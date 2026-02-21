@@ -789,6 +789,21 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
     )
   }
 
+  if (showQuiz) {
+    return (
+      <div className="how-llms mt-root quiz-fade-in">
+        <Quiz
+          questions={modelTrainingQuiz}
+          tabName="Model Training"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+          onNextModule={onSwitchTab ? () => onSwitchTab('prompt-engineering') : undefined}
+          nextModuleName="Prompt Engineering"
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="how-llms mt-root">
       {/* Welcome Banner — shows after entry screen, dismissable */}
@@ -891,7 +906,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
       )}
 
       {/* Final summary */}
-      {showFinal && !showQuiz && (
+      {showFinal && (
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">🎉 You now understand how AI is built!</div>
 
@@ -916,17 +931,6 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
             </button>
           </div>
         </div>
-      )}
-
-      {showQuiz && (
-        <Quiz
-          questions={modelTrainingQuiz}
-          tabName="Model Training"
-          onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
-          onNextModule={onSwitchTab ? () => onSwitchTab('prompt-engineering') : undefined}
-          nextModuleName="Prompt Engineering"
-        />
       )}
     </div>
   )

@@ -430,6 +430,19 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
     )
   }
 
+  if (showQuiz) {
+    return (
+      <div className="generation quiz-fade-in">
+        <Quiz
+          questions={generationQuiz}
+          tabName="Generation"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="generation">
       {showWelcome && (
@@ -713,22 +726,11 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
         </div>
       )}
 
-      {!showQuiz && (
-        <div style={{ textAlign: 'center', marginTop: 24 }}>
-          <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
-            Test Your Knowledge &rarr;
-          </button>
-        </div>
-      )}
-
-      {showQuiz && (
-        <Quiz
-          questions={generationQuiz}
-          tabName="Generation"
-          onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome}
-        />
-      )}
+      <div style={{ textAlign: 'center', marginTop: 24 }}>
+        <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
+          Test Your Knowledge &rarr;
+        </button>
+      </div>
 
     </div>
   )

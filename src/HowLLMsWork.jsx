@@ -401,6 +401,21 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     )
   }
 
+  if (showQuiz) {
+    return (
+      <div className="how-llms quiz-fade-in">
+        <Quiz
+          questions={howLLMsWorkQuiz}
+          tabName="How LLMs Work"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+          onNextModule={onSwitchTab ? () => onSwitchTab('model-training') : undefined}
+          nextModuleName="Model Training"
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="how-llms">
       {/* Welcome Banner — only after entry screen, before journey starts */}
@@ -968,7 +983,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
       )}
 
       {/* Final output */}
-      {showFinal && !showQuiz && (
+      {showFinal && (
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You just watched an LLM work!</div>
 
@@ -1021,17 +1036,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
             )}
           </div>
         </div>
-      )}
-
-      {showQuiz && (
-        <Quiz
-          questions={howLLMsWorkQuiz}
-          tabName="How LLMs Work"
-          onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
-          onNextModule={onSwitchTab ? () => onSwitchTab('model-training') : undefined}
-          nextModuleName="Model Training"
-        />
       )}
     </div>
   )

@@ -76,6 +76,19 @@ function Tokenizer({ onGoHome }) {
     )
   }
 
+  if (showQuiz) {
+    return (
+      <div className="tokenizer quiz-fade-in">
+        <Quiz
+          questions={tokenizerQuiz}
+          tabName="Tokenizer"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="tokenizer">
       {showWelcome && (
@@ -184,22 +197,11 @@ function Tokenizer({ onGoHome }) {
         </div>
       </div>
 
-      {!showQuiz && (
-        <div style={{ textAlign: 'center', marginTop: 24 }}>
-          <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
-            Test Your Knowledge &rarr;
-          </button>
-        </div>
-      )}
-
-      {showQuiz && (
-        <Quiz
-          questions={tokenizerQuiz}
-          tabName="Tokenizer"
-          onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome}
-        />
-      )}
+      <div style={{ textAlign: 'center', marginTop: 24 }}>
+        <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
+          Test Your Knowledge &rarr;
+        </button>
+      </div>
     </div>
   )
 }

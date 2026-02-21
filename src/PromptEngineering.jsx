@@ -1138,6 +1138,19 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
     )
   }
 
+  if (showQuiz) {
+    return (
+      <div className="how-llms pe-root quiz-fade-in">
+        <Quiz
+          questions={promptEngineeringQuiz}
+          tabName="Prompt Engineering"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="how-llms pe-root">
       {/* Welcome Banner — shows after entry screen, dismissable */}
@@ -1226,7 +1239,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
       )}
 
       {/* Final summary */}
-      {showFinal && !showQuiz && (
+      {showFinal && (
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">🎉 You're now a Prompt Engineer!</div>
 
@@ -1280,15 +1293,6 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
             </button>
           </div>
         </div>
-      )}
-
-      {showQuiz && (
-        <Quiz
-          questions={promptEngineeringQuiz}
-          tabName="Prompt Engineering"
-          onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
-        />
       )}
     </div>
   )
