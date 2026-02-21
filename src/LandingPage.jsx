@@ -9,6 +9,7 @@ const FEATURES = [
   { icon: '\u26A1', name: 'Generation', desc: 'Watch AI predict the next word live' },
   { icon: '\u{1F9E0}', name: 'How LLMs Work', desc: 'An interactive journey inside AI' },
   { icon: '\u{1F3D7}\uFE0F', name: 'Model Training', desc: 'Discover how AI models are built from scratch' },
+  { icon: '✍️', name: 'Prompt Engineering', desc: 'Learn how to write better prompts and get dramatically better results from any AI' },
 ]
 
 const PARTICLE_COUNT = 50

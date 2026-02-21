@@ -115,11 +115,12 @@
 /* ── Feature cards ── */
 
 .landing-cards {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-top: 24px;
-  flex-wrap: wrap;
-  justify-content: center;
+  max-width: 540px;
+  width: 100%;
 }
 
 .landing-card {
@@ -127,7 +128,6 @@
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
   padding: 20px 18px;
-  width: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,6 +147,7 @@
 .landing-typed .landing-card:nth-child(3) { animation-delay: 0.5s; }
 .landing-typed .landing-card:nth-child(4) { animation-delay: 0.65s; }
 .landing-typed .landing-card:nth-child(5) { animation-delay: 0.8s; }
+.landing-typed .landing-card:nth-child(6) { animation-delay: 0.95s; }
 
 .landing-card:hover {
   transform: translateY(-4px);
@@ -215,15 +216,18 @@
 
 @media (max-width: 680px) {
   .landing-cards {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .landing-card {
-    width: 240px;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 360px;
   }
 
   .landing-title {
     font-size: 28px;
+  }
+}
+
+@media (max-width: 400px) {
+  .landing-cards {
+    grid-template-columns: 1fr;
+    max-width: 240px;
   }
 }
