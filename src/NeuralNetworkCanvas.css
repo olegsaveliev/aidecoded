@@ -1,0 +1,335 @@
+/* ══════════════════════════════════
+   NEURAL NETWORK CANVAS
+   ══════════════════════════════════ */
+
+.nn-canvas-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+[data-theme="dark"] .nn-canvas-container {
+  background: #1C1917;
+}
+
+/* ── Background particle canvas ── */
+
+.nn-bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SVG canvas ── */
+
+.nn-canvas-svg {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════
+   ENTRANCE ANIMATIONS
+   ══════════════════════════════════ */
+
+/* ── Node appear (scale + fade with bounce) ── */
+
+.nn-node-appear {
+  opacity: 0;
+  transform: scale(0.3);
+  transform-origin: 0 0;
+  animation: nnNodeAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes nnNodeAppear {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Connection line draw (stroke-dashoffset) ── */
+
+.nn-conn-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: nnConnDraw 0.5s ease-out forwards;
+}
+
+@keyframes nnConnDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ── Dots fade in after line draws ── */
+
+.nn-dots-appear {
+  opacity: 0;
+  animation: nnDotsAppear 0.3s ease-out forwards;
+}
+
+@keyframes nnDotsAppear {
+  to {
+    opacity: 1;
+  }
+}
+
+/* ══════════════════════════════════
+   INTERACTION ANIMATIONS
+   ══════════════════════════════════ */
+
+/* ── Connection lines ── */
+
+.nn-connection-line {
+  transition: opacity 0.3s ease;
+}
+
+/* ── Traveling dots ── */
+
+.nn-traveling-dot {
+  transition: opacity 0.3s ease;
+}
+
+/* ── Node inner group (hover / click) ── */
+
+.nn-node-inner {
+  transition: transform 0.2s ease;
+  transform-origin: 0 0;
+}
+
+.nn-node-hovered {
+  transform: scale(1.15);
+}
+
+.nn-node-connected {
+  transform: scale(1.05);
+}
+
+.nn-node-clicked {
+  animation: nnNodePulse 0.6s ease-out forwards;
+}
+
+@keyframes nnNodePulse {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.2); }
+  40% { transform: scale(1.05); }
+  60% { transform: scale(1.15); }
+  80% { transform: scale(1.0); }
+  100% { transform: scale(0.9); opacity: 0.5; }
+}
+
+/* ── Node background ── */
+
+.nn-node-bg {
+  fill: #ffffff;
+  stroke: none;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+  transition: filter 0.2s ease;
+}
+
+.nn-node-bg-hover {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+[data-theme="dark"] .nn-node-bg {
+  fill: #292524;
+}
+
+[data-theme="dark"] .nn-node-bg-hover {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+/* ── Node ring ── */
+
+.nn-node-ring {
+  transition: stroke-width 0.2s ease, opacity 0.2s ease;
+}
+
+/* ── Node emoji & label ── */
+
+.nn-node-emoji {
+  pointer-events: none;
+  user-select: none;
+}
+
+.nn-node-label {
+  fill: var(--text-primary, #1d1d1f);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .nn-node-label {
+  fill: #E8E3DD;
+}
+
+/* ── Portal tooltip ── */
+
+.nn-portal-tooltip {
+  z-index: 99999;
+  pointer-events: none;
+  background: #ffffff;
+  color: #1D1D1F;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 200px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  animation: nnTooltipIn 0.15s ease-out;
+}
+
+[data-theme="dark"] .nn-portal-tooltip {
+  background: #44403C;
+  color: #E8E3DD;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes nnTooltipIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* ── Glow effect ── */
+
+.nn-node-glow {
+  animation: nnGlow 0.6s ease-in-out;
+}
+
+@keyframes nnGlow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.6; }
+}
+
+/* ══════════════════════════════════
+   REPLAY BUTTON
+   ══════════════════════════════════ */
+
+.nn-replay-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  z-index: 3;
+  background: var(--bg-primary, #ffffff);
+  border: 1px solid var(--border-light, #e5e5e5);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-secondary, #6e6e73);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.nn-replay-btn:hover {
+  background: var(--bg-secondary, #f5f5f7);
+  color: var(--text-primary, #1d1d1f);
+}
+
+[data-theme="dark"] .nn-replay-btn {
+  background: #292524;
+  border-color: #44403C;
+  color: #A8A29E;
+}
+
+[data-theme="dark"] .nn-replay-btn:hover {
+  background: #44403C;
+  color: #E8E3DD;
+}
+
+/* ══════════════════════════════════
+   MOBILE FALLBACK
+   ══════════════════════════════════ */
+
+.nn-mobile-grid {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nn-canvas-svg {
+    display: none;
+  }
+
+  .nn-bg-canvas {
+    display: none;
+  }
+
+  .nn-replay-btn {
+    display: none;
+  }
+
+  .nn-canvas-container {
+    height: auto;
+    padding: 20px;
+    background: transparent;
+  }
+
+  .nn-mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .nn-mobile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px;
+    background: var(--bg-primary, #ffffff);
+    border: 1px solid var(--border-light, #e5e5e5);
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+
+  [data-theme="dark"] .nn-mobile-card {
+    background: #292524;
+    border-color: #44403C;
+  }
+
+  .nn-mobile-card:active {
+    transform: scale(0.96);
+  }
+
+  .nn-mobile-card-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nn-mobile-card-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary, #1d1d1f);
+    text-align: center;
+  }
+
+  [data-theme="dark"] .nn-mobile-card-label {
+    color: #E8E3DD;
+  }
+}

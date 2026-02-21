@@ -116,6 +116,16 @@ function App() {
     }, 500)
   }
 
+  function handleLandingTabSelect(tabId) {
+    setFadingOut(true)
+    setTimeout(() => {
+      setShowLanding(false)
+      setFadingOut(false)
+      setShowHome(false)
+      setActiveTab(tabId)
+    }, 500)
+  }
+
   function handleBootComplete() {
     setBootFadingOut(true)
     setTimeout(() => {
@@ -477,7 +487,7 @@ function App() {
   const showSidebar = !showHome && activeTab === 'playground'
 
   if (showLanding) {
-    return <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} darkMode={darkMode} setDarkMode={setDarkMode} />
+    return <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} />
   }
 
   if (showBootScreen) {

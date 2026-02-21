@@ -1,25 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
-import logoImg from './assets/logo_dark.png'
 import TypewriterTitle from './TypewriterTitle.jsx'
+import NeuralNetworkCanvas from './NeuralNetworkCanvas.jsx'
 import './LandingPage.css'
-
-const FEATURES = [
-  { icon: '\u{1F4AC}', name: 'Playground', desc: 'Chat with AI and tune parameters in real time' },
-  { icon: '\u{1F524}', name: 'Tokenizer', desc: 'See how AI reads your text as tokens' },
-  { icon: '\u26A1', name: 'Generation', desc: 'Watch AI predict the next word live' },
-  { icon: '\u{1F9E0}', name: 'How LLMs Work', desc: 'An interactive journey inside AI' },
-  { icon: '\u{1F3D7}\uFE0F', name: 'Model Training', desc: 'Discover how AI models are built from scratch' },
-  { icon: '✍️', name: 'Prompt Engineering', desc: 'Learn how to write better prompts and get dramatically better results from any AI' },
-  { icon: '🧩', name: 'Context Engineering', desc: 'Learn how to give AI the right context to get dramatically better results every time' },
-  { icon: '🔍', name: 'RAG', desc: 'How AI learns from YOUR documents — the most powerful enterprise AI technique' },
-  { icon: '🤖', name: 'Machine Learning', desc: 'How machines actually learn from data — the foundation of all modern AI' },
-]
 
 const PARTICLE_COUNT = 50
 const CONNECTION_DIST = 120
 
-function LandingPage({ fadingOut, onGetStarted, darkMode, setDarkMode }) {
+const TAGLINE = 'Your interactive journey into AI'
+const TAGLINE_CHAR_DELAY = 40
+
+function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
   const canvasRef = useRef(null)
+  const [titleDone, setTitleDone] = useState(false)
+  const [taglineCharCount, setTaglineCharCount] = useState(0)
   const [typingDone, setTypingDone] = useState(false)
 
   useEffect(() => {
@@ -111,6 +104,24 @@ function LandingPage({ fadingOut, onGetStarted, darkMode, setDarkMode }) {
     }
   }, [])
 
+  // Tagline typewriter
+  useEffect(() => {
+    if (!titleDone) return
+    if (taglineCharCount >= TAGLINE.length) {
+      // Brief pause before network appears
+      const timer = setTimeout(() => setTypingDone(true), 400)
+      return () => clearTimeout(timer)
+    }
+    const timer = setTimeout(() => setTaglineCharCount((c) => c + 1), TAGLINE_CHAR_DELAY)
+    return () => clearTimeout(timer)
+  }, [titleDone, taglineCharCount])
+
+  function handleNodeSelect(tabId) {
+    if (onSelectTab) {
+      onSelectTab(tabId)
+    }
+  }
+
   return (
     <div className={`landing ${fadingOut ? 'landing-fade-out' : ''}`}>
       <canvas ref={canvasRef} className="landing-canvas" />
@@ -120,31 +131,30 @@ function LandingPage({ fadingOut, onGetStarted, darkMode, setDarkMode }) {
         aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
       >
         <span className={`theme-toggle-track ${darkMode ? 'theme-toggle-dark' : ''}`}>
-          <span className="theme-toggle-icon theme-toggle-sun">☀️</span>
-          <span className="theme-toggle-icon theme-toggle-moon">🌙</span>
+          <span className="theme-toggle-icon theme-toggle-sun">{'\u2600\uFE0F'}</span>
+          <span className="theme-toggle-icon theme-toggle-moon">{'\u{1F319}'}</span>
           <span className="theme-toggle-thumb" />
         </span>
       </button>
       <div className={`landing-content ${typingDone ? 'landing-typed' : ''}`}>
-        <img src={logoImg} alt="AI Decoded" className="landing-logo" />
         <TypewriterTitle
           delay={300}
-          onComplete={() => setTypingDone(true)}
+          onComplete={() => setTitleDone(true)}
           className="landing-title"
         />
-        <p className="landing-tagline">Your interactive journey into AI</p>
-        <div className="landing-cards">
-          {FEATURES.map((f) => (
-            <div key={f.name} className="landing-card">
-              <span className="landing-card-icon">{f.icon}</span>
-              <span className="landing-card-name">{f.name}</span>
-              <span className="landing-card-desc">{f.desc}</span>
-            </div>
-          ))}
+        <p className="landing-tagline">
+          {titleDone && TAGLINE.slice(0, taglineCharCount)}
+          {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
+        </p>
+
+        <div className="landing-network-wrapper">
+          {typingDone && <NeuralNetworkCanvas onSelectTab={handleNodeSelect} />}
         </div>
+
         <button className="landing-cta" onClick={onGetStarted}>
-          Get Started
+          Explore All Modules &rarr;
         </button>
+        <p className="landing-hint">Click any node to jump directly to a module</p>
       </div>
     </div>
   )

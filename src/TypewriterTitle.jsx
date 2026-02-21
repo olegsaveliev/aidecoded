@@ -26,14 +26,11 @@ function TypewriterTitle({ delay = 0, onComplete, className }) {
 
   useEffect(() => {
     if (charCount < TARGET.length) return
-    const timer = setTimeout(() => {
-      setShowCursor(false)
-      if (!completeCalled.current) {
-        completeCalled.current = true
-        onCompleteRef.current?.()
-      }
-    }, 500)
-    return () => clearTimeout(timer)
+    setShowCursor(false)
+    if (!completeCalled.current) {
+      completeCalled.current = true
+      onCompleteRef.current?.()
+    }
   }, [charCount])
 
   return (
