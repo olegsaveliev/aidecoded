@@ -26,22 +26,28 @@ function NeuronBackground({ landing = false }) {
     let animId
     let particles = []
     let visible = true
+    let cssWidth = 0
+    let cssHeight = 0
 
     const config = landing
       ? { ...DEFAULTS, ...LANDING }
       : DEFAULTS
 
     function resize() {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      const dpr = window.devicePixelRatio || 1
+      cssWidth = window.innerWidth
+      cssHeight = window.innerHeight
+      canvas.width = cssWidth * dpr
+      canvas.height = cssHeight * dpr
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
     function initParticles() {
       particles = []
       for (let i = 0; i < config.particleCount; i++) {
         particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
+          x: Math.random() * cssWidth,
+          y: Math.random() * cssHeight,
           vx: (Math.random() - 0.5) * config.speed * 2,
           vy: (Math.random() - 0.5) * config.speed * 2,
           radius: Math.random() * (config.radiusMax - config.radiusMin) + config.radiusMin,
@@ -50,7 +56,9 @@ function NeuronBackground({ landing = false }) {
     }
 
     function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const dpr = window.devicePixelRatio || 1
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx.clearRect(0, 0, cssWidth, cssHeight)
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
 
       const particleColor = isDark ? '168, 162, 158' : '0, 113, 227'
@@ -87,10 +95,10 @@ function NeuronBackground({ landing = false }) {
       for (const p of particles) {
         p.x += p.vx
         p.y += p.vy
-        if (p.x < 0) p.x = canvas.width
-        if (p.x > canvas.width) p.x = 0
-        if (p.y < 0) p.y = canvas.height
-        if (p.y > canvas.height) p.y = 0
+        if (p.x < 0) p.x = cssWidth
+        if (p.x > cssWidth) p.x = 0
+        if (p.y < 0) p.y = cssHeight
+        if (p.y > cssHeight) p.y = 0
       }
     }
 
