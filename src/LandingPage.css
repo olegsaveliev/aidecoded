@@ -183,7 +183,7 @@
 
 @media (max-width: 768px) {
   .landing-content {
-    padding: 24px 16px 24px;
+    padding: 24px 16px calc(24px + env(safe-area-inset-bottom, 16px));
     gap: 12px;
     justify-content: center;
   }
