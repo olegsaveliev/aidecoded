@@ -182,14 +182,10 @@
 /* ── Responsive ── */
 
 @media (max-width: 768px) {
-  .landing {
-    overflow-y: auto;
-  }
-
   .landing-content {
-    padding: 32px 16px 48px;
+    padding: 24px 16px 24px;
     gap: 12px;
-    height: auto;
+    justify-content: center;
   }
 
   .landing-title {
@@ -207,43 +203,8 @@
   }
 
   .landing-network-wrapper {
-    display: none;
-  }
-
-  .landing-mobile-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 0 8px;
-    margin: 16px 0;
-    width: 100%;
-    max-width: 360px;
-  }
-
-  .landing-mobile-card {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-light);
-    border-radius: 12px;
-    padding: 14px 10px;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-
-  .landing-mobile-card:active {
-    transform: scale(0.97);
-  }
-
-  .landing-mobile-card-icon {
-    font-size: 26px;
-    margin-bottom: 6px;
-  }
-
-  .landing-mobile-card-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-primary);
+    flex: 1;
+    min-height: 0;
   }
 
   .landing-cta {
@@ -262,8 +223,4 @@
     right: 16px;
   }
 
-  [data-theme="dark"] .landing-mobile-card {
-    background: var(--bg-secondary);
-    border-color: var(--border);
-  }
 }

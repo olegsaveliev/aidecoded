@@ -66,9 +66,8 @@ const DOT_DELAYS = CONN_DELAYS.map((d) => d + CONN_DRAW_DUR)
 
 /* ── Layout helpers ── */
 
-function getNodePosition(node, width, height) {
-  return { x: node.px * width, y: node.py * height }
-}
+const REF_W = 960
+const REF_H = 480
 
 const PARTICLE_BG_COUNT = 35
 
@@ -76,13 +75,13 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
   const svgRef = useRef(null)
-  const [dimensions, setDimensions] = useState({ width: 960, height: 500 })
+  const [dimensions, setDimensions] = useState({ width: 960, height: 480 })
   const [hoveredNode, setHoveredNode] = useState(null)
   const [clickedNode, setClickedNode] = useState(null)
   const [animKey, setAnimKey] = useState(0)
   const [tooltip, setTooltip] = useState(null)
 
-  // Measure container
+  // Measure container (for background canvas only)
   useEffect(() => {
     const container = containerRef.current
     if (!container) return
@@ -162,10 +161,10 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   const nodePositions = useMemo(() => {
     const map = {}
     for (const node of NODES) {
-      map[node.id] = getNodePosition(node, dimensions.width, dimensions.height)
+      map[node.id] = { x: node.px * REF_W, y: node.py * REF_H }
     }
     return map
-  }, [dimensions])
+  }, [])
 
   const connectedTo = useMemo(() => {
     if (!hoveredNode) return new Set()
@@ -192,7 +191,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
     setAnimKey((k) => k + 1)
   }, [])
 
-  const { width, height } = dimensions
+  const { width, height } = dimensions // for background canvas
   const nodeRadius = 32
 
   return (
@@ -204,9 +203,8 @@ function NeuralNetworkCanvas({ onSelectTab }) {
         ref={svgRef}
         key={animKey}
         className="nn-canvas-svg"
-        viewBox={`0 0 ${width} ${height}`}
-        width={width}
-        height={height}
+        viewBox={`0 0 ${REF_W} ${REF_H}`}
+        preserveAspectRatio="xMidYMid meet"
       >
         <defs>
           {Object.entries(GROUP_COLORS).map(([group, color]) => (
@@ -298,12 +296,12 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                 const svg = svgRef.current
                 if (svg) {
                   const svgRect = svg.getBoundingClientRect()
-                  const scaleX = svgRect.width / width
-                  const scaleY = svgRect.height / height
+                  const scaleX = svgRect.width / REF_W
+                  const scaleY = svgRect.height / REF_H
                   setTooltip({
                     text: node.desc,
                     x: svgRect.left + pos.x * scaleX,
-                    y: svgRect.top + pos.y * scaleY + nodeRadius + 13,
+                    y: svgRect.top + pos.y * scaleY + nodeRadius * scaleY + 8,
                   })
                 }
               }}
