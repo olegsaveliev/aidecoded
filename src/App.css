@@ -5218,7 +5218,7 @@
     flex: 0;
   }
 
-  .theme-toggle {
+  .header-right .theme-toggle {
     position: static;
   }
 
