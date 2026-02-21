@@ -46,6 +46,15 @@ const CARDS = [
     tagColor: 'blue',
     accent: '#f97316',
   },
+  {
+    id: 'prompt-engineering',
+    icon: '✍️',
+    title: 'Prompt Engineering',
+    description: 'Learn how to write better prompts and get dramatically better results from any AI',
+    tag: 'Practical',
+    tagColor: 'green',
+    accent: '#22c55e',
+  },
 ]
 
 function HomeScreen({ onSelectTab }) {

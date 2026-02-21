@@ -5,6 +5,7 @@ import Tokenizer from './Tokenizer.jsx'
 import Generation from './Generation.jsx'
 import HowLLMsWork from './HowLLMsWork.jsx'
 import ModelTraining from './ModelTraining.jsx'
+import PromptEngineering from './PromptEngineering.jsx'
 import LandingPage from './LandingPage.jsx'
 import HomeScreen from './HomeScreen.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
@@ -594,13 +595,13 @@ function App() {
           </div>
           {!showHome && (
             <nav className="segmented-control">
-              {['playground', 'tokenizer', 'generation', 'how-llms-work', 'model-training'].map((tab) => (
+              {['playground', 'tokenizer', 'generation', 'how-llms-work', 'model-training', 'prompt-engineering'].map((tab) => (
                 <button
                   key={tab}
                   className={`segment ${activeTab === tab ? 'segment-active' : ''}`}
                   onClick={() => setActiveTab(tab)}
                 >
-                  {tab === 'how-llms-work' ? 'How LLMs Work' : tab === 'model-training' ? 'Model Training' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {tab === 'how-llms-work' ? 'How LLMs Work' : tab === 'model-training' ? 'Model Training' : tab === 'prompt-engineering' ? 'Prompt Engineering' : tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
               ))}
             </nav>
@@ -750,6 +751,9 @@ function App() {
         )}
         {!showHome && activeTab === 'model-training' && (
           <ModelTraining onSwitchTab={setActiveTab} />
+        )}
+        {!showHome && activeTab === 'prompt-engineering' && (
+          <PromptEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} />
         )}
         </div>
       </main>
