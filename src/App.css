@@ -229,7 +229,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   background: var(--bg-primary);
 }
 
@@ -3915,6 +3915,7 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow-y: auto;
   transition: opacity 0.2s ease;
 }
 
@@ -5289,10 +5290,6 @@
   /* ── App layout stacks on mobile ── */
   .app {
     flex-direction: column;
-  }
-
-  .main {
-    overflow: visible;
   }
 
   /* ── Tab content ── */

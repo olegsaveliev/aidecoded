@@ -76,7 +76,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
   const svgRef = useRef(null)
-  const [dimensions, setDimensions] = useState({ width: 960, height: 480 })
+  const [dimensions, setDimensions] = useState({ width: 960, height: 500 })
   const [hoveredNode, setHoveredNode] = useState(null)
   const [clickedNode, setClickedNode] = useState(null)
   const [animKey, setAnimKey] = useState(0)
@@ -89,7 +89,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
 
     function measure() {
       const rect = container.getBoundingClientRect()
-      setDimensions({ width: rect.width, height: 480 })
+      setDimensions({ width: rect.width, height: rect.height })
     }
 
     measure()

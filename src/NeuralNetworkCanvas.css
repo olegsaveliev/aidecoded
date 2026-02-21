@@ -5,11 +5,10 @@
 .nn-canvas-container {
   position: relative;
   width: 100%;
-  height: 480px;
+  height: 100%;
   background: #ffffff;
   border-radius: 16px;
   overflow: hidden;
-  margin-top: 24px;
 }
 
 [data-theme="dark"] .nn-canvas-container {

@@ -10,11 +10,11 @@
   height: 100vh;
   background: var(--bg-primary);
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   z-index: 1000;
   transition: opacity 0.5s ease-out;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .landing-fade-out {
@@ -41,10 +41,11 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 16px;
-  padding: 40px 24px 60px;
+  gap: 10px;
+  padding: 24px 24px 16px;
   max-width: 960px;
   width: 100%;
+  height: 100%;
 }
 
 /* ── Keyframes ── */
@@ -115,13 +116,15 @@
 
 .landing-network-wrapper {
   width: 100%;
-  margin-top: 8px;
+  flex: 1;
+  min-height: 0;
 }
 
 /* ── CTA button ── */
 
 .landing-cta {
-  margin-top: 20px;
+  margin-top: 8px;
+  flex-shrink: 0;
   background: var(--accent);
   color: #fff;
   border: none;
@@ -179,9 +182,14 @@
 /* ── Responsive ── */
 
 @media (max-width: 768px) {
+  .landing {
+    overflow-y: auto;
+  }
+
   .landing-content {
     padding: 32px 16px 48px;
     gap: 12px;
+    height: auto;
   }
 
   .landing-title {
