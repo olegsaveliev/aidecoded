@@ -1,4 +1,7 @@
+import { useState } from 'react'
 import './HomeScreen.css'
+
+const FILTERS = ['All', 'Interactive', 'Visual', 'Journey', 'Practical']
 
 const CARDS = [
   {
@@ -58,23 +61,40 @@ const CARDS = [
 ]
 
 function HomeScreen({ onSelectTab }) {
+  const [filter, setFilter] = useState('All')
+
   return (
     <div className="home-screen">
       <h2 className="home-welcome">What would you like to explore today?</h2>
-      <div className="home-grid">
-        {CARDS.map((card, i) => (
+      <div className="home-filters">
+        {FILTERS.map((f) => (
           <button
-            key={card.id}
-            className="home-card"
-            style={{ borderLeftColor: card.accent, animationDelay: `${i * 0.08}s` }}
-            onClick={() => onSelectTab(card.id)}
+            key={f}
+            className={`home-filter-btn${filter === f ? ' home-filter-active' : ''}`}
+            onClick={() => setFilter(f)}
           >
-            <span className={`home-card-tag home-tag-${card.tagColor}`}>{card.tag}</span>
-            <span className="home-card-icon">{card.icon}</span>
-            <span className="home-card-title">{card.title}</span>
-            <span className="home-card-desc">{card.description}</span>
+            {f}
           </button>
         ))}
+      </div>
+      <div className="home-grid">
+        {CARDS.map((card, i) => {
+          const visible = filter === 'All' || card.tag === filter
+          return (
+            <button
+              key={card.id}
+              className={`home-card${visible ? '' : ' home-card-hidden'}`}
+              style={{ borderLeftColor: card.accent, animationDelay: `${i * 0.08}s` }}
+              onClick={() => onSelectTab(card.id)}
+              tabIndex={visible ? 0 : -1}
+            >
+              <span className={`home-card-tag home-tag-${card.tagColor}`}>{card.tag}</span>
+              <span className="home-card-icon">{card.icon}</span>
+              <span className="home-card-title">{card.title}</span>
+              <span className="home-card-desc">{card.description}</span>
+            </button>
+          )
+        })}
       </div>
     </div>
   )

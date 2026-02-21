@@ -1,23 +1,20 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 
 export default function Tooltip({ text }) {
   const iconRef = useRef(null)
   const tooltipRef = useRef(null)
-  const [pos, setPos] = useState(null) // null = closed, {left,top} = open
+  const [pos, setPos] = useState(null) // null = closed, {left,top,flipped} = open
   const pinnedRef = useRef(false)
   const timerRef = useRef(null)
-
-  function calcPos() {
-    const el = iconRef.current
-    if (!el) return null
-    const r = el.getBoundingClientRect()
-    return { left: r.left + r.width / 2, top: r.top - 8 }
-  }
+  const clampedRef = useRef(false)
 
   function open() {
-    const p = calcPos()
-    if (p) setPos(p)
+    clampedRef.current = false
+    const el = iconRef.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    setPos({ left: r.left + r.width / 2, top: r.top - 8, bottom: r.bottom + 8, flipped: false })
   }
 
   function close() {
@@ -25,6 +22,27 @@ export default function Tooltip({ text }) {
     pinnedRef.current = false
     setPos(null)
   }
+
+  // Clamp tooltip within viewport after it renders
+  useLayoutEffect(() => {
+    if (!pos || !tooltipRef.current || clampedRef.current) return
+    clampedRef.current = true
+    const rect = tooltipRef.current.getBoundingClientRect()
+    const pad = 12
+    let dl = 0
+    let flipped = pos.flipped
+
+    // Horizontal clamp
+    if (rect.left < pad) dl = pad - rect.left
+    else if (rect.right > window.innerWidth - pad) dl = window.innerWidth - pad - rect.right
+
+    // Vertical: if clipped above viewport, flip below the icon
+    if (!flipped && rect.top < pad) flipped = true
+
+    if (dl || flipped !== pos.flipped) {
+      setPos((p) => ({ ...p, left: p.left + dl, flipped }))
+    }
+  }, [pos])
 
   function handleIconClick(e) {
     e.stopPropagation()
@@ -104,7 +122,11 @@ export default function Tooltip({ text }) {
         <span
           ref={tooltipRef}
           className="app-tooltip-text"
-          style={{ left: pos.left, top: pos.top, transform: 'translate(-50%, -100%)' }}
+          style={{
+            left: pos.left,
+            top: pos.flipped ? pos.bottom : pos.top,
+            transform: pos.flipped ? 'translate(-50%, 0)' : 'translate(-50%, -100%)',
+          }}
           onMouseEnter={handleBubbleEnter}
           onMouseLeave={handleBubbleLeave}
         >

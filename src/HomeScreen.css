@@ -32,6 +32,48 @@
   text-align: center;
 }
 
+/* Filter buttons */
+.home-filters {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.home-filter-btn {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 18px;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition: background 0.2s, color 0.2s;
+}
+
+.home-filter-btn:hover {
+  background: var(--border-light);
+}
+
+.home-filter-active {
+  background: #0071e3;
+  color: #fff;
+}
+
+.home-filter-active:hover {
+  background: #0077ed;
+}
+
+[data-theme="dark"] .home-filter-btn:not(.home-filter-active) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .home-filter-btn:not(.home-filter-active):hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
 /* Card grid — 2+3 or 3+2 responsive */
 .home-grid {
   display: grid;
@@ -57,9 +99,15 @@
   cursor: pointer;
   font-family: inherit;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease, scale 0.3s ease;
   opacity: 0;
   animation: homeCardIn 0.4s ease-out forwards;
+}
+
+.home-card-hidden {
+  opacity: 0 !important;
+  scale: 0.95;
+  pointer-events: none;
 }
 
 @keyframes homeCardIn {
@@ -182,5 +230,9 @@
   .home-welcome {
     font-size: 20px;
     margin-bottom: 28px;
+  }
+
+  .home-filters {
+    flex-wrap: wrap;
   }
 }

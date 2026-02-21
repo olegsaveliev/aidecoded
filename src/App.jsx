@@ -484,17 +484,6 @@ function App() {
     <div className={`app ${!showSidebar ? 'app-no-sidebar' : ''} app-fade-in`}>
       {showSidebar && (
         <aside className="sidebar">
-          <div className="sidebar-brand">
-            <svg className="sidebar-logo" width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <rect width="24" height="24" rx="6" fill="#0071e3" />
-              <text x="12" y="16.5" textAnchor="middle" fill="#fff" fontSize="11" fontWeight="700" fontFamily="-apple-system, sans-serif">AI</text>
-            </svg>
-            <div>
-              <div className="sidebar-title">AI Decoded</div>
-              <div className="sidebar-version">v1.0</div>
-            </div>
-          </div>
-
           <div className="sidebar-section">
             <h2>
               Model
@@ -578,7 +567,6 @@ function App() {
             </button>
           </div>
 
-          <div className="model-badge">{model}</div>
         </aside>
       )}
 
