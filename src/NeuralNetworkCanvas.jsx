@@ -106,8 +106,18 @@ function NeuralNetworkCanvas({ onSelectTab }) {
     const { width, height } = dimensions
     if (width === 0) return
 
-    canvas.width = width
-    canvas.height = height
+    const dpr = window.devicePixelRatio || 1
+
+    // Set actual canvas pixel size accounting for DPR
+    canvas.width = width * dpr
+    canvas.height = height * dpr
+
+    // Canvas CSS size stays fixed
+    canvas.style.width = width + 'px'
+    canvas.style.height = height + 'px'
+
+    // Scale context so all drawing uses CSS pixels
+    ctx.scale(dpr, dpr)
 
     const particles = []
     for (let i = 0; i < PARTICLE_BG_COUNT; i++) {
@@ -122,6 +132,8 @@ function NeuralNetworkCanvas({ onSelectTab }) {
 
     let animId
     function loop() {
+      // Reset transform before clearing to ensure full canvas is cleared
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.clearRect(0, 0, width, height)
       const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
       const fillColor = isDark ? 'rgba(168, 162, 158, 0.10)' : 'rgba(0, 113, 227, 0.08)'
