@@ -2,9 +2,53 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import Quiz from './Quiz.jsx'
+import ToolChips from './ToolChips.jsx'
 import { promptEngineeringQuiz } from './quizData.js'
 
 const API_KEY = import.meta.env.OPENAI_API_KEY
+
+const PE_TOOLS = {
+  0: [
+    { name: 'OpenAI Playground', color: '#0071E3', desc: 'Interactive web UI to test prompts with GPT models' },
+    { name: 'Claude.ai', color: '#0071E3', desc: 'Anthropic\'s chat interface for Claude models' },
+    { name: 'PromptBase', color: '#8E8E93', desc: 'Marketplace for buying and selling prompts' },
+  ],
+  1: [
+    { name: 'OpenAI API', color: '#0071E3', desc: 'Programmatic access to GPT models' },
+    { name: 'LangChain PromptTemplate', color: '#34C759', desc: 'Templating system for structured prompts' },
+    { name: 'Guidance (Microsoft)', color: '#34C759', desc: 'Constrained generation and prompt control' },
+  ],
+  2: [
+    { name: 'OpenAI o1', color: '#0071E3', desc: 'Built-in chain of thought reasoning model' },
+    { name: 'LangChain', color: '#34C759', desc: 'Chain prompts and tools together' },
+    { name: 'DSPy', color: '#34C759', desc: 'Programming framework for optimizing prompts' },
+  ],
+  3: [
+    { name: 'LangChain', color: '#34C759', desc: 'Tree of thoughts via multi-step chains' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Complex query planning and routing' },
+    { name: 'DSPy', color: '#34C759', desc: 'Automated prompt optimization with modules' },
+  ],
+  4: [
+    { name: 'Claude.ai', color: '#0071E3', desc: 'Excellent at following role instructions' },
+    { name: 'ChatGPT', color: '#0071E3', desc: 'OpenAI\'s chat interface with custom instructions' },
+    { name: 'OpenAI Playground', color: '#0071E3', desc: 'Test different roles with system prompts' },
+  ],
+  5: [
+    { name: 'OpenAI API', color: '#0071E3', desc: 'System prompt via messages API parameter' },
+    { name: 'Anthropic API', color: '#0071E3', desc: 'System prompt as dedicated field' },
+    { name: 'LangChain', color: '#34C759', desc: 'System prompt management in chains' },
+  ],
+  6: [
+    { name: 'LangChain', color: '#34C759', desc: 'Sequential and parallel chain orchestration' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Multi-step query engines' },
+    { name: 'Flowise', color: '#34C759', desc: 'Visual no-code prompt chain builder' },
+  ],
+  7: [
+    { name: 'PromptBase', color: '#8E8E93', desc: 'Browse proven prompt patterns and templates' },
+    { name: 'LMSYS Chatbot Arena', color: '#8E8E93', desc: 'Compare model responses head-to-head' },
+    { name: 'OpenAI Evals', color: '#0071E3', desc: 'Framework for evaluating prompt quality' },
+  ],
+}
 
 const STAGES = [
   { key: 'zero-shot', label: 'Zero-Shot', emoji: '🎯' },
@@ -1219,9 +1263,6 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
             {/* Stage content */}
             {stage >= 0 && stage <= 7 && (
               <div className="how-stage how-fade-in" key={stage}>
-                {/* Visualization */}
-                {vizComponents[stage]}
-
                 {/* Explanation card */}
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
@@ -1230,17 +1271,30 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
                   {explanations[stage].content.split('\n\n').map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
+                  <ToolChips tools={PE_TOOLS[stage]} />
+                </div>
 
-                  {/* Navigation */}
-                  <div className="how-nav-row">
-                    <div className="how-nav-buttons">
-                      {stage > 0 && (
-                        <button className="how-back-btn" onClick={prevStage}>← Back</button>
-                      )}
-                      <button className="how-gotit-btn" onClick={nextStage}>
-                        {stage < 7 ? 'Got it →' : 'See the result →'}
-                      </button>
-                    </div>
+                {/* Visualization */}
+                {vizComponents[stage]}
+
+                {/* Navigation */}
+                <div className="how-nav-row">
+                  <div className="how-nav-buttons">
+                    {stage > 0 && (
+                      <button className="how-back-btn" onClick={prevStage}>← Back</button>
+                    )}
+                    <button className="how-gotit-btn" onClick={nextStage}>
+                      {[
+                        'Show me examples →',
+                        'Chain my thoughts →',
+                        'Explore the tree →',
+                        'Pick a role →',
+                        'Set the system →',
+                        'Chain it together →',
+                        'Learn the rules →',
+                        'Test my knowledge →',
+                      ][stage]}
+                    </button>
                   </div>
                 </div>
               </div>

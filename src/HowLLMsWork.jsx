@@ -3,11 +3,40 @@ import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import Quiz from './Quiz.jsx'
+import ToolChips from './ToolChips.jsx'
 import { howLLMsWorkQuiz } from './quizData.js'
 
 const API_KEY = import.meta.env.OPENAI_API_KEY
 
 const STAGES = ['Prompt', 'Tokenization', 'Embeddings', 'Attention', 'Generation']
+
+const HOW_TOOLS = {
+  0: [
+    { name: 'OpenAI API', color: '#0071E3', desc: 'Most popular LLM API for building AI apps' },
+    { name: 'Anthropic API', color: '#0071E3', desc: 'Claude models — strong at reasoning and safety' },
+    { name: 'Google Gemini API', color: '#0071E3', desc: 'Google\'s multimodal AI models' },
+  ],
+  1: [
+    { name: 'tiktoken (OpenAI)', color: '#34C759', desc: 'Fast BPE tokenizer used by GPT models' },
+    { name: 'SentencePiece (Google)', color: '#34C759', desc: 'Tokenizer used in LLaMA and Gemini' },
+    { name: 'HuggingFace Tokenizers', color: '#34C759', desc: 'Open source tokenizer library for any model' },
+  ],
+  2: [
+    { name: 'text-embedding-3-small', color: '#0071E3', desc: 'OpenAI\'s fast, affordable embedding model' },
+    { name: 'Sentence Transformers', color: '#34C759', desc: 'Free open source embedding models' },
+    { name: 'Cohere Embeddings', color: '#0071E3', desc: 'Enterprise embedding API with multilingual support' },
+  ],
+  3: [
+    { name: 'PyTorch', color: '#AF52DE', desc: 'Visualize attention weights in transformer models' },
+    { name: 'BertViz', color: '#34C759', desc: 'Interactive attention visualization tool' },
+    { name: 'TransformerLens', color: '#34C759', desc: 'Mechanistic interpretability library by Neel Nanda' },
+  ],
+  4: [
+    { name: 'OpenAI API', color: '#0071E3', desc: 'Stream completions with logprobs for generation' },
+    { name: 'LangChain', color: '#34C759', desc: 'Framework for chaining LLM calls and tools' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Data framework for LLM applications' },
+  ],
+}
 
 const STAGE_TOOLTIPS = {
   Prompt: 'Your text is the starting point for everything. The AI processes every word you write through all 5 stages.',
@@ -525,7 +554,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
             {/* Stage 0: Prompt */}
             {stage === 0 && (
               <div className="how-stage how-fade-in">
-                <div className="how-prompt-bubble">{prompt}</div>
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
                     <span className="how-info-emoji">{STAGE_EMOJIS[0]}</span>
@@ -533,14 +561,25 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   </div>
                   <p>This is where it all begins. Your text is the input to the entire AI pipeline. The clearer and more specific your prompt, the better the AI understands what you want.</p>
                   <div className="how-info-tip">Adding context like "You are an expert..." as a system prompt dramatically improves responses.</div>
-                  <button className="how-gotit-btn" onClick={() => setStage(1)}>Got it &rarr;</button>
+                  <ToolChips tools={HOW_TOOLS[0]} />
                 </div>
+                <div className="how-prompt-bubble">{prompt}</div>
+                <button className="how-gotit-btn" onClick={() => setStage(1)}>Tokenize it &rarr;</button>
               </div>
             )}
 
             {/* Stage 1: Tokenization */}
             {stage === 1 && (
               <div className="how-stage how-fade-in">
+                <div className="how-info-card how-info-card-edu">
+                  <div className="how-info-card-header">
+                    <span className="how-info-emoji">{STAGE_EMOJIS[1]}</span>
+                    <strong>Stage 2: Tokenization</strong>
+                  </div>
+                  <p>Your text gets split into tokens &mdash; the AI's alphabet. Notice how common words are 1 token but rare or long words split into multiple pieces. This is why AI has token limits, not word limits.</p>
+                  <div className="how-info-tip">The spaces before words are often part of the token itself &mdash; that's why you see '&middot;weather' not 'weather'.</div>
+                  <ToolChips tools={HOW_TOOLS[1]} />
+                </div>
                 <div className="how-token-display">
                   {visibleTokens.map((tok, i) => {
                     const color = TOKEN_PASTELS[i % TOKEN_PASTELS.length]
@@ -561,29 +600,31 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                     {allTokens.length} tokens from {prompt.length} characters
                   </div>
                 )}
-                <div className="how-info-card how-info-card-edu">
-                  <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[1]}</span>
-                    <strong>Stage 2: Tokenization</strong>
-                  </div>
-                  <p>Your text gets split into tokens &mdash; the AI's alphabet. Notice how common words are 1 token but rare or long words split into multiple pieces. This is why AI has token limits, not word limits.</p>
-                  <div className="how-info-tip">The spaces before words are often part of the token itself &mdash; that's why you see '&middot;weather' not 'weather'.</div>
-                  {visibleTokens.length === allTokens.length && (
-                    <div className="how-nav-row">
-                      {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
-                      <div className="how-nav-buttons">
-                        <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(0) }}>&larr; Back</button>
-                        <button className="how-gotit-btn" onClick={() => setStage(2)}>Got it &rarr;</button>
-                      </div>
+                {visibleTokens.length === allTokens.length && (
+                  <div className="how-nav-row">
+                    {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
+                    <div className="how-nav-buttons">
+                      <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(0) }}>&larr; Back</button>
+                      <button className="how-gotit-btn" onClick={() => setStage(2)}>Turn them into numbers &rarr;</button>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             )}
 
             {/* Stage 2: Embeddings */}
             {stage === 2 && (
               <div className="how-stage how-fade-in">
+                <div className="how-info-card how-info-card-edu">
+                  <div className="how-info-card-header">
+                    <span className="how-info-emoji">{STAGE_EMOJIS[2]}</span>
+                    <strong>Stage 3: Embeddings</strong>
+                  </div>
+                  <p>Each token becomes a list of numbers (a vector) that captures its meaning mathematically. Words used in similar contexts end up with similar numbers.</p>
+                  <div className="how-info-tip">This is how AI knows that 'king' and 'queen' are related, or that 'Paris' relates to 'France' the same way 'Tokyo' relates to 'Japan'.</div>
+                  <ToolChips tools={HOW_TOOLS[2]} />
+                </div>
+
                 {embedLoading && (
                   <div className="how-embed-loading">
                     <div className="how-embed-spinner" />
@@ -826,29 +867,31 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   </>
                 )}
 
-                <div className="how-info-card how-info-card-edu">
-                  <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[2]}</span>
-                    <strong>Stage 3: Embeddings</strong>
-                  </div>
-                  <p>Each token becomes a list of numbers (a vector) that captures its meaning mathematically. Words used in similar contexts end up with similar numbers.</p>
-                  <div className="how-info-tip">This is how AI knows that 'king' and 'queen' are related, or that 'Paris' relates to 'France' the same way 'Tokyo' relates to 'Japan'.</div>
-                  {embedData && (
-                    <div className="how-nav-row">
-                      {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
-                      <div className="how-nav-buttons">
-                        <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(1) }}>&larr; Back</button>
-                        <button className="how-gotit-btn" onClick={() => setStage(3)}>Got it &rarr;</button>
-                      </div>
+                {embedData && (
+                  <div className="how-nav-row">
+                    {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
+                    <div className="how-nav-buttons">
+                      <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(1) }}>&larr; Back</button>
+                      <button className="how-gotit-btn" onClick={() => setStage(3)}>Show me attention &rarr;</button>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             )}
 
             {/* Stage 3: Attention */}
             {stage === 3 && (
               <div className="how-stage how-fade-in">
+                <div className="how-info-card how-info-card-edu">
+                  <div className="how-info-card-header">
+                    <span className="how-info-emoji">{STAGE_EMOJIS[3]}</span>
+                    <strong>Stage 4: Attention</strong>
+                  </div>
+                  <p>The Transformer looks at every token in relation to every other token simultaneously. The lines show which words 'pay attention' to each other.</p>
+                  <div className="how-info-tip">This is the breakthrough that made modern AI possible &mdash; before Transformers, AI read text word by word like a human. Now it sees the whole picture at once.</div>
+                  <ToolChips tools={HOW_TOOLS[3]} />
+                </div>
+
                 <div className="how-attention">
                   <svg className="how-attn-svg" viewBox={`0 0 ${Math.max(allTokens.length * 100, 300)} 120`} preserveAspectRatio="xMidYMid meet">
                     {attentionVisible && attentionPairs.filter(p => p.weight > 0.3).map((pair, idx) => {
@@ -900,19 +943,11 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   </svg>
                 </div>
 
-                <div className="how-info-card how-info-card-edu">
-                  <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[3]}</span>
-                    <strong>Stage 4: Attention</strong>
-                  </div>
-                  <p>The Transformer looks at every token in relation to every other token simultaneously. The lines show which words 'pay attention' to each other.</p>
-                  <div className="how-info-tip">This is the breakthrough that made modern AI possible &mdash; before Transformers, AI read text word by word like a human. Now it sees the whole picture at once.</div>
-                  <div className="how-nav-row">
-                    {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
-                    <div className="how-nav-buttons">
-                      <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(2) }}>&larr; Back</button>
-                      <button className="how-gotit-btn" onClick={startGeneration}>Got it &rarr;</button>
-                    </div>
+                <div className="how-nav-row">
+                  {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
+                  <div className="how-nav-buttons">
+                    <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(2) }}>&larr; Back</button>
+                    <button className="how-gotit-btn" onClick={startGeneration}>Generate the response &rarr;</button>
                   </div>
                 </div>
               </div>
@@ -921,6 +956,16 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
             {/* Stage 4: Generation */}
             {stage === 4 && (
               <div className="how-stage how-fade-in">
+                <div className="how-info-card how-info-card-edu">
+                  <div className="how-info-card-header">
+                    <span className="how-info-emoji">{STAGE_EMOJIS[4]}</span>
+                    <strong>Stage 5: Generation</strong>
+                  </div>
+                  <p>The model predicts the most likely next token based on everything it has learned from training on billions of documents. Then it repeats &mdash; adding one token at a time until the response is complete.</p>
+                  <div className="how-info-tip">There's no 'understanding' happening &mdash; just incredibly sophisticated pattern matching at a scale humans can't comprehend.</div>
+                  <ToolChips tools={HOW_TOOLS[4]} />
+                </div>
+
                 <div className="how-gen-output">
                   <span className="how-gen-prompt">{prompt}</span>
                   {genStreamedText && (
@@ -970,23 +1015,15 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <div className="how-gen-status">Streaming response...</div>
                 )}
 
-                <div className="how-info-card how-info-card-edu">
-                  <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[4]}</span>
-                    <strong>Stage 5: Generation</strong>
-                  </div>
-                  <p>The model predicts the most likely next token based on everything it has learned from training on billions of documents. Then it repeats &mdash; adding one token at a time until the response is complete.</p>
-                  <div className="how-info-tip">There's no 'understanding' happening &mdash; just incredibly sophisticated pattern matching at a scale humans can't comprehend.</div>
-                  {genPhase === 'done' && (
-                    <div className="how-nav-row">
-                      {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
-                      <div className="how-nav-buttons">
-                        <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(3) }}>&larr; Back</button>
-                        <button className="how-gotit-btn" onClick={finishJourney}>See the result &rarr;</button>
-                      </div>
+                {genPhase === 'done' && (
+                  <div className="how-nav-row">
+                    {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
+                    <div className="how-nav-buttons">
+                      <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(3) }}>&larr; Back</button>
+                      <button className="how-gotit-btn" onClick={finishJourney}>See the full picture &rarr;</button>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             )}
           </div>

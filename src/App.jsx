@@ -10,6 +10,7 @@ import ContextEngineering from './ContextEngineering.jsx'
 import RAG from './RAG.jsx'
 import MachineLearning from './MachineLearning.jsx'
 import LandingPage from './LandingPage.jsx'
+import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
 import NavDropdown from './NavDropdown.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
@@ -496,6 +497,7 @@ function App() {
 
   return (
     <div className={`app ${!showSidebar ? 'app-no-sidebar' : ''} app-fade-in`}>
+      <NeuronBackground />
       {showSidebar && (
         <aside className="sidebar">
           <div className="sidebar-section">

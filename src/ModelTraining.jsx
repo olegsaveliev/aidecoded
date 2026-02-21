@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
-import { createPortal } from 'react-dom'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ToolChips from './ToolChips.jsx'
 import Quiz from './Quiz.jsx'
 import { modelTrainingQuiz } from './quizData.js'
 
@@ -110,84 +110,6 @@ function useAnimatedCounter(target, duration, active) {
     return () => cancelAnimationFrame(animId)
   }, [target, duration, active])
   return value
-}
-
-function ToolChips({ tools }) {
-  const [activeTool, setActiveTool] = useState(null)
-  const [popupPos, setPopupPos] = useState(null)
-  const chipRefs = useRef({})
-  const popupRef = useRef(null)
-
-  function openPopup(name) {
-    const el = chipRefs.current[name]
-    if (!el) return
-    const r = el.getBoundingClientRect()
-    setPopupPos({ left: r.left + r.width / 2, top: r.top - 8 })
-    setActiveTool(name)
-  }
-
-  function closePopup() {
-    setActiveTool(null)
-    setPopupPos(null)
-  }
-
-  useEffect(() => {
-    if (!activeTool) return
-    function onDocClick(e) {
-      const chip = chipRefs.current[activeTool]
-      const popup = popupRef.current
-      if (chip && chip.contains(e.target)) return
-      if (popup && popup.contains(e.target)) return
-      closePopup()
-    }
-    function onKey(e) {
-      if (e.key === 'Escape') closePopup()
-    }
-    const id = setTimeout(() => {
-      document.addEventListener('mousedown', onDocClick, true)
-      document.addEventListener('keydown', onKey)
-    }, 0)
-    return () => {
-      clearTimeout(id)
-      document.removeEventListener('mousedown', onDocClick, true)
-      document.removeEventListener('keydown', onKey)
-    }
-  }, [activeTool])
-
-  const activeToolData = activeTool ? tools.find((t) => t.name === activeTool) : null
-
-  return (
-    <div className="mt-tools-section">
-      <div className="mt-tools-title">🛠️ Tools used in industry:</div>
-      <div className="mt-tools-chips">
-        {tools.map((tool) => (
-          <div
-            key={tool.name}
-            ref={(el) => { chipRefs.current[tool.name] = el }}
-            className={`mt-tool-chip ${activeTool === tool.name ? 'mt-tool-chip-active' : ''}`}
-            onClick={() => activeTool === tool.name ? closePopup() : openPopup(tool.name)}
-          >
-            <span
-              className="mt-tool-chip-dot"
-              style={{ background: tool.color }}
-            />
-            <span className="mt-tool-chip-name">{tool.name}</span>
-          </div>
-        ))}
-      </div>
-      {activeTool && popupPos && activeToolData && createPortal(
-        <div
-          ref={popupRef}
-          className="mt-tool-popup"
-          style={{ left: popupPos.left, top: popupPos.top }}
-        >
-          <div className="mt-tool-popup-name" style={{ color: activeToolData.color }}>{activeToolData.name}</div>
-          <div className="mt-tool-popup-desc">{activeToolData.desc}</div>
-        </div>,
-        document.body
-      )}
-    </div>
-  )
 }
 
 // Stage 1: Data Collection animation
@@ -872,9 +794,6 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
             {/* Stage content */}
             {stage >= 0 && stage <= 5 && (
               <div className="how-stage how-fade-in" key={stage}>
-                {/* Visualization */}
-                {vizComponents[stage]}
-
                 {/* Explanation card */}
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
@@ -897,17 +816,27 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
 
                   {/* Tools section */}
                   <ToolChips tools={TOOLS_BY_STAGE[STAGES[stage].key]} />
+                </div>
 
-                  {/* Navigation */}
-                  <div className="how-nav-row">
-                    <div className="how-nav-buttons">
-                      {stage > 0 && (
-                        <button className="how-back-btn" onClick={prevStage}>← Back</button>
-                      )}
-                      <button className="how-gotit-btn" onClick={nextStage}>
-                        {stage < 5 ? 'Got it →' : 'See the result →'}
-                      </button>
-                    </div>
+                {/* Visualization */}
+                {vizComponents[stage]}
+
+                {/* Navigation */}
+                <div className="how-nav-row">
+                  <div className="how-nav-buttons">
+                    {stage > 0 && (
+                      <button className="how-back-btn" onClick={prevStage}>← Back</button>
+                    )}
+                    <button className="how-gotit-btn" onClick={nextStage}>
+                      {[
+                        'Now let\'s clean it →',
+                        'Tokenize the data →',
+                        'Start pre-training →',
+                        'Fine-tune the model →',
+                        'Add human feedback →',
+                        'Test my knowledge →',
+                      ][stage]}
+                    </button>
                   </div>
                 </div>
               </div>

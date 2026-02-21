@@ -341,19 +341,18 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 28px;
-  background: linear-gradient(135deg, var(--accent, #0071e3) 0%, #2997ff 100%);
+  padding: 14px 32px;
+  background: var(--accent);
   color: #fff;
   border: none;
-  border-radius: 14px;
-  font-size: 15px;
+  border-radius: 100px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s, transform 0.1s;
   margin-top: 8px;
 }
 
 .quiz-launch-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 113, 227, 0.3);
+  background: var(--accent-hover);
 }

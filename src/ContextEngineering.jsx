@@ -2,8 +2,42 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import Quiz from './Quiz.jsx'
+import ToolChips from './ToolChips.jsx'
 import { contextEngineeringQuiz } from './quizData.js'
 import './ContextEngineering.css'
+
+const CE_TOOLS = {
+  0: [
+    { name: 'tiktoken', color: '#34C759', desc: 'Count tokens before sending to API' },
+    { name: 'Claude.ai', color: '#0071E3', desc: 'Visualizes token usage in conversations' },
+    { name: 'OpenAI Tokenizer', color: '#0071E3', desc: 'Web tool to see how text gets tokenized' },
+  ],
+  1: [
+    { name: 'LangChain Memory', color: '#34C759', desc: 'Manage conversation context automatically' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Smart context retrieval and management' },
+    { name: 'OpenAI API', color: '#0071E3', desc: 'Context window via messages parameter' },
+  ],
+  2: [
+    { name: 'Guardrails AI', color: '#34C759', desc: 'Validate and sanitize LLM inputs/outputs' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Structured context with metadata filtering' },
+    { name: 'Rebuff', color: '#34C759', desc: 'Prompt injection detection framework' },
+  ],
+  3: [
+    { name: 'LangChain', color: '#34C759', desc: 'RAG chains with retrieval and generation' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Document indexing and query engines' },
+    { name: 'Haystack', color: '#34C759', desc: 'Production-ready RAG pipelines' },
+  ],
+  4: [
+    { name: 'LangChain', color: '#34C759', desc: 'Context strategies via memory modules' },
+    { name: 'MemGPT', color: '#34C759', desc: 'Virtual context management for long conversations' },
+    { name: 'Zep Memory', color: '#34C759', desc: 'Long-term memory layer for AI assistants' },
+  ],
+  5: [
+    { name: 'LangChain', color: '#34C759', desc: 'Build use-case specific chains and agents' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Domain-specific document Q&A' },
+    { name: 'Flowise', color: '#34C759', desc: 'No-code AI workflow builder' },
+  ],
+}
 
 const STAGES = [
   { key: 'what-is-context', label: 'What is Context?', emoji: '🧩' },
@@ -219,14 +253,6 @@ function ContextWindowViz({ active }) {
         </div>
       </div>
 
-      <div className="ce-tools">
-        <div className="ce-tools-title">Useful Tools:</div>
-        <div className="ce-tools-list">
-          <span className="ce-tool-chip">tiktoken — count tokens</span>
-          <span className="ce-tool-chip">LangChain — manage context</span>
-          <span className="ce-tool-chip">LlamaIndex — smart retrieval</span>
-        </div>
-      </div>
     </div>
   )
 }
@@ -392,16 +418,6 @@ function RAGViz({ active }) {
           <div className="ce-rag-insight">You don't need to train a new model — just engineer the context better.</div>
         </div>
       )}
-
-      <div className="ce-tools">
-        <div className="ce-tools-title">RAG Tools:</div>
-        <div className="ce-tools-list">
-          <span className="ce-tool-chip">Pinecone — vector DB</span>
-          <span className="ce-tool-chip">Weaviate — open source vector DB</span>
-          <span className="ce-tool-chip">LangChain — RAG orchestration</span>
-          <span className="ce-tool-chip">LlamaIndex — document indexing</span>
-        </div>
-      </div>
 
       {animStep >= pipelineSteps.length && (
         <div style={{ textAlign: 'center' }}>
@@ -777,8 +793,6 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
           <div className="how-content">
             {stage >= 0 && stage < STAGES.length && (
               <div className="how-stage how-fade-in" key={stage}>
-                {vizComponents[stage]}
-
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
                     <strong>{explanations[stage].title}</strong>
@@ -786,16 +800,26 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
                   {explanations[stage].content.split('\n\n').map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
+                  <ToolChips tools={CE_TOOLS[stage]} />
+                </div>
 
-                  <div className="how-nav-row">
-                    <div className="how-nav-buttons">
-                      {stage > 0 && (
-                        <button className="how-back-btn" onClick={prevStage}>← Back</button>
-                      )}
-                      <button className="how-gotit-btn" onClick={nextStage}>
-                        {stage < STAGES.length - 1 ? 'Got it →' : 'See the result →'}
-                      </button>
-                    </div>
+                {vizComponents[stage]}
+
+                <div className="how-nav-row">
+                  <div className="how-nav-buttons">
+                    {stage > 0 && (
+                      <button className="how-back-btn" onClick={prevStage}>← Back</button>
+                    )}
+                    <button className="how-gotit-btn" onClick={nextStage}>
+                      {[
+                        'Show me the window →',
+                        'What can go wrong? →',
+                        'How does RAG work? →',
+                        'Teach me strategies →',
+                        'Real use cases →',
+                        'Test my knowledge →',
+                      ][stage]}
+                    </button>
                   </div>
                 </div>
               </div>

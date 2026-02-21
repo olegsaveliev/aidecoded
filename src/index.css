@@ -24,6 +24,8 @@ html {
   --accent: #0071e3;
   --accent-hover: #0077ed;
   --accent-light: rgba(0, 113, 227, 0.08);
+  --bg-card: #EEF4FF;
+  --chip-bg: #F2F2F7;
   --border: #d2d2d7;
   --border-light: #e8e8ed;
   --error: #ff3b30;
@@ -74,6 +76,8 @@ html {
   --accent: #0071E3;
   --accent-hover: #0077ed;
   --accent-light: #1C2B3A;
+  --bg-card: #1C2B3A;
+  --chip-bg: #3D3936;
   --border: #44403C;
   --border-light: #292524;
   --error: #ff453a;

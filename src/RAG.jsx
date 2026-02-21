@@ -2,8 +2,50 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import Quiz from './Quiz.jsx'
+import ToolChips from './ToolChips.jsx'
 import { ragQuiz } from './quizData.js'
 import './RAG.css'
+
+const RAG_TOOLS = {
+  0: [
+    { name: 'LangChain', color: '#34C759', desc: 'Most popular framework for building RAG systems' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Data framework for document Q&A' },
+    { name: 'Haystack', color: '#34C759', desc: 'End-to-end NLP and RAG pipelines' },
+  ],
+  1: [
+    { name: 'LangChain RAG', color: '#34C759', desc: 'RetrievalQA and conversational RAG chains' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Index, retrieve, and query documents' },
+    { name: 'Haystack Pipeline', color: '#34C759', desc: 'Modular pipeline components for RAG' },
+  ],
+  2: [
+    { name: 'OpenAI Embeddings', color: '#0071E3', desc: 'text-embedding-3-small — fast and affordable' },
+    { name: 'Sentence Transformers', color: '#34C759', desc: 'Free open source embedding models' },
+    { name: 'Cohere Embeddings', color: '#0071E3', desc: 'Multilingual enterprise embeddings' },
+  ],
+  3: [
+    { name: 'LangChain TextSplitter', color: '#34C759', desc: 'Recursive and semantic text splitting' },
+    { name: 'LlamaIndex NodeParser', color: '#34C759', desc: 'Document node parsing with metadata' },
+    { name: 'Unstructured.io', color: '#34C759', desc: 'Extract text from PDFs, docs, and HTML' },
+  ],
+  4: [
+    { name: 'Pinecone', color: '#FF9500', desc: 'Managed vector database for production' },
+    { name: 'Weaviate', color: '#FF9500', desc: 'Open source vector database' },
+    { name: 'Chroma', color: '#FF9500', desc: 'Lightweight vector DB for local development' },
+    { name: 'pgvector', color: '#FF9500', desc: 'PostgreSQL extension for vector search' },
+    { name: 'Qdrant', color: '#FF9500', desc: 'High performance vector similarity engine' },
+  ],
+  5: [
+    { name: 'LangChain', color: '#34C759', desc: 'Production RAG with agents and tools' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Enterprise document intelligence' },
+    { name: 'Azure AI Search', color: '#0071E3', desc: 'Microsoft\'s managed search + vector service' },
+  ],
+  6: [
+    { name: 'LangChain', color: '#34C759', desc: 'Build RAG in under 50 lines of Python' },
+    { name: 'LlamaIndex', color: '#34C759', desc: 'Simple document Q&A in 5 lines' },
+    { name: 'Flowise', color: '#34C759', desc: 'No-code RAG builder with visual UI' },
+    { name: 'Vercel AI SDK', color: '#34C759', desc: 'Build RAG into Next.js apps' },
+  ],
+}
 
 const STAGES = [
   { key: 'problem', label: 'The Problem', emoji: '🎯' },
@@ -450,16 +492,6 @@ function VectorDBViz() {
         </table>
       </div>
 
-      <div className="rag-tools">
-        <div className="rag-tools-title">Popular Vector Databases:</div>
-        <div className="rag-tools-list">
-          <span className="rag-tool-chip">Pinecone — managed vector DB</span>
-          <span className="rag-tool-chip">Weaviate — open source</span>
-          <span className="rag-tool-chip">Chroma — local development</span>
-          <span className="rag-tool-chip">pgvector — PostgreSQL extension</span>
-          <span className="rag-tool-chip">Qdrant — high performance</span>
-        </div>
-      </div>
     </div>
   )
 }
@@ -612,16 +644,6 @@ function BuildViz({ active }) {
         ))}
       </div>
 
-      <div className="rag-tools">
-        <div className="rag-tools-title">RAG Frameworks & Tools:</div>
-        <div className="rag-tools-list">
-          <span className="rag-tool-chip">LangChain — most popular RAG framework</span>
-          <span className="rag-tool-chip">LlamaIndex — document Q&A</span>
-          <span className="rag-tool-chip">Haystack — production pipelines</span>
-          <span className="rag-tool-chip">OpenAI Embeddings — text-embedding-3-small</span>
-          <span className="rag-tool-chip">Sentence Transformers — free models</span>
-        </div>
-      </div>
     </div>
   )
 }
@@ -797,8 +819,6 @@ function RAG({ onSwitchTab, onGoHome }) {
           <div className="how-content">
             {stage >= 0 && stage < STAGES.length && (
               <div className="how-stage how-fade-in" key={stage}>
-                {vizComponents[stage]}
-
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
                     <strong>{explanations[stage].title}</strong>
@@ -806,16 +826,27 @@ function RAG({ onSwitchTab, onGoHome }) {
                   {explanations[stage].content.split('\n\n').map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
+                  <ToolChips tools={RAG_TOOLS[stage]} />
+                </div>
 
-                  <div className="how-nav-row">
-                    <div className="how-nav-buttons">
-                      {stage > 0 && (
-                        <button className="how-back-btn" onClick={prevStage}>← Back</button>
-                      )}
-                      <button className="how-gotit-btn" onClick={nextStage}>
-                        {stage < STAGES.length - 1 ? 'Got it →' : 'See the result →'}
-                      </button>
-                    </div>
+                {vizComponents[stage]}
+
+                <div className="how-nav-row">
+                  <div className="how-nav-buttons">
+                    {stage > 0 && (
+                      <button className="how-back-btn" onClick={prevStage}>← Back</button>
+                    )}
+                    <button className="how-gotit-btn" onClick={nextStage}>
+                      {[
+                        'Show me the pipeline →',
+                        'Why vectors? →',
+                        'How to chunk? →',
+                        'Pick a database →',
+                        'Real world examples →',
+                        'Build my first RAG →',
+                        'Test my knowledge →',
+                      ][stage]}
+                    </button>
                   </div>
                 </div>
               </div>

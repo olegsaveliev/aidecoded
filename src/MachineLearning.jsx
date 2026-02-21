@@ -2,8 +2,56 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import Quiz from './Quiz.jsx'
+import ToolChips from './ToolChips.jsx'
 import { machineLearningQuiz } from './quizData.js'
 import './MachineLearning.css'
+
+const ML_TOOLS = {
+  0: [
+    { name: 'Scikit-learn', color: '#34C759', desc: 'Most popular ML library for Python' },
+    { name: 'Python', color: '#8E8E93', desc: 'The dominant language for machine learning' },
+    { name: 'Jupyter Notebooks', color: '#8E8E93', desc: 'Interactive coding environment for data science' },
+  ],
+  1: [
+    { name: 'Scikit-learn', color: '#34C759', desc: 'Supports supervised, unsupervised, and more' },
+    { name: 'PyTorch', color: '#AF52DE', desc: 'Deep learning framework by Meta' },
+    { name: 'OpenAI Gym', color: '#34C759', desc: 'Reinforcement learning environments' },
+  ],
+  2: [
+    { name: 'Scikit-learn', color: '#34C759', desc: 'Classification, regression, and evaluation tools' },
+    { name: 'XGBoost', color: '#34C759', desc: 'Gradient boosting — best for tabular data' },
+    { name: 'Pandas', color: '#34C759', desc: 'Data manipulation and analysis library' },
+    { name: 'NumPy', color: '#34C759', desc: 'Numerical computing foundation for ML' },
+  ],
+  3: [
+    { name: 'PyTorch', color: '#AF52DE', desc: 'Most popular deep learning framework' },
+    { name: 'TensorFlow', color: '#AF52DE', desc: 'Google\'s ML framework for production' },
+    { name: 'Keras', color: '#AF52DE', desc: 'High-level neural network API' },
+    { name: 'FastAI', color: '#34C759', desc: 'High-level deep learning library' },
+  ],
+  4: [
+    { name: 'Scikit-learn', color: '#34C759', desc: 'Cross-validation and regularization tools' },
+    { name: 'Weights & Biases', color: '#8E8E93', desc: 'Experiment tracking and visualization' },
+    { name: 'Early Stopping (Keras)', color: '#AF52DE', desc: 'Callback to stop training before overfitting' },
+  ],
+  5: [
+    { name: 'Scikit-learn', color: '#34C759', desc: 'Decision Trees, SVM, KNN, and more' },
+    { name: 'XGBoost', color: '#34C759', desc: 'Kaggle competition champion for tabular data' },
+    { name: 'LightGBM', color: '#34C759', desc: 'Fast gradient boosting by Microsoft' },
+  ],
+  6: [
+    { name: 'MLflow', color: '#8E8E93', desc: 'Open source ML lifecycle management' },
+    { name: 'Vertex AI (Google)', color: '#0071E3', desc: 'Google Cloud\'s managed ML platform' },
+    { name: 'Azure ML', color: '#0071E3', desc: 'Microsoft\'s cloud ML service' },
+  ],
+  7: [
+    { name: 'MLflow', color: '#8E8E93', desc: 'Experiment tracking and model registry' },
+    { name: 'DVC', color: '#34C759', desc: 'Data version control for ML projects' },
+    { name: 'Weights & Biases', color: '#8E8E93', desc: 'Training monitoring and collaboration' },
+    { name: 'Evidently AI', color: '#34C759', desc: 'ML model monitoring and observability' },
+    { name: 'Seldon', color: '#34C759', desc: 'Model deployment and serving platform' },
+  ],
+}
 
 const STAGES = [
   { key: 'what-is-ml', label: 'What is ML?', emoji: '🤖' },
@@ -485,15 +533,6 @@ function SupervisedViz({ active }) {
         ) : null}
       </div>
 
-      <div className="ml-tools">
-        <div className="ml-tools-title">Popular Tools:</div>
-        <div className="ml-tools-list">
-          <span className="ml-tool-chip">Scikit-learn — most popular ML library</span>
-          <span className="ml-tool-chip">XGBoost — best for tabular data</span>
-          <span className="ml-tool-chip">Pandas — data manipulation</span>
-          <span className="ml-tool-chip">NumPy — numerical computing</span>
-        </div>
-      </div>
     </div>
   )
 }
@@ -614,14 +653,6 @@ function NeuralNetworkViz({ active }) {
         </div>
       )}
 
-      <div className="ml-tools">
-        <div className="ml-tools-title">Deep Learning Frameworks:</div>
-        <div className="ml-tools-list">
-          <span className="ml-tool-chip">PyTorch — most popular DL framework</span>
-          <span className="ml-tool-chip">TensorFlow/Keras — Google's framework</span>
-          <span className="ml-tool-chip">FastAI — high-level DL library</span>
-        </div>
-      </div>
     </div>
   )
 }
@@ -1014,16 +1045,6 @@ function LifecycleViz({ active }) {
         )}
       </div>
 
-      <div className="ml-tools">
-        <div className="ml-tools-title">MLOps Tools:</div>
-        <div className="ml-tools-list">
-          <span className="ml-tool-chip">MLflow — experiment tracking</span>
-          <span className="ml-tool-chip">DVC — data version control</span>
-          <span className="ml-tool-chip">Weights & Biases — training monitoring</span>
-          <span className="ml-tool-chip">Seldon — model deployment</span>
-          <span className="ml-tool-chip">Evidently AI — model monitoring</span>
-        </div>
-      </div>
     </div>
   )
 }
@@ -1205,8 +1226,6 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
           <div className="how-content">
             {stage >= 0 && stage < STAGES.length && (
               <div className="how-stage how-fade-in" key={stage}>
-                {vizComponents[stage]}
-
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
                     <strong>{explanations[stage].title}</strong>
@@ -1214,16 +1233,28 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
                   {explanations[stage].content.split('\n\n').map((para, i) => (
                     <p key={i}>{para}</p>
                   ))}
+                  <ToolChips tools={ML_TOOLS[stage]} />
+                </div>
 
-                  <div className="how-nav-row">
-                    <div className="how-nav-buttons">
-                      {stage > 0 && (
-                        <button className="how-back-btn" onClick={prevStage}>← Back</button>
-                      )}
-                      <button className="how-gotit-btn" onClick={nextStage}>
-                        {stage < STAGES.length - 1 ? 'Got it →' : 'See the result →'}
-                      </button>
-                    </div>
+                {vizComponents[stage]}
+
+                <div className="how-nav-row">
+                  <div className="how-nav-buttons">
+                    {stage > 0 && (
+                      <button className="how-back-btn" onClick={prevStage}>← Back</button>
+                    )}
+                    <button className="how-gotit-btn" onClick={nextStage}>
+                      {[
+                        'I get it, show me more →',
+                        'Let\'s explore each type →',
+                        'Show me how training works →',
+                        'Take me deeper →',
+                        'Got it, next challenge →',
+                        'Show me real use cases →',
+                        'How do projects work? →',
+                        'Test my knowledge →',
+                      ][stage]}
+                    </button>
                   </div>
                 </div>
               </div>

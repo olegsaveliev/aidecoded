@@ -1321,12 +1321,12 @@
 }
 
 .ml-tool-chip {
-  font-size: 12px;
-  background: var(--bg-surface);
+  font-size: 13px;
+  background: var(--chip-bg);
   border: 1px solid var(--border-light);
-  border-radius: 16px;
-  padding: 4px 12px;
-  color: var(--text-secondary);
+  border-radius: 100px;
+  padding: 6px 14px;
+  color: var(--text-primary);
 }
 
 /* ═══════════════════════════════════

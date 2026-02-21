@@ -1,108 +1,16 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import NeuralNetworkCanvas from './NeuralNetworkCanvas.jsx'
+import NeuronBackground from './NeuronBackground.jsx'
 import './LandingPage.css'
-
-const PARTICLE_COUNT = 50
-const CONNECTION_DIST = 120
 
 const TAGLINE = 'Your interactive journey into AI'
 const TAGLINE_CHAR_DELAY = 40
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
-  const canvasRef = useRef(null)
   const [titleDone, setTitleDone] = useState(false)
   const [taglineCharCount, setTaglineCharCount] = useState(0)
   const [typingDone, setTypingDone] = useState(false)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    let animId
-    let particles = []
-
-    function resize() {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    function initParticles() {
-      particles = []
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.4,
-          vy: (Math.random() - 0.5) * 0.4,
-          radius: Math.random() * 2 + 1,
-        })
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < CONNECTION_DIST) {
-            const baseOpacity = isDark ? 0.12 : 0.12
-            const opacity = (1 - dist / CONNECTION_DIST) * baseOpacity
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = isDark ? `rgba(168, 162, 158, ${opacity})` : `rgba(0, 113, 227, ${opacity})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        }
-      }
-
-      for (const p of particles) {
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = isDark ? 'rgba(168, 162, 158, 0.1)' : 'rgba(0, 113, 227, 0.15)'
-        ctx.fill()
-      }
-    }
-
-    function update() {
-      for (const p of particles) {
-        p.x += p.vx
-        p.y += p.vy
-        if (p.x < 0) p.x = canvas.width
-        if (p.x > canvas.width) p.x = 0
-        if (p.y < 0) p.y = canvas.height
-        if (p.y > canvas.height) p.y = 0
-      }
-    }
-
-    function loop() {
-      update()
-      draw()
-      animId = requestAnimationFrame(loop)
-    }
-
-    function handleResize() {
-      resize()
-      initParticles()
-    }
-
-    resize()
-    initParticles()
-    loop()
-
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
 
   // Tagline typewriter
   useEffect(() => {
@@ -124,7 +32,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
 
   return (
     <div className={`landing ${fadingOut ? 'landing-fade-out' : ''}`}>
-      <canvas ref={canvasRef} className="landing-canvas" />
+      <NeuronBackground landing />
       <button
         className="theme-toggle landing-theme-toggle"
         onClick={() => setDarkMode((d) => !d)}
