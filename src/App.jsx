@@ -14,7 +14,7 @@ import EntryScreen from './EntryScreen.jsx'
 import logoImg from './assets/logo_dark.png'
 import './App.css'
 
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
+const API_KEY = import.meta.env.OPENAI_API_KEY
 
 const MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo']
 
@@ -755,18 +755,18 @@ function App() {
           </div>
         )}
 
-        {!showHome && activeTab === 'tokenizer' && <Tokenizer />}
+        {!showHome && activeTab === 'tokenizer' && <Tokenizer onGoHome={handleGoHome} />}
         {!showHome && activeTab === 'generation' && (
-          <Generation model={model} maxTokens={maxTokens} />
+          <Generation model={model} maxTokens={maxTokens} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'how-llms-work' && (
-          <HowLLMsWork model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} />
+          <HowLLMsWork model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'model-training' && (
-          <ModelTraining onSwitchTab={setActiveTab} />
+          <ModelTraining onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'prompt-engineering' && (
-          <PromptEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} />
+          <PromptEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         </div>
       </main>

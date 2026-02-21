@@ -2,6 +2,8 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import Quiz from './Quiz.jsx'
+import { tokenizerQuiz } from './quizData.js'
 
 const TOKEN_COLORS = [
   { bgVar: '--token-pastels-1-bg', borderVar: '--token-pastels-1-border' },
@@ -27,13 +29,14 @@ const FUN_FACTS = [
   'Shakespeare\u2019s complete works \u2248 1.2 million tokens',
 ]
 
-function Tokenizer() {
+function Tokenizer({ onGoHome }) {
   const [showEntry, setShowEntry] = useState(true)
   const [text, setText] = useState('')
   const [showWelcome, setShowWelcome] = useState(true)
   const [showInfo, setShowInfo] = useState(true)
   const [factIndex, setFactIndex] = useState(0)
   const [factFading, setFactFading] = useState(false)
+  const [showQuiz, setShowQuiz] = useState(false)
   const factTimer = useRef(null)
 
   const tokenData = useMemo(() => {
@@ -180,6 +183,23 @@ function Tokenizer() {
           {FUN_FACTS[factIndex]}
         </div>
       </div>
+
+      {!showQuiz && (
+        <div style={{ textAlign: 'center', marginTop: 24 }}>
+          <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
+            Test Your Knowledge &rarr;
+          </button>
+        </div>
+      )}
+
+      {showQuiz && (
+        <Quiz
+          questions={tokenizerQuiz}
+          tabName="Tokenizer"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome}
+        />
+      )}
     </div>
   )
 }

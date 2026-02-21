@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import Quiz from './Quiz.jsx'
+import { generationQuiz } from './quizData.js'
 
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
+const API_KEY = import.meta.env.OPENAI_API_KEY
 
 const BAR_COLORS = [
   '#0071e3',
@@ -36,7 +38,7 @@ function spaceToken(token, prior) {
 
 const MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo']
 
-function Generation({ model: defaultModel, maxTokens }) {
+function Generation({ model: defaultModel, maxTokens, onGoHome }) {
   const [showEntry, setShowEntry] = useState(true)
   const [genModel, setGenModel] = useState(defaultModel || 'gpt-4o-mini')
   const [temperature, setTemperature] = useState(0.7)
@@ -58,6 +60,7 @@ function Generation({ model: defaultModel, maxTokens }) {
   const [showLearnTip, setShowLearnTip] = useState(false)
   const [learnTipFading, setLearnTipFading] = useState(false)
   const [hasRunOnce, setHasRunOnce] = useState(false)
+  const [showQuiz, setShowQuiz] = useState(false)
   const simRef = useRef(false)
   const timerRef = useRef(null)
   const tokensRef = useRef([])
@@ -708,6 +711,23 @@ function Generation({ model: defaultModel, maxTokens }) {
         <div className="gen-click-hint">
           Click any token to choose it — or use the buttons above
         </div>
+      )}
+
+      {!showQuiz && (
+        <div style={{ textAlign: 'center', marginTop: 24 }}>
+          <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
+            Test Your Knowledge &rarr;
+          </button>
+        </div>
+      )}
+
+      {showQuiz && (
+        <Quiz
+          questions={generationQuiz}
+          tabName="Generation"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome}
+        />
       )}
 
     </div>

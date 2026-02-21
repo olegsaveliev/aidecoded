@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import Quiz from './Quiz.jsx'
+import { promptEngineeringQuiz } from './quizData.js'
 
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
+const API_KEY = import.meta.env.OPENAI_API_KEY
 
 const STAGES = [
   { key: 'zero-shot', label: 'Zero-Shot', emoji: '🎯' },
@@ -1039,11 +1041,12 @@ function PatternsViz({ active }) {
 /* ═══════════════════════════════════
    MAIN COMPONENT
    ═══════════════════════════════════ */
-function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab }) {
+function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome }) {
   const [stage, setStage] = useState(-1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
+  const [showQuiz, setShowQuiz] = useState(false)
 
   useEffect(() => {
     if (stage > maxStageReached) setMaxStageReached(stage)
@@ -1072,6 +1075,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab })
     setStage(-1)
     setMaxStageReached(-1)
     setShowFinal(false)
+    setShowQuiz(false)
   }
 
   const apiProps = { model, temperature, topP, maxTokens }
@@ -1222,7 +1226,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab })
       )}
 
       {/* Final summary */}
-      {showFinal && (
+      {showFinal && !showQuiz && (
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">🎉 You're now a Prompt Engineer!</div>
 
@@ -1258,6 +1262,9 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab })
           </div>
 
           <div className="how-final-actions">
+            <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
+              Test Your Knowledge &rarr;
+            </button>
             {onSwitchTab && (
               <>
                 <button className="how-start-btn" onClick={() => onSwitchTab('playground')}>
@@ -1273,6 +1280,15 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab })
             </button>
           </div>
         </div>
+      )}
+
+      {showQuiz && (
+        <Quiz
+          questions={promptEngineeringQuiz}
+          tabName="Prompt Engineering"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+        />
       )}
     </div>
   )

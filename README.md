@@ -29,7 +29,7 @@ npm run dev
 
 | Variable | Description |
 |---|---|
-| `VITE_OPENAI_API_KEY` | Your OpenAI API key (required for generation and embedding features) |
+| `OPENAI_API_KEY` | Your OpenAI API key (required for generation and embedding features) |
 
 Create a `.env` file in the project root (see `.env.example`).
 
@@ -38,7 +38,7 @@ Create a `.env` file in the project root (see `.env.example`).
 1. Push this repo to GitHub.
 2. Go to [vercel.com/new](https://vercel.com/new) and import the repository.
 3. In the Vercel project settings, add the environment variable:
-   - `VITE_OPENAI_API_KEY` = your OpenAI API key
+   - `OPENAI_API_KEY` = your OpenAI API key
 4. Deploy. Vercel will auto-detect Vite and use the settings from `vercel.json`.
 
 ## Scripts

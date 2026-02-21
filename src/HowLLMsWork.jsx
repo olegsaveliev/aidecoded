@@ -2,8 +2,10 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import Quiz from './Quiz.jsx'
+import { howLLMsWorkQuiz } from './quizData.js'
 
-const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
+const API_KEY = import.meta.env.OPENAI_API_KEY
 
 const STAGES = ['Prompt', 'Tokenization', 'Embeddings', 'Attention', 'Generation']
 
@@ -39,7 +41,7 @@ const SUGGESTIONS = [
   'Hello world',
 ]
 
-function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
+function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome }) {
   const [showEntry, setShowEntry] = useState(true)
   const [prompt, setPrompt] = useState('The weather today is')
   const [stage, setStage] = useState(-1) // -1 = not started
@@ -58,6 +60,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
   const [hoveredDot, setHoveredDot] = useState(null)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showBackHint, setShowBackHint] = useState(true)
+  const [showQuiz, setShowQuiz] = useState(false)
   const genAbortRef = useRef(null)
   const genStartedRef = useRef(false)
 
@@ -88,6 +91,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
     setGenCandidates([])
     setGenPhase('idle')
     setShowFinal(false)
+    setShowQuiz(false)
     setElapsed(0)
   }
 
@@ -964,7 +968,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
       )}
 
       {/* Final output */}
-      {showFinal && (
+      {showFinal && !showQuiz && (
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You just watched an LLM work!</div>
 
@@ -1004,6 +1008,9 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
           </div>
 
           <div className="how-final-actions">
+            <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
+              Test Your Knowledge &rarr;
+            </button>
             <button className="how-start-btn" onClick={reset}>
               Try another prompt
             </button>
@@ -1014,6 +1021,17 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
             )}
           </div>
         </div>
+      )}
+
+      {showQuiz && (
+        <Quiz
+          questions={howLLMsWorkQuiz}
+          tabName="How LLMs Work"
+          onBack={() => setShowQuiz(false)}
+          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+          onNextModule={onSwitchTab ? () => onSwitchTab('model-training') : undefined}
+          nextModuleName="Model Training"
+        />
       )}
     </div>
   )
