@@ -313,8 +313,11 @@
 
   .nav-hamburger {
     display: flex;
-    top: 12px;
-    left: 16px;
+    position: fixed;
+    top: 8px;
+    left: auto;
+    right: 16px;
+    z-index: 10000;
   }
 
   .nav-mobile-overlay {

@@ -179,6 +179,7 @@ svg,
 @media (max-width: 768px) {
   html, body {
     overflow-x: hidden;
+    overflow-y: auto;
   }
 
   #root {

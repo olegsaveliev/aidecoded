@@ -232,6 +232,9 @@
 @media (max-width: 768px) {
   .home-screen {
     padding: 32px 16px;
+    min-height: 100vh;
+    padding-bottom: 80px;
+    justify-content: flex-start;
   }
 
   .home-welcome {
