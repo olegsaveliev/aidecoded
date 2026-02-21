@@ -67,6 +67,15 @@ const CARDS = [
     tagColor: 'green',
     accent: '#00c7be',
   },
+  {
+    id: 'rag',
+    icon: '🔍',
+    title: 'RAG',
+    description: 'How AI learns from YOUR documents — Retrieval Augmented Generation explained',
+    tag: 'Journey',
+    tagColor: 'blue',
+    accent: '#5856D6',
+  },
 ]
 
 function HomeScreen({ onSelectTab }) {

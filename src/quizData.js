@@ -315,3 +315,56 @@ export const generationQuiz = [
     correct: 2,
   },
 ]
+
+export const ragQuiz = [
+  {
+    question: 'What problem does RAG primarily solve?',
+    options: ['Making AI faster', 'Making AI know your specific documents', 'Reducing API costs', 'Improving AI creativity'],
+    correct: 1,
+  },
+  {
+    question: 'What does RAG stand for?',
+    options: ['Random Answer Generation', 'Retrieval Augmented Generation', 'Recursive AI Generation', 'Rapid Answer Grouping'],
+    correct: 1,
+  },
+  {
+    question: 'RAG has two phases. What are they?',
+    options: ['Training and Testing', 'Indexing and Querying', 'Encoding and Decoding', 'Loading and Saving'],
+    correct: 1,
+  },
+  {
+    question: 'What is the typical chunk size for RAG?',
+    options: ['10 tokens', '50,000 tokens', '200-500 tokens', 'Exactly 1 paragraph'],
+    correct: 2,
+  },
+  {
+    question: 'Why is vector search better than keyword search for RAG?',
+    options: ['It is faster', 'It matches meaning not just exact words', 'It is cheaper', 'It works offline'],
+    correct: 1,
+  },
+  {
+    question: 'What is chunk overlap used for?',
+    options: ['Saving storage space', 'Preventing context loss at chunk boundaries', 'Improving search speed', 'Reducing embedding costs'],
+    correct: 1,
+  },
+  {
+    question: 'Which is NOT a vector database?',
+    options: ['Pinecone', 'Weaviate', 'PostgreSQL (standard)', 'Chroma'],
+    correct: 2,
+  },
+  {
+    question: 'In RAG, how many chunks are typically retrieved per query?',
+    options: ['1 chunk', '3-5 chunks', '50 chunks', 'All chunks'],
+    correct: 1,
+  },
+  {
+    question: 'What is ANN search?',
+    options: ['Artificial Neural Network search', 'Approximate Nearest Neighbor search', 'Automated Node Navigation', 'Advanced Natural language search'],
+    correct: 1,
+  },
+  {
+    question: 'What is the biggest advantage of RAG vs fine-tuning?',
+    options: ['RAG is always more accurate', 'RAG requires no model retraining', 'RAG is free', 'RAG works with any language'],
+    correct: 1,
+  },
+]

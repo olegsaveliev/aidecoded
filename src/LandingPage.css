@@ -123,7 +123,7 @@
   width: 100%;
 }
 
-/* Center the last card when 7 items (3+3+1) */
+/* Center the last card when it's alone in its row */
 .landing-card:last-child:nth-child(3n + 1) {
   grid-column: 2;
 }
