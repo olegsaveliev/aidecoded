@@ -1,0 +1,1383 @@
+/* ══════════════════════════════════
+   MACHINE LEARNING
+   ══════════════════════════════════ */
+
+.ml-root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* ── Stepper purple accent ── */
+.ml-stepper .how-step-current .how-step-num {
+  background: #AF52DE;
+  color: #fff;
+  border-color: #AF52DE;
+}
+
+.ml-stepper .how-step-completed .how-step-num {
+  background: #AF52DE;
+  border-color: #AF52DE;
+  color: #fff;
+}
+
+.ml-stepper .how-step-active .how-step-label {
+  color: var(--text-primary);
+}
+
+/* ── Shared viz wrapper ── */
+.ml-viz {
+  margin-bottom: 24px;
+}
+
+.ml-demo-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 1 — WHAT IS ML
+   ═══════════════════════════════════ */
+
+.ml-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ml-comp-panel {
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+}
+
+.ml-comp-hidden {
+  opacity: 0;
+}
+
+.ml-comp-traditional { border-top: 3px solid #ff3b30; }
+.ml-comp-ml { border-top: 3px solid #34c759; }
+
+.ml-comp-header {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.ml-comp-flow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.ml-comp-flow-box {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.ml-comp-flow-rules {
+  background: rgba(175, 82, 222, 0.1);
+  color: #AF52DE;
+}
+
+.ml-comp-flow-data {
+  background: rgba(0, 113, 227, 0.1);
+  color: #0071e3;
+}
+
+.ml-comp-flow-output {
+  background: rgba(142, 142, 147, 0.1);
+  color: var(--text-secondary);
+}
+
+.ml-comp-flow-answers {
+  background: rgba(52, 199, 89, 0.1);
+  color: #34c759;
+}
+
+.ml-comp-flow-plus,
+.ml-comp-flow-arrow {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+
+.ml-comp-example {
+  margin-bottom: 12px;
+}
+
+.ml-comp-code {
+  font-size: 12px;
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.ml-comp-verdict {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.ml-verdict-bad {
+  background: rgba(255, 59, 48, 0.08);
+  color: #ff3b30;
+}
+
+.ml-verdict-good {
+  background: rgba(52, 199, 89, 0.08);
+  color: #34c759;
+}
+
+/* Email demo */
+.ml-email-demo {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.ml-email-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.ml-email-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.ml-email-row:last-of-type {
+  border-bottom: none;
+}
+
+.ml-email-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.ml-email-buttons {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.ml-email-btn {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 4px 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+}
+
+.ml-email-btn-spam:hover {
+  background: rgba(255, 59, 48, 0.1);
+  border-color: #ff3b30;
+  color: #ff3b30;
+}
+
+.ml-email-btn-safe:hover {
+  background: rgba(52, 199, 89, 0.1);
+  border-color: #34c759;
+  color: #34c759;
+}
+
+.ml-email-result {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.ml-email-correct { color: #34c759; }
+.ml-email-wrong { color: #ff3b30; }
+
+.ml-email-score {
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid #AF52DE;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 2 — TYPES OF ML
+   ═══════════════════════════════════ */
+
+.ml-types-tree {
+  margin-bottom: 16px;
+}
+
+.ml-types-root {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  padding: 10px 20px;
+  background: rgba(175, 82, 222, 0.1);
+  border: 1px solid rgba(175, 82, 222, 0.2);
+  border-radius: 10px;
+  display: inline-block;
+  margin: 0 auto 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ml-types-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ml-types-branch {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--branch-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.ml-types-branch-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ml-types-branch-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.ml-types-branch-header:hover {
+  background: rgba(175, 82, 222, 0.04);
+}
+
+.ml-types-branch-expanded {
+  background: rgba(175, 82, 222, 0.04);
+}
+
+.ml-types-branch-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.ml-types-branch-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ml-types-branch-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.ml-types-branch-detail {
+  padding: 0 16px 14px 52px;
+}
+
+.ml-types-type-item {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 3px 0;
+}
+
+.ml-types-branch-examples {
+  font-size: 12px;
+  font-weight: 500;
+  color: #AF52DE;
+  margin-top: 8px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 3 — SUPERVISED LEARNING
+   ═══════════════════════════════════ */
+
+.ml-supervised-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 10px;
+  column-gap: 0;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.ml-sup-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-light);
+  border-radius: 8px;
+  opacity: 0.3;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.ml-sup-step-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ml-sup-step-current {
+  border-color: #AF52DE;
+  box-shadow: 0 0 0 2px rgba(175, 82, 222, 0.15);
+}
+
+.ml-sup-step-done {
+  border-color: rgba(52, 199, 89, 0.4);
+}
+
+.ml-sup-step-check {
+  font-size: 13px;
+  font-weight: 700;
+  color: #34c759;
+}
+
+.ml-sup-step-icon {
+  font-size: 16px;
+}
+
+.ml-sup-step-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ml-sup-connector {
+  color: var(--text-tertiary);
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+  padding: 0 2px;
+  display: flex;
+  align-items: center;
+}
+
+.ml-sup-connector svg {
+  width: 16px;
+  height: 10px;
+}
+
+.ml-sup-connector-active {
+  opacity: 1;
+  color: #AF52DE;
+}
+
+/* ── Popup card ── */
+.ml-sup-popup {
+  background: rgba(175, 82, 222, 0.04);
+  border: 1px solid rgba(175, 82, 222, 0.15);
+  border-left: 3px solid #AF52DE;
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+
+[data-theme="dark"] .ml-sup-popup {
+  background: rgba(175, 82, 222, 0.06);
+}
+
+.ml-sup-popup-in {
+  animation: ml-sup-popup-slide 0.35s ease-out both;
+}
+
+@keyframes ml-sup-popup-slide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ml-sup-popup-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+
+.ml-sup-popup-text strong {
+  color: var(--text-primary);
+}
+
+.ml-sup-popup-highlight {
+  font-size: 12px;
+  font-weight: 600;
+  color: #AF52DE;
+  background: rgba(175, 82, 222, 0.08);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  display: inline-block;
+}
+
+/* ── Table (shared) ── */
+.ml-sup-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+
+.ml-sup-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.ml-sup-table th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--border-light);
+  font-size: 12px;
+}
+
+.ml-sup-table td {
+  padding: 8px 12px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.ml-sup-test-row td {
+  background: rgba(175, 82, 222, 0.06);
+}
+
+.ml-sup-price {
+  font-weight: 600;
+  color: var(--text-primary) !important;
+}
+
+.ml-sup-split-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ml-sup-split-train { color: #34c759; }
+.ml-sup-split-test { color: #AF52DE; }
+
+/* ── Step 3: Loss iterations ── */
+.ml-sup-loss-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.ml-sup-loss-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ml-sup-loss-iter {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.ml-sup-loss-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ml-sup-loss-fill-step {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease-out;
+}
+
+.ml-sup-loss-high { color: #ff3b30; }
+.ml-sup-loss-mid { color: #ff9500; }
+.ml-sup-loss-low { color: #AF52DE; }
+.ml-sup-loss-done { color: #34c759; }
+
+.ml-sup-loss-row:nth-child(1) .ml-sup-loss-fill-step { background: #ff3b30; }
+.ml-sup-loss-row:nth-child(2) .ml-sup-loss-fill-step { background: #ff9500; }
+.ml-sup-loss-row:nth-child(3) .ml-sup-loss-fill-step { background: #AF52DE; }
+.ml-sup-loss-row:nth-child(4) .ml-sup-loss-fill-step { background: #34c759; }
+
+.ml-sup-loss-val {
+  font-size: 12px;
+  font-weight: 600;
+  width: 80px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Step 4: Eval table ── */
+.ml-sup-eval-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 4px;
+}
+
+.ml-sup-eval-pct {
+  font-weight: 600;
+  color: #34c759 !important;
+}
+
+/* ── Step 5: Predict form ── */
+.ml-sup-predict-form {
+  margin-bottom: 4px;
+}
+
+.ml-sup-predict-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.ml-sup-predict-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  flex: 1;
+  min-width: 100px;
+}
+
+.ml-sup-predict-input {
+  font-size: 14px;
+  font-family: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.ml-sup-predict-input:focus {
+  border-color: #AF52DE;
+}
+
+.ml-sup-predict-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 24px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #AF52DE;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ml-sup-predict-btn:hover {
+  background: #9B3DC8;
+}
+
+.ml-sup-predict-result {
+  margin-top: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #AF52DE;
+  padding: 12px 16px;
+  background: rgba(175, 82, 222, 0.08);
+  border: 1px solid rgba(175, 82, 222, 0.2);
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════
+   STAGE 4 — NEURAL NETWORKS
+   ═══════════════════════════════════ */
+
+.ml-nn-wrapper {
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.ml-nn-svg {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.ml-nn-visible {
+  opacity: 1;
+}
+
+.ml-nn-connection {
+  stroke: var(--border-light);
+  stroke-width: 0.5;
+  opacity: 0;
+  transition: opacity 0.4s ease, stroke 0.4s ease;
+}
+
+.ml-nn-connection-active {
+  opacity: 0.5;
+  stroke: #AF52DE;
+}
+
+.ml-nn-node {
+  stroke: var(--border-light);
+  stroke-width: 1;
+  transition: fill 0.4s ease, stroke 0.4s ease;
+}
+
+.ml-nn-node-active {
+  stroke: none;
+}
+
+.ml-nn-node-label {
+  fill: #fff;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ml-nn-layer-label {
+  fill: var(--text-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+}
+
+.ml-nn-interactive {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.ml-nn-interactive-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.ml-nn-weight-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ml-nn-weight-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ml-nn-weight-name {
+  font-size: 13px;
+  color: var(--text-secondary);
+  width: 120px;
+}
+
+.ml-nn-weight-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border-light);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.ml-nn-weight-btn:hover {
+  border-color: #AF52DE;
+}
+
+.ml-nn-weight-val {
+  font-size: 14px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #AF52DE;
+  width: 40px;
+  text-align: center;
+}
+
+.ml-nn-weight-result {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 5 — OVERFITTING
+   ═══════════════════════════════════ */
+
+.ml-overfit-panels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ml-overfit-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 14px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.ml-overfit-panel-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ml-overfit-panel-good {
+  border-color: #34c759;
+  box-shadow: 0 0 0 1px rgba(52, 199, 89, 0.2);
+}
+
+.ml-overfit-panel-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.ml-overfit-panel-subtitle {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-bottom: 10px;
+}
+
+.ml-overfit-chart {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.ml-overfit-dot {
+  fill: #AF52DE;
+  opacity: 0.7;
+}
+
+.ml-overfit-line {
+  stroke-width: 2;
+  fill: none;
+}
+
+.ml-overfit-line-under {
+  stroke: #ff3b30;
+}
+
+.ml-overfit-line-good {
+  stroke: #34c759;
+}
+
+.ml-overfit-line-over {
+  stroke: #ff9500;
+}
+
+.ml-overfit-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ml-score-good { color: #34c759; }
+.ml-score-bad { color: #ff3b30; }
+
+/* ═══════════════════════════════════
+   STAGE 6 — ALGORITHMS
+   ═══════════════════════════════════ */
+
+.ml-algo-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.ml-algo-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.ml-algo-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ml-algo-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+
+.ml-algo-card-header:hover {
+  background: rgba(175, 82, 222, 0.04);
+}
+
+.ml-algo-card-expanded {
+  background: rgba(175, 82, 222, 0.04);
+}
+
+.ml-algo-card-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.ml-algo-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ml-algo-card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.ml-algo-card-detail {
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border-light);
+}
+
+.ml-algo-card-formula {
+  font-size: 12px;
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #AF52DE;
+  margin: 10px 0 8px;
+  line-height: 1.5;
+}
+
+.ml-algo-card-best {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════
+   STAGE 7 — BUSINESS USE CASES
+   ═══════════════════════════════════ */
+
+.ml-business-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ml-business-card {
+  display: flex;
+  gap: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.ml-business-card-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.ml-business-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.ml-business-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.ml-business-card-uses {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.ml-business-card-tools {
+  font-size: 11px;
+  font-weight: 500;
+  color: #AF52DE;
+  margin-top: 6px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 8 — LIFECYCLE (zigzag layout)
+   ═══════════════════════════════════ */
+
+.ml-lc-zigzag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 20px;
+  transition: opacity 0.4s ease;
+}
+
+.ml-lc-fade-out {
+  opacity: 0;
+}
+
+.ml-lc-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ── Arrow between steps ── */
+.ml-lc-arrow {
+  display: flex;
+  justify-content: center;
+  padding: 2px 0;
+  animation: ml-arrow-draw 0.3s ease-out both;
+}
+
+.ml-lc-arrow svg {
+  display: block;
+}
+
+.ml-lc-arrow-from-right {
+  padding-right: 40%;
+}
+
+.ml-lc-arrow-from-left {
+  padding-left: 40%;
+}
+
+/* ── Card ── */
+.ml-lc-card {
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  width: 55%;
+  min-width: 240px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ml-lc-card-left {
+  align-self: flex-start;
+  margin-left: 4%;
+}
+
+.ml-lc-card-right {
+  align-self: flex-end;
+  margin-right: 4%;
+}
+
+.ml-lc-card-active {
+  border-color: #AF52DE;
+  box-shadow: 0 0 0 3px rgba(175, 82, 222, 0.12);
+}
+
+.ml-lc-card-done {
+  border-color: rgba(52, 199, 89, 0.35);
+}
+
+/* ── Card header ── */
+.ml-lc-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.ml-lc-card-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #AF52DE;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.ml-lc-card-num-done {
+  background: #34c759;
+  font-size: 11px;
+}
+
+.ml-lc-card-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.ml-lc-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Card body ── */
+.ml-lc-card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+  padding-left: 36px;
+}
+
+.ml-lc-card-pct {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 36px;
+}
+
+.ml-lc-pct-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.ml-lc-pct-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #AF52DE, #c084fc);
+  border-radius: 3px;
+  animation: ml-pct-grow 0.6s ease-out both;
+}
+
+@keyframes ml-pct-grow {
+  from { width: 0; }
+}
+
+.ml-lc-pct-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #AF52DE;
+  white-space: nowrap;
+}
+
+/* ── End actions (loop + restart) ── */
+.ml-lc-end-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.ml-lc-loop-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #AF52DE;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ml-lc-loop-btn:hover {
+  background: #9B3DC8;
+}
+
+@keyframes ml-arrow-draw {
+  from { opacity: 0; transform: scaleY(0); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+/* ── Insight callout ── */
+.ml-lifecycle-insight {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid #AF52DE;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.ml-lifecycle-insight strong {
+  color: var(--text-primary);
+}
+
+/* ── Step counter & next-step controls ── */
+.ml-step-counter {
+  font-size: 12px;
+  font-weight: 600;
+  color: #AF52DE;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: 0.03em;
+}
+
+.ml-step-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ml-next-step-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 24px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #AF52DE;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ml-next-step-btn:hover {
+  background: #9B3DC8;
+}
+
+.ml-success-banner {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #34c759;
+  background: rgba(52, 199, 89, 0.08);
+  border: 1px solid rgba(52, 199, 89, 0.2);
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+/* ── Slide-in animation ── */
+.ml-slide-in {
+  animation: ml-slide-in-anim 0.4s ease-out both;
+}
+
+@keyframes ml-slide-in-anim {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Replay button ── */
+.ml-replay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #AF52DE;
+  background: transparent;
+  border: 1.5px solid #AF52DE;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  margin-top: 16px;
+}
+
+.ml-replay-btn:hover {
+  background: #AF52DE;
+  color: #fff;
+}
+
+/* ── Tools chips ── */
+.ml-tools {
+  margin-top: 16px;
+}
+
+.ml-tools-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.ml-tools-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ml-tool-chip {
+  font-size: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 4px 12px;
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════ */
+
+@media (max-width: 720px) {
+  .ml-comparison,
+  .ml-algo-cards,
+  .ml-business-cards,
+  .ml-overfit-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .ml-supervised-steps {
+    flex-direction: column;
+  }
+
+  .ml-sup-connector {
+    transform: rotate(90deg);
+  }
+
+  .ml-sup-predict-row {
+    flex-direction: column;
+  }
+
+  .ml-lc-card {
+    width: 90%;
+    min-width: 0;
+  }
+
+  .ml-lc-card-left,
+  .ml-lc-card-right {
+    align-self: center;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .ml-lc-arrow-from-right,
+  .ml-lc-arrow-from-left {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .ml-algo-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .ml-business-cards {
+    grid-template-columns: 1fr;
+  }
+}

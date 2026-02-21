@@ -12,6 +12,7 @@ const FEATURES = [
   { icon: '✍️', name: 'Prompt Engineering', desc: 'Learn how to write better prompts and get dramatically better results from any AI' },
   { icon: '🧩', name: 'Context Engineering', desc: 'Learn how to give AI the right context to get dramatically better results every time' },
   { icon: '🔍', name: 'RAG', desc: 'How AI learns from YOUR documents — the most powerful enterprise AI technique' },
+  { icon: '🤖', name: 'Machine Learning', desc: 'How machines actually learn from data — the foundation of all modern AI' },
 ]
 
 const PARTICLE_COUNT = 50

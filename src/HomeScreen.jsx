@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './HomeScreen.css'
 
-const FILTERS = ['All', 'Interactive', 'Visual', 'Journey', 'Practical']
+const FILTERS = ['All', 'Interactive', 'Visual', 'Journey', 'Practical', 'Technical']
 
 const CARDS = [
   {
@@ -75,6 +75,15 @@ const CARDS = [
     tag: 'Journey',
     tagColor: 'blue',
     accent: '#5856D6',
+  },
+  {
+    id: 'machine-learning',
+    icon: '🤖',
+    title: 'Machine Learning',
+    description: 'How machines actually learn from data — the foundation of all modern AI',
+    tag: 'Technical',
+    tagColor: 'purple',
+    accent: '#AF52DE',
   },
 ]
 

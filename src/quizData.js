@@ -368,3 +368,56 @@ export const ragQuiz = [
     correct: 1,
   },
 ]
+
+export const machineLearningQuiz = [
+  {
+    question: 'What is the key difference between ML and traditional programming?',
+    options: ['ML is faster', 'ML learns rules from data instead of being explicitly programmed', 'ML requires more memory', 'ML only works for images'],
+    correct: 1,
+  },
+  {
+    question: 'Which type of ML learns from labeled examples?',
+    options: ['Unsupervised Learning', 'Reinforcement Learning', 'Supervised Learning', 'Transfer Learning'],
+    correct: 2,
+  },
+  {
+    question: 'What is overfitting?',
+    options: ['Training for too long', 'Model memorizes training data but fails on new data', 'Using too much data', 'Model is too simple'],
+    correct: 1,
+  },
+  {
+    question: 'What percentage of ML project time is typically spent on data?',
+    options: ['10%', '30%', '55%', '~80%'],
+    correct: 3,
+  },
+  {
+    question: 'Which algorithm is best known for winning tabular data competitions?',
+    options: ['Neural Networks', 'Decision Trees', 'XGBoost', 'K-Nearest Neighbors'],
+    correct: 2,
+  },
+  {
+    question: 'What is gradient descent?',
+    options: ['A type of neural network', 'An optimization algorithm that minimizes error', 'A data cleaning technique', 'A regularization method'],
+    correct: 1,
+  },
+  {
+    question: 'What is "data drift"?',
+    options: ['Data corruption', 'When real-world data changes making models less accurate', 'Slow data loading', 'Missing data values'],
+    correct: 1,
+  },
+  {
+    question: 'Which ML type does RLHF in ChatGPT use?',
+    options: ['Supervised Learning', 'Unsupervised Learning', 'Reinforcement Learning', 'Transfer Learning'],
+    correct: 2,
+  },
+  {
+    question: 'What is the test set used for?',
+    options: ['Training the model', 'Evaluating model on data it has never seen', 'Cleaning data', 'Feature engineering'],
+    correct: 1,
+  },
+  {
+    question: 'Deep Learning refers to:',
+    options: ['Thorough data analysis', 'Neural networks with many hidden layers', 'Slow training processes', 'Underground data centers'],
+    correct: 1,
+  },
+]

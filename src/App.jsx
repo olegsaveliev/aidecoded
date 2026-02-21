@@ -8,6 +8,7 @@ import ModelTraining from './ModelTraining.jsx'
 import PromptEngineering from './PromptEngineering.jsx'
 import ContextEngineering from './ContextEngineering.jsx'
 import RAG from './RAG.jsx'
+import MachineLearning from './MachineLearning.jsx'
 import LandingPage from './LandingPage.jsx'
 import HomeScreen from './HomeScreen.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
@@ -595,13 +596,13 @@ function App() {
           </div>
           {!showHome && (
             <nav className="segmented-control">
-              {['playground', 'tokenizer', 'generation', 'how-llms-work', 'model-training', 'prompt-engineering', 'context-engineering', 'rag'].map((tab) => (
+              {['playground', 'tokenizer', 'generation', 'how-llms-work', 'model-training', 'prompt-engineering', 'context-engineering', 'rag', 'machine-learning'].map((tab) => (
                 <button
                   key={tab}
                   className={`segment ${activeTab === tab ? 'segment-active' : ''}`}
                   onClick={() => setActiveTab(tab)}
                 >
-                  {tab === 'how-llms-work' ? 'How LLMs Work' : tab === 'model-training' ? 'Model Training' : tab === 'prompt-engineering' ? 'Prompt Engineering' : tab === 'context-engineering' ? 'Context Engineering' : tab === 'rag' ? 'RAG' : tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  {tab === 'how-llms-work' ? 'How LLMs Work' : tab === 'model-training' ? 'Model Training' : tab === 'prompt-engineering' ? 'Prompt Engineering' : tab === 'context-engineering' ? 'Context Engineering' : tab === 'rag' ? 'RAG' : tab === 'machine-learning' ? 'Machine Learning' : tab.charAt(0).toUpperCase() + tab.slice(1)}
                 </button>
               ))}
             </nav>
@@ -775,6 +776,9 @@ function App() {
         )}
         {!showHome && activeTab === 'rag' && (
           <RAG model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'machine-learning' && (
+          <MachineLearning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         </div>
       </main>

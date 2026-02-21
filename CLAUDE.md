@@ -21,6 +21,7 @@ Interactive React app for learning how Large Language Models work.
 | `prompt-engineering` | PromptEngineering.jsx | PromptEngineering.css | promptEngineeringQuiz | #22c55e |
 | `context-engineering` | ContextEngineering.jsx | ContextEngineering.css | contextEngineeringQuiz | #00c7be |
 | `rag` | RAG.jsx | RAG.css | ragQuiz | #5856D6 |
+| `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | #AF52DE |
 
 ## Adding a New Tutorial Tab
 
