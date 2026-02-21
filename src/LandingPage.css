@@ -1,0 +1,229 @@
+/* ══════════════════════════════════
+   LANDING PAGE
+   ══════════════════════════════════ */
+
+.landing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.5s ease-out;
+}
+
+.landing-fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Neural network canvas */
+.landing-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Centered content */
+.landing-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px 24px;
+  max-width: 720px;
+}
+
+/* ── Keyframes ── */
+
+@keyframes landingLogoIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes landingFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes landingPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(0, 113, 227, 0);
+  }
+}
+
+/* ── Elements ── */
+
+.landing-logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+}
+
+[data-theme="dark"] .landing-logo {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+  opacity: 0;
+  animation: landingLogoIn 0.6s ease-out forwards;
+}
+
+.landing-title {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin: 0;
+  min-height: 44px;
+}
+
+.landing-tagline {
+  font-size: 17px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin: 0;
+  opacity: 0;
+}
+
+.landing-typed .landing-tagline {
+  animation: landingFadeUp 0.5s ease-out forwards;
+}
+
+/* ── Feature cards ── */
+
+.landing-cards {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.landing-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.landing-typed .landing-card {
+  animation: landingFadeUp 0.45s ease-out forwards;
+}
+
+.landing-typed .landing-card:nth-child(1) { animation-delay: 0.2s; }
+.landing-typed .landing-card:nth-child(2) { animation-delay: 0.35s; }
+.landing-typed .landing-card:nth-child(3) { animation-delay: 0.5s; }
+.landing-typed .landing-card:nth-child(4) { animation-delay: 0.65s; }
+.landing-typed .landing-card:nth-child(5) { animation-delay: 0.8s; }
+
+.landing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.landing-card-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.landing-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.landing-card-desc {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+/* ── CTA button ── */
+
+.landing-cta {
+  margin-top: 28px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 14px 36px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  opacity: 0;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.landing-typed .landing-cta {
+  animation:
+    landingFadeUp 0.5s ease-out 0.8s forwards,
+    landingPulse 2s ease-in-out 1.6s infinite;
+}
+
+.landing-cta:hover {
+  background: var(--accent-hover);
+}
+
+.landing-cta:active {
+  transform: scale(0.97);
+}
+
+/* ── Theme toggle on landing ── */
+
+.landing-theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 10;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 680px) {
+  .landing-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .landing-card {
+    width: 240px;
+  }
+
+  .landing-title {
+    font-size: 28px;
+  }
+}
