@@ -324,27 +324,6 @@
   line-height: 1.5;
 }
 
-/* ── Breadcrumb ── */
-
-.breadcrumb-home {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--text-tertiary);
-  cursor: pointer;
-  padding: 12px 40px 0;
-  transition: color 0.2s;
-}
-
-.breadcrumb-home:hover {
-  color: var(--text-primary);
-}
-
 /* ══════════════════════════════════
    RESPONSIVE
    ══════════════════════════════════ */

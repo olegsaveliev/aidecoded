@@ -70,7 +70,7 @@ const SUGGESTIONS = [
   'Hello world',
 ]
 
-function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome }) {
+function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome, onSubPageChange }) {
   const [showEntry, setShowEntry] = useState(true)
   const [prompt, setPrompt] = useState('The weather today is')
   const [stage, setStage] = useState(-1) // -1 = not started
@@ -79,6 +79,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   const [attentionVisible, setAttentionVisible] = useState(false)
   const [embedData, setEmbedData] = useState(null)
   const [embedLoading, setEmbedLoading] = useState(false)
+  const [vectorsReady, setVectorsReady] = useState(false)
   const [genStreamedText, setGenStreamedText] = useState('')
   const [genCandidates, setGenCandidates] = useState([])
   const [genPhase, setGenPhase] = useState('idle') // idle | logprobs | streaming | done
@@ -123,6 +124,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     setAttentionVisible(false)
     setEmbedData(null)
     setEmbedLoading(false)
+    setVectorsReady(false)
     setGenStreamedText('')
     setGenCandidates([])
     setGenPhase('idle')
@@ -151,6 +153,34 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
       setMaxStageReached(stage)
     }
   }, [stage, maxStageReached])
+
+  // Embeddings: set vectorsReady once data arrives (forces clean re-render)
+  useEffect(() => {
+    if (embedData && embedData.tokens && embedData.tokens.length > 0) {
+      setVectorsReady(true)
+    }
+  }, [embedData])
+
+  // Report current sub-page to parent for breadcrumb
+  useEffect(() => {
+    if (!onSubPageChange) return
+    if (showEntry) {
+      onSubPageChange(null)
+    } else if (showQuiz) {
+      onSubPageChange('Quiz')
+    } else if (showFinal) {
+      onSubPageChange('Summary')
+    } else if (stage >= 0 && stage < STAGES.length) {
+      onSubPageChange(`Stage ${stage + 1}: ${STAGES[stage]}`)
+    } else {
+      onSubPageChange(null)
+    }
+  }, [showEntry, showQuiz, showFinal, stage, onSubPageChange])
+
+  // Clear sub-page on unmount
+  useEffect(() => {
+    return () => onSubPageChange?.(null)
+  }, [onSubPageChange])
 
   // Stage 1: Animate tokens appearing one by one (skip animation on revisit)
   useEffect(() => {
@@ -233,26 +263,11 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     return () => { cancelled = true }
   }, [stage, embedData, allTokens])
 
-  // Stage 2: Animate rows after embeddings are loaded (skip animation on revisit)
+  // Stage 2: Show all rows once vectors are ready (CSS handles staggered animation)
   useEffect(() => {
-    if (stage !== 2 || !embedData) return
-    // If revisiting, show all rows instantly
-    if (maxStageReached > 2) {
-      setEmbeddingProgress(allTokens.map((_, i) => i))
-      return
-    }
-    setEmbeddingProgress([])
-    let count = 0
-    const interval = setInterval(() => {
-      if (count < allTokens.length) {
-        setEmbeddingProgress((prev) => [...prev, count])
-        count++
-      } else {
-        clearInterval(interval)
-      }
-    }, 300)
-    return () => clearInterval(interval)
-  }, [stage, embedData, allTokens, maxStageReached])
+    if (stage !== 2 || !vectorsReady || !embedData) return
+    setEmbeddingProgress(allTokens.map((_, i) => i))
+  }, [stage, vectorsReady, embedData, allTokens])
 
   // Stage 3: Show attention lines with delay (instant on revisit)
   useEffect(() => {
@@ -632,15 +647,20 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   </div>
                 )}
 
-                {embedData && (
+                {vectorsReady && embedData && (
                   <>
-                    <div className="how-embed-grid">
+                    <div className="how-embed-grid how-vectors-fade-in">
                       {allTokens.map((tok, i) => {
                         const visible = embeddingProgress.includes(i)
+                        const isRevisit = maxStageReached > 2
                         const display = tok.text.replace(/ /g, '\u00B7')
                         const vec = embedData.tokens[i]?.vec
                         return (
-                          <div key={i} className={`how-embed-row ${visible ? 'how-embed-visible' : ''}`}>
+                          <div
+                            key={i}
+                            className={`how-embed-row ${visible ? (isRevisit ? 'how-embed-instant' : 'how-embed-visible') : ''}`}
+                            style={visible && !isRevisit ? { animationDelay: `${i * 0.3}s` } : undefined}
+                          >
                             <span className="how-embed-token">{display || '\u00B7'}</span>
                             <span className="how-embed-arrow">&rarr;</span>
                             <div className="how-embed-chips">
@@ -867,7 +887,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   </>
                 )}
 
-                {embedData && (
+                {vectorsReady && embedData && (
                   <div className="how-nav-row">
                     {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
                     <div className="how-nav-buttons">

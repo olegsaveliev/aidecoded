@@ -2080,12 +2080,29 @@
   border-radius: 10px;
   opacity: 0;
   transform: translateX(-12px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .how-embed-visible {
+  animation: embedRowIn 0.4s ease forwards;
+}
+
+.how-embed-instant {
   opacity: 1;
-  transform: translateX(0);
+  transform: none;
+}
+
+@keyframes embedRowIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.how-vectors-fade-in {
+  animation: vectorsFadeIn 0.4s ease both;
+}
+
+@keyframes vectorsFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .how-embed-token {
@@ -5220,10 +5237,6 @@
 
   .header-right .theme-toggle {
     position: static;
-  }
-
-  .breadcrumb-home {
-    padding: 10px 16px 0;
   }
 
   /* ── Sidebar (playground) ── */

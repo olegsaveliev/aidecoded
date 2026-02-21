@@ -13,6 +13,7 @@ import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
 import NavDropdown from './NavDropdown.jsx'
+import Breadcrumb from './Breadcrumb.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
@@ -138,6 +139,7 @@ function App() {
 
   function handleGoHome() {
     setHomeTransition(true)
+    setSubPage(null)
     setTimeout(() => {
       setShowHome(true)
       setHomeTransition(false)
@@ -146,6 +148,7 @@ function App() {
 
   function handleSelectTab(tab) {
     setHomeTransition(true)
+    setSubPage(null)
     setTimeout(() => {
       setShowHome(false)
       setActiveTab(tab)
@@ -153,7 +156,15 @@ function App() {
     }, 200)
   }
 
+  function handleTabReset(tabId) {
+    setSubPage(null)
+    setTabKey((k) => k + 1)
+  }
+
   const [activeTab, setActiveTab] = useState('playground')
+  const [subPage, setSubPage] = useState(null)
+  const [navGroupToOpen, setNavGroupToOpen] = useState(null)
+  const [tabKey, setTabKey] = useState(0)
   const [model, setModel] = useState('gpt-4o-mini')
 
   const [systemPrompt, setSystemPrompt] = useState('')
@@ -603,7 +614,7 @@ function App() {
             </div>
           </div>
           <div className="header-center">
-            <NavDropdown activeTab={activeTab} onSelectTab={handleSelectTab} showHome={showHome} />
+            <NavDropdown activeTab={activeTab} onSelectTab={handleSelectTab} showHome={showHome} openGroupRequest={navGroupToOpen} onGroupOpened={() => setNavGroupToOpen(null)} />
           </div>
           <div className="header-right">
             <button
@@ -622,13 +633,21 @@ function App() {
 
         <div className={`tab-content-wrapper ${homeTransition ? 'tab-content-fading' : ''}`}>
         {showHome && (
-          <HomeScreen onSelectTab={handleSelectTab} />
+          <>
+            <Breadcrumb activeTab={activeTab} showHome={true} />
+            <HomeScreen onSelectTab={handleSelectTab} />
+          </>
         )}
 
         {!showHome && (
-          <button className="breadcrumb-home" onClick={handleGoHome}>
-            &larr; Home
-          </button>
+          <Breadcrumb
+            activeTab={activeTab}
+            showHome={false}
+            subPage={subPage}
+            onGoHome={handleGoHome}
+            onGroupClick={(groupId) => setNavGroupToOpen(groupId)}
+            onTabClick={handleTabReset}
+          />
         )}
 
         {!showHome && activeTab === 'playground' && showPlaygroundEntry && messages.length === 0 && (
@@ -774,7 +793,7 @@ function App() {
           <Generation model={model} maxTokens={maxTokens} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'how-llms-work' && (
-          <HowLLMsWork model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <HowLLMsWork key={tabKey} model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} onSubPageChange={setSubPage} />
         )}
         {!showHome && activeTab === 'model-training' && (
           <ModelTraining onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
