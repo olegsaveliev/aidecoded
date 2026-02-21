@@ -14,6 +14,7 @@ import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
 import NavDropdown from './NavDropdown.jsx'
 import Breadcrumb from './Breadcrumb.jsx'
+import FeedbackWidget from './FeedbackWidget.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
@@ -500,7 +501,12 @@ function App() {
   const showSidebar = !showHome && activeTab === 'playground'
 
   if (showLanding) {
-    return <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} />
+    return (
+      <>
+        <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} />
+        <FeedbackWidget showLanding activeTab={activeTab} showHome={showHome} subPage={subPage} />
+      </>
+    )
   }
 
   if (showBootScreen) {
@@ -812,6 +818,7 @@ function App() {
         )}
         </div>
       </main>
+      <FeedbackWidget showHome={showHome} activeTab={activeTab} subPage={subPage} />
     </div>
   )
 }
