@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
+import EntryScreen from './EntryScreen.jsx'
 
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
 
@@ -1121,11 +1122,23 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab })
     },
   }
 
+  if (stage === -1) {
+    return (
+      <EntryScreen
+        icon="✍️"
+        title="Prompt Engineering"
+        description="Learn 8 powerful techniques to get dramatically better results from any AI — with live examples you can try yourself."
+        buttonText="Start Learning"
+        onStart={() => setStage(0)}
+      />
+    )
+  }
+
   return (
     <div className="how-llms pe-root">
-      {/* Welcome Banner */}
-      {showWelcome && stage === -1 && (
-        <div className="how-welcome">
+      {/* Welcome Banner — shows after entry screen, dismissable */}
+      {showWelcome && (
+        <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             ✍️ <strong>Prompt Engineering is the most valuable AI skill you can learn right now.</strong> The same AI gives completely different results based on how you ask. Let's learn how to ask better.
           </div>
@@ -1133,10 +1146,10 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab })
         </div>
       )}
 
-      {/* Stepper */}
-      {stage >= -1 && !showFinal && (
+      {/* Stepper + stage content — only when journey has started (stage >= 0) */}
+      {stage >= 0 && !showFinal && (
         <>
-          <div className="how-stepper pe-stepper">
+          <div className="how-stepper pe-stepper how-fade-in">
             {STAGES.map((s, i) => {
               const isCompleted = stage > i
               const isCurrent = stage === i
@@ -1175,20 +1188,6 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab })
           </div>
 
           <div className="how-content">
-            {/* Welcome / start screen */}
-            {stage === -1 && (
-              <div className="how-stage how-fade-in" style={{ alignItems: 'center', textAlign: 'center', padding: '40px 20px' }}>
-                <div style={{ fontSize: '48px', marginBottom: '8px' }}>✍️</div>
-                <h2 className="how-start-title">Prompt Engineering</h2>
-                <p className="how-start-subtitle">
-                  Learn 8 powerful techniques to get dramatically better results from any AI — with live examples you can try yourself.
-                </p>
-                <button className="how-start-btn" onClick={() => setStage(0)}>
-                  Start the Journey
-                </button>
-              </div>
-            )}
-
             {/* Stage content */}
             {stage >= 0 && stage <= 7 && (
               <div className="how-stage how-fade-in" key={stage}>

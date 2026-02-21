@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
+import EntryScreen from './EntryScreen.jsx'
 
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
 
@@ -39,6 +40,7 @@ const SUGGESTIONS = [
 ]
 
 function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
+  const [showEntry, setShowEntry] = useState(true)
   const [prompt, setPrompt] = useState('The weather today is')
   const [stage, setStage] = useState(-1) // -1 = not started
   const [visibleTokens, setVisibleTokens] = useState([])
@@ -383,11 +385,23 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
   // Compute summary stats for final screen
   const genTokenCount = genStreamedText ? encode(genStreamedText).length : 0
 
+  if (showEntry) {
+    return (
+      <EntryScreen
+        icon="🧠"
+        title="How LLMs Work"
+        description="Take an interactive 5-stage journey through every step an AI goes through to answer your question. From your words to tokens to embeddings to the final response."
+        buttonText="Start the Journey"
+        onStart={() => setShowEntry(false)}
+      />
+    )
+  }
+
   return (
     <div className="how-llms">
-      {/* Welcome Banner */}
+      {/* Welcome Banner — only after entry screen, before journey starts */}
       {showWelcome && stage === -1 && (
-        <div className="how-welcome">
+        <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to How LLMs Work</strong> — Take an interactive journey through every stage an AI goes through to answer your question. From your words to tokens to embeddings to the final response — see it all happen live!
           </div>
@@ -395,10 +409,50 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
         </div>
       )}
 
-      {/* Stepper + content */}
-      {stage >= -1 && !showFinal && (
+      {/* Prompt input — stage -1, no stepper yet */}
+      {stage === -1 && !showFinal && (
+        <div className="how-content">
+          <div className="how-stage how-fade-in">
+            <div className="how-input-area">
+              <label htmlFor="how-prompt">
+                Enter a prompt to begin
+                <Tooltip text="This is the text that will travel through all 5 stages. Keep it short and simple for the best experience — try 'The weather today is' or 'Hello world'" />
+              </label>
+              <input
+                id="how-prompt"
+                type="text"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                placeholder='e.g. "The weather today is"'
+                className="how-input"
+              />
+              <div className="how-suggestion-chips">
+                {SUGGESTIONS.map((s) => (
+                  <button
+                    key={s}
+                    className={`how-suggestion-chip ${prompt === s ? 'how-suggestion-chip-active' : ''}`}
+                    onClick={() => setPrompt(s)}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button
+              className="how-start-btn"
+              onClick={startJourney}
+              disabled={!prompt.trim()}
+            >
+              Start Journey
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Stepper + stage content — only when journey has started (stage >= 0) */}
+      {stage >= 0 && !showFinal && (
         <>
-          <div className="how-stepper">
+          <div className="how-stepper how-fade-in">
             {STAGES.map((s, i) => {
               const isCompleted = stage > i
               const isCurrent = stage === i
@@ -437,43 +491,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab }) {
           </div>
 
           <div className="how-content">
-            {/* Stage -1: Prompt input */}
-            {stage === -1 && (
-              <div className="how-stage how-fade-in">
-                <div className="how-input-area">
-                  <label htmlFor="how-prompt">
-                    Enter a prompt to begin
-                    <Tooltip text="This is the text that will travel through all 5 stages. Keep it short and simple for the best experience — try 'The weather today is' or 'Hello world'" />
-                  </label>
-                  <input
-                    id="how-prompt"
-                    type="text"
-                    value={prompt}
-                    onChange={(e) => setPrompt(e.target.value)}
-                    placeholder='e.g. "The weather today is"'
-                    className="how-input"
-                  />
-                  <div className="how-suggestion-chips">
-                    {SUGGESTIONS.map((s) => (
-                      <button
-                        key={s}
-                        className={`how-suggestion-chip ${prompt === s ? 'how-suggestion-chip-active' : ''}`}
-                        onClick={() => setPrompt(s)}
-                      >
-                        {s}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <button
-                  className="how-start-btn"
-                  onClick={startJourney}
-                  disabled={!prompt.trim()}
-                >
-                  Start Journey
-                </button>
-              </div>
-            )}
 
             {/* Stage 0: Prompt */}
             {stage === 0 && (

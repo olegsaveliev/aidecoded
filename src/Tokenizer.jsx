@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
+import EntryScreen from './EntryScreen.jsx'
 
 const TOKEN_COLORS = [
   { bgVar: '--token-pastels-1-bg', borderVar: '--token-pastels-1-border' },
@@ -27,6 +28,7 @@ const FUN_FACTS = [
 ]
 
 function Tokenizer() {
+  const [showEntry, setShowEntry] = useState(true)
   const [text, setText] = useState('')
   const [showWelcome, setShowWelcome] = useState(true)
   const [showInfo, setShowInfo] = useState(true)
@@ -59,6 +61,18 @@ function Tokenizer() {
     return () => clearInterval(factTimer.current)
   }, [])
 
+  if (showEntry) {
+    return (
+      <EntryScreen
+        icon="🔤"
+        title="Token Visualizer"
+        description="Type any text and watch how AI breaks it into tokens in real time. Understand why AI has token limits not word limits — and how it actually reads your text."
+        buttonText="Start Tokenizing"
+        onStart={() => setShowEntry(false)}
+      />
+    )
+  }
+
   return (
     <div className="tokenizer">
       {showWelcome && (
@@ -70,24 +84,21 @@ function Tokenizer() {
         </div>
       )}
 
-      <div className={`tok-info-card ${showInfo ? 'tok-info-card-open' : ''}`}>
-        <strong>What is a token?</strong>
-        <ul>
-          <li>A token is roughly 3–4 characters or about &frac34; of a word</li>
-          <li>Common words like "the" or "is" are usually 1 token</li>
-          <li>Longer or rare words get split into multiple tokens</li>
-          <li>Numbers, punctuation and spaces are often their own tokens</li>
-          <li>This is why AI has token <em>limits</em> — not word limits</li>
-          <li>GPT-4 can handle up to 128,000 tokens in one conversation</li>
-        </ul>
-        <button className="tok-info-toggle" onClick={() => setShowInfo(!showInfo)}>
-          {showInfo ? 'Hide explanation' : 'Show explanation'}
-        </button>
-      </div>
-      {!showInfo && (
-        <button className="tok-info-toggle" onClick={() => setShowInfo(true)}>
-          Show explanation
-        </button>
+      {showInfo && (
+        <div className="tok-info-banner">
+          <div className="tok-info-banner-text">
+            <strong>💡 What is a token?</strong>
+            <ul>
+              <li>A token is roughly 3–4 characters or about &frac34; of a word</li>
+              <li>Common words like &ldquo;the&rdquo; or &ldquo;is&rdquo; are usually 1 token</li>
+              <li>Longer or rare words get split into multiple tokens</li>
+              <li>Numbers, punctuation and spaces are often their own tokens</li>
+              <li>This is why AI has token <em>limits</em> — not word limits</li>
+              <li>GPT-4 can handle up to 128,000 tokens in one conversation</li>
+            </ul>
+          </div>
+          <button className="tok-welcome-dismiss" onClick={() => setShowInfo(false)}>Got it</button>
+        </div>
       )}
 
       <div className="tokenizer-model-label">

@@ -1401,6 +1401,91 @@
   border-color: var(--accent);
 }
 
+/* ============ Entry / Intro Screen ============ */
+.entry-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 60vh;
+  background: var(--bg-primary);
+  animation: entryFadeIn 0.4s ease;
+}
+
+@keyframes entryFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.entry-screen-icon {
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.entry-screen-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1D1D1F;
+  margin: 0 0 12px;
+  letter-spacing: -0.03em;
+}
+
+[data-theme="dark"] .entry-screen-title {
+  color: var(--text-primary);
+}
+
+.entry-screen-description {
+  font-size: 18px;
+  color: #6E6E73;
+  max-width: 480px;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+[data-theme="dark"] .entry-screen-description {
+  color: var(--text-secondary);
+}
+
+.entry-screen-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 14px 36px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.entry-screen-btn:hover {
+  background: var(--accent-hover);
+}
+
+.entry-screen-btn:active {
+  transform: scale(0.97);
+}
+
+.entry-start-over {
+  display: inline-block;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  padding: 4px 8px;
+  margin-bottom: 8px;
+  transition: color 0.2s;
+}
+
+.entry-start-over:hover {
+  color: var(--accent);
+}
+
 /* Start screen */
 .how-start {
   display: flex;
@@ -2607,33 +2692,34 @@
   border-color: var(--accent);
 }
 
-/* What is a token? card */
-.tok-info-card {
+/* What is a token? dismissable banner */
+.tok-info-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
   background: var(--accent-light);
   border: 1px solid rgba(0, 113, 227, 0.12);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.35s ease, opacity 0.35s ease;
-  max-height: 0;
-  padding: 0 20px;
-  opacity: 0;
-}
-
-.tok-info-card-open {
-  max-height: 500px;
+  border-radius: 12px;
   padding: 16px 20px;
-  opacity: 1;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  animation: fadeIn 0.3s ease;
 }
 
-.tok-info-card strong {
+.tok-info-banner-text {
+  flex: 1;
+}
+
+.tok-info-banner-text strong {
+  display: block;
   font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
-  display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.tok-info-card ul {
+.tok-info-banner-text ul {
   margin: 0;
   padding-left: 18px;
   font-size: 13px;
@@ -2641,24 +2727,8 @@
   color: var(--text-secondary);
 }
 
-.tok-info-card li {
+.tok-info-banner-text li {
   margin-bottom: 2px;
-}
-
-.tok-info-toggle {
-  background: none;
-  border: none;
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  padding: 0;
-  margin-top: 10px;
-}
-
-.tok-info-toggle:hover {
-  text-decoration: underline;
 }
 
 /* Suggestion chips */

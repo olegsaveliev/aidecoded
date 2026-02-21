@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
+import EntryScreen from './EntryScreen.jsx'
 
 const STAGES = [
   { key: 'collection', label: 'Data Collection', emoji: '📦' },
@@ -772,11 +773,23 @@ function ModelTraining({ onSwitchTab }) {
     },
   }
 
+  if (stage === -1) {
+    return (
+      <EntryScreen
+        icon="🏗️"
+        title="How AI Models Are Built"
+        description="Follow the complete journey from raw internet data to a working AI assistant, in 6 interactive stages. No PhD required."
+        buttonText="Start the Journey"
+        onStart={() => setStage(0)}
+      />
+    )
+  }
+
   return (
     <div className="how-llms mt-root">
-      {/* Welcome Banner */}
-      {showWelcome && stage === -1 && (
-        <div className="how-welcome">
+      {/* Welcome Banner — shows after entry screen, dismissable */}
+      {showWelcome && (
+        <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             🏗️ <strong>Ever wondered how ChatGPT was actually built?</strong> This is the full story — from raw internet data to a working AI assistant. No PhD required.
           </div>
@@ -784,10 +797,10 @@ function ModelTraining({ onSwitchTab }) {
         </div>
       )}
 
-      {/* Stepper */}
-      {stage >= -1 && !showFinal && (
+      {/* Stepper + stage content — only when journey has started (stage >= 0) */}
+      {stage >= 0 && !showFinal && (
         <>
-          <div className="how-stepper mt-stepper">
+          <div className="how-stepper mt-stepper how-fade-in">
             {STAGES.map((s, i) => {
               const isCompleted = stage > i
               const isCurrent = stage === i
@@ -826,20 +839,6 @@ function ModelTraining({ onSwitchTab }) {
           </div>
 
           <div className="how-content">
-            {/* Welcome / start screen */}
-            {stage === -1 && (
-              <div className="how-stage how-fade-in" style={{ alignItems: 'center', textAlign: 'center', padding: '40px 20px' }}>
-                <div style={{ fontSize: '48px', marginBottom: '8px' }}>🏗️</div>
-                <h2 className="how-start-title">How AI Models Are Built</h2>
-                <p className="how-start-subtitle">
-                  Follow the complete journey from raw internet data to a working AI assistant, in 6 interactive stages.
-                </p>
-                <button className="how-start-btn" onClick={() => setStage(0)}>
-                  Start the Journey
-                </button>
-              </div>
-            )}
-
             {/* Stage content */}
             {stage >= 0 && stage <= 5 && (
               <div className="how-stage how-fade-in" key={stage}>

@@ -10,6 +10,7 @@ import LandingPage from './LandingPage.jsx'
 import HomeScreen from './HomeScreen.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import Tooltip from './Tooltip.jsx'
+import EntryScreen from './EntryScreen.jsx'
 import logoImg from './assets/logo_dark.png'
 import './App.css'
 
@@ -149,6 +150,15 @@ function App() {
   const [temperature, setTemperature] = useState(0.7)
   const [maxTokens, setMaxTokens] = useState(500)
   const [topP, setTopP] = useState(1)
+
+  const [showPlaygroundEntry, setShowPlaygroundEntry] = useState(true)
+
+  // Reset entry screen when navigating to playground tab
+  useEffect(() => {
+    if (activeTab === 'playground') {
+      setShowPlaygroundEntry(true)
+    }
+  }, [activeTab])
 
   const [showWelcome, setShowWelcome] = useState(true)
   const [showLearnTip, setShowLearnTip] = useState(false)
@@ -619,8 +629,23 @@ function App() {
           </button>
         )}
 
-        {!showHome && activeTab === 'playground' && (
+        {!showHome && activeTab === 'playground' && showPlaygroundEntry && messages.length === 0 && (
+          <EntryScreen
+            icon="💬"
+            title="AI Playground"
+            description="Chat directly with AI and experiment with temperature, model selection and parameters in real time. See how small changes dramatically affect responses."
+            buttonText="Open Playground"
+            onStart={() => setShowPlaygroundEntry(false)}
+          />
+        )}
+
+        {!showHome && activeTab === 'playground' && !(showPlaygroundEntry && messages.length === 0) && (
           <div className="chat-container">
+            {messages.length > 0 && (
+              <button className="entry-start-over" onClick={() => { setMessages([]); setInput(''); setError(''); setShowPlaygroundEntry(true); setShowWelcome(true); }}>
+                &larr; Start over
+              </button>
+            )}
             {showWelcome && (
               <div className="playground-welcome">
                 <div className="playground-welcome-text">

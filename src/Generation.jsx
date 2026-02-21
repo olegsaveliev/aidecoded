@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Tooltip from './Tooltip.jsx'
+import EntryScreen from './EntryScreen.jsx'
 
 const API_KEY = import.meta.env.VITE_OPENAI_API_KEY
 
@@ -36,6 +37,7 @@ function spaceToken(token, prior) {
 const MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo']
 
 function Generation({ model: defaultModel, maxTokens }) {
+  const [showEntry, setShowEntry] = useState(true)
   const [genModel, setGenModel] = useState(defaultModel || 'gpt-4o-mini')
   const [temperature, setTemperature] = useState(0.7)
   const [topP, setTopP] = useState(1)
@@ -412,6 +414,18 @@ function Generation({ model: defaultModel, maxTokens }) {
   // Determine what to show in the text box
   const hasStreamedContent = streaming || (doneMode === 'auto' && streamedText)
   const hasTokenContent = tokens.length > 0
+
+  if (showEntry) {
+    return (
+      <EntryScreen
+        icon="⚡"
+        title="Token Generation"
+        description="Watch AI predict the next word live, one token at a time. Choose manually, simulate step by step, or let it run automatically — just like ChatGPT under the hood."
+        buttonText="Start Generating"
+        onStart={() => setShowEntry(false)}
+      />
+    )
+  }
 
   return (
     <div className="generation">
