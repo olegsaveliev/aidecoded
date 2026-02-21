@@ -1,0 +1,728 @@
+/* ══════════════════════════════════
+   CONTEXT ENGINEERING
+   ══════════════════════════════════ */
+
+.ce-root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* ── Stepper teal accent ── */
+.ce-stepper .how-step-current .how-step-num {
+  background: #00c7be;
+  color: #fff;
+  border-color: #00c7be;
+}
+
+.ce-stepper .how-step-completed .how-step-num {
+  background: #00c7be;
+  border-color: #00c7be;
+  color: #fff;
+}
+
+.ce-stepper .how-step-active .how-step-label {
+  color: var(--text-primary);
+}
+
+/* ── Shared viz wrapper ── */
+.ce-viz {
+  margin-bottom: 24px;
+}
+
+.ce-demo-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 1 — WHAT IS CONTEXT
+   ═══════════════════════════════════ */
+
+/* Context bar animation */
+.ce-context-bar-wrapper {
+  margin-bottom: 24px;
+}
+
+.ce-context-bar {
+  height: 60px;
+  background: var(--bg-surface);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  border: 1px solid var(--border-light);
+}
+
+.ce-context-bar-section {
+  height: 100%;
+  min-width: 0;
+  transition: width 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ce-context-bar-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 6px;
+}
+
+.ce-context-bar-counter {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.ce-context-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.ce-context-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.ce-context-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Comparison panels */
+.ce-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.ce-comp-panel {
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+}
+
+.ce-comp-bad { border-left: 3px solid #ff3b30; }
+.ce-comp-good { border-left: 3px solid #34c759; }
+
+.ce-comp-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.ce-comp-prompt {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.ce-comp-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 10px 0;
+}
+
+.ce-comp-response {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.ce-comp-verdict {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.ce-verdict-bad {
+  background: rgba(255, 59, 48, 0.08);
+  color: #ff3b30;
+}
+
+.ce-verdict-good {
+  background: rgba(52, 199, 89, 0.08);
+  color: #34c759;
+}
+
+/* ═══════════════════════════════════
+   STAGE 2 — CONTEXT WINDOW
+   ═══════════════════════════════════ */
+
+.ce-window-rect {
+  width: 100%;
+  max-width: 500px;
+  height: 360px;
+  margin: 0 auto 0;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ce-window-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.ce-window-section-visible {
+  opacity: 0.85;
+  transform: scaleY(1);
+}
+
+.ce-window-section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.ce-window-warning {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  background: #fff0f0;
+  border: 1px solid #fecaca;
+  border-left: 3px solid #ff3b30;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+[data-theme="dark"] .ce-window-warning {
+  background: rgba(255, 59, 48, 0.1);
+  border-color: rgba(255, 59, 48, 0.3);
+  border-left-color: #ff3b30;
+}
+
+.ce-window-warning-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.ce-tokens-remaining {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.ce-model-table {
+  margin-bottom: 16px;
+}
+
+.ce-model-table-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.ce-model-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.ce-model-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+}
+
+.ce-model-card-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.ce-model-card-tokens {
+  font-size: 14px;
+  font-weight: 700;
+  color: #00c7be;
+}
+
+.ce-model-card-words {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+
+/* ── Tools chips ── */
+.ce-tools {
+  margin-top: 16px;
+}
+
+.ce-tools-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.ce-tools-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ce-tool-chip {
+  font-size: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  padding: 4px 12px;
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════
+   STAGE 3 — CONTEXT POISONING
+   ═══════════════════════════════════ */
+
+.ce-poison-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.ce-poison-panel {
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  padding: 16px;
+  border: 1px solid var(--border-light);
+}
+
+.ce-poison-bad { border-top: 3px solid #ff3b30; }
+.ce-poison-good { border-top: 3px solid #34c759; }
+
+.ce-poison-panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.ce-poison-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 6px 0;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.ce-poison-item-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ce-poison-icon {
+  flex-shrink: 0;
+}
+
+.ce-poison-mistakes {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.ce-poison-mistakes-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.ce-poison-mistakes ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.ce-poison-rule {
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #00c7be;
+}
+
+/* ═══════════════════════════════════
+   STAGE 4 — RAG
+   ═══════════════════════════════════ */
+
+.ce-rag-pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 10px;
+  column-gap: 0;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.ce-rag-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  opacity: 0.3;
+  transform: scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.ce-rag-step-active {
+  opacity: 1;
+  transform: scale(1);
+  border-color: var(--step-color);
+}
+
+.ce-rag-step-icon {
+  font-size: 16px;
+}
+
+.ce-rag-step-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+}
+
+.ce-rag-step-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ce-rag-connector {
+  color: var(--text-tertiary);
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+  padding: 0 2px;
+  display: flex;
+  align-items: center;
+}
+
+.ce-rag-connector svg {
+  width: 16px;
+  height: 10px;
+}
+
+.ce-rag-connector-active {
+  opacity: 1;
+  color: #00c7be;
+}
+
+/* ── Replay button (secondary outline pill) ── */
+.ce-replay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--accent);
+  background: transparent;
+  border: 1.5px solid var(--accent);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  margin-top: 16px;
+}
+
+.ce-replay-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.ce-rag-summary {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 3px solid #00c7be;
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.ce-rag-summary strong {
+  color: var(--text-primary);
+}
+
+.ce-rag-summary ul {
+  margin: 8px 0;
+  padding-left: 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.ce-rag-insight {
+  font-size: 13px;
+  font-weight: 600;
+  color: #00c7be;
+  margin-top: 8px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 5 — STRATEGIES
+   ═══════════════════════════════════ */
+
+.ce-strategy-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ce-strategy-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.ce-strategy-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ce-strategy-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ce-strategy-card-icon {
+  font-size: 22px;
+}
+
+.ce-strategy-card-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ce-strategy-card-formula {
+  font-size: 12px;
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #00c7be;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.ce-strategy-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════
+   STAGE 6 — USE CASES
+   ═══════════════════════════════════ */
+
+.ce-usecase-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ce-usecase-card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.ce-usecase-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.ce-usecase-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.ce-usecase-card-expanded {
+  border-color: #00c7be;
+  box-shadow: 0 0 0 1px #00c7be;
+}
+
+.ce-usecase-card-icon {
+  font-size: 28px;
+}
+
+.ce-usecase-card-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ce-usecase-items {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 0 0 8px 8px;
+  padding: 10px 12px;
+  margin-top: -4px;
+}
+
+.ce-usecase-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.ce-usecase-item input[type="checkbox"] {
+  accent-color: #00c7be;
+}
+
+.ce-template-builder {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.ce-template-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.ce-template-output {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  line-height: 1.6;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.ce-usecase-rule {
+  font-size: 14px;
+  font-weight: 600;
+  color: #00c7be;
+  text-align: center;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+/* ═══════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════ */
+
+@media (max-width: 720px) {
+  .ce-comparison,
+  .ce-poison-split,
+  .ce-strategy-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .ce-model-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ce-usecase-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .ce-rag-pipeline {
+    flex-direction: column;
+  }
+
+  .ce-rag-connector {
+    transform: rotate(90deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .ce-model-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ce-usecase-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}

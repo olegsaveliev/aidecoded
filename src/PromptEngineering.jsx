@@ -1047,10 +1047,17 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const activeStepRef = useRef(null)
 
   useEffect(() => {
     if (stage > maxStageReached) setMaxStageReached(stage)
   }, [stage, maxStageReached])
+
+  useEffect(() => {
+    if (activeStepRef.current) {
+      activeStepRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    }
+  }, [stage])
 
   function goToStage(target) {
     if (target < 0 || target > maxStageReached) return
@@ -1166,42 +1173,46 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
       {/* Stepper + stage content — only when journey has started (stage >= 0) */}
       {stage >= 0 && !showFinal && (
         <>
-          <div className="how-stepper pe-stepper how-fade-in">
-            {STAGES.map((s, i) => {
-              const isCompleted = stage > i
-              const isCurrent = stage === i
-              const isActive = stage >= i
-              const isClickable = i <= maxStageReached && !isCurrent
-              return (
-                <div key={s.key} className="how-step-wrapper">
-                  <div
-                    className={`how-step ${isActive ? 'how-step-active' : ''} ${isCurrent ? 'how-step-current' : ''} ${isCompleted ? 'how-step-completed' : ''} ${isClickable ? 'how-step-clickable' : ''}`}
-                    onClick={isClickable ? () => goToStage(i) : undefined}
-                  >
-                    <div className="how-step-num">
-                      {isCompleted ? (
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                      ) : (
-                        i + 1
+          <div className="how-stepper-wrapper how-fade-in">
+            <div className="how-stepper pe-stepper">
+              <div className="how-stepper-inner">
+                {STAGES.map((s, i) => {
+                  const isCompleted = stage > i
+                  const isCurrent = stage === i
+                  const isActive = stage >= i
+                  const isClickable = i <= maxStageReached && !isCurrent
+                  return (
+                    <div key={s.key} className="how-step-wrapper" ref={isCurrent ? activeStepRef : null}>
+                      <div
+                        className={`how-step ${isActive ? 'how-step-active' : ''} ${isCurrent ? 'how-step-current' : ''} ${isCompleted ? 'how-step-completed' : ''} ${isClickable ? 'how-step-clickable' : ''}`}
+                        onClick={isClickable ? () => goToStage(i) : undefined}
+                      >
+                        <div className="how-step-num">
+                          {isCompleted ? (
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                          ) : (
+                            i + 1
+                          )}
+                        </div>
+                        <div className="how-step-label">
+                          {s.label}
+                          <Tooltip text={STAGE_TOOLTIPS[s.key]} />
+                        </div>
+                      </div>
+                      {i < STAGES.length - 1 && (
+                        <div className={`how-step-arrow ${stage > i ? 'how-arrow-active' : ''}`}>
+                          <svg width="24" height="12" viewBox="0 0 24 12">
+                            <path d="M0 6h20M16 1l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
                       )}
                     </div>
-                    <div className="how-step-label">
-                      {s.label}
-                      <Tooltip text={STAGE_TOOLTIPS[s.key]} />
-                    </div>
-                  </div>
-                  {i < STAGES.length - 1 && (
-                    <div className={`how-step-arrow ${stage > i ? 'how-arrow-active' : ''}`}>
-                      <svg width="24" height="12" viewBox="0 0 24 12">
-                        <path d="M0 6h20M16 1l5 5-5 5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                  )}
-                </div>
-              )
-            })}
+                  )
+                })}
+              </div>
+            </div>
           </div>
 
           <div className="how-content">

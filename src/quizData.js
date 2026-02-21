@@ -210,6 +210,59 @@ export const promptEngineeringQuiz = [
   },
 ]
 
+export const contextEngineeringQuiz = [
+  {
+    question: 'What is a context window?',
+    options: ['A browser popup', 'Everything the AI can see when generating a response', 'A type of neural network', 'A prompt template'],
+    correct: 1,
+  },
+  {
+    question: 'What happens when the context window is full?',
+    options: ['The AI crashes', 'Oldest content gets dropped', 'The response gets shorter', 'Nothing changes'],
+    correct: 1,
+  },
+  {
+    question: 'What is "context poisoning"?',
+    options: ['A security attack', 'Including bad/contradictory info that confuses the AI', 'Using too many tokens', 'A type of prompt injection'],
+    correct: 1,
+  },
+  {
+    question: 'What does RAG stand for?',
+    options: ['Random Answer Generation', 'Retrieval Augmented Generation', 'Recursive AI Generation', 'Ranked Answer Grouping'],
+    correct: 1,
+  },
+  {
+    question: 'Which model has the largest context window?',
+    options: ['GPT-3.5 (16k)', 'GPT-4o (128k)', 'Gemini 1.5 (1M tokens)', 'Claude 3 (200k)'],
+    correct: 2,
+  },
+  {
+    question: 'The "Sandwich Method" means:',
+    options: ['Breaking context into layers', 'Instructions + Content + Instructions again', 'Alternating user and AI messages', 'Splitting documents in half'],
+    correct: 1,
+  },
+  {
+    question: 'What is a vector database used for in RAG?',
+    options: ['Storing images', 'Finding semantically similar document chunks', 'Training new models', 'Caching API responses'],
+    correct: 1,
+  },
+  {
+    question: 'Why should you NOT paste entire documents into context?',
+    options: ['It costs too much', 'Irrelevant content dilutes focus and wastes tokens', "AI can't read long documents", 'It slows down the response'],
+    correct: 1,
+  },
+  {
+    question: 'Context refresh every 10 messages helps because:',
+    options: ['It saves money', 'It prevents context drift in long conversations', 'It makes AI faster', "It's required by the API"],
+    correct: 1,
+  },
+  {
+    question: 'What makes RAG powerful for enterprises?',
+    options: ['It trains a new custom model', 'It makes AI know your docs without retraining', 'It reduces API costs to zero', 'It works without an internet connection'],
+    correct: 1,
+  },
+]
+
 export const generationQuiz = [
   {
     question: 'How does an LLM actually generate text?',

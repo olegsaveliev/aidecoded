@@ -58,6 +58,15 @@ const CARDS = [
     tagColor: 'green',
     accent: '#22c55e',
   },
+  {
+    id: 'context-engineering',
+    icon: '🧩',
+    title: 'Context Engineering',
+    description: 'Learn how to give AI the right context to get dramatically better results every time',
+    tag: 'Practical',
+    tagColor: 'green',
+    accent: '#00c7be',
+  },
 ]
 
 function HomeScreen({ onSelectTab }) {

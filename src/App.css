@@ -1611,13 +1611,55 @@
   color: #fff;
 }
 
-/* Stepper */
+/* Stepper — scrollable wrapper with fade edges */
+.how-stepper-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.how-stepper-wrapper::before,
+.how-stepper-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 32px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.how-stepper-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-primary), transparent);
+}
+
+.how-stepper-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-primary), transparent);
+}
+
 .how-stepper {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 0;
-  padding: 4px 0 8px;
+  padding: 8px 0 12px;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.how-stepper::-webkit-scrollbar {
+  display: none;
+}
+
+.how-stepper-inner {
+  display: flex;
+  align-items: center;
+  min-width: max-content;
+  padding: 0 24px;
+  gap: 0;
+  margin: 0 auto;
 }
 
 .how-step-wrapper {
@@ -3811,10 +3853,6 @@
 }
 
 /* Stepper overrides for 8 stages */
-.pe-stepper {
-  flex-wrap: wrap;
-  gap: 2px;
-}
 .pe-stepper .how-step {
   padding: 5px 8px;
 }
