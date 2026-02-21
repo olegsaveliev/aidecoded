@@ -313,5 +313,17 @@
 
   .nav-hamburger {
     display: flex;
+    top: 12px;
+    left: 16px;
+  }
+
+  .nav-mobile-overlay {
+    padding: 64px 20px 40px;
+  }
+
+  .nav-mobile-item {
+    height: 48px;
+    font-size: 15px;
+    min-height: 44px;
   }
 }

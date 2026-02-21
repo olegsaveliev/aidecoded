@@ -167,6 +167,7 @@ function App() {
   const [topP, setTopP] = useState(1)
 
   const [showPlaygroundEntry, setShowPlaygroundEntry] = useState(true)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true)
 
   // Reset entry screen when navigating to playground tab
   useEffect(() => {
@@ -499,7 +500,14 @@ function App() {
     <div className={`app ${!showSidebar ? 'app-no-sidebar' : ''} app-fade-in`}>
       <NeuronBackground />
       {showSidebar && (
-        <aside className="sidebar">
+        <aside className={`sidebar ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+          <button
+            className="sidebar-toggle-mobile"
+            onClick={() => setSidebarCollapsed((c) => !c)}
+          >
+            <span>Settings</span>
+            <span>{sidebarCollapsed ? '\u25BC' : '\u25B2'}</span>
+          </button>
           <div className="sidebar-section">
             <h2>
               Model

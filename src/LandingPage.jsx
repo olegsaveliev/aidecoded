@@ -7,6 +7,15 @@ import './LandingPage.css'
 const TAGLINE = 'Your interactive journey into AI'
 const TAGLINE_CHAR_DELAY = 40
 
+const MOBILE_MODULES = [
+  { id: 'playground', icon: '\uD83D\uDCAC', label: 'Playground' },
+  { id: 'tokenizer', icon: '\uD83E\uDDE9', label: 'Tokenizer' },
+  { id: 'how-llms-work', icon: '\uD83E\uDDE0', label: 'How LLMs Work' },
+  { id: 'generation', icon: '\u2728', label: 'Generation' },
+  { id: 'prompt-engineering', icon: '\uD83C\uDFAF', label: 'Prompting' },
+  { id: 'rag', icon: '\uD83D\uDD0D', label: 'RAG' },
+]
+
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
   const [titleDone, setTitleDone] = useState(false)
   const [taglineCharCount, setTaglineCharCount] = useState(0)
@@ -58,6 +67,17 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
         <div className="landing-network-wrapper">
           {typingDone && <NeuralNetworkCanvas onSelectTab={handleNodeSelect} />}
         </div>
+
+        {typingDone && (
+          <div className="landing-mobile-grid">
+            {MOBILE_MODULES.map((m) => (
+              <button key={m.id} className="landing-mobile-card" onClick={() => handleNodeSelect(m.id)}>
+                <div className="landing-mobile-card-icon">{m.icon}</div>
+                <div className="landing-mobile-card-label">{m.label}</div>
+              </button>
+            ))}
+          </div>
+        )}
 
         <button className="landing-cta" onClick={onGetStarted}>
           Explore All Modules &rarr;

@@ -717,6 +717,28 @@
   }
 }
 
+@media (max-width: 768px) {
+  .ce-root {
+    padding: 0 16px 40px;
+  }
+
+  .ce-window-rect {
+    height: 280px;
+  }
+
+  .ce-model-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ce-usecase-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ce-template-output {
+    font-size: 11px;
+  }
+}
+
 @media (max-width: 480px) {
   .ce-model-cards {
     grid-template-columns: 1fr 1fr;

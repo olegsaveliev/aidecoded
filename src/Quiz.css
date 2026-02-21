@@ -356,3 +356,71 @@
 .quiz-launch-btn:hover {
   background: var(--accent-hover);
 }
+
+/* ── Mobile Responsive ── */
+
+@media (max-width: 768px) {
+  .quiz-container {
+    padding: 20px 16px 40px;
+  }
+
+  .quiz-card {
+    padding: 24px 18px 20px;
+    border-radius: 16px;
+  }
+
+  .quiz-question {
+    font-size: 17px;
+    margin-bottom: 20px;
+  }
+
+  .quiz-option {
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 12px;
+  }
+
+  .quiz-option-letter {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+  }
+
+  .quiz-result-card {
+    padding: 32px 20px;
+  }
+
+  .quiz-score-circle-wrapper {
+    width: 120px;
+    height: 120px;
+  }
+
+  .quiz-score-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .quiz-score-circle-value {
+    font-size: 28px;
+  }
+
+  .quiz-result-message {
+    font-size: 16px;
+  }
+
+  .quiz-result-actions {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .quiz-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .quiz-launch-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

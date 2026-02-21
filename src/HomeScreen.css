@@ -229,6 +229,48 @@
   }
 }
 
+@media (max-width: 768px) {
+  .home-screen {
+    padding: 32px 16px;
+  }
+
+  .home-welcome {
+    font-size: 22px;
+    margin-bottom: 24px;
+    padding: 0;
+  }
+
+  .home-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding: 0;
+    gap: 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .home-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-filter-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .home-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 100%;
+  }
+
+  .home-card {
+    padding: 16px;
+  }
+}
+
 @media (max-width: 500px) {
   .home-grid {
     grid-template-columns: 1fr;
