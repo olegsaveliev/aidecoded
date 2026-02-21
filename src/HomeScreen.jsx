@@ -12,6 +12,7 @@ const CARDS = [
     tag: 'Interactive',
     tagColor: 'green',
     accent: '#0071e3',
+    group: '🛠️ Tools',
   },
   {
     id: 'tokenizer',
@@ -21,6 +22,7 @@ const CARDS = [
     tag: 'Visual',
     tagColor: 'purple',
     accent: '#8b5cf6',
+    group: '🛠️ Tools',
   },
   {
     id: 'generation',
@@ -30,6 +32,7 @@ const CARDS = [
     tag: 'Interactive',
     tagColor: 'green',
     accent: '#eab308',
+    group: '🛠️ Tools',
   },
   {
     id: 'how-llms-work',
@@ -39,6 +42,7 @@ const CARDS = [
     tag: 'Journey',
     tagColor: 'blue',
     accent: '#ec4899',
+    group: '🧠 Foundations',
   },
   {
     id: 'model-training',
@@ -48,6 +52,7 @@ const CARDS = [
     tag: 'Journey',
     tagColor: 'blue',
     accent: '#f97316',
+    group: '🧠 Foundations',
   },
   {
     id: 'prompt-engineering',
@@ -57,6 +62,7 @@ const CARDS = [
     tag: 'Practical',
     tagColor: 'green',
     accent: '#22c55e',
+    group: '💡 Skills',
   },
   {
     id: 'context-engineering',
@@ -66,6 +72,7 @@ const CARDS = [
     tag: 'Practical',
     tagColor: 'green',
     accent: '#00c7be',
+    group: '💡 Skills',
   },
   {
     id: 'rag',
@@ -75,6 +82,7 @@ const CARDS = [
     tag: 'Journey',
     tagColor: 'blue',
     accent: '#5856D6',
+    group: '⚡ Advanced',
   },
   {
     id: 'machine-learning',
@@ -84,6 +92,7 @@ const CARDS = [
     tag: 'Technical',
     tagColor: 'purple',
     accent: '#AF52DE',
+    group: '🧠 Foundations',
   },
 ]
 
@@ -116,6 +125,7 @@ function HomeScreen({ onSelectTab }) {
               tabIndex={visible ? 0 : -1}
             >
               <span className={`home-card-tag home-tag-${card.tagColor}`}>{card.tag}</span>
+              <span className="home-card-group">{card.group}</span>
               <span className="home-card-icon">{card.icon}</span>
               <span className="home-card-title">{card.title}</span>
               <span className="home-card-desc">{card.description}</span>

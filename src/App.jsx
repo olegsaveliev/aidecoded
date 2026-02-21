@@ -11,6 +11,7 @@ import RAG from './RAG.jsx'
 import MachineLearning from './MachineLearning.jsx'
 import LandingPage from './LandingPage.jsx'
 import HomeScreen from './HomeScreen.jsx'
+import NavDropdown from './NavDropdown.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
@@ -574,39 +575,29 @@ function App() {
       )}
 
       <main className="main">
-        <header className="header">
+        <header className="header header-grouped">
           <canvas ref={headerCanvasRef} className="header-canvas" />
-          <button
-            className="theme-toggle"
-            onClick={() => setDarkMode((d) => !d)}
-            aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            <span className={`theme-toggle-track ${darkMode ? 'theme-toggle-dark' : ''}`}>
-              <span className="theme-toggle-icon theme-toggle-sun">☀️</span>
-              <span className="theme-toggle-icon theme-toggle-moon">🌙</span>
-              <span className="theme-toggle-thumb" />
-            </span>
-          </button>
-          <div className="header-top">
+          <div className="header-left">
             <div className="header-brand header-brand-clickable" onClick={handleGoHome} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleGoHome()}>
-              <img src={logoImg} alt="AI Decoded" className="header-logo" />
               <TypewriterTitle className="header-title" />
             </div>
-            <p className="header-tagline">Your interactive journey into AI</p>
           </div>
-          {!showHome && (
-            <nav className="segmented-control">
-              {['playground', 'tokenizer', 'generation', 'how-llms-work', 'model-training', 'prompt-engineering', 'context-engineering', 'rag', 'machine-learning'].map((tab) => (
-                <button
-                  key={tab}
-                  className={`segment ${activeTab === tab ? 'segment-active' : ''}`}
-                  onClick={() => setActiveTab(tab)}
-                >
-                  {tab === 'how-llms-work' ? 'How LLMs Work' : tab === 'model-training' ? 'Model Training' : tab === 'prompt-engineering' ? 'Prompt Engineering' : tab === 'context-engineering' ? 'Context Engineering' : tab === 'rag' ? 'RAG' : tab === 'machine-learning' ? 'Machine Learning' : tab.charAt(0).toUpperCase() + tab.slice(1)}
-                </button>
-              ))}
-            </nav>
-          )}
+          <div className="header-center">
+            <NavDropdown activeTab={activeTab} onSelectTab={handleSelectTab} showHome={showHome} />
+          </div>
+          <div className="header-right">
+            <button
+              className="theme-toggle"
+              onClick={() => setDarkMode((d) => !d)}
+              aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            >
+              <span className={`theme-toggle-track ${darkMode ? 'theme-toggle-dark' : ''}`}>
+                <span className="theme-toggle-icon theme-toggle-sun">☀️</span>
+                <span className="theme-toggle-icon theme-toggle-moon">🌙</span>
+                <span className="theme-toggle-thumb" />
+              </span>
+            </button>
+          </div>
         </header>
 
         <div className={`tab-content-wrapper ${homeTransition ? 'tab-content-fading' : ''}`}>

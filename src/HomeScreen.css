@@ -173,6 +173,15 @@
   color: #93c5fd;
 }
 
+/* Group category tag */
+.home-card-group {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text-tertiary);
+  margin-bottom: 2px;
+}
+
 .home-card-icon {
   font-size: 32px;
   line-height: 1;
