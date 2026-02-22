@@ -70,7 +70,7 @@
   opacity: 0.5;
 }
 
-.ale-room-box-current {
+.ale-room-box.ale-room-box-current {
   background: rgba(245, 158, 11, 0.08);
   border: 1.5px solid #F59E0B;
   box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
@@ -89,7 +89,7 @@
   }
 }
 
-.ale-room-box-completed {
+.ale-room-box.ale-room-box-completed {
   background: rgba(52, 199, 89, 0.06);
   border: 1.5px solid #34C759;
   cursor: pointer;
@@ -319,18 +319,18 @@
   }
 }
 
-.ale-data-card-selected {
+.ale-data-card.ale-data-card-selected {
   border-color: #F59E0B;
   background: rgba(245, 158, 11, 0.06);
 }
 
-.ale-data-card-correct {
+.ale-data-card.ale-data-card-correct {
   border-color: #34C759;
   background: rgba(52, 199, 89, 0.06);
   animation: roomComplete 0.3s ease-out;
 }
 
-.ale-data-card-wrong {
+.ale-data-card.ale-data-card-wrong {
   animation: lockShake 0.3s ease-out;
   border-color: #FF3B30;
 }
@@ -682,28 +682,28 @@
   }
 }
 
-.ale-word-node-selected {
+.ale-word-node.ale-word-node-selected {
   border-color: #F59E0B;
   background: rgba(245, 158, 11, 0.08);
   box-shadow: 0 0 8px rgba(245, 158, 11, 0.2);
 }
 
-.ale-word-node-correct {
+.ale-word-node.ale-word-node-correct {
   border-color: #34C759;
   background: rgba(52, 199, 89, 0.08);
 }
 
-.ale-word-node-wrong {
+.ale-word-node.ale-word-node-wrong {
   border-color: #FF3B30;
   animation: lockShake 0.3s ease-out;
 }
 
-.ale-word-node-highlight {
+.ale-word-node.ale-word-node-highlight {
   border-color: #0071E3;
   background: rgba(0, 113, 227, 0.06);
 }
 
-.ale-word-node-hint {
+.ale-word-node.ale-word-node-hint {
   border-color: rgba(245, 158, 11, 0.5);
   background: rgba(245, 158, 11, 0.06);
   animation: hintPulse 1.5s ease-in-out infinite;
@@ -776,18 +776,18 @@
   }
 }
 
-.ale-ingredient-selected {
+.ale-ingredient.ale-ingredient-selected {
   border-color: #F59E0B;
   background: rgba(245, 158, 11, 0.08);
   color: #F59E0B;
 }
 
-.ale-ingredient-correct {
+.ale-ingredient.ale-ingredient-correct {
   border-color: #34C759;
   background: rgba(52, 199, 89, 0.08);
 }
 
-.ale-ingredient-wrong {
+.ale-ingredient.ale-ingredient-wrong {
   border-color: #FF3B30;
   background: rgba(255, 59, 48, 0.08);
   color: #FF3B30;
@@ -913,13 +913,13 @@
   }
 }
 
-.ale-problem-option-correct {
+.ale-problem-option.ale-problem-option-correct {
   border-color: #34C759;
   background: rgba(52, 199, 89, 0.08);
   cursor: default;
 }
 
-.ale-problem-option-wrong {
+.ale-problem-option.ale-problem-option-wrong {
   border-color: #FF3B30;
   animation: lockShake 0.3s ease-out;
 }
