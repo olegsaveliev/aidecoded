@@ -355,12 +355,12 @@ function RAGViz({ active }) {
   const timerRef = useRef(null)
 
   const pipelineSteps = [
-    { num: '1', label: 'User asks question', icon: <QuestionIcon size={18} />, color: '#0071e3' },
-    { num: '2', label: 'Question → embedding (vector)', icon: <HashIcon size={18} />, color: '#8b5cf6' },
-    { num: '3', label: 'Vector DB searched', icon: <SearchIcon size={18} />, color: '#ff9500' },
-    { num: '4', label: 'Top chunks retrieved', icon: <FileIcon size={18} />, color: '#34c759' },
-    { num: '5', label: 'Chunks added to context', icon: <PackageIcon size={18} />, color: '#00c7be' },
-    { num: '6', label: 'AI answers with context', icon: <RobotIcon size={18} />, color: '#af52de' },
+    { num: '1', label: 'User asks question', icon: <QuestionIcon size={18} color="#0071e3" />, color: '#0071e3' },
+    { num: '2', label: 'Question → embedding (vector)', icon: <HashIcon size={18} color="#8b5cf6" />, color: '#8b5cf6' },
+    { num: '3', label: 'Vector DB searched', icon: <SearchIcon size={18} color="#ff9500" />, color: '#ff9500' },
+    { num: '4', label: 'Top chunks retrieved', icon: <FileIcon size={18} color="#34c759" />, color: '#34c759' },
+    { num: '5', label: 'Chunks added to context', icon: <PackageIcon size={18} color="#00c7be" />, color: '#00c7be' },
+    { num: '6', label: 'AI answers with context', icon: <RobotIcon size={18} color="#af52de" />, color: '#af52de' },
   ]
 
   useEffect(() => {
@@ -715,7 +715,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="context-engineering" size={48} style={{ color: '#00c7be' }} />}
+        icon={<ModuleIcon module="context-engineering" size={48} style={{ color: '#34C759' }} />}
         title="Context Engineering"
         description="Prompt Engineering is about HOW you ask. Context Engineering is about WHAT you include. Learn how to craft the perfect context window to get consistently great AI results."
         buttonText="Start Learning"

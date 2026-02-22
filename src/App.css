@@ -412,7 +412,7 @@
   z-index: 1;
   display: inline-flex;
   background: var(--bg-secondary);
-  border-radius: 9px;
+  border-radius: 10px;
   padding: 3px;
   gap: 2px;
 }
@@ -425,7 +425,7 @@
   font-size: 13px;
   font-weight: 500;
   font-family: inherit;
-  border-radius: 7px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -673,7 +673,7 @@
 .send-btn {
   background: var(--accent);
   color: #fff;
-  border: none;
+  border: 1.5px solid transparent;
   border-radius: 22px;
   width: 44px;
   height: 44px;
@@ -1030,7 +1030,7 @@
 .gen-step-btn,
 .gen-auto-btn,
 .gen-reset-btn {
-  border: none;
+  border: 1.5px solid transparent;
   border-radius: 10px;
   padding: 10px 22px;
   font-size: 14px;
@@ -1060,7 +1060,7 @@
 
 .gen-auto-btn {
   background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   color: var(--text-primary);
 }
 
@@ -1086,7 +1086,7 @@
 
 .gen-reset-btn {
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   color: var(--text-secondary);
 }
 
@@ -2640,7 +2640,7 @@
 
 .preset-btn {
   background: var(--bg-input);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 18px;
   padding: 5px 14px;
   font-size: 12px;
@@ -2676,7 +2676,7 @@
 
 .suggestion-chip {
   background: var(--bg-input);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 20px;
   padding: 8px 18px;
   font-size: 13px;
@@ -5338,7 +5338,7 @@
   .header-grouped .header-logo {
     width: 30px;
     height: 30px;
-    border-radius: 7px;
+    border-radius: 8px;
   }
 
   .header-grouped .header-brand {

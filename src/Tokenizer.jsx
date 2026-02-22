@@ -23,7 +23,7 @@ const SUGGESTIONS = [
 
 const FUN_FACTS = [
   'The word "token" itself is 1 token!',
-  'Emojis are usually 1\u20132 tokens \ud83c\udf89',
+  'Emojis are usually 1\u20132 tokens',
   'Code is often more token-efficient than plain English',
   'GPT-4 "reads" your entire conversation as one long token sequence',
   'The Bible is approximately 800,000 tokens',
@@ -68,7 +68,7 @@ function Tokenizer({ onGoHome }) {
   if (showEntry) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="tokenizer" size={48} style={{ color: '#8b5cf6' }} />}
+        icon={<ModuleIcon module="tokenizer" size={48} style={{ color: '#AF52DE' }} />}
         title="Token Visualizer"
         description="Type any text and watch how AI breaks it into tokens in real time. Understand why AI has token limits not word limits — and how it actually reads your text."
         buttonText="Start Tokenizing"

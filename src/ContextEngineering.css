@@ -753,10 +753,10 @@
 
 @media (max-width: 480px) {
   .ce-model-cards {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .ce-usecase-cards {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }

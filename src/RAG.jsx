@@ -132,13 +132,13 @@ function PipelineViz({ active }) {
   ]
 
   const querySteps = [
-    { icon: <QuestionIcon size={18} />, label: 'User Question' },
-    { icon: <HashIcon size={18} />, label: 'Convert to Embedding' },
-    { icon: <SearchIcon size={18} />, label: 'Search Vector DB' },
-    { icon: <FileIcon size={18} />, label: 'Retrieve Top Chunks' },
-    { icon: <PackageIcon size={18} />, label: 'Inject into Context' },
-    { icon: <RobotIcon size={18} />, label: 'LLM Generates Answer' },
-    { icon: <CheckIcon size={18} />, label: 'Grounded Answer' },
+    { icon: <QuestionIcon size={18} color="#5856D6" />, label: 'User Question' },
+    { icon: <HashIcon size={18} color="#5856D6" />, label: 'Convert to Embedding' },
+    { icon: <SearchIcon size={18} color="#5856D6" />, label: 'Search Vector DB' },
+    { icon: <FileIcon size={18} color="#5856D6" />, label: 'Retrieve Top Chunks' },
+    { icon: <PackageIcon size={18} color="#5856D6" />, label: 'Inject into Context' },
+    { icon: <RobotIcon size={18} color="#5856D6" />, label: 'LLM Generates Answer' },
+    { icon: <CheckIcon size={18} color="#34C759" />, label: 'Grounded Answer' },
   ]
 
   useEffect(() => {
@@ -316,7 +316,7 @@ function ChunkingViz({ active }) {
     {
       name: 'Fixed Size',
       tag: 'Simple',
-      icon: <RulerIcon size={18} />,
+      icon: <RulerIcon size={18} color="#8E8E93" />,
       desc: 'Split every 500 tokens',
       visual: ['Chunk 1: 500 tokens', 'Chunk 2: 500 tokens', 'Chunk 3: 500 tokens'],
       pro: 'Simple to implement',
@@ -325,7 +325,7 @@ function ChunkingViz({ active }) {
     {
       name: 'Semantic',
       tag: 'Better',
-      icon: <MemoIcon size={18} />,
+      icon: <MemoIcon size={18} color="#5856D6" />,
       desc: 'Split at paragraph/section boundaries',
       visual: ['[Introduction]', '[Section 1]', '[Section 2]'],
       pro: 'Preserves meaning',
@@ -334,7 +334,7 @@ function ChunkingViz({ active }) {
     {
       name: 'Hierarchical',
       tag: 'Best',
-      icon: <ConstructionIcon size={18} />,
+      icon: <ConstructionIcon size={18} color="#34c759" />,
       desc: 'Small chunks with parent context',
       visual: ['[Summary] → [Section] → [Paragraph]'],
       pro: 'Multi-level retrieval',
@@ -741,7 +741,7 @@ function RAG({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="rag" size={48} style={{ color: '#5856D6' }} />}
+        icon={<ModuleIcon module="rag" size={48} style={{ color: '#FF9500' }} />}
         title="RAG — Retrieval Augmented Generation"
         description="Ever wonder how ChatGPT plugins work? Or how companies build AI that knows their internal docs? That's RAG — the most powerful enterprise AI technique available today. No model training required."
         buttonText="Start Learning"

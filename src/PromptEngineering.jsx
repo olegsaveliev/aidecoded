@@ -1155,7 +1155,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="prompt-engineering" size={48} style={{ color: '#22c55e' }} />}
+        icon={<ModuleIcon module="prompt-engineering" size={48} style={{ color: '#34C759' }} />}
         title="Prompt Engineering"
         description="Learn 8 powerful techniques to get dramatically better results from any AI — with live examples you can try yourself."
         buttonText="Start Learning"

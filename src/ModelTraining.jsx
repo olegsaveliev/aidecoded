@@ -711,7 +711,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="model-training" size={48} style={{ color: '#f97316' }} />}
+        icon={<ModuleIcon module="model-training" size={48} style={{ color: '#FF9500' }} />}
         title="How AI Models Are Built"
         description="Follow the complete journey from raw internet data to a working AI assistant, in 6 interactive stages. No PhD required."
         buttonText="Start the Journey"

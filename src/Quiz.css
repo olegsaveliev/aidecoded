@@ -307,11 +307,11 @@
 
 .quiz-btn {
   padding: 12px 24px;
-  border-radius: 12px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  border: none;
+  border: 1.5px solid transparent;
   transition: all 0.18s ease;
 }
 
@@ -328,7 +328,7 @@
 .quiz-btn-secondary {
   background: var(--bg-primary, #f5f5f7);
   color: var(--text-primary, #1d1d1f);
-  border: 1px solid var(--border-light, #e5e5ea);
+  border: 1.5px solid var(--border-light, #e5e5ea);
 }
 
 .quiz-btn-secondary:hover {
@@ -417,6 +417,7 @@
   .quiz-btn {
     width: 100%;
     text-align: center;
+    min-height: 44px;
   }
 
   .quiz-launch-btn {

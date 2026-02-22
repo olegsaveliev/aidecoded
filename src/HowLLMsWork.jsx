@@ -444,7 +444,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   if (showEntry) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="how-llms-work" size={48} style={{ color: '#ec4899' }} />}
+        icon={<ModuleIcon module="how-llms-work" size={48} style={{ color: '#FF9500' }} />}
         title="How LLMs Work"
         description="Take an interactive journey through every stage an AI goes through to answer your question. From your words to tokens to embeddings to the final response — see it all happen live."
         buttonText="Start the Journey →"

@@ -127,10 +127,11 @@
   flex-shrink: 0;
   background: var(--accent);
   color: #fff;
-  border: none;
+  border: 1.5px solid transparent;
   border-radius: 10px;
-  padding: 14px 36px;
-  font-size: 16px;
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
@@ -211,7 +212,9 @@
   .landing-cta {
     width: calc(100% - 32px);
     margin: 0 16px;
-    padding: 14px 24px;
+    height: 44px;
+    padding: 0 20px;
+    font-size: 14px;
   }
 
   .landing-hint {

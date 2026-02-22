@@ -536,7 +536,7 @@ function App() {
             onClick={() => setSidebarCollapsed((c) => !c)}
           >
             <span>Settings</span>
-            <span>{sidebarCollapsed ? '\u25BC' : '\u25B2'}</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: sidebarCollapsed ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.2s' }}><polyline points="6 9 12 15 18 9" /></svg>
           </button>
           <div className="sidebar-section">
             <h2>

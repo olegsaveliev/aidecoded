@@ -9,12 +9,12 @@ const TAGLINE = 'Your interactive journey into AI'
 const TAGLINE_CHAR_DELAY = 40
 
 const MOBILE_MODULES = [
-  { id: 'playground', label: 'Playground', color: '#0071e3' },
-  { id: 'tokenizer', label: 'Tokenizer', color: '#8b5cf6' },
-  { id: 'how-llms-work', label: 'How LLMs Work', color: '#ec4899' },
-  { id: 'generation', label: 'Generation', color: '#eab308' },
-  { id: 'prompt-engineering', label: 'Prompting', color: '#22c55e' },
-  { id: 'rag', label: 'RAG', color: '#5856D6' },
+  { id: 'playground', label: 'Playground', color: '#0071E3' },
+  { id: 'tokenizer', label: 'Tokenizer', color: '#AF52DE' },
+  { id: 'how-llms-work', label: 'How LLMs Work', color: '#FF9500' },
+  { id: 'generation', label: 'Generation', color: '#0071E3' },
+  { id: 'prompt-engineering', label: 'Prompting', color: '#34C759' },
+  { id: 'rag', label: 'RAG', color: '#FF9500' },
 ]
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {

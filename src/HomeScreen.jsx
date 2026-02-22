@@ -176,7 +176,7 @@ function HomeScreen({ onSelectTab }) {
                 <span className="home-card-group">{card.group}</span>
                 <span className={`home-card-tag home-tag-${card.tag.toLowerCase()}`}>{card.tag}</span>
               </span>
-              <span className="home-card-title"><ModuleIcon module={card.id} size={20} style={{ color: card.accent }} />{card.title}</span>
+              <span className="home-card-title"><ModuleIcon module={card.id} size={20} style={{ color: FILTER_COLORS[card.tag] }} />{card.title}</span>
               <span className="home-card-desc">{card.description}</span>
             </button>
           ))}

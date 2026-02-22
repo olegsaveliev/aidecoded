@@ -215,7 +215,7 @@ function TypesViz({ active }) {
 
   const branches = [
     {
-      icon: <GraduationIcon size={18} />,
+      icon: <GraduationIcon size={18} color="#AF52DE" />,
       name: 'Supervised Learning',
       subtitle: 'Learning from labeled examples',
       types: ['Classification (spam/not spam, cat/dog)', 'Regression (predict house price, stock value)'],
@@ -223,7 +223,7 @@ function TypesViz({ active }) {
       color: '#AF52DE',
     },
     {
-      icon: <SearchIcon size={18} />,
+      icon: <SearchIcon size={18} color="#5856D6" />,
       name: 'Unsupervised Learning',
       subtitle: 'Finding hidden patterns in unlabeled data',
       types: ['Clustering (group similar customers)', 'Dimensionality reduction'],
@@ -231,7 +231,7 @@ function TypesViz({ active }) {
       color: '#5856D6',
     },
     {
-      icon: <GamepadIcon size={18} />,
+      icon: <GamepadIcon size={18} color="#FF9500" />,
       name: 'Reinforcement Learning',
       subtitle: 'Learning through trial and error with rewards',
       types: ['Agent takes actions in environment', 'Gets rewards for good, penalties for bad'],
@@ -262,7 +262,7 @@ function TypesViz({ active }) {
       )}
 
       <div className="ml-types-tree">
-        <div className="ml-types-root"><RobotIcon size={18} /> Machine Learning</div>
+        <div className="ml-types-root"><RobotIcon size={18} color="#AF52DE" /> Machine Learning</div>
         <div className="ml-types-branches">
           {branches.map((b, i) => (
             <div
@@ -328,11 +328,11 @@ function SupervisedViz({ active }) {
   ]
 
   const steps = [
-    { num: 1, label: 'Collect Data', icon: <BarChartIcon size={16} /> },
-    { num: 2, label: 'Split Data', icon: <ScissorsIcon size={16} /> },
-    { num: 3, label: 'Train Model', icon: <DumbbellIcon size={16} /> },
-    { num: 4, label: 'Evaluate', icon: <TrendingUpIcon size={16} /> },
-    { num: 5, label: 'Deploy', icon: <RocketIcon size={16} /> },
+    { num: 1, label: 'Collect Data', icon: <BarChartIcon size={16} color="#AF52DE" /> },
+    { num: 2, label: 'Split Data', icon: <ScissorsIcon size={16} color="#AF52DE" /> },
+    { num: 3, label: 'Train Model', icon: <DumbbellIcon size={16} color="#AF52DE" /> },
+    { num: 4, label: 'Evaluate', icon: <TrendingUpIcon size={16} color="#AF52DE" /> },
+    { num: 5, label: 'Deploy', icon: <RocketIcon size={16} color="#AF52DE" /> },
   ]
 
   useEffect(() => {
@@ -743,42 +743,42 @@ function AlgorithmsViz({ active }) {
 
   const algorithms = [
     {
-      icon: <TreeIcon size={18} />,
+      icon: <TreeIcon size={18} color="#AF52DE" />,
       name: 'Decision Tree',
       desc: 'Yes/no splits leading to a decision',
       detail: 'Income > 50k? → Yes → Employment > 2 years? → APPROVE',
       bestFor: 'Explainable decisions, business rules',
     },
     {
-      icon: <PineTreeIcon size={18} />,
+      icon: <PineTreeIcon size={18} color="#AF52DE" />,
       name: 'Random Forest',
       desc: '100 decision trees vote → majority wins',
       detail: 'Multiple trees each see different data, then vote on the answer.',
       bestFor: 'Tabular data, very reliable',
     },
     {
-      icon: <TrendingUpIcon size={18} />,
+      icon: <TrendingUpIcon size={18} color="#AF52DE" />,
       name: 'Linear Regression',
       desc: 'Draw the best straight line through data',
       detail: 'Find the line that minimizes distance to all data points.',
       bestFor: 'Predicting continuous values',
     },
     {
-      icon: <TargetIcon size={18} />,
+      icon: <TargetIcon size={18} color="#AF52DE" />,
       name: 'Support Vector Machine',
       desc: 'Find the widest boundary between classes',
       detail: 'Draw the widest possible margin between two groups of data.',
       bestFor: 'Small datasets, binary classification',
     },
     {
-      icon: <ZapIcon size={18} />,
+      icon: <ZapIcon size={18} color="#AF52DE" />,
       name: 'XGBoost',
       desc: 'Each tree corrects previous tree\'s mistakes',
       detail: 'Gradient boosting builds trees sequentially, each fixing errors.',
       bestFor: 'Kaggle competitions, tabular data champion',
     },
     {
-      icon: <LinkIcon size={18} />,
+      icon: <LinkIcon size={18} color="#AF52DE" />,
       name: 'K-Nearest Neighbors',
       desc: 'Classify by looking at your neighbors',
       detail: 'A new point is classified by the majority vote of its K closest neighbors.',
@@ -851,37 +851,37 @@ function BusinessViz({ active }) {
 
   const industries = [
     {
-      icon: <BankIcon size={20} />,
+      icon: <BankIcon size={20} color="#AF52DE" />,
       name: 'Banking & Finance',
       uses: ['Credit scoring (loan approval)', 'Fraud detection', 'Algorithmic trading', 'Risk assessment'],
       tools: 'XGBoost, Random Forest',
     },
     {
-      icon: <HospitalIcon size={20} />,
+      icon: <HospitalIcon size={20} color="#AF52DE" />,
       name: 'Healthcare',
       uses: ['Disease diagnosis from scans', 'Drug discovery', 'Patient readmission prediction', 'Medical image analysis'],
       tools: 'CNN, ResNet, PyTorch',
     },
     {
-      icon: <CartIcon size={20} />,
+      icon: <CartIcon size={20} color="#AF52DE" />,
       name: 'Retail & E-commerce',
       uses: ['Product recommendations', 'Demand forecasting', 'Price optimization', 'Customer churn prediction'],
       tools: 'Collaborative filtering, LSTM',
     },
     {
-      icon: <CarIcon size={20} />,
+      icon: <CarIcon size={20} color="#AF52DE" />,
       name: 'Transportation',
       uses: ['Self-driving vehicles', 'Route optimization', 'Predictive maintenance', 'Traffic prediction'],
       tools: 'Reinforcement Learning, CNN',
     },
     {
-      icon: <PhoneIcon size={20} />,
+      icon: <PhoneIcon size={20} color="#AF52DE" />,
       name: 'Technology',
       uses: ['Spam filtering', 'Search ranking', 'Ad targeting', 'Content moderation'],
       tools: 'BERT, XGBoost, Neural Networks',
     },
     {
-      icon: <FactoryIcon size={20} />,
+      icon: <FactoryIcon size={20} color="#AF52DE" />,
       name: 'Manufacturing',
       uses: ['Quality control (defect detection)', 'Predictive maintenance', 'Supply chain optimization', 'Energy optimization'],
       tools: 'Computer Vision, Time Series',
@@ -947,14 +947,14 @@ function LifecycleViz({ active }) {
   const [looping, setLooping] = useState(false)
 
   const steps = [
-    { label: 'Business Problem', icon: <TargetIcon size={16} />, pct: 0, desc: 'Define what you want to predict or classify — this shapes everything.' },
-    { label: 'Data Collection', icon: <InboxIcon size={16} />, pct: 20, desc: 'Gather raw data from databases, APIs, surveys, or web scraping.' },
-    { label: 'Data Cleaning & EDA', icon: <BroomIcon size={16} />, pct: 35, desc: 'Fix missing values, remove outliers, and explore patterns in data.' },
-    { label: 'Feature Engineering', icon: <WrenchIcon size={16} />, pct: 15, desc: 'Create new input variables that help the model learn better.' },
-    { label: 'Model Training', icon: <DumbbellIcon size={16} />, pct: 10, desc: 'Feed data into algorithms and let the model learn patterns.' },
-    { label: 'Model Evaluation', icon: <BarChartIcon size={16} />, pct: 10, desc: 'Test on held-out data — check accuracy, precision, recall.' },
-    { label: 'Deployment', icon: <RocketIcon size={16} />, pct: 5, desc: 'Ship the model to production via API, batch jobs, or edge.' },
-    { label: 'Monitoring', icon: <EyeIcon size={16} />, pct: 5, desc: 'Watch for data drift, performance decay — retrain when needed.' },
+    { label: 'Business Problem', icon: <TargetIcon size={16} color="#AF52DE" />, pct: 0, desc: 'Define what you want to predict or classify — this shapes everything.' },
+    { label: 'Data Collection', icon: <InboxIcon size={16} color="#AF52DE" />, pct: 20, desc: 'Gather raw data from databases, APIs, surveys, or web scraping.' },
+    { label: 'Data Cleaning & EDA', icon: <BroomIcon size={16} color="#AF52DE" />, pct: 35, desc: 'Fix missing values, remove outliers, and explore patterns in data.' },
+    { label: 'Feature Engineering', icon: <WrenchIcon size={16} color="#AF52DE" />, pct: 15, desc: 'Create new input variables that help the model learn better.' },
+    { label: 'Model Training', icon: <DumbbellIcon size={16} color="#AF52DE" />, pct: 10, desc: 'Feed data into algorithms and let the model learn patterns.' },
+    { label: 'Model Evaluation', icon: <BarChartIcon size={16} color="#AF52DE" />, pct: 10, desc: 'Test on held-out data — check accuracy, precision, recall.' },
+    { label: 'Deployment', icon: <RocketIcon size={16} color="#AF52DE" />, pct: 5, desc: 'Ship the model to production via API, batch jobs, or edge.' },
+    { label: 'Monitoring', icon: <EyeIcon size={16} color="#AF52DE" />, pct: 5, desc: 'Watch for data drift, performance decay — retrain when needed.' },
   ]
 
   useEffect(() => {
@@ -1147,7 +1147,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="machine-learning" size={48} style={{ color: '#AF52DE' }} />}
+        icon={<ModuleIcon module="machine-learning" size={48} style={{ color: '#5856D6' }} />}
         title="Machine Learning"
         subtitle="How machines actually learn from data"
         description="Before ChatGPT, before transformers, before all the AI buzz — there was Machine Learning. Understanding ML gives you the foundation to understand everything else in AI. No math degree required."
