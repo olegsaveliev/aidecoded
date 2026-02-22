@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useRef } from 'react'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { CheckIcon, CrossIcon, TipIcon } from './ContentIcons.jsx'
@@ -604,12 +604,14 @@ function AICityBuilder({ onSwitchTab, onGoHome }) {
   const [wrongFlash, setWrongFlash] = useState(null)
   const [showLesson, setShowLesson] = useState(false)
   const [gameComplete, setGameComplete] = useState(false)
+  const resetTimerRef = useRef(null)
 
   const handleAskQuestion = useCallback((qi) => {
     setRevealedClues((prev) => prev.includes(qi) ? prev : [...prev, qi])
   }, [])
 
   const handleDiagnose = useCallback((option) => {
+    if (resetTimerRef.current) clearTimeout(resetTimerRef.current)
     const caseData = CASES[caseIndex]
     if (option === caseData.correct) {
       setDiagnosisState({ selected: option, correct: true })
@@ -621,7 +623,7 @@ function AICityBuilder({ onSwitchTab, onGoHome }) {
       setWrongFlash(Date.now())
       setTimeout(() => setWrongFlash(null), 1000)
       // Allow retry
-      setTimeout(() => setDiagnosisState({ selected: null, correct: false }), 800)
+      resetTimerRef.current = setTimeout(() => setDiagnosisState({ selected: null, correct: false }), 800)
     }
   }, [caseIndex])
 

@@ -398,9 +398,11 @@
   transition: border-color 0.2s, background 0.2s, transform 0.1s;
 }
 
-.acb-option-btn:hover:not(:disabled) {
-  border-color: var(--accent);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .acb-option-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
 }
 
 .acb-option-btn:active:not(:disabled) {
