@@ -10,15 +10,23 @@
 
 /* ── Stepper teal accent ── */
 .ce-stepper .how-step-current .how-step-num {
-  background: #00c7be;
-  color: #fff;
-  border-color: #00c7be;
+  background: #ffffff;
+  color: #00c7be;
+  border: 2px solid #00c7be;
+}
+
+[data-theme="dark"] .ce-stepper .how-step-current .how-step-num {
+  background: #1C1917;
 }
 
 .ce-stepper .how-step-completed .how-step-num {
-  background: #00c7be;
-  border-color: #00c7be;
-  color: #fff;
+  background: #ffffff;
+  border: 2px solid #34c759;
+  color: #34c759;
+}
+
+[data-theme="dark"] .ce-stepper .how-step-completed .how-step-num {
+  background: #1C1917;
 }
 
 .ce-stepper .how-step-active .how-step-label {
@@ -121,8 +129,8 @@
   border: 1px solid var(--border-light);
 }
 
-.ce-comp-bad { border-left: 3px solid #ff3b30; }
-.ce-comp-good { border-left: 3px solid #34c759; }
+.ce-comp-bad { border-left: 2px solid #FF9500; }
+.ce-comp-good { border-left: 2px solid #34C759; }
 
 .ce-comp-label {
   font-size: 12px;
@@ -214,9 +222,9 @@
   align-items: center;
   gap: 8px;
   margin-top: 12px;
-  background: #fff0f0;
-  border: 1px solid #fecaca;
-  border-left: 3px solid #ff3b30;
+  background: #ffffff;
+  border: none;
+  border-left: 2px solid #FF9500;
   color: #dc2626;
   font-size: 13px;
   font-weight: 600;
@@ -225,9 +233,7 @@
 }
 
 [data-theme="dark"] .ce-window-warning {
-  background: rgba(255, 59, 48, 0.1);
-  border-color: rgba(255, 59, 48, 0.3);
-  border-left-color: #ff3b30;
+  background: #1C1917;
 }
 
 .ce-window-warning-icon {
@@ -332,8 +338,8 @@
   border: 1px solid var(--border-light);
 }
 
-.ce-poison-bad { border-top: 3px solid #ff3b30; }
-.ce-poison-good { border-top: 3px solid #34c759; }
+.ce-poison-bad { border-top: 2px solid #FF9500; }
+.ce-poison-good { border-top: 2px solid #34c759; }
 
 .ce-poison-panel-title {
   font-size: 14px;
@@ -475,7 +481,7 @@
   color: var(--accent);
   background: transparent;
   border: 1.5px solid var(--accent);
-  border-radius: 18px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
   margin-top: 16px;
@@ -487,12 +493,18 @@
 }
 
 .ce-rag-summary {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-left: 3px solid #00c7be;
+  background: #ffffff;
+  border: 1px solid #E5E5EA;
+  border-left: 2px solid #00c7be;
   border-radius: var(--radius);
   padding: 16px;
   margin-bottom: 16px;
+}
+
+[data-theme="dark"] .ce-rag-summary {
+  background: #1C1917;
+  border-color: #44403C;
+  border-left-color: #00c7be;
 }
 
 .ce-rag-summary strong {

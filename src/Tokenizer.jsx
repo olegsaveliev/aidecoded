@@ -68,7 +68,7 @@ function Tokenizer({ onGoHome }) {
   if (showEntry) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="tokenizer" size={48} />}
+        icon={<ModuleIcon module="tokenizer" size={48} style={{ color: '#8b5cf6' }} />}
         title="Token Visualizer"
         description="Type any text and watch how AI breaks it into tokens in real time. Understand why AI has token limits not word limits — and how it actually reads your text."
         buttonText="Start Tokenizing"

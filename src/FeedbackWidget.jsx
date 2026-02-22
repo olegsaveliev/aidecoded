@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { NAV_GROUPS, getGroupForTab } from './NavDropdown.jsx'
+import { BugIcon, MemoIcon, TipIcon, StarIcon, ChatIcon, CrossIcon } from './ContentIcons.jsx'
 import './FeedbackWidget.css'
 
 // SETUP: Add FORMSPREE_ID to your .env and Vercel environment variables
@@ -8,10 +9,10 @@ import './FeedbackWidget.css'
 // Submissions arrive at your registered Formspree email
 
 const FEEDBACK_TYPES = [
-  { id: 'bug', icon: '🐛', label: 'Bug Report' },
-  { id: 'wrong-info', icon: '📝', label: 'Wrong Info' },
-  { id: 'suggestion', icon: '💡', label: 'Suggestion' },
-  { id: 'other', icon: '⭐', label: 'Other' },
+  { id: 'bug', icon: <BugIcon size={14} />, label: 'Bug Report' },
+  { id: 'wrong-info', icon: <MemoIcon size={14} />, label: 'Wrong Info' },
+  { id: 'suggestion', icon: <TipIcon size={14} color="#eab308" />, label: 'Suggestion' },
+  { id: 'other', icon: <StarIcon size={14} />, label: 'Other' },
 ]
 
 const PLACEHOLDERS = {
@@ -272,7 +273,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage, minimized, 
           cursor: dragging ? 'grabbing' : 'grab',
         }}
       >
-        <button className="feedback-dismiss" onClick={handleDismiss} aria-label="Close feedback button">✕</button>
+        <button className="feedback-dismiss" onClick={handleDismiss} aria-label="Close feedback button"><CrossIcon size={12} color="#8E8E93" /></button>
         <div className="feedback-bubble-large" />
         <div className="feedback-bubble-small">
           <span />
@@ -296,7 +297,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage, minimized, 
         <div className="feedback-backdrop" onClick={handleBackdropClick}>
           <div className="feedback-modal" ref={modalRef} role="dialog" aria-modal="true">
             <button className="feedback-close" onClick={handleClose} aria-label="Close feedback">
-              ✕
+              <CrossIcon size={14} color="#8E8E93" />
             </button>
 
             {status === 'success' ? (
@@ -309,7 +310,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage, minimized, 
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-                <h2 className="feedback-title">💬 Share Feedback</h2>
+                <h2 className="feedback-title"><ChatIcon size={18} /> Share Feedback</h2>
                 <p className="feedback-subtitle">Found a bug or outdated info? Let us know!</p>
 
                 <div className="feedback-types">

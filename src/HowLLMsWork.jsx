@@ -3,7 +3,7 @@ import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
-import { MemoIcon, TypeIcon, HashIcon, EyeIcon, ZapIcon } from './ContentIcons.jsx'
+import { MemoIcon, TypeIcon, HashIcon, EyeIcon, ZapIcon, TipIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { howLLMsWorkQuiz } from './quizData.js'
@@ -444,7 +444,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   if (showEntry) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="how-llms-work" size={48} />}
+        icon={<ModuleIcon module="how-llms-work" size={48} style={{ color: '#ec4899' }} />}
         title="How LLMs Work"
         description="Take an interactive journey through every stage an AI goes through to answer your question. From your words to tokens to embeddings to the final response — see it all happen live."
         buttonText="Start the Journey →"
@@ -575,7 +575,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                     <strong>Stage 1: Your Prompt</strong>
                   </div>
                   <p>This is where it all begins. Your text is the input to the entire AI pipeline. The clearer and more specific your prompt, the better the AI understands what you want.</p>
-                  <div className="how-info-tip">Adding context like "You are an expert..." as a system prompt dramatically improves responses.</div>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> Adding context like "You are an expert..." as a system prompt dramatically improves responses.</div>
                   <ToolChips tools={HOW_TOOLS[0]} />
                 </div>
                 <div className="how-prompt-bubble">{prompt}</div>
@@ -596,7 +596,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                     <strong>Stage 2: Tokenization</strong>
                   </div>
                   <p>Your text gets split into tokens &mdash; the AI's alphabet. Notice how common words are 1 token but rare or long words split into multiple pieces. This is why AI has token limits, not word limits.</p>
-                  <div className="how-info-tip">The spaces before words are often part of the token itself &mdash; that's why you see '&middot;weather' not 'weather'.</div>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> The spaces before words are often part of the token itself &mdash; that's why you see '&middot;weather' not 'weather'.</div>
                   <ToolChips tools={HOW_TOOLS[1]} />
                 </div>
                 <div className="how-token-display">
@@ -638,7 +638,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                     <strong>Stage 3: Embeddings</strong>
                   </div>
                   <p>Each token becomes a list of numbers (a vector) that captures its meaning mathematically. Words used in similar contexts end up with similar numbers.</p>
-                  <div className="how-info-tip">This is how AI knows that 'king' and 'queen' are related, or that 'Paris' relates to 'France' the same way 'Tokyo' relates to 'Japan'.</div>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> This is how AI knows that 'king' and 'queen' are related, or that 'Paris' relates to 'France' the same way 'Tokyo' relates to 'Japan'.</div>
                   <ToolChips tools={HOW_TOOLS[2]} />
                 </div>
 
@@ -908,7 +908,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                     <strong>Stage 4: Attention</strong>
                   </div>
                   <p>The Transformer looks at every token in relation to every other token simultaneously. The lines show which words 'pay attention' to each other.</p>
-                  <div className="how-info-tip">This is the breakthrough that made modern AI possible &mdash; before Transformers, AI read text word by word like a human. Now it sees the whole picture at once.</div>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> This is the breakthrough that made modern AI possible &mdash; before Transformers, AI read text word by word like a human. Now it sees the whole picture at once.</div>
                   <ToolChips tools={HOW_TOOLS[3]} />
                 </div>
 
@@ -980,7 +980,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                     <strong>Stage 5: Generation</strong>
                   </div>
                   <p>The model predicts the most likely next token based on everything it has learned from training on billions of documents. Then it repeats &mdash; adding one token at a time until the response is complete.</p>
-                  <div className="how-info-tip">There's no 'understanding' happening &mdash; just incredibly sophisticated pattern matching at a scale humans can't comprehend.</div>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> There's no 'understanding' happening &mdash; just incredibly sophisticated pattern matching at a scale humans can't comprehend.</div>
                   <ToolChips tools={HOW_TOOLS[4]} />
                 </div>
 

@@ -5,7 +5,7 @@ import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { promptEngineeringQuiz } from './quizData.js'
-import { CheckIcon, CrossIcon, TipIcon, GearIcon, ChatIcon, RobotIcon, TheaterIcon, WrenchIcon, MemoIcon, SearchIcon, BarChartIcon, PencilIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, TipIcon, GearIcon, ChatIcon, RobotIcon, TheaterIcon, WrenchIcon, MemoIcon, SearchIcon, BarChartIcon, PencilIcon, TargetIcon, FileIcon, LinkIcon, TreeIcon, RefreshIcon, BookIcon, PlayIcon } from './ContentIcons.jsx'
 
 const API_KEY = import.meta.env.OPENAI_API_KEY
 
@@ -75,14 +75,14 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'Zero-Shot', when: 'Clear, well-defined tasks', phrase: '[Role] + [Task] + [Format]' },
-  { technique: 'Few-Shot', when: 'Pattern tasks, classification', phrase: '"Here are examples..."' },
-  { technique: 'Chain of Thought', when: 'Complex reasoning', phrase: '"Think step by step"' },
-  { technique: 'Tree of Thoughts', when: 'Hard problems', phrase: '"Consider 3 approaches..."' },
-  { technique: 'Role Prompting', when: 'Expert answers', phrase: '"You are a senior..."' },
-  { technique: 'System Prompts', when: 'Consistent behavior', phrase: 'Set in system prompt' },
-  { technique: 'Prompt Chaining', when: 'Complex tasks', phrase: 'Break into steps' },
-  { technique: 'Patterns', when: 'Always', phrase: 'Specific + Format + Constraints' },
+  { technique: 'Zero-Shot', when: 'Clear, well-defined tasks', phrase: '[Role] + [Task] + [Format]', icon: <TargetIcon size={24} color="#8E8E93" /> },
+  { technique: 'Few-Shot', when: 'Pattern tasks, classification', phrase: '"Here are examples..."', icon: <FileIcon size={24} color="#8E8E93" /> },
+  { technique: 'Chain of Thought', when: 'Complex reasoning', phrase: '"Think step by step"', icon: <LinkIcon size={24} color="#8E8E93" /> },
+  { technique: 'Tree of Thoughts', when: 'Hard problems', phrase: '"Consider 3 approaches..."', icon: <TreeIcon size={24} color="#8E8E93" /> },
+  { technique: 'Role Prompting', when: 'Expert answers', phrase: '"You are a senior..."', icon: <TheaterIcon size={24} color="#8E8E93" /> },
+  { technique: 'System Prompts', when: 'Consistent behavior', phrase: 'Set in system prompt', icon: <GearIcon size={24} color="#8E8E93" /> },
+  { technique: 'Prompt Chaining', when: 'Complex tasks', phrase: 'Break into steps', icon: <RefreshIcon size={24} color="#8E8E93" /> },
+  { technique: 'Patterns', when: 'Always', phrase: 'Specific + Format + Constraints', icon: <BookIcon size={24} color="#8E8E93" /> },
 ]
 
 async function callOpenAI({ model, temperature, topP, maxTokens, messages }) {
@@ -274,11 +274,11 @@ function ZeroShotViz({ active, model, temperature, topP, maxTokens }) {
       </div>
 
       {phase === 'done' && (
-        <button className="pe-replay-btn" onClick={handleReplay}>▶ Replay animation</button>
+        <button className="pe-replay-btn" onClick={handleReplay}><PlayIcon size={12} /> Replay animation</button>
       )}
 
       <div className="pe-tips">
-        <strong><TipIcon size={14} /> Quick wins:</strong>
+        <strong><TipIcon size={14} color="#eab308" /> Quick wins:</strong>
         <ul>
           <li>Add a role: "You are a..."</li>
           <li>Specify format: "Write as bullet points / table / email"</li>
@@ -343,7 +343,7 @@ Classification:`)
       tag: '3 examples',
       tagColor: '#34c759',
       prompt: 'Classify this email:\n"Server is down" = Urgent\n"Newsletter attached" = Low Priority\n"Review proposal by Friday" = Normal\n\nNow: "Payment system stopped 10 mins ago" → ?',
-      response: 'Urgent ✓',
+      response: <><span>Urgent</span> <CheckIcon size={14} color="#34C759" /></>,
       verdict: 'Confident and correct — pattern learned!',
       verdictClass: 'pe-fs-verdict-good',
     },
@@ -394,7 +394,7 @@ Classification:`)
         )}
         {visibleCards >= demoCards.length && (
           <button className="pe-replay-btn" onClick={() => { setVisibleCards(0); requestAnimationFrame(() => setVisibleCards(1)) }}>
-            ▶ Replay
+            <PlayIcon size={12} /> Replay
           </button>
         )}
       </div>
@@ -420,7 +420,7 @@ function ChainOfThoughtViz({ active, model, temperature, topP, maxTokens }) {
     { num: '1', text: 'Red: 4 × $1.20 = $4.80' },
     { num: '2', text: 'Green: 3 × $0.90 = $2.70' },
     { num: '3', text: 'Yellow: 6 × $1.50 = $9.00' },
-    { num: '✓', text: 'Total: $4.80 + $2.70 + $9.00 = $16.50' },
+    { num: <CheckIcon size={14} color="#34C759" />, text: 'Total: $4.80 + $2.70 + $9.00 = $16.50' },
   ]
 
   useEffect(() => {
@@ -486,7 +486,7 @@ function ChainOfThoughtViz({ active, model, temperature, topP, maxTokens }) {
         <div className="pe-flow-arrow">→</div>
         <div className="pe-flow-box">Step 2</div>
         <div className="pe-flow-arrow">→</div>
-        <div className="pe-flow-box pe-flow-answer">Answer ✓</div>
+        <div className="pe-flow-box pe-flow-answer">Answer <CheckIcon size={12} color="#34C759" /></div>
       </div>
 
       <TryItSection prompt={tryPrompt} setPrompt={setTryPrompt} result={tryResult}
@@ -547,7 +547,7 @@ The question is: A company has $100k budget. Should they invest in hiring 2 new 
         {/* Path A */}
         <rect x="70" y="100" width="100" height="36" rx="8" className={`pe-tree-node ${animStep >= 2 ? 'pe-tree-node-pruned' : ''}`} />
         <text x="120" y="123" className="pe-tree-label">Path A</text>
-        {animStep >= 4 && <text x="120" y="155" className="pe-tree-label" fill="#ff3b30" fontSize="16">✗</text>}
+        {animStep >= 4 && <g transform="translate(120, 150)"><line x1="-5" y1="-5" x2="5" y2="5" stroke="#ff3b30" strokeWidth="2" strokeLinecap="round" /><line x1="5" y1="-5" x2="-5" y2="5" stroke="#ff3b30" strokeWidth="2" strokeLinecap="round" /></g>}
 
         {/* Path B */}
         <rect x="200" y="100" width="100" height="36" rx="8" className={`pe-tree-node ${animStep >= 2 ? 'pe-tree-node-active' : ''}`} />
@@ -556,7 +556,7 @@ The question is: A company has $100k budget. Should they invest in hiring 2 new 
         {/* Path C */}
         <rect x="330" y="100" width="100" height="36" rx="8" className={`pe-tree-node ${animStep >= 2 ? 'pe-tree-node-pruned' : ''}`} />
         <text x="380" y="123" className="pe-tree-label">Path C</text>
-        {animStep >= 4 && <text x="380" y="155" className="pe-tree-label" fill="#ff3b30" fontSize="16">✗</text>}
+        {animStep >= 4 && <g transform="translate(380, 150)"><line x1="-5" y1="-5" x2="5" y2="5" stroke="#ff3b30" strokeWidth="2" strokeLinecap="round" /><line x1="5" y1="-5" x2="-5" y2="5" stroke="#ff3b30" strokeWidth="2" strokeLinecap="round" /></g>}
 
         {/* Path B sub-branches */}
         <path d="M230 136 L200 190" className={`pe-tree-path ${animStep >= 3 ? 'pe-tree-path-active' : ''}`} />
@@ -574,7 +574,8 @@ The question is: A company has $100k budget. Should they invest in hiring 2 new 
 
         {/* Answer node */}
         <rect x="200" y="270" width="100" height="36" rx="8" className={`pe-tree-node ${animStep >= 5 ? 'pe-tree-node-answer' : ''}`} />
-        <text x="250" y="293" className="pe-tree-label" fontWeight="600">{animStep >= 5 ? 'Best Answer ✓' : 'Answer'}</text>
+        <text x="250" y="293" className="pe-tree-label" fontWeight="600">{animStep >= 5 ? 'Best Answer' : 'Answer'}</text>
+        {animStep >= 5 && <g transform="translate(304, 288)"><polyline points="-4 0 -1 3 5 -3" fill="none" stroke="#34C759" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></g>}
       </svg>
 
       <div className="pe-tree-comparison">
@@ -686,7 +687,7 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
               Same question — 4 completely different expert angles. That's the power of role prompting.
             </div>
             <button className="pe-replay-btn" onClick={() => { setVisibleCards(0); requestAnimationFrame(() => setVisibleCards(1)) }}>
-              ▶ Replay
+              <PlayIcon size={12} /> Replay
             </button>
           </>
         )}
@@ -753,7 +754,7 @@ function SystemPromptsViz({ active, model, temperature, topP, maxTokens, onSwitc
     <div className="pe-viz">
       <div className="pe-arch">
         <div className="pe-arch-box pe-arch-system">
-          <div className="pe-arch-box-label"><GearIcon size={14} /> System Prompt</div>
+          <div className="pe-arch-box-label"><GearIcon size={14} color="var(--accent)" /> System Prompt</div>
           <div className="pe-arch-box-desc">Hidden configuration layer</div>
         </div>
         <div className="pe-arch-arrow">+</div>
@@ -763,7 +764,7 @@ function SystemPromptsViz({ active, model, temperature, topP, maxTokens, onSwitc
         </div>
         <div className="pe-arch-arrow">→</div>
         <div className="pe-arch-box pe-arch-ai">
-          <div className="pe-arch-box-label"><RobotIcon size={14} /> AI Response</div>
+          <div className="pe-arch-box-label"><RobotIcon size={14} color="#34c759" /> AI Response</div>
           <div className="pe-arch-box-desc">Shaped by both</div>
         </div>
       </div>
@@ -817,7 +818,7 @@ function SystemPromptsViz({ active, model, temperature, topP, maxTokens, onSwitc
 
       {onSwitchTab && (
         <div className="pe-playground-link">
-          <TipIcon size={14} /> You can already use system prompts in the <button className="pe-link-btn" onClick={() => onSwitchTab('playground')}>Playground tab →</button>
+          <TipIcon size={14} color="#eab308" /> You can already use system prompts in the <button className="pe-link-btn" onClick={() => onSwitchTab('playground')}>Playground tab →</button>
         </div>
       )}
 
@@ -853,9 +854,9 @@ function PromptChainingViz({ active, model, temperature, topP, maxTokens }) {
   const timerRef = useRef(null)
 
   const pipelineSteps = [
-    { icon: <MemoIcon size={14} />, label: 'Step 1: Research', desc: '"List top 3 challenges facing remote teams"', accentClass: 'pe-pipe-blue' },
-    { icon: <SearchIcon size={14} />, label: 'Step 2: Analyze', desc: '"For each challenge suggest one solution"', accentClass: 'pe-pipe-purple' },
-    { icon: <BarChartIcon size={14} />, label: 'Step 3: Summarize', desc: '"Write a 2-sentence executive summary"', accentClass: 'pe-pipe-orange' },
+    { icon: <MemoIcon size={14} color="#0071e3" />, label: 'Step 1: Research', desc: '"List top 3 challenges facing remote teams"', accentClass: 'pe-pipe-blue' },
+    { icon: <SearchIcon size={14} color="#8b5cf6" />, label: 'Step 2: Analyze', desc: '"For each challenge suggest one solution"', accentClass: 'pe-pipe-purple' },
+    { icon: <BarChartIcon size={14} color="#ff9500" />, label: 'Step 3: Summarize', desc: '"Write a 2-sentence executive summary"', accentClass: 'pe-pipe-orange' },
   ]
 
   function startAnimation() {
@@ -933,7 +934,7 @@ function PromptChainingViz({ active, model, temperature, topP, maxTokens }) {
           </div>
         ))}
         {visibleSteps === 0 && (
-          <button className="pe-replay-btn" onClick={startAnimation} style={{ marginTop: 8 }}>▶ Play demo</button>
+          <button className="pe-replay-btn" onClick={startAnimation} style={{ marginTop: 8 }}><PlayIcon size={12} /> Play demo</button>
         )}
       </div>
 
@@ -942,7 +943,7 @@ function PromptChainingViz({ active, model, temperature, topP, maxTokens }) {
       {visibleSteps >= pipelineSteps.length && (
         <div style={{ textAlign: 'center', marginTop: 16 }}>
           {!isRunning && !isDone && (
-            <button className="pe-chain-run-btn" onClick={runChain}>▶ Run this chain with real AI</button>
+            <button className="pe-chain-run-btn" onClick={runChain}><PlayIcon size={12} /> Run this chain with real AI</button>
           )}
           {isRunning && (
             <div className="pe-chain-status">Running Step {runningStep + 1} of {pipelineSteps.length}...</div>
@@ -1037,7 +1038,7 @@ function PatternsViz({ active }) {
       </div>
 
       {visibleCards === 0 && (
-        <button className="pe-replay-btn" onClick={startAnimation} style={{ marginTop: 8 }}>▶ Play demo</button>
+        <button className="pe-replay-btn" onClick={startAnimation} style={{ marginTop: 8 }}><PlayIcon size={12} /> Play demo</button>
       )}
 
       {showRules && (
@@ -1154,7 +1155,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="prompt-engineering" size={48} />}
+        icon={<ModuleIcon module="prompt-engineering" size={48} style={{ color: '#22c55e' }} />}
         title="Prompt Engineering"
         description="Learn 8 powerful techniques to get dramatically better results from any AI — with live examples you can try yourself."
         buttonText="Start Learning"
@@ -1285,7 +1286,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
+                <div className="pe-final-card-emoji">{item.icon}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}

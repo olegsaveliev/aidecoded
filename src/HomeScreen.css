@@ -195,7 +195,7 @@
   position: relative;
   background: var(--bg-surface);
   border: 1px solid var(--border-light);
-  border-left: 4px solid;
+  border-left: 2px solid;
   border-radius: 16px;
   padding: 20px 24px 24px;
   display: flex;

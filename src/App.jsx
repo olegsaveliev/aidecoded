@@ -690,7 +690,7 @@ function App() {
 
         {!showHome && activeTab === 'playground' && showPlaygroundEntry && messages.length === 0 && (
           <EntryScreen
-            icon={<ModuleIcon module="playground" size={48} />}
+            icon={<ModuleIcon module="playground" size={48} style={{ color: '#0071e3' }} />}
             title="AI Playground"
             description="Chat directly with AI and experiment with temperature, model selection and parameters in real time. See how small changes dramatically affect responses."
             buttonText="Open Playground"

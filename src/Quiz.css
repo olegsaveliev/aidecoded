@@ -341,12 +341,12 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 32px;
+  padding: 12px 28px;
   background: var(--accent);
   color: #fff;
-  border: none;
-  border-radius: 100px;
-  font-size: 16px;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;

@@ -9,12 +9,12 @@ const TAGLINE = 'Your interactive journey into AI'
 const TAGLINE_CHAR_DELAY = 40
 
 const MOBILE_MODULES = [
-  { id: 'playground', label: 'Playground' },
-  { id: 'tokenizer', label: 'Tokenizer' },
-  { id: 'how-llms-work', label: 'How LLMs Work' },
-  { id: 'generation', label: 'Generation' },
-  { id: 'prompt-engineering', label: 'Prompting' },
-  { id: 'rag', label: 'RAG' },
+  { id: 'playground', label: 'Playground', color: '#0071e3' },
+  { id: 'tokenizer', label: 'Tokenizer', color: '#8b5cf6' },
+  { id: 'how-llms-work', label: 'How LLMs Work', color: '#ec4899' },
+  { id: 'generation', label: 'Generation', color: '#eab308' },
+  { id: 'prompt-engineering', label: 'Prompting', color: '#22c55e' },
+  { id: 'rag', label: 'RAG', color: '#5856D6' },
 ]
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
@@ -85,7 +85,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
           <div className="landing-mobile-grid">
             {MOBILE_MODULES.map((m) => (
               <button key={m.id} className="landing-mobile-card" onClick={() => handleNodeSelect(m.id)}>
-                <div className="landing-mobile-card-icon"><ModuleIcon module={m.id} size={28} /></div>
+                <div className="landing-mobile-card-icon"><ModuleIcon module={m.id} size={28} style={{ color: m.color }} /></div>
                 <div className="landing-mobile-card-label">{m.label}</div>
               </button>
             ))}

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
-import { CheckIcon, CrossIcon, FileIcon, QuestionIcon, SearchIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, FileIcon, QuestionIcon, SearchIcon, ScissorsIcon, HashIcon, FileCabinetIcon, PackageIcon, RobotIcon, RulerIcon, MemoIcon, ConstructionIcon, BuildingIcon, CartIcon, HospitalIcon, LaptopIcon, TargetIcon, RefreshIcon, RocketIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { ragQuiz } from './quizData.js'
@@ -70,13 +70,13 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'Problem Fit', when: 'Company-specific AI', phrase: 'Retrieve, inject, generate' },
-  { technique: 'RAG Pipeline', when: 'Every RAG system', phrase: 'Index once, query many' },
-  { technique: 'Embeddings', when: 'Semantic search', phrase: 'Meaning = similar vectors' },
-  { technique: 'Chunking', when: 'Document prep', phrase: '200-500 tokens with overlap' },
-  { technique: 'Vector DB', when: 'Production RAG', phrase: 'ANN search at scale' },
-  { technique: 'Use Cases', when: 'Enterprise AI', phrase: 'Knowledge that knows you' },
-  { technique: 'Implementation', when: 'Building RAG', phrase: 'Start simple, iterate' },
+  { technique: 'Problem Fit', when: 'Company-specific AI', phrase: 'Retrieve, inject, generate', icon: <TargetIcon size={24} color="#8E8E93" /> },
+  { technique: 'RAG Pipeline', when: 'Every RAG system', phrase: 'Index once, query many', icon: <RefreshIcon size={24} color="#8E8E93" /> },
+  { technique: 'Embeddings', when: 'Semantic search', phrase: 'Meaning = similar vectors', icon: <HashIcon size={24} color="#8E8E93" /> },
+  { technique: 'Chunking', when: 'Document prep', phrase: '200-500 tokens with overlap', icon: <ScissorsIcon size={24} color="#8E8E93" /> },
+  { technique: 'Vector DB', when: 'Production RAG', phrase: 'ANN search at scale', icon: <FileCabinetIcon size={24} color="#8E8E93" /> },
+  { technique: 'Use Cases', when: 'Enterprise AI', phrase: 'Knowledge that knows you', icon: <BuildingIcon size={24} color="#8E8E93" /> },
+  { technique: 'Implementation', when: 'Building RAG', phrase: 'Start simple, iterate', icon: <RocketIcon size={24} color="#8E8E93" /> },
 ]
 
 /* ═══════════════════════════════════
@@ -125,20 +125,20 @@ function PipelineViz({ active }) {
   const timerRef = useRef(null)
 
   const indexSteps = [
-    { icon: '📄', label: 'Documents' },
-    { icon: '✂️', label: 'Chunk Documents' },
-    { icon: '🔢', label: 'Create Embeddings' },
-    { icon: '🗄️', label: 'Store in Vector DB' },
+    { icon: <FileIcon size={18} />, label: 'Documents' },
+    { icon: <ScissorsIcon size={18} />, label: 'Chunk Documents' },
+    { icon: <HashIcon size={18} />, label: 'Create Embeddings' },
+    { icon: <FileCabinetIcon size={18} />, label: 'Store in Vector DB' },
   ]
 
   const querySteps = [
-    { icon: '❓', label: 'User Question' },
-    { icon: '🔢', label: 'Convert to Embedding' },
-    { icon: '🔍', label: 'Search Vector DB' },
-    { icon: '📄', label: 'Retrieve Top Chunks' },
-    { icon: '📦', label: 'Inject into Context' },
-    { icon: '🤖', label: 'LLM Generates Answer' },
-    { icon: '✅', label: 'Grounded Answer' },
+    { icon: <QuestionIcon size={18} />, label: 'User Question' },
+    { icon: <HashIcon size={18} />, label: 'Convert to Embedding' },
+    { icon: <SearchIcon size={18} />, label: 'Search Vector DB' },
+    { icon: <FileIcon size={18} />, label: 'Retrieve Top Chunks' },
+    { icon: <PackageIcon size={18} />, label: 'Inject into Context' },
+    { icon: <RobotIcon size={18} />, label: 'LLM Generates Answer' },
+    { icon: <CheckIcon size={18} />, label: 'Grounded Answer' },
   ]
 
   useEffect(() => {
@@ -290,7 +290,7 @@ function EmbeddingsViz({ active }) {
               className={`rag-embed-query-btn ${selectedQuery === i ? 'rag-embed-query-active' : ''}`}
               onClick={() => setSelectedQuery(selectedQuery === i ? null : i)}
             >
-              ❓ {q.text}
+              <QuestionIcon size={14} /> {q.text}
             </button>
           ))}
         </div>
@@ -316,7 +316,7 @@ function ChunkingViz({ active }) {
     {
       name: 'Fixed Size',
       tag: 'Simple',
-      icon: '📏',
+      icon: <RulerIcon size={18} />,
       desc: 'Split every 500 tokens',
       visual: ['Chunk 1: 500 tokens', 'Chunk 2: 500 tokens', 'Chunk 3: 500 tokens'],
       pro: 'Simple to implement',
@@ -325,7 +325,7 @@ function ChunkingViz({ active }) {
     {
       name: 'Semantic',
       tag: 'Better',
-      icon: '📝',
+      icon: <MemoIcon size={18} />,
       desc: 'Split at paragraph/section boundaries',
       visual: ['[Introduction]', '[Section 1]', '[Section 2]'],
       pro: 'Preserves meaning',
@@ -334,7 +334,7 @@ function ChunkingViz({ active }) {
     {
       name: 'Hierarchical',
       tag: 'Best',
-      icon: '🏗️',
+      icon: <ConstructionIcon size={18} />,
       desc: 'Small chunks with parent context',
       visual: ['[Summary] → [Section] → [Paragraph]'],
       pro: 'Multi-level retrieval',
@@ -507,25 +507,25 @@ function RealWorldViz({ active }) {
 
   const useCases = [
     {
-      icon: '🏢',
+      icon: <BuildingIcon size={20} />,
       name: 'Enterprise Knowledge Base',
       desc: 'Company uploads HR policies, product docs, SOPs → Employees ask questions in natural language → AI answers from actual company documents',
       companies: 'Microsoft Copilot, Notion AI',
     },
     {
-      icon: '🛒',
+      icon: <CartIcon size={20} />,
       name: 'E-commerce Product Search',
       desc: 'Product catalog converted to embeddings → Customer searches "comfortable shoes for standing" → Returns semantically relevant products',
       companies: 'Shopify, Amazon',
     },
     {
-      icon: '🏥',
+      icon: <HospitalIcon size={20} />,
       name: 'Medical Knowledge',
       desc: 'Medical literature indexed as vectors → Doctor queries symptoms and patient history → AI retrieves relevant research and guidelines',
       companies: 'Research institutions',
     },
     {
-      icon: '💻',
+      icon: <LaptopIcon size={20} />,
       name: 'Code Assistant',
       desc: 'Entire codebase indexed → Developer asks "how does auth work in our app?" → AI retrieves relevant code files and explains',
       companies: 'GitHub Copilot, Cursor',
@@ -630,7 +630,7 @@ function BuildViz({ active }) {
           <div key={i} className={`rag-build-step ${i < visibleSteps ? 'rag-build-step-visible' : ''}`}>
             <label className="rag-build-step-header" onClick={() => toggleStep(i)}>
               <span className={`rag-build-checkbox ${checkedSteps[i] ? 'rag-build-checkbox-checked' : ''}`}>
-                {checkedSteps[i] ? '✓' : (i + 1)}
+                {checkedSteps[i] ? <CheckIcon size={14} /> : (i + 1)}
               </span>
               <span className={`rag-build-step-label ${checkedSteps[i] ? 'rag-build-step-done' : ''}`}>{step.label}</span>
             </label>
@@ -718,11 +718,11 @@ function RAG({ onSwitchTab, onGoHome }) {
     },
     2: {
       title: 'Stage 3: Why Vectors Enable Smart Search',
-      content: "Traditional search matches exact keywords. Vector search matches MEANING.\n\nExample:\nQuery: 'Can I get my money back?'\nMatches: 'refund policy', 'return procedure', 'money-back guarantee' — even without the word 'money back'\n\nThis is why RAG finds relevant content even when users phrase things differently than the documentation.\n\n💡 The same embeddings you saw in 'How LLMs Work' are used here to power intelligent document retrieval.",
+      content: "Traditional search matches exact keywords. Vector search matches MEANING.\n\nExample:\nQuery: 'Can I get my money back?'\nMatches: 'refund policy', 'return procedure', 'money-back guarantee' — even without the word 'money back'\n\nThis is why RAG finds relevant content even when users phrase things differently than the documentation.\n\nTip:The same embeddings you saw in 'How LLMs Work' are used here to power intelligent document retrieval.",
     },
     3: {
       title: 'Stage 4: Chunking — The Art of Splitting Docs',
-      content: "How you split documents dramatically affects RAG quality. Too large: irrelevant content dilutes results. Too small: missing context makes chunks useless.\n\nBest practices:\n- 200-500 tokens per chunk for most use cases\n- Always include some overlap between chunks (50-100 tokens)\n- Split at natural boundaries (paragraphs, sections)\n- Include document title/metadata in each chunk\n\n💡 Chunking strategy is often the biggest factor in RAG system quality — more than the model choice.",
+      content: "How you split documents dramatically affects RAG quality. Too large: irrelevant content dilutes results. Too small: missing context makes chunks useless.\n\nBest practices:\n- 200-500 tokens per chunk for most use cases\n- Always include some overlap between chunks (50-100 tokens)\n- Split at natural boundaries (paragraphs, sections)\n- Include document title/metadata in each chunk\n\nTip:Chunking strategy is often the biggest factor in RAG system quality — more than the model choice.",
     },
     4: {
       title: 'Stage 5: Vector Databases',
@@ -741,7 +741,7 @@ function RAG({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="rag" size={48} />}
+        icon={<ModuleIcon module="rag" size={48} style={{ color: '#5856D6' }} />}
         title="RAG — Retrieval Augmented Generation"
         description="Ever wonder how ChatGPT plugins work? Or how companies build AI that knows their internal docs? That's RAG — the most powerful enterprise AI technique available today. No model training required."
         buttonText="Start Learning"
@@ -864,7 +864,7 @@ function RAG({ onSwitchTab, onGoHome }) {
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
+                <div className="pe-final-card-emoji">{item.icon}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}

@@ -82,7 +82,7 @@ const ICON_PATHS = {
   ),
 }
 
-function ModuleIcon({ module, size = 24, className = '' }) {
+function ModuleIcon({ module, size = 24, className = '', style }) {
   const paths = ICON_PATHS[module]
   if (!paths) return null
 
@@ -97,6 +97,7 @@ function ModuleIcon({ module, size = 24, className = '' }) {
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
+      style={style}
     >
       {paths}
     </svg>

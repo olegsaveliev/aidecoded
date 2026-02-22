@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
-import { WarningIcon, SkullIcon, SparklesIcon } from './ContentIcons.jsx'
+import { WarningIcon, SkullIcon, SparklesIcon, CrossIcon, CheckIcon, QuestionIcon, HashIcon, SearchIcon, FileIcon, PackageIcon, RobotIcon, LayersIcon, ScissorsIcon, TheaterIcon, RefreshIcon, MailIcon, BarChartIcon, BriefcaseIcon, WrenchIcon, EyeIcon, TargetIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { contextEngineeringQuiz } from './quizData.js'
@@ -60,12 +60,12 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'Context Awareness', when: 'Every AI interaction', phrase: 'Include what changes the answer' },
-  { technique: 'Window Management', when: 'Long conversations', phrase: 'Monitor token usage' },
-  { technique: 'Quality Control', when: 'Complex tasks', phrase: 'Every piece earns its place' },
-  { technique: 'RAG', when: 'Enterprise knowledge', phrase: 'Retrieve, inject, generate' },
-  { technique: 'Sandwich Method', when: 'Long content', phrase: 'Instructions + Content + Instructions' },
-  { technique: 'Use Case Matching', when: 'Specific tasks', phrase: 'Match context to task type' },
+  { technique: 'Context Awareness', when: 'Every AI interaction', phrase: 'Include what changes the answer', icon: <EyeIcon size={24} color="#8E8E93" /> },
+  { technique: 'Window Management', when: 'Long conversations', phrase: 'Monitor token usage', icon: <BarChartIcon size={24} color="#8E8E93" /> },
+  { technique: 'Quality Control', when: 'Complex tasks', phrase: 'Every piece earns its place', icon: <CheckIcon size={24} color="#8E8E93" /> },
+  { technique: 'RAG', when: 'Enterprise knowledge', phrase: 'Retrieve, inject, generate', icon: <SearchIcon size={24} color="#8E8E93" /> },
+  { technique: 'Sandwich Method', when: 'Long content', phrase: 'Instructions + Content + Instructions', icon: <LayersIcon size={24} color="#8E8E93" /> },
+  { technique: 'Use Case Matching', when: 'Specific tasks', phrase: 'Match context to task type', icon: <TargetIcon size={24} color="#8E8E93" /> },
 ]
 
 /* ═══════════════════════════════════
@@ -267,17 +267,17 @@ function ContextPoisoningViz({ active }) {
   const timerRef = useRef(null)
 
   const badItems = [
-    { icon: '❌', text: 'Contradictory instructions' },
-    { icon: '❌', text: 'Outdated information mixed with current' },
-    { icon: '❌', text: 'Irrelevant documents diluting focus' },
-    { icon: '❌', text: 'Ambiguous pronouns ("it", "they", "this")' },
+    { icon: <CrossIcon size={14} />, text: 'Contradictory instructions' },
+    { icon: <CrossIcon size={14} />, text: 'Outdated information mixed with current' },
+    { icon: <CrossIcon size={14} />, text: 'Irrelevant documents diluting focus' },
+    { icon: <CrossIcon size={14} />, text: 'Ambiguous pronouns ("it", "they", "this")' },
   ]
 
   const goodItems = [
-    { icon: '✅', text: 'Clear single source of truth' },
-    { icon: '✅', text: 'Relevant documents only' },
-    { icon: '✅', text: 'Explicit references ("the Q3 report states...")' },
-    { icon: '✅', text: 'Consistent terminology throughout' },
+    { icon: <CheckIcon size={14} />, text: 'Clear single source of truth' },
+    { icon: <CheckIcon size={14} />, text: 'Relevant documents only' },
+    { icon: <CheckIcon size={14} />, text: 'Explicit references ("the Q3 report states...")' },
+    { icon: <CheckIcon size={14} />, text: 'Consistent terminology throughout' },
   ]
 
   function startAnimation() {
@@ -355,12 +355,12 @@ function RAGViz({ active }) {
   const timerRef = useRef(null)
 
   const pipelineSteps = [
-    { num: '1', label: 'User asks question', icon: '❓', color: '#0071e3' },
-    { num: '2', label: 'Question → embedding (vector)', icon: '🔢', color: '#8b5cf6' },
-    { num: '3', label: 'Vector DB searched', icon: '🔍', color: '#ff9500' },
-    { num: '4', label: 'Top chunks retrieved', icon: '📄', color: '#34c759' },
-    { num: '5', label: 'Chunks added to context', icon: '📦', color: '#00c7be' },
-    { num: '6', label: 'AI answers with context', icon: '🤖', color: '#af52de' },
+    { num: '1', label: 'User asks question', icon: <QuestionIcon size={18} />, color: '#0071e3' },
+    { num: '2', label: 'Question → embedding (vector)', icon: <HashIcon size={18} />, color: '#8b5cf6' },
+    { num: '3', label: 'Vector DB searched', icon: <SearchIcon size={18} />, color: '#ff9500' },
+    { num: '4', label: 'Top chunks retrieved', icon: <FileIcon size={18} />, color: '#34c759' },
+    { num: '5', label: 'Chunks added to context', icon: <PackageIcon size={18} />, color: '#00c7be' },
+    { num: '6', label: 'AI answers with context', icon: <RobotIcon size={18} />, color: '#af52de' },
   ]
 
   useEffect(() => {
@@ -440,25 +440,25 @@ function StrategiesViz({ active }) {
   const strategies = [
     {
       name: 'Sandwich Method',
-      icon: '🥪',
+      icon: <LayersIcon size={18} />,
       formula: '[Instructions] + [Content] + [Instructions again]',
       desc: 'Repeating key instructions before AND after long content keeps AI focused on what matters.',
     },
     {
       name: 'Chunking',
-      icon: '✂️',
+      icon: <ScissorsIcon size={18} />,
       formula: 'Instead of: Paste 50-page document → Do: Split into chunks, retrieve relevant ones only',
       desc: 'Never paste more than you need.',
     },
     {
       name: 'Persona Anchoring',
-      icon: '🎭',
+      icon: <TheaterIcon size={18} />,
       formula: 'Set role in system prompt + reinforce in first message',
       desc: '"You are X. Remember you are X. As X, please..." — keeps AI in character for long conversations.',
     },
     {
       name: 'Context Refresh',
-      icon: '🔄',
+      icon: <RefreshIcon size={18} />,
       formula: 'Every 10 messages: summarize conversation so far → inject summary as new context',
       desc: 'Prevents context drift in long sessions.',
     },
@@ -520,7 +520,7 @@ function UseCasesViz({ active }) {
 
   const useCases = [
     {
-      icon: '📧',
+      icon: <MailIcon size={18} />,
       name: 'Email Writing',
       items: [
         'Your writing style sample',
@@ -531,7 +531,7 @@ function UseCasesViz({ active }) {
       ],
     },
     {
-      icon: '📊',
+      icon: <BarChartIcon size={18} />,
       name: 'Data Analysis',
       items: [
         'Data schema',
@@ -542,7 +542,7 @@ function UseCasesViz({ active }) {
       ],
     },
     {
-      icon: '💼',
+      icon: <BriefcaseIcon size={18} />,
       name: 'Business Decisions',
       items: [
         'Company strategy doc excerpt',
@@ -553,7 +553,7 @@ function UseCasesViz({ active }) {
       ],
     },
     {
-      icon: '🔧',
+      icon: <WrenchIcon size={18} />,
       name: 'Technical Help',
       items: [
         'Error message',
@@ -715,7 +715,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="context-engineering" size={48} />}
+        icon={<ModuleIcon module="context-engineering" size={48} style={{ color: '#00c7be' }} />}
         title="Context Engineering"
         description="Prompt Engineering is about HOW you ask. Context Engineering is about WHAT you include. Learn how to craft the perfect context window to get consistently great AI results."
         buttonText="Start Learning"
@@ -837,7 +837,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
+                <div className="pe-final-card-emoji">{item.icon}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}

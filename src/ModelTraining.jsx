@@ -3,7 +3,7 @@ import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
-import { FileCabinetIcon, CrossIcon } from './ContentIcons.jsx'
+import { FileCabinetIcon, CrossIcon, CpuIcon, ChatIcon, UserIcon, GraduationIcon, RefreshIcon, GlobeIcon, BookIcon, CodeIcon, FileIcon, MemoIcon } from './ContentIcons.jsx'
 import ToolChips from './ToolChips.jsx'
 import Quiz from './Quiz.jsx'
 import { modelTrainingQuiz } from './quizData.js'
@@ -35,12 +35,12 @@ const TOKEN_PASTELS = [
 ]
 
 const DATA_SOURCES = [
-  { label: 'Web Pages', sub: 'Common Crawl', color: '#0071e3' },
-  { label: 'Books', sub: 'Project Gutenberg', color: '#5856d6' },
-  { label: 'Code', sub: 'GitHub', color: '#34c759' },
-  { label: 'Wikipedia', sub: 'Encyclopedia', color: '#ff9500' },
-  { label: 'Forums', sub: 'Reddit', color: '#ff3b30' },
-  { label: 'Papers', sub: 'ArXiv', color: '#af52de' },
+  { label: 'Web Pages', sub: 'Common Crawl', color: '#0071e3', icon: <GlobeIcon size={18} color="#0071e3" /> },
+  { label: 'Books', sub: 'Project Gutenberg', color: '#5856d6', icon: <BookIcon size={18} color="#5856d6" /> },
+  { label: 'Code', sub: 'GitHub', color: '#34c759', icon: <CodeIcon size={18} color="#34c759" /> },
+  { label: 'Wikipedia', sub: 'Encyclopedia', color: '#ff9500', icon: <FileIcon size={18} color="#ff9500" /> },
+  { label: 'Forums', sub: 'Reddit', color: '#ff3b30', icon: <ChatIcon size={18} color="#ff3b30" /> },
+  { label: 'Papers', sub: 'ArXiv', color: '#af52de', icon: <MemoIcon size={18} color="#af52de" /> },
 ]
 
 const FILTER_STAGES = [
@@ -166,7 +166,7 @@ function DataCollectionViz({ active }) {
             className={`mt-source-card ${activeSources.includes(i) ? 'mt-source-active' : ''}`}
             style={{ '--source-color': src.color }}
           >
-            <span className="mt-source-emoji" style={{ width: 20, height: 20, borderRadius: '50%', background: src.color, opacity: 0.25, display: 'inline-block' }} />
+            <span className="mt-source-emoji">{src.icon}</span>
             <div className="mt-source-info">
               <div className="mt-source-label">{src.label}</div>
               <div className="mt-source-sub">{src.sub}</div>
@@ -469,7 +469,7 @@ function PreTrainingViz({ active }) {
                 key={i}
                 className={`mt-gpu-box ${gpuActive.includes(i) ? 'mt-gpu-active' : ''}`}
               >
-                <span className="mt-gpu-icon">⬛</span>
+                <span className="mt-gpu-icon"><CpuIcon size={14} /></span>
               </div>
             ))}
           </div>
@@ -545,10 +545,10 @@ function RLHFViz({ active }) {
   const scoreCounter = useAnimatedCounter(87, 4000, active)
 
   const steps = [
-    { icon: '💬', label: 'Model generates 2 responses' },
-    { icon: '👤', label: 'Human picks the better one' },
-    { icon: '🎓', label: 'Reward model learns preferences' },
-    { icon: '🔄', label: 'LLM updated to score higher' },
+    { icon: <ChatIcon size={16} />, label: 'Model generates 2 responses' },
+    { icon: <UserIcon size={16} />, label: 'Human picks the better one' },
+    { icon: <GraduationIcon size={16} />, label: 'Reward model learns preferences' },
+    { icon: <RefreshIcon size={16} />, label: 'LLM updated to score higher' },
   ]
 
   useEffect(() => {
@@ -577,7 +577,7 @@ function RLHFViz({ active }) {
           </div>
         ))}
         <div className={`mt-rlhf-loop-back ${activeStep === 0 ? 'mt-rlhf-arrow-active' : ''}`}>
-          ↩ Repeat thousands of times
+          <RefreshIcon size={12} /> Repeat thousands of times
         </div>
       </div>
       <div className="mt-rlhf-score">
@@ -692,26 +692,26 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
     },
     2: {
       title: 'Stage 3: Tokenization',
-      content: "All the cleaned text gets converted to tokens — numbers the model can process mathematically. The entire training dataset becomes a massive sequence of token IDs.\n\n💡 You've already seen this in action in the Tokenizer tab!",
+      content: "All the cleaned text gets converted to tokens — numbers the model can process mathematically. The entire training dataset becomes a massive sequence of token IDs.\n\nTip:You've already seen this in action in the Tokenizer tab!",
     },
     3: {
       title: 'Stage 4: Pre-Training',
-      content: "This is the main training phase — the model learns by trying to predict the next token in the training data, billions of times. Every wrong prediction updates the model's weights slightly.\n\nAfter months of training on thousands of GPUs, the model has learned grammar, facts, reasoning patterns, and much more — just from predicting the next word.\n\n💡 At this stage the model can complete text but doesn't yet know how to follow instructions or have a conversation.",
+      content: "This is the main training phase — the model learns by trying to predict the next token in the training data, billions of times. Every wrong prediction updates the model's weights slightly.\n\nAfter months of training on thousands of GPUs, the model has learned grammar, facts, reasoning patterns, and much more — just from predicting the next word.\n\nTip:At this stage the model can complete text but doesn't yet know how to follow instructions or have a conversation.",
     },
     4: {
       title: 'Stage 5: Supervised Fine-Tuning (SFT)',
-      content: "The pre-trained model is powerful but wild — it just completes text, it doesn't know how to be helpful. Fine-tuning teaches it to have conversations and follow instructions.\n\nHuman trainers write thousands of example conversations showing the ideal AI behavior. The model is then trained on these examples to match that style.\n\n💡 This is why ChatGPT answers questions instead of just completing your sentence.",
+      content: "The pre-trained model is powerful but wild — it just completes text, it doesn't know how to be helpful. Fine-tuning teaches it to have conversations and follow instructions.\n\nHuman trainers write thousands of example conversations showing the ideal AI behavior. The model is then trained on these examples to match that style.\n\nTip:This is why ChatGPT answers questions instead of just completing your sentence.",
     },
     5: {
       title: 'Stage 6: RLHF — The Secret Sauce',
-      content: "This is what separates ChatGPT from a raw language model. Human raters compare pairs of responses and pick the better one. A 'reward model' learns to predict human preferences.\n\nThen the main model is optimized using reinforcement learning to generate responses the reward model rates highly — essentially learning to be more helpful and less harmful by chasing human approval.\n\n💡 The thumbs up/down buttons in ChatGPT? That's RLHF data collection happening in real time.",
+      content: "This is what separates ChatGPT from a raw language model. Human raters compare pairs of responses and pick the better one. A 'reward model' learns to predict human preferences.\n\nThen the main model is optimized using reinforcement learning to generate responses the reward model rates highly — essentially learning to be more helpful and less harmful by chasing human approval.\n\nTip:The thumbs up/down buttons in ChatGPT? That's RLHF data collection happening in real time.",
     },
   }
 
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="model-training" size={48} />}
+        icon={<ModuleIcon module="model-training" size={48} style={{ color: '#f97316' }} />}
         title="How AI Models Are Built"
         description="Follow the complete journey from raw internet data to a working AI assistant, in 6 interactive stages. No PhD required."
         buttonText="Start the Journey"

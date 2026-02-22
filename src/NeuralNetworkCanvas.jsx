@@ -364,7 +364,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
 
                   {/* Module icon */}
                   <foreignObject x="-12" y="-12" width="24" height="24">
-                    <ModuleIcon module={node.id} size={24} className={isHovered ? 'module-icon-active' : ''} />
+                    <ModuleIcon module={node.id} size={24} className={isHovered ? 'module-icon-active' : ''} style={{ color }} />
                   </foreignObject>
 
                   {/* Label below node */}
@@ -387,7 +387,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
 
       {/* Replay button */}
       <button className="nn-replay-btn" onClick={handleReplay}>
-        {'\u25B6'} Replay
+        Replay
       </button>
 
       {/* Mobile fallback grid */}
@@ -398,10 +398,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
             className="nn-mobile-card"
             onClick={() => onSelectTab(node.id)}
           >
-            <span
-              className="nn-mobile-card-dot"
-              style={{ background: GROUP_COLORS[node.group] }}
-            />
+            <ModuleIcon module={node.id} size={20} style={{ color: GROUP_COLORS[node.group] }} />
             <span className="nn-mobile-card-label">{node.label}</span>
           </button>
         ))}

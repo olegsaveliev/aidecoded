@@ -4,6 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import { generationQuiz } from './quizData.js'
+import { CheckIcon } from './ContentIcons.jsx'
 
 const API_KEY = import.meta.env.OPENAI_API_KEY
 
@@ -422,7 +423,7 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
   if (showEntry) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="generation" size={48} />}
+        icon={<ModuleIcon module="generation" size={48} style={{ color: '#eab308' }} />}
         title="Token Generation"
         description="Watch AI predict the next word live, one token at a time. Choose manually, simulate step by step, or let it run automatically — just like ChatGPT under the hood."
         buttonText="Start Generating"
@@ -464,7 +465,7 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
             <p>Combined with <strong>Temperature</strong> (which sharpens or flattens the probabilities) and <strong>Top-p</strong> (which picks tokens until their cumulative probability reaches p), these controls determine how creative or predictable the output is.</p>
           </div>
           <button className="gen-topk-dismiss" onClick={() => setShowTopK(false)}>
-            Got it ✓
+            Got it <CheckIcon size={12} />
           </button>
         </div>
       )}

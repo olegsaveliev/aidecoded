@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
-import { CheckIcon, CrossIcon, RobotIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, RobotIcon, GraduationIcon, SearchIcon, GamepadIcon, BarChartIcon, ScissorsIcon, DumbbellIcon, TrendingUpIcon, RocketIcon, TreeIcon, PineTreeIcon, LinkIcon, TargetIcon, ZapIcon, BankIcon, HospitalIcon, CartIcon, CarIcon, PhoneIcon, FactoryIcon, InboxIcon, BroomIcon, WrenchIcon, EyeIcon, BookIcon, RefreshIcon, GearIcon, RepeatIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { machineLearningQuiz } from './quizData.js'
@@ -78,14 +78,14 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'ML Fundamentals', when: 'Understanding AI', phrase: 'Data in, rules out' },
-  { technique: 'ML Types', when: 'Choosing approach', phrase: 'Supervised, Unsupervised, RL' },
-  { technique: 'Training Loop', when: 'Building models', phrase: 'Predict, compare, adjust' },
-  { technique: 'Neural Networks', when: 'Complex patterns', phrase: 'Layers learn features' },
-  { technique: 'Generalization', when: 'Model evaluation', phrase: 'Not too simple, not too complex' },
-  { technique: 'Algorithm Choice', when: 'Problem solving', phrase: 'Start simple, then iterate' },
-  { technique: 'Business Impact', when: 'Real applications', phrase: 'ML is already everywhere' },
-  { technique: 'ML Lifecycle', when: 'Production ML', phrase: '80% data, 20% models' },
+  { technique: 'ML Fundamentals', when: 'Understanding AI', phrase: 'Data in, rules out', icon: <BookIcon size={24} color="#8E8E93" /> },
+  { technique: 'ML Types', when: 'Choosing approach', phrase: 'Supervised, Unsupervised, RL', icon: <TreeIcon size={24} color="#8E8E93" /> },
+  { technique: 'Training Loop', when: 'Building models', phrase: 'Predict, compare, adjust', icon: <RefreshIcon size={24} color="#8E8E93" /> },
+  { technique: 'Neural Networks', when: 'Complex patterns', phrase: 'Layers learn features', icon: <ZapIcon size={24} color="#8E8E93" /> },
+  { technique: 'Generalization', when: 'Model evaluation', phrase: 'Not too simple, not too complex', icon: <TargetIcon size={24} color="#8E8E93" /> },
+  { technique: 'Algorithm Choice', when: 'Problem solving', phrase: 'Start simple, then iterate', icon: <GearIcon size={24} color="#8E8E93" /> },
+  { technique: 'Business Impact', when: 'Real applications', phrase: 'ML is already everywhere', icon: <TrendingUpIcon size={24} color="#8E8E93" /> },
+  { technique: 'ML Lifecycle', when: 'Production ML', phrase: '80% data, 20% models', icon: <RepeatIcon size={24} color="#8E8E93" /> },
 ]
 
 /* ═══════════════════════════════════
@@ -188,7 +188,7 @@ function WhatIsMLViz({ active }) {
                   </>
                 ) : (
                   <span className={`ml-email-result ${emailResults[i] === emails[i].isSpam ? 'ml-email-correct' : 'ml-email-wrong'}`}>
-                    {emailResults[i] === emails[i].isSpam ? '✅ Correct' : '❌ Wrong'}
+                    {emailResults[i] === emails[i].isSpam ? <><CheckIcon size={14} /> Correct</> : <><CrossIcon size={14} /> Wrong</>}
                   </span>
                 )}
               </div>
@@ -215,7 +215,7 @@ function TypesViz({ active }) {
 
   const branches = [
     {
-      icon: '🎓',
+      icon: <GraduationIcon size={18} />,
       name: 'Supervised Learning',
       subtitle: 'Learning from labeled examples',
       types: ['Classification (spam/not spam, cat/dog)', 'Regression (predict house price, stock value)'],
@@ -223,7 +223,7 @@ function TypesViz({ active }) {
       color: '#AF52DE',
     },
     {
-      icon: '🔍',
+      icon: <SearchIcon size={18} />,
       name: 'Unsupervised Learning',
       subtitle: 'Finding hidden patterns in unlabeled data',
       types: ['Clustering (group similar customers)', 'Dimensionality reduction'],
@@ -231,7 +231,7 @@ function TypesViz({ active }) {
       color: '#5856D6',
     },
     {
-      icon: '🎮',
+      icon: <GamepadIcon size={18} />,
       name: 'Reinforcement Learning',
       subtitle: 'Learning through trial and error with rewards',
       types: ['Agent takes actions in environment', 'Gets rewards for good, penalties for bad'],
@@ -328,11 +328,11 @@ function SupervisedViz({ active }) {
   ]
 
   const steps = [
-    { num: 1, label: 'Collect Data', icon: '📊' },
-    { num: 2, label: 'Split Data', icon: '✂️' },
-    { num: 3, label: 'Train Model', icon: '🏋️' },
-    { num: 4, label: 'Evaluate', icon: '📈' },
-    { num: 5, label: 'Deploy', icon: '🚀' },
+    { num: 1, label: 'Collect Data', icon: <BarChartIcon size={16} /> },
+    { num: 2, label: 'Split Data', icon: <ScissorsIcon size={16} /> },
+    { num: 3, label: 'Train Model', icon: <DumbbellIcon size={16} /> },
+    { num: 4, label: 'Evaluate', icon: <TrendingUpIcon size={16} /> },
+    { num: 5, label: 'Deploy', icon: <RocketIcon size={16} /> },
   ]
 
   useEffect(() => {
@@ -379,7 +379,7 @@ function SupervisedViz({ active }) {
           return [
             connector,
             <div key={`s${i}`} className={`ml-sup-step ${animStep > i ? 'ml-sup-step-active' : ''} ${isDone ? 'ml-sup-step-done' : ''} ${isCurrent ? 'ml-sup-step-current' : ''}`}>
-              {isDone ? <span className="ml-sup-step-check">✓</span> : <span className="ml-sup-step-icon">{s.icon}</span>}
+              {isDone ? <span className="ml-sup-step-check"><CheckIcon size={14} /></span> : <span className="ml-sup-step-icon">{s.icon}</span>}
               <span className="ml-sup-step-label">{s.label}</span>
             </div>,
           ]
@@ -743,42 +743,42 @@ function AlgorithmsViz({ active }) {
 
   const algorithms = [
     {
-      icon: '🌳',
+      icon: <TreeIcon size={18} />,
       name: 'Decision Tree',
       desc: 'Yes/no splits leading to a decision',
       detail: 'Income > 50k? → Yes → Employment > 2 years? → APPROVE',
       bestFor: 'Explainable decisions, business rules',
     },
     {
-      icon: '🌲',
+      icon: <PineTreeIcon size={18} />,
       name: 'Random Forest',
       desc: '100 decision trees vote → majority wins',
       detail: 'Multiple trees each see different data, then vote on the answer.',
       bestFor: 'Tabular data, very reliable',
     },
     {
-      icon: '📈',
+      icon: <TrendingUpIcon size={18} />,
       name: 'Linear Regression',
       desc: 'Draw the best straight line through data',
       detail: 'Find the line that minimizes distance to all data points.',
       bestFor: 'Predicting continuous values',
     },
     {
-      icon: '🎯',
+      icon: <TargetIcon size={18} />,
       name: 'Support Vector Machine',
       desc: 'Find the widest boundary between classes',
       detail: 'Draw the widest possible margin between two groups of data.',
       bestFor: 'Small datasets, binary classification',
     },
     {
-      icon: '⚡',
+      icon: <ZapIcon size={18} />,
       name: 'XGBoost',
       desc: 'Each tree corrects previous tree\'s mistakes',
       detail: 'Gradient boosting builds trees sequentially, each fixing errors.',
       bestFor: 'Kaggle competitions, tabular data champion',
     },
     {
-      icon: '🔗',
+      icon: <LinkIcon size={18} />,
       name: 'K-Nearest Neighbors',
       desc: 'Classify by looking at your neighbors',
       detail: 'A new point is classified by the majority vote of its K closest neighbors.',
@@ -851,37 +851,37 @@ function BusinessViz({ active }) {
 
   const industries = [
     {
-      icon: '🏦',
+      icon: <BankIcon size={20} />,
       name: 'Banking & Finance',
       uses: ['Credit scoring (loan approval)', 'Fraud detection', 'Algorithmic trading', 'Risk assessment'],
       tools: 'XGBoost, Random Forest',
     },
     {
-      icon: '🏥',
+      icon: <HospitalIcon size={20} />,
       name: 'Healthcare',
       uses: ['Disease diagnosis from scans', 'Drug discovery', 'Patient readmission prediction', 'Medical image analysis'],
       tools: 'CNN, ResNet, PyTorch',
     },
     {
-      icon: '🛒',
+      icon: <CartIcon size={20} />,
       name: 'Retail & E-commerce',
       uses: ['Product recommendations', 'Demand forecasting', 'Price optimization', 'Customer churn prediction'],
       tools: 'Collaborative filtering, LSTM',
     },
     {
-      icon: '🚗',
+      icon: <CarIcon size={20} />,
       name: 'Transportation',
       uses: ['Self-driving vehicles', 'Route optimization', 'Predictive maintenance', 'Traffic prediction'],
       tools: 'Reinforcement Learning, CNN',
     },
     {
-      icon: '📱',
+      icon: <PhoneIcon size={20} />,
       name: 'Technology',
       uses: ['Spam filtering', 'Search ranking', 'Ad targeting', 'Content moderation'],
       tools: 'BERT, XGBoost, Neural Networks',
     },
     {
-      icon: '🏭',
+      icon: <FactoryIcon size={20} />,
       name: 'Manufacturing',
       uses: ['Quality control (defect detection)', 'Predictive maintenance', 'Supply chain optimization', 'Energy optimization'],
       tools: 'Computer Vision, Time Series',
@@ -947,14 +947,14 @@ function LifecycleViz({ active }) {
   const [looping, setLooping] = useState(false)
 
   const steps = [
-    { label: 'Business Problem', icon: '🎯', pct: 0, desc: 'Define what you want to predict or classify — this shapes everything.' },
-    { label: 'Data Collection', icon: '📥', pct: 20, desc: 'Gather raw data from databases, APIs, surveys, or web scraping.' },
-    { label: 'Data Cleaning & EDA', icon: '🧹', pct: 35, desc: 'Fix missing values, remove outliers, and explore patterns in data.' },
-    { label: 'Feature Engineering', icon: '🔧', pct: 15, desc: 'Create new input variables that help the model learn better.' },
-    { label: 'Model Training', icon: '🏋️', pct: 10, desc: 'Feed data into algorithms and let the model learn patterns.' },
-    { label: 'Model Evaluation', icon: '📊', pct: 10, desc: 'Test on held-out data — check accuracy, precision, recall.' },
-    { label: 'Deployment', icon: '🚀', pct: 5, desc: 'Ship the model to production via API, batch jobs, or edge.' },
-    { label: 'Monitoring', icon: '👁️', pct: 5, desc: 'Watch for data drift, performance decay — retrain when needed.' },
+    { label: 'Business Problem', icon: <TargetIcon size={16} />, pct: 0, desc: 'Define what you want to predict or classify — this shapes everything.' },
+    { label: 'Data Collection', icon: <InboxIcon size={16} />, pct: 20, desc: 'Gather raw data from databases, APIs, surveys, or web scraping.' },
+    { label: 'Data Cleaning & EDA', icon: <BroomIcon size={16} />, pct: 35, desc: 'Fix missing values, remove outliers, and explore patterns in data.' },
+    { label: 'Feature Engineering', icon: <WrenchIcon size={16} />, pct: 15, desc: 'Create new input variables that help the model learn better.' },
+    { label: 'Model Training', icon: <DumbbellIcon size={16} />, pct: 10, desc: 'Feed data into algorithms and let the model learn patterns.' },
+    { label: 'Model Evaluation', icon: <BarChartIcon size={16} />, pct: 10, desc: 'Test on held-out data — check accuracy, precision, recall.' },
+    { label: 'Deployment', icon: <RocketIcon size={16} />, pct: 5, desc: 'Ship the model to production via API, batch jobs, or edge.' },
+    { label: 'Monitoring', icon: <EyeIcon size={16} />, pct: 5, desc: 'Watch for data drift, performance decay — retrain when needed.' },
   ]
 
   useEffect(() => {
@@ -1010,7 +1010,7 @@ function LifecycleViz({ active }) {
               >
                 <div className="ml-lc-card-header">
                   <div className={`ml-lc-card-num ${isCompleted ? 'ml-lc-card-num-done' : ''}`}>
-                    {isCompleted ? '✓' : i + 1}
+                    {isCompleted ? <CheckIcon size={14} /> : i + 1}
                   </div>
                   <div className="ml-lc-card-icon">{s.icon}</div>
                   <div className="ml-lc-card-title">{s.label}</div>
@@ -1147,7 +1147,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon={<ModuleIcon module="machine-learning" size={48} />}
+        icon={<ModuleIcon module="machine-learning" size={48} style={{ color: '#AF52DE' }} />}
         title="Machine Learning"
         subtitle="How machines actually learn from data"
         description="Before ChatGPT, before transformers, before all the AI buzz — there was Machine Learning. Understanding ML gives you the foundation to understand everything else in AI. No math degree required."
@@ -1272,7 +1272,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
+                <div className="pe-final-card-emoji">{item.icon}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ModuleIcon from './ModuleIcon.jsx'
+import { CrossIcon } from './ContentIcons.jsx'
 import './HomeScreen.css'
 
 const FILTER_COLORS = {
@@ -12,6 +13,14 @@ const FILTER_COLORS = {
 }
 
 const FILTERS = Object.keys(FILTER_COLORS)
+
+const TAG_BORDER_COLORS = {
+  Interactive: 'rgba(0, 113, 227, 0.5)',
+  Visual: 'rgba(175, 82, 222, 0.5)',
+  Journey: 'rgba(255, 149, 0, 0.5)',
+  Practical: 'rgba(52, 199, 89, 0.5)',
+  Technical: 'rgba(88, 86, 214, 0.5)',
+}
 
 const CARDS = [
   {
@@ -125,7 +134,7 @@ function HomeScreen({ onSelectTab }) {
             onClick={() => setSearchQuery('')}
             aria-label="Clear search"
           >
-            ✕
+            <CrossIcon size={12} color="#8E8E93" />
           </button>
         )}
       </div>
@@ -160,14 +169,14 @@ function HomeScreen({ onSelectTab }) {
             <button
               key={card.id}
               className="home-card"
-              style={{ borderLeftColor: card.accent, animationDelay: `${i * 0.08}s` }}
+              style={{ borderLeftColor: TAG_BORDER_COLORS[card.tag] || card.accent, animationDelay: `${i * 0.08}s` }}
               onClick={() => onSelectTab(card.id)}
             >
               <span className="home-card-top">
                 <span className="home-card-group">{card.group}</span>
                 <span className={`home-card-tag home-tag-${card.tag.toLowerCase()}`}>{card.tag}</span>
               </span>
-              <span className="home-card-title"><ModuleIcon module={card.id} size={20} />{card.title}</span>
+              <span className="home-card-title"><ModuleIcon module={card.id} size={20} style={{ color: card.accent }} />{card.title}</span>
               <span className="home-card-desc">{card.description}</span>
             </button>
           ))}
