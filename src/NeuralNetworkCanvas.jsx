@@ -8,6 +8,7 @@ const GROUP_COLORS = {
   foundations: '#AF52DE',
   skills: '#34C759',
   advanced: '#FF9500',
+  play: '#F59E0B',
 }
 
 const NODES = [
@@ -25,6 +26,7 @@ const NODES = [
   { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.82, py: 0.22, desc: 'Write better prompts for better results' },
   { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.85, py: 0.60, desc: 'Give AI the right context every time' },
   { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.48, py: 0.78, desc: 'Turn a general AI into a domain expert' },
+  { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.72, py: 0.88, desc: 'Solve AI mysteries, build your city' },
 ]
 
 const CONNECTIONS = [
@@ -44,6 +46,8 @@ const CONNECTIONS = [
   ['fine-tuning', 'model-training'],
   ['fine-tuning', 'rag'],
   ['fine-tuning', 'machine-learning'],
+  ['ai-city-builder', 'how-llms-work'],
+  ['ai-city-builder', 'prompt-engineering'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -59,6 +63,7 @@ const NODE_DELAYS = {
   'prompt-engineering': 1700,
   'context-engineering': 1900,
   'fine-tuning': 1600,
+  'ai-city-builder': 2100,
 }
 
 const NODE_APPEAR_DUR = 500

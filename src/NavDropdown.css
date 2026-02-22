@@ -10,6 +10,12 @@
   display: flex;
   align-items: center;
   gap: 0;
+  transition: opacity 0.2s ease;
+}
+
+.nav-dropdown-bar-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nav-dropdown-sep {
@@ -168,14 +174,21 @@
 .nav-dropdown-item-tag[data-tag="Journey"]     { background: #FFF4E5; color: #FF9500; }
 .nav-dropdown-item-tag[data-tag="Practical"]   { background: #EDFFF3; color: #34C759; }
 .nav-dropdown-item-tag[data-tag="Technical"]   { background: #EEEEFF; color: #5856D6; }
+.nav-dropdown-item-tag[data-tag="Game"]        { background: #FFF8E1; color: #F59E0B; }
 
 [data-theme="dark"] .nav-dropdown-item-tag[data-tag="Interactive"] { background: rgba(0, 113, 227, 0.15); color: #4DA3FF; }
 [data-theme="dark"] .nav-dropdown-item-tag[data-tag="Visual"]      { background: rgba(175, 82, 222, 0.15); color: #C989F0; }
 [data-theme="dark"] .nav-dropdown-item-tag[data-tag="Journey"]     { background: rgba(255, 149, 0, 0.15); color: #FFB340; }
 [data-theme="dark"] .nav-dropdown-item-tag[data-tag="Practical"]   { background: rgba(52, 199, 89, 0.15); color: #5ED882; }
 [data-theme="dark"] .nav-dropdown-item-tag[data-tag="Technical"]   { background: rgba(88, 86, 214, 0.15); color: #8382E0; }
+[data-theme="dark"] .nav-dropdown-item-tag[data-tag="Game"]        { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
 
 /* ── Hamburger (mobile only) ── */
+
+.nav-hamburger-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
 
 .nav-hamburger {
   display: none;
@@ -325,12 +338,14 @@
 .nav-mobile-item-tag[data-tag="Journey"]     { background: #FFF4E5; color: #FF9500; }
 .nav-mobile-item-tag[data-tag="Practical"]   { background: #EDFFF3; color: #34C759; }
 .nav-mobile-item-tag[data-tag="Technical"]   { background: #EEEEFF; color: #5856D6; }
+.nav-mobile-item-tag[data-tag="Game"]        { background: #FFF8E1; color: #F59E0B; }
 
 [data-theme="dark"] .nav-mobile-item-tag[data-tag="Interactive"] { background: rgba(0, 113, 227, 0.15); color: #4DA3FF; }
 [data-theme="dark"] .nav-mobile-item-tag[data-tag="Visual"]      { background: rgba(175, 82, 222, 0.15); color: #C989F0; }
 [data-theme="dark"] .nav-mobile-item-tag[data-tag="Journey"]     { background: rgba(255, 149, 0, 0.15); color: #FFB340; }
 [data-theme="dark"] .nav-mobile-item-tag[data-tag="Practical"]   { background: rgba(52, 199, 89, 0.15); color: #5ED882; }
 [data-theme="dark"] .nav-mobile-item-tag[data-tag="Technical"]   { background: rgba(88, 86, 214, 0.15); color: #8382E0; }
+[data-theme="dark"] .nav-mobile-item-tag[data-tag="Game"]        { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
 
 /* ── Responsive ── */
 

@@ -4006,6 +4006,7 @@
   flex-direction: column;
   min-height: 0;
   overflow-y: auto;
+  scrollbar-gutter: stable;
   transition: opacity 0.2s ease;
 }
 

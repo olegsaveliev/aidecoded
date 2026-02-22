@@ -25,6 +25,7 @@ Interactive React app for learning how Large Language Models work.
 | `rag` | RAG.jsx | RAG.css | ragQuiz | Journey | #FF9500 |
 | `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | Technical | #5856D6 |
 | `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
+| `ai-city-builder` | AICityBuilder.jsx | AICityBuilder.css | — (game) | Game | #F59E0B |
 
 ## Color System — Two Color Layers
 
@@ -39,6 +40,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
 | Technical | #5856D6 (indigo) | Machine Learning |
+| Game | #F59E0B (amber/gold) | AI City Builder |
 
 **Where tag colors are used:**
 - HomeScreen card left borders + card icons: `FILTER_COLORS[card.tag]`
@@ -54,6 +56,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning |
 | Skills | #34C759 | Prompt Engineering, Context Engineering |
 | Advanced | #FF9500 | RAG |
+| Play | #F59E0B | AI City Builder |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings, mobile grid)
 
@@ -117,7 +120,7 @@ Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings, mobile grid)
 
 Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 
-- Desktop: `[Logo + AI Decoded]  [Tools] [Foundations] [Skills] [Advanced]  [dark mode toggle]`
+- Desktop: `[Logo + AI Decoded]  [Tools] [Foundations] [Skills] [Advanced] [Play]  [dark mode toggle]`
 - Mobile (< 768px): Hamburger menu with full-screen overlay
 - Active tab's parent group label turns Apple blue (#0071E3)
 - Breadcrumb shows `Group > Tab Name` on wider screens (>= 900px)
@@ -139,6 +142,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/quizData.js` — All quiz question banks
 - `src/Tooltip.jsx` — Info tooltip component
 - `src/FeedbackWidget.jsx` / `src/FeedbackWidget.css` — Feedback bubble + modal
+- `src/AICityBuilder.jsx` / `src/AICityBuilder.css` — AI City Builder game (detective cases, SVG city)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 

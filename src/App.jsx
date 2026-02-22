@@ -10,6 +10,7 @@ import ContextEngineering from './ContextEngineering.jsx'
 import RAG from './RAG.jsx'
 import MachineLearning from './MachineLearning.jsx'
 import FineTuning from './FineTuning.jsx'
+import AICityBuilder from './AICityBuilder.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -851,6 +852,9 @@ function App() {
         )}
         {!showHome && activeTab === 'fine-tuning' && (
           <FineTuning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'ai-city-builder' && (
+          <AICityBuilder onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         </div>
       </main>

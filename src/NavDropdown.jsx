@@ -42,6 +42,14 @@ const NAV_GROUPS = [
       { id: 'rag', name: 'RAG', tag: 'Journey' },
     ],
   },
+  {
+    id: 'play',
+    label: 'Play',
+    color: '#F59E0B',
+    items: [
+      { id: 'ai-city-builder', name: 'AI City Builder', tag: 'Game' },
+    ],
+  },
 ]
 
 function getGroupForTab(tabId) {
@@ -139,14 +147,12 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
     }
   }
 
-  if (showHome) return null
-
   const openGroupData = openGroup ? NAV_GROUPS.find((g) => g.id === openGroup) : null
 
   return (
     <>
       {/* Desktop nav */}
-      <nav className="nav-dropdown-bar" ref={navRef}>
+      <nav className={`nav-dropdown-bar${showHome ? ' nav-dropdown-bar-hidden' : ''}`} ref={navRef}>
         {NAV_GROUPS.map((group, i) => {
           const isActive = activeGroup?.id === group.id
           const isOpen = openGroup === group.id
@@ -170,7 +176,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
       </nav>
 
       {/* Portal dropdown menu */}
-      {openGroupData && menuPos && createPortal(
+      {!showHome && openGroupData && menuPos && createPortal(
         <div
           className="nav-dropdown-menu-portal"
           style={{
@@ -199,7 +205,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
 
       {/* Mobile hamburger */}
       <button
-        className={`nav-hamburger${mobileOpen ? ' nav-hamburger-active' : ''}`}
+        className={`nav-hamburger${mobileOpen ? ' nav-hamburger-active' : ''}${showHome ? ' nav-hamburger-hidden' : ''}`}
         onClick={() => setMobileOpen((v) => !v)}
         aria-label="Open navigation menu"
       >

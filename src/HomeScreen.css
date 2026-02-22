@@ -7,8 +7,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 48px 32px;
+  justify-content: flex-start;
+  padding: 80px 32px 48px;
   animation: homeIn 0.4s ease-out;
 }
 
@@ -300,6 +300,36 @@
 [data-theme="dark"] .home-tag-technical {
   background: rgba(88, 86, 214, 0.15);
   color: #8987e0;
+}
+
+/* ── Game Card ── */
+
+.home-card-game {
+  background: var(--bg-secondary);
+}
+
+.home-card-game-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  background: #FFF8E1;
+  color: #F59E0B;
+}
+
+[data-theme="dark"] .home-card-game-badge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.home-card-difficulty {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  margin-top: 2px;
 }
 
 /* ── Group Label ── */

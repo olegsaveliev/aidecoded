@@ -10,6 +10,7 @@ const FILTER_COLORS = {
   Journey: '#FF9500',
   Practical: '#34C759',
   Technical: '#5856D6',
+  Game: '#F59E0B',
 }
 
 const FILTERS = Object.keys(FILTER_COLORS)
@@ -20,6 +21,7 @@ const TAG_BORDER_COLORS = {
   Journey: 'rgba(255, 149, 0, 0.5)',
   Practical: 'rgba(52, 199, 89, 0.5)',
   Technical: 'rgba(88, 86, 214, 0.5)',
+  Game: 'rgba(245, 158, 11, 0.5)',
 }
 
 const CARDS = [
@@ -103,6 +105,16 @@ const CARDS = [
     accent: '#5856D6',
     group: 'Foundations',
   },
+  {
+    id: 'ai-city-builder',
+    title: 'AI City Builder',
+    description: 'Solve AI mysteries. Diagnose failures. Build your city with every case you crack.',
+    tag: 'Game',
+    accent: '#F59E0B',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Beginner Friendly',
+  },
 ]
 
 function HomeScreen({ onSelectTab }) {
@@ -176,16 +188,27 @@ function HomeScreen({ onSelectTab }) {
           {filteredCards.map((card, i) => (
             <button
               key={card.id}
-              className="home-card"
-              style={{ borderLeftColor: TAG_BORDER_COLORS[card.tag] || card.accent, animationDelay: `${i * 0.08}s` }}
+              className={`home-card${card.isGame ? ' home-card-game' : ''}`}
+              style={{
+                borderLeftColor: TAG_BORDER_COLORS[card.tag] || card.accent,
+                animationDelay: `${i * 0.08}s`,
+                ...(card.isGame ? { border: '1.5px solid #F59E0B', borderLeft: '1.5px solid #F59E0B' } : {}),
+              }}
               onClick={() => onSelectTab(card.id)}
             >
               <span className="home-card-top">
                 <span className="home-card-group">{card.group}</span>
-                <span className={`home-card-tag home-tag-${card.tag.toLowerCase()}`}>{card.tag}</span>
+                {card.isGame ? (
+                  <span className="home-card-game-badge">GAME</span>
+                ) : (
+                  <span className={`home-card-tag home-tag-${card.tag.toLowerCase()}`}>{card.tag}</span>
+                )}
               </span>
               <span className="home-card-title"><ModuleIcon module={card.id} size={20} style={{ color: FILTER_COLORS[card.tag] }} />{card.title}</span>
               <span className="home-card-desc">{card.description}</span>
+              {card.difficulty && (
+                <span className="home-card-difficulty">{card.difficulty}</span>
+              )}
             </button>
           ))}
         </div>

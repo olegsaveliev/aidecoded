@@ -1,0 +1,815 @@
+/* ══════════════════════════════════
+   AI CITY BUILDER — GAME MODULE
+   Prefix: .acb-
+   ══════════════════════════════════ */
+
+/* ── Entry Screen Extras ── */
+
+.acb-entry-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.acb-entry-meta {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: -8px;
+  margin-bottom: 24px;
+}
+
+.acb-entry-silhouettes {
+  width: 100%;
+  max-width: 500px;
+  opacity: 0.6;
+  margin-top: 8px;
+}
+
+/* ── Game Layout ── */
+
+.acb-game {
+  padding: 24px 40px 48px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.acb-layout {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.acb-left {
+  flex: 0 0 40%;
+  position: sticky;
+  top: 80px;
+}
+
+.acb-right {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ══════════════════════════════════
+   CITY VIEW
+   ══════════════════════════════════ */
+
+.acb-city {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+}
+
+.acb-city-svg {
+  display: block;
+}
+
+/* Sky */
+.acb-sky-rect {
+  fill: url(#acb-sky-light);
+}
+
+[data-theme="dark"] .acb-sky-rect {
+  fill: url(#acb-sky-dark);
+}
+
+/* Ground */
+.acb-ground {
+  fill: #d4c5a9;
+}
+
+[data-theme="dark"] .acb-ground {
+  fill: #3d3520;
+}
+
+/* Building labels */
+.acb-building-label {
+  fill: var(--text-tertiary);
+  font-family: inherit;
+  font-weight: 600;
+}
+
+/* Building animations */
+.acb-building-solved {
+  animation: buildingRise 0.8s ease-out forwards;
+}
+
+.acb-building-fill {
+  animation: buildingFill 0.5s ease-out 0.6s forwards;
+}
+
+@keyframes buildingRise {
+  from {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes buildingFill {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+
+/* Windows light up staggered */
+.acb-window {
+  animation: windowLight 0.3s ease-out forwards;
+}
+
+@keyframes windowLight {
+  0% { opacity: 0; }
+  100% { opacity: 0.9; }
+}
+
+/* Stars */
+.acb-star {
+  animation: starTwinkle 2s ease-in-out infinite;
+}
+
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* Fireworks */
+.acb-firework {
+  animation: firework 1.5s ease-out infinite;
+}
+
+@keyframes firework {
+  0% { r: 4; opacity: 1; }
+  100% { r: 40; opacity: 0; }
+}
+
+/* Lightning bolt for wrong answer */
+.acb-lightning-bolt {
+  animation: lightningFlash 1s ease-out forwards;
+}
+
+@keyframes lightningFlash {
+  0% { opacity: 0.9; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+/* All complete glow */
+.acb-fireworks {
+  pointer-events: none;
+}
+
+/* ── Progress Bar ── */
+
+.acb-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border-light);
+}
+
+.acb-progress-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.acb-progress-buildings {
+  display: flex;
+  gap: 8px;
+}
+
+.acb-progress-building {
+  opacity: 0.3;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.acb-progress-building-solved {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ══════════════════════════════════
+   DETECTIVE PANEL
+   ══════════════════════════════════ */
+
+.acb-detective {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Case Card */
+.acb-case-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acb-case-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: #FFF8E1;
+  color: #F59E0B;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .acb-case-badge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.acb-case-citizen {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.acb-case-complaint {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+/* Interview */
+.acb-interview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.acb-interview-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.acb-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acb-question-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acb-question-btn {
+  min-height: 44px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s;
+}
+
+.acb-question-btn:hover:not(:disabled) {
+  border-color: #F59E0B;
+  background: #FFF8E1;
+}
+
+[data-theme="dark"] .acb-question-btn:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.acb-question-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.acb-question-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.acb-question-asked {
+  border-color: #F59E0B;
+  opacity: 0.6;
+}
+
+/* Chat exchange */
+.acb-chat-exchange {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 4px;
+  animation: chatSlideIn 0.3s ease-out;
+}
+
+@keyframes chatSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.acb-chat-user {
+  align-self: flex-end;
+  background: #F59E0B;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 14px 14px 4px 14px;
+  font-size: 14px;
+  max-width: 85%;
+  line-height: 1.4;
+}
+
+.acb-chat-ai {
+  align-self: flex-start;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: 14px 14px 14px 4px;
+  font-size: 14px;
+  max-width: 85%;
+  line-height: 1.4;
+}
+
+.acb-clue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #eab308;
+  padding: 6px 12px;
+  background: rgba(234, 179, 8, 0.08);
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+/* Diagnosis */
+.acb-diagnosis {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: chatSlideIn 0.4s ease-out;
+}
+
+.acb-diagnosis-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.acb-diagnosis-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acb-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s;
+}
+
+.acb-option-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.acb-option-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.acb-option-btn:disabled {
+  cursor: default;
+}
+
+.acb-option-correct {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+}
+
+.acb-option-wrong {
+  border-color: #FF3B30;
+  background: rgba(255, 59, 48, 0.08);
+  animation: shake 0.4s ease-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.acb-wrong-feedback {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FF3B30;
+}
+
+.acb-correct-feedback {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #34C759;
+}
+
+/* Lesson card */
+.acb-lesson {
+  border-left: 2px solid #34C759;
+  padding: 16px 20px;
+  background: rgba(52, 199, 89, 0.06);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  animation: chatSlideIn 0.4s ease-out;
+}
+
+.acb-lesson-text {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Next button */
+.acb-next-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #F59E0B;
+  color: #fff;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.acb-next-btn:hover {
+  background: #d97706;
+  transform: translateY(-1px);
+}
+
+.acb-next-btn:active {
+  transform: scale(0.97);
+}
+
+/* ══════════════════════════════════
+   COMPLETION SCREEN
+   ══════════════════════════════════ */
+
+.acb-completion {
+  padding: 24px 40px 64px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.acb-completion-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.acb-completion-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: center;
+}
+
+.acb-completion-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: -8px 0 0;
+  text-align: center;
+}
+
+/* Score card */
+.acb-score-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.acb-score-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.acb-score-rank {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border-light);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.acb-rank-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.acb-rank-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #F59E0B;
+}
+
+/* What you learned */
+.acb-learned {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acb-learned-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+
+.acb-learned-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.acb-learned-concept {
+  flex: 1;
+}
+
+/* Action buttons */
+.acb-completion-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.acb-play-again-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #F59E0B;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.acb-play-again-btn:hover {
+  background: #d97706;
+  transform: translateY(-1px);
+}
+
+.acb-play-again-btn:active {
+  transform: scale(0.97);
+}
+
+/* Explore next */
+.acb-explore-next {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.acb-explore-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 12px;
+}
+
+.acb-explore-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acb-explore-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.acb-explore-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.acb-explore-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.acb-explore-card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.acb-explore-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════
+   DARK MODE
+   ══════════════════════════════════ */
+
+[data-theme="dark"] .acb-chat-user {
+  background: #d97706;
+}
+
+[data-theme="dark"] .acb-lesson {
+  background: rgba(52, 199, 89, 0.08);
+}
+
+[data-theme="dark"] .acb-clue {
+  background: rgba(234, 179, 8, 0.12);
+}
+
+[data-theme="dark"] .acb-option-correct {
+  background: rgba(52, 199, 89, 0.12);
+}
+
+[data-theme="dark"] .acb-option-wrong {
+  background: rgba(255, 59, 48, 0.12);
+}
+
+/* ══════════════════════════════════
+   RESPONSIVE — 768px
+   ══════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .acb-game {
+    padding: 16px 16px 80px;
+  }
+
+  .acb-layout {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .acb-left {
+    flex: none;
+    width: 100%;
+    position: relative;
+    top: auto;
+    height: 200px;
+  }
+
+  .acb-city {
+    height: 200px;
+  }
+
+  .acb-right {
+    width: 100%;
+  }
+
+  .acb-case-card {
+    padding: 16px;
+  }
+
+  .acb-case-complaint {
+    font-size: 16px;
+  }
+
+  .acb-question-btn {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .acb-option-btn {
+    width: 100%;
+    min-height: 48px;
+    font-size: 14px;
+  }
+
+  .acb-next-btn {
+    width: 100%;
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .acb-completion {
+    padding: 16px 16px 80px;
+  }
+
+  .acb-completion-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .acb-play-again-btn {
+    width: 100%;
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .acb-explore-cards {
+    flex-direction: column;
+  }
+
+  .acb-chat-user,
+  .acb-chat-ai {
+    max-width: 95%;
+  }
+}
+
+/* ══════════════════════════════════
+   RESPONSIVE — 480px
+   ══════════════════════════════════ */
+
+@media (max-width: 480px) {
+  .acb-left {
+    height: 160px;
+  }
+
+  .acb-city {
+    height: 160px;
+  }
+
+  .acb-building-label {
+    display: none;
+  }
+
+  .acb-case-badge {
+    font-size: 11px;
+  }
+
+  .acb-detective {
+    gap: 16px;
+  }
+
+  .acb-case-card {
+    padding: 12px;
+  }
+
+  .acb-right {
+    padding: 0;
+  }
+}
