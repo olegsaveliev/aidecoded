@@ -83,6 +83,9 @@ const ICON_PATHS = {
   'ai-city-builder': (
     <path d="M6 12h4M8 10v4M15 11h.01M18 11h.01M4 7h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'ai-lab-explorer': (
+    <path d="M3 7l6-3 6 3 6-3v13l-6 3-6-3-6 3V7zM9 4v13M15 7v13" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

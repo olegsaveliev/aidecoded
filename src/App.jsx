@@ -11,6 +11,7 @@ import RAG from './RAG.jsx'
 import MachineLearning from './MachineLearning.jsx'
 import FineTuning from './FineTuning.jsx'
 import AICityBuilder from './AICityBuilder.jsx'
+import AILabExplorer from './AILabExplorer.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -855,6 +856,9 @@ function App() {
         )}
         {!showHome && activeTab === 'ai-city-builder' && (
           <AICityBuilder onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'ai-lab-explorer' && (
+          <AILabExplorer onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         </div>
       </main>

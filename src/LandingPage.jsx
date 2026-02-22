@@ -17,6 +17,7 @@ const MOBILE_MODULES = [
   { id: 'rag', label: 'RAG', color: '#FF9500' },
   { id: 'fine-tuning', label: 'Fine-Tuning', color: '#5856D6' },
   { id: 'ai-city-builder', label: 'City Builder', color: '#F59E0B' },
+  { id: 'ai-lab-explorer', label: 'Lab Explorer', color: '#F59E0B' },
 ]
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {

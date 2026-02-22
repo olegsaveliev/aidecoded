@@ -115,6 +115,16 @@ const CARDS = [
     isGame: true,
     difficulty: 'Beginner Friendly',
   },
+  {
+    id: 'ai-lab-explorer',
+    title: 'AI Lab Explorer',
+    description: 'Walk through an AI research lab. Unlock each room by completing hands-on challenges.',
+    tag: 'Game',
+    accent: '#F59E0B',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Interactive',
+  },
 ]
 
 function HomeScreen({ onSelectTab }) {

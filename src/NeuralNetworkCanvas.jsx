@@ -27,6 +27,7 @@ const NODES = [
   { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.85, py: 0.60, desc: 'Give AI the right context every time' },
   { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.48, py: 0.78, desc: 'Turn a general AI into a domain expert' },
   { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.72, py: 0.88, desc: 'Solve AI mysteries, build your city' },
+  { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', px: 0.62, py: 0.90, desc: 'Explore an AI research lab room by room' },
 ]
 
 const CONNECTIONS = [
@@ -48,6 +49,8 @@ const CONNECTIONS = [
   ['fine-tuning', 'machine-learning'],
   ['ai-city-builder', 'how-llms-work'],
   ['ai-city-builder', 'prompt-engineering'],
+  ['ai-lab-explorer', 'ai-city-builder'],
+  ['ai-lab-explorer', 'how-llms-work'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -64,6 +67,7 @@ const NODE_DELAYS = {
   'context-engineering': 1900,
   'fine-tuning': 1600,
   'ai-city-builder': 2100,
+  'ai-lab-explorer': 2300,
 }
 
 const NODE_APPEAR_DUR = 500

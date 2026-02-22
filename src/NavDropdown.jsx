@@ -48,6 +48,7 @@ const NAV_GROUPS = [
     color: '#F59E0B',
     items: [
       { id: 'ai-city-builder', name: 'AI City Builder', tag: 'Game' },
+      { id: 'ai-lab-explorer', name: 'AI Lab Explorer', tag: 'Game' },
     ],
   },
 ]
