@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { SeedlingIcon, TargetIcon, StarIcon, TrophyIcon } from './ContentIcons.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { getRandomModules } from './moduleData.js'
+import { useAuth } from './AuthContext'
 import './Quiz.css'
 
 const SCORE_MESSAGES = [
@@ -94,6 +95,7 @@ function ScoreCircle({ score, total }) {
 }
 
 function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentModuleId }) {
+  const { saveQuizResult } = useAuth()
   const [current, setCurrent] = useState(0)
   const [score, setScore] = useState(0)
   const [selected, setSelected] = useState(null) // index of selected answer
@@ -146,6 +148,13 @@ function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentMod
       if (confettiTimerRef.current) clearTimeout(confettiTimerRef.current)
     }
   }, [])
+
+  // Save quiz result to Supabase when quiz is completed
+  useEffect(() => {
+    if (showResult && currentModuleId) {
+      saveQuizResult(currentModuleId, score, questions.length * 10)
+    }
+  }, [showResult]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const suggestions = useMemo(
     () => (currentModuleId ? getRandomModules(currentModuleId, 3) : []),

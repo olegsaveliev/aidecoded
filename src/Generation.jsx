@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import Quiz from './Quiz.jsx'
 import { generationQuiz } from './quizData.js'
 import { CheckIcon } from './ContentIcons.jsx'
@@ -41,6 +42,7 @@ function spaceToken(token, prior) {
 const MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo']
 
 function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [showEntry, setShowEntry] = useState(true)
   const [genModel, setGenModel] = useState(defaultModel || 'gpt-4o-mini')
   const [temperature, setTemperature] = useState(0.7)
@@ -169,6 +171,7 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
     const spaced = spaceToken(tokenText, tokensRef.current)
     const newTokens = [...tokensRef.current, spaced]
     setTokens(newTokens)
+    markModuleComplete('generation')
 
     setLoading(true)
     try {
@@ -427,7 +430,7 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
         title="Token Generation"
         description="Watch AI predict the next word live, one token at a time. Choose manually, simulate step by step, or let it run automatically — just like ChatGPT under the hood."
         buttonText="Start Generating"
-        onStart={() => setShowEntry(false)}
+        onStart={() => { setShowEntry(false); markModuleStarted('generation') }}
       />
     )
   }

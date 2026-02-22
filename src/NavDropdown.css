@@ -373,3 +373,25 @@
     min-height: 44px;
   }
 }
+
+/* ── Locked module items ── */
+
+.nav-dropdown-item-locked {
+  opacity: 0.5;
+}
+
+.nav-dropdown-item-lock {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.nav-mobile-item-locked {
+  opacity: 0.5;
+}
+
+.nav-mobile-item-lock {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}

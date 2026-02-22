@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import { CheckIcon, CrossIcon, FileIcon, QuestionIcon, SearchIcon, ScissorsIcon, HashIcon, FileCabinetIcon, PackageIcon, RobotIcon, RulerIcon, MemoIcon, ConstructionIcon, BuildingIcon, CartIcon, HospitalIcon, LaptopIcon, TargetIcon, RefreshIcon, RocketIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -655,6 +656,7 @@ function BuildViz({ active }) {
    MAIN COMPONENT
    ═══════════════════════════════════ */
 function RAG({ onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = useState(-1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(true)
@@ -684,6 +686,7 @@ function RAG({ onSwitchTab, onGoHome }) {
     } else {
       setShowFinal(true)
       setStage(STAGES.length)
+      markModuleComplete('rag')
     }
   }
 
@@ -746,7 +749,7 @@ function RAG({ onSwitchTab, onGoHome }) {
         title="RAG — Retrieval Augmented Generation"
         description="Ever wonder how ChatGPT plugins work? Or how companies build AI that knows their internal docs? That's RAG — the most powerful enterprise AI technique available today. No model training required."
         buttonText="Start Learning"
-        onStart={() => setStage(0)}
+        onStart={() => { setStage(0); markModuleStarted('rag') }}
       />
     )
   }

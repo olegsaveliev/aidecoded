@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import { WarningIcon, SkullIcon, SparklesIcon, CrossIcon, CheckIcon, QuestionIcon, HashIcon, SearchIcon, FileIcon, PackageIcon, RobotIcon, LayersIcon, ScissorsIcon, TheaterIcon, RefreshIcon, MailIcon, BarChartIcon, BriefcaseIcon, WrenchIcon, EyeIcon, TargetIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -634,6 +635,7 @@ function UseCasesViz({ active }) {
    MAIN COMPONENT
    ═══════════════════════════════════ */
 function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = useState(-1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(true)
@@ -663,6 +665,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
     } else {
       setShowFinal(true)
       setStage(STAGES.length)
+      markModuleComplete('context-engineering')
     }
   }
 
@@ -720,7 +723,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
         title="Context Engineering"
         description="Prompt Engineering is about HOW you ask. Context Engineering is about WHAT you include. Learn how to craft the perfect context window to get consistently great AI results."
         buttonText="Start Learning"
-        onStart={() => setStage(0)}
+        onStart={() => { setStage(0); markModuleStarted('context-engineering') }}
       />
     )
   }

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { promptEngineeringQuiz } from './quizData.js'
@@ -1062,6 +1063,7 @@ function PatternsViz({ active }) {
    MAIN COMPONENT
    ═══════════════════════════════════ */
 function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = useState(-1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(true)
@@ -1091,6 +1093,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
     } else {
       setShowFinal(true)
       setStage(8)
+      markModuleComplete('prompt-engineering')
     }
   }
 
@@ -1160,7 +1163,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
         title="Prompt Engineering"
         description="Learn 8 powerful techniques to get dramatically better results from any AI — with live examples you can try yourself."
         buttonText="Start Learning"
-        onStart={() => setStage(0)}
+        onStart={() => { setStage(0); markModuleStarted('prompt-engineering') }}
       />
     )
   }

@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo, useRef } from 'react'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { CheckIcon, CrossIcon, TipIcon } from './ContentIcons.jsx'
+import { useAuth } from './AuthContext'
 import './AICityBuilder.css'
 
 const CASES = [
@@ -595,6 +596,7 @@ function CompletionScreen({ wrongGuesses, onPlayAgain, onSwitchTab }) {
    ══════════════════════════════════ */
 
 function AICityBuilder({ onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [started, setStarted] = useState(false)
   const [caseIndex, setCaseIndex] = useState(0)
   const [solvedCases, setSolvedCases] = useState(new Set())
@@ -617,6 +619,7 @@ function AICityBuilder({ onSwitchTab, onGoHome }) {
       setDiagnosisState({ selected: option, correct: true })
       setShowLesson(true)
       setSolvedCases((prev) => new Set([...prev, caseIndex]))
+      markModuleComplete('ai-city-builder')
     } else {
       setDiagnosisState({ selected: option, correct: false })
       setWrongGuesses((prev) => prev + 1)
@@ -658,7 +661,7 @@ function AICityBuilder({ onSwitchTab, onGoHome }) {
           subtitle="Solve AI mysteries. Build your city."
           description="Five citizens report strange AI behavior. Diagnose what went wrong and watch your city grow with every case you crack."
           buttonText="Start Building"
-          onStart={() => setStarted(true)}
+          onStart={() => { setStarted(true); markModuleStarted('ai-city-builder') }}
         />
         <div className="acb-entry-meta">5 cases &middot; Beginner Friendly</div>
         <div className="acb-entry-silhouettes">

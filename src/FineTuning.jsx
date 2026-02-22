@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import { CheckIcon, CrossIcon, TipIcon, WarningIcon, BookIcon, FileIcon, CodeIcon, TrendingUpIcon, ChatIcon, TargetIcon, GearIcon, BarChartIcon, SearchIcon, ZapIcon, RocketIcon, EyeIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -663,6 +664,7 @@ function ChecklistViz({ active }) {
    MAIN COMPONENT
    =================================== */
 function FineTuning({ onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = useState(-1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(true)
@@ -692,6 +694,7 @@ function FineTuning({ onSwitchTab, onGoHome }) {
     } else {
       setShowFinal(true)
       setStage(STAGES.length)
+      markModuleComplete('fine-tuning')
     }
   }
 
@@ -769,7 +772,7 @@ function FineTuning({ onSwitchTab, onGoHome }) {
         subtitle="Teaching AI to be an expert in YOUR domain"
         description="Pre-trained models are generalists. Fine-tuning makes them specialists. Learn how companies build custom AI models without training from scratch."
         buttonText="Start Learning"
-        onStart={() => setStage(0)}
+        onStart={() => { setStage(0); markModuleStarted('fine-tuning') }}
       />
     )
   }

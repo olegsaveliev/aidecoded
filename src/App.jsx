@@ -22,6 +22,8 @@ import TypewriterTitle from './TypewriterTitle.jsx'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import AuthModal from './AuthModal.jsx'
+import { useAuth, FREE_MODULES } from './AuthContext'
 import logoImg from './assets/logo_dark.png'
 import './App.css'
 
@@ -97,6 +99,11 @@ function BootScreen({ fadingOut, onComplete }) {
 }
 
 function App() {
+  const { user, loading: authLoading, signOut, isModuleLocked, markModuleStarted, markModuleComplete } = useAuth()
+  const [showAuthModal, setShowAuthModal] = useState(false)
+  const [authUnlockMessage, setAuthUnlockMessage] = useState('')
+  const [showAvatarDropdown, setShowAvatarDropdown] = useState(false)
+
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('theme')
     return saved === 'dark'
@@ -106,6 +113,14 @@ function App() {
     document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
     localStorage.setItem('theme', darkMode ? 'dark' : 'light')
   }, [darkMode])
+
+  // Close avatar dropdown on outside click
+  useEffect(() => {
+    if (!showAvatarDropdown) return
+    function handleClick() { setShowAvatarDropdown(false) }
+    window.addEventListener('click', handleClick)
+    return () => window.removeEventListener('click', handleClick)
+  }, [showAvatarDropdown])
 
   const [feedbackMinimized, setFeedbackMinimized] = useState(() => !!sessionStorage.getItem('feedbackMinimized'))
 
@@ -119,7 +134,8 @@ function App() {
     sessionStorage.removeItem('feedbackMinimized')
   }
 
-  const [showLanding, setShowLanding] = useState(true)
+  const [pendingAuthReturn, setPendingAuthReturn] = useState(() => sessionStorage.getItem('auth_return_tab'))
+  const [showLanding, setShowLanding] = useState(!pendingAuthReturn)
   const [fadingOut, setFadingOut] = useState(false)
   const [showBootScreen, setShowBootScreen] = useState(false)
   const [bootFadingOut, setBootFadingOut] = useState(false)
@@ -136,6 +152,12 @@ function App() {
   }
 
   function handleLandingTabSelect(tabId) {
+    if (isModuleLocked(tabId)) {
+      sessionStorage.setItem('auth_return_tab', tabId)
+      setAuthUnlockMessage('Create a free account to unlock all modules')
+      setShowAuthModal(true)
+      return
+    }
     setFadingOut(true)
     setTimeout(() => {
       setShowLanding(false)
@@ -175,6 +197,12 @@ function App() {
   }
 
   function handleSelectTab(tab) {
+    if (isModuleLocked(tab)) {
+      sessionStorage.setItem('auth_return_tab', tab)
+      setAuthUnlockMessage('Create a free account to unlock all modules')
+      setShowAuthModal(true)
+      return
+    }
     setHomeTransition(true)
     setSubPage(null)
     setTimeout(() => {
@@ -190,6 +218,29 @@ function App() {
   }
 
   const [activeTab, setActiveTab] = useState('playground')
+
+  // Restore tab after OAuth redirect
+  useEffect(() => {
+    if (!pendingAuthReturn) return
+    if (user) {
+      sessionStorage.removeItem('auth_return_tab')
+      setPendingAuthReturn(null)
+      if (pendingAuthReturn === 'landing' || pendingAuthReturn === 'home') {
+        setShowHome(true)
+      } else {
+        setShowHome(false)
+        setActiveTab(pendingAuthReturn)
+      }
+      return
+    }
+    // Fallback: if user never appears after 3s, show landing
+    const timeout = setTimeout(() => {
+      sessionStorage.removeItem('auth_return_tab')
+      setPendingAuthReturn(null)
+      setShowLanding(true)
+    }, 3000)
+    return () => clearTimeout(timeout)
+  }, [user, pendingAuthReturn])
   const [subPage, setSubPage] = useState(null)
   const [homeFilter, setHomeFilter] = useState(null)
   const [tabKey, setTabKey] = useState(0)
@@ -391,6 +442,7 @@ function App() {
         content: data.choices[0].message.content,
       }
       setMessages((prev) => [...prev, assistantMsg])
+      markModuleComplete('playground')
     } catch (err) {
       setError(err.message)
     } finally {
@@ -517,6 +569,7 @@ function App() {
         content: data.choices[0].message.content,
       }
       setMessages((prev) => [...prev, assistantMsg])
+      markModuleComplete('playground')
     } catch (err) {
       setError(err.message)
     } finally {
@@ -680,6 +733,36 @@ function App() {
                 </svg>
               )}
             </button>
+            {!user ? (
+              <button className="header-icon-btn" onClick={() => { sessionStorage.setItem('auth_return_tab', showLanding ? 'landing' : showHome ? 'home' : activeTab); setAuthUnlockMessage(''); setShowAuthModal(true) }} aria-label="Sign In" title="Sign In">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                  <polyline points="10 17 15 12 10 7" />
+                  <line x1="15" y1="12" x2="3" y2="12" />
+                </svg>
+              </button>
+            ) : (
+              <div className="header-avatar-wrap" onClick={(e) => e.stopPropagation()}>
+                <button className="header-avatar-svg" onClick={() => setShowAvatarDropdown((v) => !v)} aria-label="Account menu">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </button>
+                {showAvatarDropdown && (
+                  <div className="avatar-dropdown">
+                    <div className="avatar-dropdown-info">
+                      <div className="avatar-dropdown-name">{user.user_metadata?.full_name || 'User'}</div>
+                      <div className="avatar-dropdown-email">{user.email}</div>
+                    </div>
+                    <div className="avatar-dropdown-divider" />
+                    <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false) }}>
+                      Sign Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </header>
 
@@ -708,7 +791,7 @@ function App() {
             title="AI Playground"
             description="Chat directly with AI and experiment with temperature, model selection and parameters in real time. See how small changes dramatically affect responses."
             buttonText="Open Playground"
-            onStart={() => setShowPlaygroundEntry(false)}
+            onStart={() => { setShowPlaygroundEntry(false); markModuleStarted('playground') }}
           />
         )}
 
@@ -874,6 +957,7 @@ function App() {
         </div>
       </main>
       <FeedbackWidget showHome={showHome} activeTab={activeTab} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} unlockMessage={authUnlockMessage} />
     </div>
   )
 }

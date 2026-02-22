@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import ModuleIcon from './ModuleIcon.jsx'
-import { CrossIcon } from './ContentIcons.jsx'
+import { CrossIcon, CheckIcon, StarIcon, LockIcon } from './ContentIcons.jsx'
+import { useAuth } from './AuthContext'
 import './HomeScreen.css'
 
 const FILTER_COLORS = {
@@ -129,7 +130,10 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
 
+const TOTAL_MODULES = 12 // all modules including tools and games
+
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
+  const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()
   const [filter, setFilter] = useState('All')
   const [activeGroup, setActiveGroup] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
@@ -166,9 +170,23 @@ function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
     return matchesGroup && matchesFilter && matchesSearch
   })
 
+  const userName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'
+
   return (
     <div className="home-screen">
       <h2 className="home-welcome">What would you like to explore today?</h2>
+
+      {user && (
+        <div className="home-progress-summary">
+          <div className="home-progress-welcome">Welcome back, {userName}</div>
+          <div className="home-progress-bar-wrap">
+            <span className="home-progress-text">Progress: {completedCount} / {TOTAL_MODULES} modules</span>
+            <div className="home-progress-bar">
+              <div className="home-progress-fill" style={{ width: `${(completedCount / TOTAL_MODULES) * 100}%` }} />
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="home-search-wrap">
         <svg className="home-search-icon" viewBox="0 0 20 20" fill="none" width="18" height="18">
@@ -228,32 +246,71 @@ function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
         </div>
       ) : (
         <div className="home-grid" ref={cardsRef}>
-          {filteredCards.map((card, i) => (
-            <button
-              key={card.id}
-              className={`home-card${card.isGame ? ' home-card-game' : ''}`}
-              style={{
-                borderLeftColor: TAG_BORDER_COLORS[card.tag] || card.accent,
-                animationDelay: `${i * 0.08}s`,
-                ...(card.isGame ? { border: '1.5px solid #F59E0B', borderLeft: '1.5px solid #F59E0B' } : {}),
-              }}
-              onClick={() => onSelectTab(card.id)}
-            >
-              <span className="home-card-top">
-                <span className="home-card-group">{card.group}</span>
-                {card.isGame ? (
-                  <span className="home-card-game-badge">GAME</span>
-                ) : (
-                  <span className={`home-card-tag home-tag-${card.tag.toLowerCase()}`}>{card.tag}</span>
+          {filteredCards.map((card, i) => {
+            const locked = isModuleLocked(card.id)
+            const completed = isModuleComplete(card.id)
+            const started = isModuleStarted(card.id)
+            const quizResult = getQuizResult(card.id)
+
+            return (
+              <button
+                key={card.id}
+                className={`home-card${card.isGame ? ' home-card-game' : ''}${locked ? ' home-card-locked' : ''}`}
+                style={{
+                  borderLeftColor: TAG_BORDER_COLORS[card.tag] || card.accent,
+                  animationDelay: `${i * 0.08}s`,
+                  ...(card.isGame ? { border: '1.5px solid #F59E0B', borderLeft: '1.5px solid #F59E0B' } : {}),
+                }}
+                onClick={() => onSelectTab(card.id)}
+              >
+                {locked && (
+                  <span className="home-card-lock-icon">
+                    <LockIcon size={16} color="var(--text-tertiary, #86868b)" />
+                  </span>
                 )}
-              </span>
-              <span className="home-card-title"><ModuleIcon module={card.id} size={20} style={{ color: FILTER_COLORS[card.tag] }} />{card.title}</span>
-              <span className="home-card-desc">{card.description}</span>
-              {card.difficulty && (
-                <span className="home-card-difficulty">{card.difficulty}</span>
-              )}
-            </button>
-          ))}
+                <span className="home-card-top">
+                  <span className="home-card-group">{card.group}</span>
+                  {card.isGame ? (
+                    <span className="home-card-game-badge">GAME</span>
+                  ) : (
+                    <span className={`home-card-tag home-tag-${card.tag.toLowerCase()}`}>{card.tag}</span>
+                  )}
+                </span>
+                <span className="home-card-title"><ModuleIcon module={card.id} size={20} style={{ color: FILTER_COLORS[card.tag] }} />{card.title}</span>
+                <span className="home-card-desc">{card.description}</span>
+                {card.difficulty && (
+                  <span className="home-card-difficulty">{card.difficulty}</span>
+                )}
+                {!locked && (started || completed || quizResult) && (
+                  <span className="home-card-badges">
+                    {started && !completed && (
+                      <span className="home-card-badge" title="In Progress">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0071E3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" />
+                          <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                      </span>
+                    )}
+                    {completed && (
+                      <span className="home-card-badge" title="Done">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34C759" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="3" width="18" height="18" rx="3" />
+                          <polyline points="9 12 11.5 14.5 16 9.5" />
+                        </svg>
+                      </span>
+                    )}
+                    {quizResult && (
+                      <span className="home-card-badge" title="Quiz completed">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" strokeWidth="0.5">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                        </svg>
+                      </span>
+                    )}
+                  </span>
+                )}
+              </button>
+            )
+          })}
         </div>
       )}
     </div>

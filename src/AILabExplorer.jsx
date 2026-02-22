@@ -3,6 +3,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import SuggestedModules from './SuggestedModules.jsx'
 import { CheckIcon, CrossIcon, LockIcon, FlaskIcon, TipIcon } from './ContentIcons.jsx'
+import { useAuth } from './AuthContext'
 import './AILabExplorer.css'
 
 /* ── Room Data ── */
@@ -180,6 +181,7 @@ const LESSONS = [
 /* ── Main Component ── */
 
 function AILabExplorer({ onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [started, setStarted] = useState(false)
   const [currentRoom, setCurrentRoom] = useState(1)
   const [unlockedRooms, setUnlockedRooms] = useState(new Set([1]))
@@ -275,6 +277,7 @@ function AILabExplorer({ onSwitchTab, onGoHome }) {
   }
 
   function completeRoom(roomId) {
+    markModuleComplete('ai-lab-explorer')
     setCompletedRooms((prev) => {
       const next = new Set(prev)
       next.add(roomId)
@@ -319,7 +322,7 @@ function AILabExplorer({ onSwitchTab, onGoHome }) {
           subtitle="Explore. Interact. Understand AI."
           description="Walk through a 6-room AI research lab. Each room hides a hands-on challenge. Complete it to unlock the next room and learn how AI really works."
           buttonText="Enter the Lab"
-          onStart={() => setStarted(true)}
+          onStart={() => { setStarted(true); markModuleStarted('ai-lab-explorer') }}
         />
         <div className="ale-entry-preview">
           <div className="ale-entry-room ale-entry-room-open">Room 1</div>

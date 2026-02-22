@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import { CheckIcon, CrossIcon, RobotIcon, GraduationIcon, SearchIcon, GamepadIcon, BarChartIcon, ScissorsIcon, DumbbellIcon, TrendingUpIcon, RocketIcon, TreeIcon, PineTreeIcon, LinkIcon, TargetIcon, ZapIcon, BankIcon, HospitalIcon, CartIcon, CarIcon, PhoneIcon, FactoryIcon, InboxIcon, BroomIcon, WrenchIcon, EyeIcon, BookIcon, RefreshIcon, GearIcon, RepeatIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -1056,6 +1057,7 @@ function LifecycleViz({ active }) {
    MAIN COMPONENT
    ═══════════════════════════════════ */
 function MachineLearning({ onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = useState(-1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(true)
@@ -1085,6 +1087,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
     } else {
       setShowFinal(true)
       setStage(STAGES.length)
+      markModuleComplete('machine-learning')
     }
   }
 
@@ -1153,7 +1156,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
         subtitle="How machines actually learn from data"
         description="Before ChatGPT, before transformers, before all the AI buzz — there was Machine Learning. Understanding ML gives you the foundation to understand everything else in AI. No math degree required."
         buttonText="Start Learning"
-        onStart={() => setStage(0)}
+        onStart={() => { setStage(0); markModuleStarted('machine-learning') }}
       />
     )
   }

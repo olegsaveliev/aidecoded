@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
 import { createPortal } from 'react-dom'
 import ModuleIcon from './ModuleIcon.jsx'
+import { LockIcon } from './ContentIcons.jsx'
+import { useAuth } from './AuthContext'
 import './NavDropdown.css'
 
 const NAV_GROUPS = [
@@ -63,6 +65,7 @@ function getGroupForTab(tabId) {
 }
 
 function NavDropdown({ activeTab, onSelectTab, showHome }) {
+  const { isModuleLocked } = useAuth()
   const [openGroup, setOpenGroup] = useState(null)
   const [menuPos, setMenuPos] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -176,17 +179,24 @@ function NavDropdown({ activeTab, onSelectTab, showHome }) {
           }}
         >
           <div className="nav-dropdown-menu">
-            {openGroupData.items.map((item) => (
-              <button
-                key={item.id}
-                className={`nav-dropdown-item${activeTab === item.id ? ' nav-dropdown-item-active' : ''}`}
-                onClick={() => handleItemClick(item.id)}
-              >
-                <span className="nav-dropdown-item-icon"><ModuleIcon module={item.id} size={18} className={activeTab === item.id ? 'module-icon-active' : ''} /></span>
-                <span className="nav-dropdown-item-name">{item.name}</span>
-                <span className="nav-dropdown-item-tag" data-tag={item.tag}>{item.tag}</span>
-              </button>
-            ))}
+            {openGroupData.items.map((item) => {
+              const locked = isModuleLocked(item.id)
+              return (
+                <button
+                  key={item.id}
+                  className={`nav-dropdown-item${activeTab === item.id ? ' nav-dropdown-item-active' : ''}${locked ? ' nav-dropdown-item-locked' : ''}`}
+                  onClick={() => handleItemClick(item.id)}
+                >
+                  <span className="nav-dropdown-item-icon"><ModuleIcon module={item.id} size={18} className={activeTab === item.id ? 'module-icon-active' : ''} /></span>
+                  <span className="nav-dropdown-item-name">{item.name}</span>
+                  {locked ? (
+                    <span className="nav-dropdown-item-lock"><LockIcon size={14} color="var(--text-tertiary)" /></span>
+                  ) : (
+                    <span className="nav-dropdown-item-tag" data-tag={item.tag}>{item.tag}</span>
+                  )}
+                </button>
+              )
+            })}
           </div>
         </div>,
         document.body
@@ -212,17 +222,24 @@ function NavDropdown({ activeTab, onSelectTab, showHome }) {
                 <div className="nav-mobile-group-label">
                   <span style={{ color: group.color }}>{'\u2014'}</span> {group.label}
                 </div>
-                {group.items.map((item) => (
-                  <button
-                    key={item.id}
-                    className={`nav-mobile-item${activeTab === item.id ? ' nav-mobile-item-active' : ''}`}
-                    onClick={() => handleItemClick(item.id)}
-                  >
-                    <span className="nav-mobile-item-icon"><ModuleIcon module={item.id} size={18} className={activeTab === item.id ? 'module-icon-active' : ''} /></span>
-                    <span className="nav-mobile-item-name">{item.name}</span>
-                    <span className="nav-mobile-item-tag" data-tag={item.tag}>{item.tag}</span>
-                  </button>
-                ))}
+                {group.items.map((item) => {
+                  const locked = isModuleLocked(item.id)
+                  return (
+                    <button
+                      key={item.id}
+                      className={`nav-mobile-item${activeTab === item.id ? ' nav-mobile-item-active' : ''}${locked ? ' nav-mobile-item-locked' : ''}`}
+                      onClick={() => handleItemClick(item.id)}
+                    >
+                      <span className="nav-mobile-item-icon"><ModuleIcon module={item.id} size={18} className={activeTab === item.id ? 'module-icon-active' : ''} /></span>
+                      <span className="nav-mobile-item-name">{item.name}</span>
+                      {locked ? (
+                        <span className="nav-mobile-item-lock"><LockIcon size={14} color="var(--text-tertiary)" /></span>
+                      ) : (
+                        <span className="nav-mobile-item-tag" data-tag={item.tag}>{item.tag}</span>
+                      )}
+                    </button>
+                  )
+                })}
               </div>
             ))}
           </div>

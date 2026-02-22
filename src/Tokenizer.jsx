@@ -3,6 +3,7 @@ import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import Quiz from './Quiz.jsx'
 import { tokenizerQuiz } from './quizData.js'
 
@@ -31,6 +32,7 @@ const FUN_FACTS = [
 ]
 
 function Tokenizer({ onSwitchTab, onGoHome }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [showEntry, setShowEntry] = useState(true)
   const [text, setText] = useState('')
   const [showWelcome, setShowWelcome] = useState(true)
@@ -53,6 +55,10 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
     }
   }, [text])
 
+  useEffect(() => {
+    if (tokenData.length > 0) markModuleComplete('tokenizer')
+  }, [tokenData.length > 0])
+
   // Rotate fun facts every 8 seconds
   useEffect(() => {
     factTimer.current = setInterval(() => {
@@ -72,7 +78,7 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
         title="Token Visualizer"
         description="Type any text and watch how AI breaks it into tokens in real time. Understand why AI has token limits not word limits — and how it actually reads your text."
         buttonText="Start Tokenizing"
-        onStart={() => setShowEntry(false)}
+        onStart={() => { setShowEntry(false); markModuleStarted('tokenizer') }}
       />
     )
   }

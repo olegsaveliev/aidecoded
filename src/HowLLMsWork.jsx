@@ -3,6 +3,7 @@ import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import { MemoIcon, TypeIcon, HashIcon, EyeIcon, ZapIcon, TipIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -74,6 +75,7 @@ const SUGGESTIONS = [
 ]
 
 function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome, onSubPageChange }) {
+  const { markModuleStarted, markModuleComplete } = useAuth()
   const [showEntry, setShowEntry] = useState(true)
   const [prompt, setPrompt] = useState('The weather today is')
   const [stage, setStage] = useState(-1) // -1 = not started
@@ -411,6 +413,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     setElapsed(Date.now() - startTime)
     setShowFinal(true)
     setStage(5)
+    markModuleComplete('how-llms-work')
   }
 
   useEffect(() => {
@@ -449,7 +452,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
         title="How LLMs Work"
         description="Take an interactive journey through every stage an AI goes through to answer your question. From your words to tokens to embeddings to the final response — see it all happen live."
         buttonText="Start the Journey →"
-        onStart={() => setShowEntry(false)}
+        onStart={() => { setShowEntry(false); markModuleStarted('how-llms-work') }}
       />
     )
   }

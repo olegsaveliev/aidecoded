@@ -6,8 +6,9 @@ Interactive React app for learning how Large Language Models work.
 
 - **Framework**: React + Vite
 - **API**: OpenAI (Chat Completions, Embeddings)
+- **Auth**: Supabase Auth (Google OAuth + email/password) with PostgreSQL progress tracking
 - **Styling**: Per-module CSS files, CSS variables for theming (light/dark)
-- **State**: React useState/useEffect (no external state management)
+- **State**: React useState/useEffect, AuthContext for auth/progress state
 - **Icons**: SVG-only (no emojis anywhere in UI). Two icon systems: `ContentIcons.jsx` and `ModuleIcon.jsx`
 - **Font Stack**: `-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif`
 
@@ -147,6 +148,94 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/AILabExplorer.jsx` / `src/AILabExplorer.css` — AI Lab Explorer game (6-room lab, hands-on challenges)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
+- `src/supabase.js` — Supabase client (null-safe, handles missing env vars)
+- `src/AuthContext.jsx` — Auth provider: user state, progress, quiz results, module started/complete tracking
+- `src/AuthModal.jsx` — Sign In/Sign Up modal (Google OAuth + email/password)
+- `src/AuthModal.css` — Auth modal, avatar dropdown, progress badges, locked card styles
+
+---
+
+## Authentication & Progress
+
+### Overview
+
+- **Provider**: Supabase Auth (Google OAuth + email/password)
+- **Database**: Supabase PostgreSQL with Row Level Security (RLS)
+- **Free modules**: `playground`, `tokenizer`, `generation` — no login required
+- **Locked modules**: All others dimmed with lock icon until user signs in
+- **Env vars**: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (also accepts `SUPABASE_*` prefix for Vercel)
+
+### Supabase Tables
+
+```sql
+-- User progress (completed modules)
+create table progress (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users not null,
+  module_id text not null,
+  completed_at timestamptz default now(),
+  unique(user_id, module_id)
+);
+
+-- Quiz results
+create table quiz_results (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users not null,
+  module_id text not null,
+  score integer not null,
+  max_score integer not null,
+  taken_at timestamptz default now()
+);
+```
+
+### AuthContext API
+
+| Export | Purpose |
+|---|---|
+| `AuthProvider` | Wraps app in `main.jsx`, provides auth state |
+| `useAuth()` | Hook to access auth state and actions |
+| `FREE_MODULES` | `['playground', 'tokenizer', 'generation']` |
+
+**State**: `user`, `loading`, `progress`, `quizResults`, `completedCount`
+
+**Actions**: `signInWithGoogle()`, `signInWithEmail(email, pw)`, `signUpWithEmail(email, pw, name)`, `signOut()`
+
+**Progress**: `markModuleStarted(id)`, `markModuleComplete(id)`, `saveQuizResult(id, score, max)`
+
+**Queries**: `isModuleLocked(id)`, `isModuleStarted(id)`, `isModuleComplete(id)`, `getQuizResult(id)`
+
+### Progress Tracking Triggers
+
+| Module | Started trigger | Completed trigger |
+|---|---|---|
+| Playground | Entry screen dismissed | First AI response |
+| Tokenizer | Entry screen dismissed | First text tokenized |
+| Generation | Entry screen dismissed | First token generated |
+| Tutorial modules (7) | Entry screen dismissed | Reach final screen |
+| AI City Builder | Game started | First case solved |
+| AI Lab Explorer | Game started | First room completed |
+
+### Header Auth UI
+
+- **Logged out**: SVG door/login icon (uses `header-icon-btn` class)
+- **Logged in**: SVG person icon (`.header-avatar-svg`) with dropdown
+- Auth button is **last** in header-right (after dark mode toggle)
+- OAuth redirect preserves current tab via `sessionStorage('auth_return_tab')`
+
+### HomeScreen Badges
+
+Cards show SVG icon badges in bottom-right corner:
+- **In Progress** (blue clock) — module started but not completed, tracked via localStorage
+- **Done** (green checkbox) — module completed, tracked via Supabase `progress` table
+- **Quiz star** (yellow star) — quiz taken, tracked via Supabase `quiz_results` table
+- **Lock icon** (top-right) — module locked for unauthenticated users
+
+### Mobile Auth
+
+- Auth modal slides up as bottom sheet (`border-radius: 16px 16px 0 0`)
+- Avatar dropdown slides up as bottom sheet on mobile
+- Form inputs use `font-size: 16px` to prevent iOS auto-zoom
+- All auth buttons/inputs have 44px min-height for touch targets
 
 ---
 
@@ -464,7 +553,11 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 14. Use `border: 1.5px solid transparent` on all filled buttons
 15. Final screen: exactly 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
 16. Quiz: pass `onStartOver`, `onSwitchTab`, `currentModuleId` props
-17. Update this file
+17. Add `useAuth` import and destructure `markModuleStarted`, `markModuleComplete`
+18. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
+19. Call `markModuleComplete('<module-id>')` when module is completed (final screen or first meaningful action)
+20. Update `TOTAL_MODULES` in `HomeScreen.jsx` if adding a completable module
+21. Update this file
 
 ## Conventions
 
@@ -488,3 +581,11 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Quiz end screens: exactly 2 buttons (Start Over + Take Quiz Again) + explore next cards
 - Tip boxes: always yellow — `rgba(234, 179, 8, 0.06)` bg, `#eab308` border-left, `TipIcon color="#eab308"`
 - NeuralNetworkCanvas tooltips must account for SVG letterboxing (xMidYMid meet)
+- Free modules (playground, tokenizer, generation) don't require login
+- All other modules show lock icon + dimmed card until authenticated
+- Every module must call `markModuleStarted` on entry screen dismiss and `markModuleComplete` on completion
+- Auth header button (sign-in icon / avatar) is always last in header-right, after dark mode toggle
+- OAuth redirect preserves current tab via sessionStorage `auth_return_tab`
+- Progress badges (bottom-right of cards): blue clock (in progress), green checkbox (done), yellow star (quiz)
+- Supabase client is null-safe — all calls guarded with `if (!supabase) return`
+- Started modules tracked in localStorage (keyed by user ID), completed in Supabase `progress` table
