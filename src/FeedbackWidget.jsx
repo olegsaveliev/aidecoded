@@ -50,6 +50,7 @@ function getInitialPos() {
 }
 
 function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
+  const [visible, setVisible] = useState(() => !sessionStorage.getItem('feedbackClosed'))
   const [isOpen, setIsOpen] = useState(false)
   const [type, setType] = useState('bug')
   const [message, setMessage] = useState('')
@@ -183,6 +184,15 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
     setShowTooltip(false)
   }
 
+  function handleDismiss(e) {
+    e.stopPropagation()
+    setShowTooltip(false)
+    setVisible(false)
+    sessionStorage.setItem('feedbackClosed', 'true')
+  }
+
+  if (!visible) return null
+
   function handleOpen() {
     if (hasDragged.current) return
     setShowTooltip(false)
@@ -264,6 +274,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
           cursor: dragging ? 'grabbing' : 'grab',
         }}
       >
+        <button className="feedback-dismiss" onClick={handleDismiss} aria-label="Close feedback button">✕</button>
         <div className="feedback-bubble-large" />
         <div className="feedback-bubble-small">
           <span />
