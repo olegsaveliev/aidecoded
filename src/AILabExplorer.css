@@ -82,9 +82,11 @@
   cursor: pointer;
 }
 
-.ale-room-box-unlocked:hover {
-  border-color: #F59E0B;
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .ale-room-box-unlocked:hover {
+    border-color: #F59E0B;
+    transform: translateY(-1px);
+  }
 }
 
 .ale-room-box-completed {
@@ -93,8 +95,10 @@
   cursor: pointer;
 }
 
-.ale-room-box-completed:hover {
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .ale-room-box-completed:hover {
+    transform: translateY(-1px);
+  }
 }
 
 .ale-room-number {
@@ -308,9 +312,11 @@
   transform: scale(0.97);
 }
 
-.ale-data-card:hover {
-  border-color: #F59E0B;
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .ale-data-card:hover {
+    border-color: #F59E0B;
+    transform: translateY(-1px);
+  }
 }
 
 .ale-data-card-selected {
@@ -669,9 +675,11 @@
   user-select: none;
 }
 
-.ale-word-node:hover {
-  border-color: #F59E0B;
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .ale-word-node:hover {
+    border-color: #F59E0B;
+    transform: translateY(-1px);
+  }
 }
 
 .ale-word-node-selected {
@@ -761,9 +769,11 @@
   text-align: center;
 }
 
-.ale-ingredient:hover {
-  border-color: #F59E0B;
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .ale-ingredient:hover {
+    border-color: #F59E0B;
+    transform: translateY(-1px);
+  }
 }
 
 .ale-ingredient-selected {
@@ -896,9 +906,11 @@
   font-family: inherit;
 }
 
-.ale-problem-option:hover {
-  border-color: #F59E0B;
-  transform: translateX(2px);
+@media (hover: hover) {
+  .ale-problem-option:hover {
+    border-color: #F59E0B;
+    transform: translateX(2px);
+  }
 }
 
 .ale-problem-option-correct {
