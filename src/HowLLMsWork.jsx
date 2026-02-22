@@ -89,7 +89,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   const [showWelcome, setShowWelcome] = useState(true)
   const [hoveredDot, setHoveredDot] = useState(null)
   const [maxStageReached, setMaxStageReached] = useState(-1)
-  const [showBackHint, setShowBackHint] = useState(true)
   const [showQuiz, setShowQuiz] = useState(false)
   const genAbortRef = useRef(null)
   const genStartedRef = useRef(false)
@@ -445,8 +444,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
       <EntryScreen
         icon="🧠"
         title="How LLMs Work"
-        description="Take an interactive 5-stage journey through every step an AI goes through to answer your question. From your words to tokens to embeddings to the final response."
-        buttonText="Start the Journey"
+        description="Take an interactive journey through every stage an AI goes through to answer your question. From your words to tokens to embeddings to the final response — see it all happen live."
+        buttonText="Start the Journey →"
         onStart={() => setShowEntry(false)}
       />
     )
@@ -571,7 +570,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
               <div className="how-stage how-fade-in">
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[0]}</span>
                     <strong>Stage 1: Your Prompt</strong>
                   </div>
                   <p>This is where it all begins. Your text is the input to the entire AI pipeline. The clearer and more specific your prompt, the better the AI understands what you want.</p>
@@ -579,7 +577,12 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <ToolChips tools={HOW_TOOLS[0]} />
                 </div>
                 <div className="how-prompt-bubble">{prompt}</div>
-                <button className="how-gotit-btn" onClick={() => setStage(1)}>Tokenize it &rarr;</button>
+                <div className="how-nav-row">
+                  <div className="how-nav-buttons">
+                    <button className="how-back-btn" onClick={() => reset()}>&larr; Edit Prompt</button>
+                    <button className="how-gotit-btn" onClick={() => setStage(1)}>Tokenize it &rarr;</button>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -588,7 +591,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
               <div className="how-stage how-fade-in">
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[1]}</span>
                     <strong>Stage 2: Tokenization</strong>
                   </div>
                   <p>Your text gets split into tokens &mdash; the AI's alphabet. Notice how common words are 1 token but rare or long words split into multiple pieces. This is why AI has token limits, not word limits.</p>
@@ -617,9 +619,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                 )}
                 {visibleTokens.length === allTokens.length && (
                   <div className="how-nav-row">
-                    {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
                     <div className="how-nav-buttons">
-                      <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(0) }}>&larr; Back</button>
+                      <button className="how-back-btn" onClick={() => goToStage(0)}>&larr; Back</button>
                       <button className="how-gotit-btn" onClick={() => setStage(2)}>Turn them into numbers &rarr;</button>
                     </div>
                   </div>
@@ -632,7 +633,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
               <div className="how-stage how-fade-in">
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[2]}</span>
                     <strong>Stage 3: Embeddings</strong>
                   </div>
                   <p>Each token becomes a list of numbers (a vector) that captures its meaning mathematically. Words used in similar contexts end up with similar numbers.</p>
@@ -889,9 +889,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
 
                 {vectorsReady && embedData && (
                   <div className="how-nav-row">
-                    {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
                     <div className="how-nav-buttons">
-                      <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(1) }}>&larr; Back</button>
+                      <button className="how-back-btn" onClick={() => goToStage(1)}>&larr; Back</button>
                       <button className="how-gotit-btn" onClick={() => setStage(3)}>Show me attention &rarr;</button>
                     </div>
                   </div>
@@ -904,7 +903,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
               <div className="how-stage how-fade-in">
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[3]}</span>
                     <strong>Stage 4: Attention</strong>
                   </div>
                   <p>The Transformer looks at every token in relation to every other token simultaneously. The lines show which words 'pay attention' to each other.</p>
@@ -964,9 +962,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                 </div>
 
                 <div className="how-nav-row">
-                  {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
                   <div className="how-nav-buttons">
-                    <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(2) }}>&larr; Back</button>
+                    <button className="how-back-btn" onClick={() => goToStage(2)}>&larr; Back</button>
                     <button className="how-gotit-btn" onClick={startGeneration}>Generate the response &rarr;</button>
                   </div>
                 </div>
@@ -978,7 +975,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
               <div className="how-stage how-fade-in">
                 <div className="how-info-card how-info-card-edu">
                   <div className="how-info-card-header">
-                    <span className="how-info-emoji">{STAGE_EMOJIS[4]}</span>
                     <strong>Stage 5: Generation</strong>
                   </div>
                   <p>The model predicts the most likely next token based on everything it has learned from training on billions of documents. Then it repeats &mdash; adding one token at a time until the response is complete.</p>
@@ -1037,9 +1033,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
 
                 {genPhase === 'done' && (
                   <div className="how-nav-row">
-                    {showBackHint && <div className="how-back-hint">&larr; Review previous stage anytime</div>}
                     <div className="how-nav-buttons">
-                      <button className="how-back-btn" onClick={() => { setShowBackHint(false); goToStage(3) }}>&larr; Back</button>
+                      <button className="how-back-btn" onClick={() => goToStage(3)}>&larr; Back</button>
                       <button className="how-gotit-btn" onClick={finishJourney}>See the full picture &rarr;</button>
                     </div>
                   </div>

@@ -187,7 +187,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
               >
                 <span className="nav-dropdown-item-icon">{item.icon}</span>
                 <span className="nav-dropdown-item-name">{item.name}</span>
-                <span className="nav-dropdown-item-tag">{item.tag}</span>
+                <span className="nav-dropdown-item-tag" data-tag={item.tag}>{item.tag}</span>
               </button>
             ))}
           </div>
@@ -223,7 +223,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
                   >
                     <span className="nav-mobile-item-icon">{item.icon}</span>
                     <span className="nav-mobile-item-name">{item.name}</span>
-                    <span className="nav-mobile-item-tag">{item.tag}</span>
+                    <span className="nav-mobile-item-tag" data-tag={item.tag}>{item.tag}</span>
                   </button>
                 ))}
               </div>

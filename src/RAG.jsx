@@ -707,31 +707,31 @@ function RAG({ onSwitchTab, onGoHome }) {
 
   const explanations = {
     0: {
-      title: '🎯 Stage 1: The Problem RAG Solves',
+      title: 'Stage 1: The Problem RAG Solves',
       content: "LLMs are trained on general internet data. They know nothing about:\n\n- Your company policies and procedures\n- Your product documentation\n- Your internal knowledge base\n- Recent events after their training cutoff\n\nRAG (Retrieval Augmented Generation) solves this by retrieving relevant information from YOUR documents and injecting it into the context window before the AI answers.\n\nNo retraining. No fine-tuning. Just smart context engineering.",
     },
     1: {
-      title: '⚙️ Stage 2: How RAG Works',
+      title: 'Stage 2: How RAG Works',
       content: "RAG has two phases:\n\nINDEXING (setup, done once):\n1. Split your documents into chunks (~500 tokens each)\n2. Convert each chunk to an embedding vector\n3. Store vectors in a vector database\n\nQUERYING (every user question):\n1. Convert user question to embedding\n2. Find chunks with similar embeddings (semantic search)\n3. Add those chunks to the AI's context\n4. AI answers using retrieved context\n\nThe magic: similar meaning = similar vectors, so searching by meaning finds the right content even if exact words don't match.",
     },
     2: {
-      title: '🔢 Stage 3: Why Vectors Enable Smart Search',
+      title: 'Stage 3: Why Vectors Enable Smart Search',
       content: "Traditional search matches exact keywords. Vector search matches MEANING.\n\nExample:\nQuery: 'Can I get my money back?'\nMatches: 'refund policy', 'return procedure', 'money-back guarantee' — even without the word 'money back'\n\nThis is why RAG finds relevant content even when users phrase things differently than the documentation.\n\n💡 The same embeddings you saw in 'How LLMs Work' are used here to power intelligent document retrieval.",
     },
     3: {
-      title: '✂️ Stage 4: Chunking — The Art of Splitting Docs',
+      title: 'Stage 4: Chunking — The Art of Splitting Docs',
       content: "How you split documents dramatically affects RAG quality. Too large: irrelevant content dilutes results. Too small: missing context makes chunks useless.\n\nBest practices:\n- 200-500 tokens per chunk for most use cases\n- Always include some overlap between chunks (50-100 tokens)\n- Split at natural boundaries (paragraphs, sections)\n- Include document title/metadata in each chunk\n\n💡 Chunking strategy is often the biggest factor in RAG system quality — more than the model choice.",
     },
     4: {
-      title: '🗄️ Stage 5: Vector Databases',
+      title: 'Stage 5: Vector Databases',
       content: "A vector database is optimized for one thing: finding similar vectors FAST — even with millions of documents.\n\nRegular databases ask: 'Find rows where id = 5'\nVector databases ask: 'Find the 5 most similar vectors to this query vector'\n\nThis is called Approximate Nearest Neighbor (ANN) search and it's what makes RAG fast enough for real-time use.",
     },
     5: {
-      title: '🌍 Stage 6: RAG Powers the Enterprise AI Revolution',
+      title: 'Stage 6: RAG Powers the Enterprise AI Revolution',
       content: "RAG is why AI is finally useful in business settings. Instead of generic AI that knows nothing about your company, RAG gives you AI that IS an expert on your specific domain.\n\nThe business case is clear:\n- Faster employee onboarding (AI knows your processes)\n- Better customer support (AI knows your products)\n- Smarter search (find meaning, not just keywords)\n- Compliance-friendly (AI only uses approved sources)",
     },
     6: {
-      title: '🛠️ Stage 7: Build Your First RAG System',
+      title: 'Stage 7: Build Your First RAG System',
       content: "With modern frameworks like LangChain and LlamaIndex, a basic RAG system can be built in under 50 lines of Python.\n\nThe hard parts are actually:\n- Getting high quality, clean documents\n- Choosing the right chunking strategy\n- Evaluating retrieval quality\n- Handling edge cases (no relevant docs found)\n\nStart simple, then optimize based on where it fails.",
     },
   }
@@ -766,7 +766,7 @@ function RAG({ onSwitchTab, onGoHome }) {
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            🔍 <strong>Welcome to RAG</strong> — This is how companies like Microsoft, Google and thousands of enterprises make AI work with their own data. By the end you'll understand exactly how it works and how to implement it.
+            <strong>Welcome to RAG</strong> — This is how companies like Microsoft, Google and thousands of enterprises make AI work with their own data. By the end you'll understand exactly how it works and how to implement it.
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -881,7 +881,7 @@ function RAG({ onSwitchTab, onGoHome }) {
               <tbody>
                 {QUICK_REFERENCE.map((item) => (
                   <tr key={item.technique}>
-                    <td className="pe-ref-technique">{item.emoji} {item.technique}</td>
+                    <td className="pe-ref-technique">{item.technique}</td>
                     <td>{item.when}</td>
                     <td className="pe-ref-phrase">{item.phrase}</td>
                   </tr>

@@ -3,8 +3,6 @@
    ============================================= */
 .feedback-btn {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
   z-index: 9998;
   display: flex;
   align-items: center;
@@ -17,9 +15,12 @@
   font-size: 14px;
   font-weight: 600;
   font-family: inherit;
-  cursor: pointer;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
   box-shadow: 0 4px 16px rgba(0, 113, 227, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
 .feedback-btn:hover {
@@ -29,6 +30,14 @@
 
 .feedback-btn:active {
   transform: scale(0.98);
+}
+
+.feedback-btn-dragging {
+  cursor: grabbing;
+  opacity: 0.85;
+  transform: scale(0.95);
+  box-shadow: 0 8px 28px rgba(0, 113, 227, 0.4);
+  transition: none;
 }
 
 .feedback-btn-emoji {
@@ -375,8 +384,6 @@
    ============================================= */
 @media (max-width: 768px) {
   .feedback-btn {
-    bottom: 80px;
-    right: 16px;
     width: 48px;
     height: 48px;
     border-radius: 50%;

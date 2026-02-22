@@ -1824,15 +1824,22 @@
 
 /* Prompt bubble (stage 0) */
 .how-prompt-bubble {
-  background: var(--accent);
-  color: #fff;
-  padding: 16px 24px;
-  border-radius: 18px 18px 4px 18px;
-  font-size: 16px;
+  background: #F2F2F7;
+  color: #1D1D1F;
+  padding: 12px 20px;
+  border-radius: 16px 16px 4px 16px;
+  font-size: 15px;
+  font-weight: 400;
   line-height: 1.5;
-  max-width: 480px;
+  max-width: 80%;
+  display: inline-block;
   align-self: flex-end;
-  box-shadow: 0 2px 8px rgba(0, 113, 227, 0.18);
+  cursor: default;
+}
+
+[data-theme="dark"] .how-prompt-bubble {
+  background: #292524;
+  color: #E8E3DD;
 }
 
 /* Info cards — educational upgrade */
@@ -1967,13 +1974,27 @@
   font-style: italic;
 }
 
-/* Clickable stepper steps */
+/* Clickable stepper steps (completed stages) */
 .how-step-clickable {
   cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .how-step-clickable:hover {
   background: var(--accent-light);
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.2);
+}
+
+.how-step-clickable:hover .how-step-num {
+  background: #2db84e;
+  border-color: #2db84e;
+}
+
+/* Future stages (not yet unlocked) */
+.how-step:not(.how-step-active):not(.how-step-clickable) {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 /* Token display (stage 1) */
@@ -4077,6 +4098,7 @@
   font-family: inherit;
   transition: all 0.2s ease;
   align-self: center;
+  animation: peFsCardIn 0.5s ease-out 0.1s both;
 }
 .pe-replay-btn:hover {
   border-color: var(--accent);
@@ -4155,12 +4177,13 @@
   flex-direction: column;
   gap: 0;
   opacity: 0;
-  transform: translateY(12px) scale(0.98);
-  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .pe-fs-card-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+  animation: peFsCardIn 0.6s ease-out 0.15s both;
+}
+@keyframes peFsCardIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .pe-fs-card-none {
   border: 1px solid var(--border);
@@ -4469,12 +4492,9 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   opacity: 0;
-  transform: translateY(14px);
-  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .pe-role-resp-card-visible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: peFsCardIn 0.6s ease-out 0.15s both;
 }
 .pe-role-accent-blue {
   border-left: 4px solid #0071e3;
@@ -5088,7 +5108,7 @@
   font-size: 13px;
 }
 .pe-reference th {
-  text-align: left;
+  text-align: center;
   padding: 8px 12px;
   font-weight: 600;
   border-bottom: 2px solid var(--border);
@@ -5432,8 +5452,8 @@
 
   .how-prompt-bubble {
     max-width: 100%;
-    font-size: 15px;
-    padding: 14px 18px;
+    font-size: 14px;
+    padding: 10px 16px;
   }
 
   .how-scatter-container {

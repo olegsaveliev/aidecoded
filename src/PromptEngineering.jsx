@@ -316,7 +316,6 @@ Classification:`)
   const [tryResult, setTryResult] = useState('')
   const [tryLoading, setTryLoading] = useState(false)
   const [tryError, setTryError] = useState('')
-  const timerRef = useRef(null)
 
   const demoCards = [
     {
@@ -348,23 +347,8 @@ Classification:`)
     },
   ]
 
-  function startAnimation() {
-    clearTimeout(timerRef.current)
-    setVisibleCards(0)
-    let i = 0
-    function showNext() {
-      i++
-      setVisibleCards(i)
-      if (i < demoCards.length) {
-        timerRef.current = setTimeout(showNext, 800)
-      }
-    }
-    timerRef.current = setTimeout(showNext, 400)
-  }
-
   useEffect(() => {
-    if (active) startAnimation()
-    return () => clearTimeout(timerRef.current)
+    if (active) setVisibleCards(1)
   }, [active])
 
   async function handleRun() {
@@ -391,8 +375,8 @@ Classification:`)
       <div className="pe-demo-label">Watch how adding examples improves accuracy:</div>
 
       <div className="pe-fs-cards">
-        {demoCards.map((card, i) => (
-          <div key={i} className={`pe-fs-card ${card.borderClass} ${i < visibleCards ? 'pe-fs-card-visible' : ''}`}>
+        {demoCards.slice(0, visibleCards).map((card, i) => (
+          <div key={i} className={`pe-fs-card ${card.borderClass} pe-fs-card-visible`}>
             <div className="pe-fs-card-tag" style={{ color: card.tagColor }}>{card.tag}</div>
             <div className="pe-fs-card-prompt">{card.prompt}</div>
             <div className="pe-fs-card-divider" />
@@ -401,14 +385,17 @@ Classification:`)
             <div className={`pe-fs-card-verdict ${card.verdictClass}`}>{card.verdict}</div>
           </div>
         ))}
-        {visibleCards === 0 && (
-          <button className="pe-replay-btn" onClick={startAnimation} style={{ marginTop: 8 }}>▶ Play demo</button>
+        {visibleCards < demoCards.length && (
+          <button className="pe-replay-btn" onClick={() => setVisibleCards(v => v + 1)}>
+            Show next example &rarr;
+          </button>
+        )}
+        {visibleCards >= demoCards.length && (
+          <button className="pe-replay-btn" onClick={() => { setVisibleCards(0); requestAnimationFrame(() => setVisibleCards(1)) }}>
+            ▶ Replay
+          </button>
         )}
       </div>
-
-      {visibleCards >= 3 && (
-        <button className="pe-replay-btn" onClick={startAnimation}>▶ Replay animation</button>
-      )}
 
       <TryItSection prompt={tryPrompt} setPrompt={setTryPrompt} result={tryResult}
         loading={tryLoading} error={tryError} onRun={handleRun} />
@@ -625,7 +612,6 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
   const [tryResult, setTryResult] = useState('')
   const [tryLoading, setTryLoading] = useState(false)
   const [tryError, setTryError] = useState('')
-  const timerRef = useRef(null)
 
   const question = 'Should I invest in AI tools for my team?'
 
@@ -659,23 +645,8 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
     { emoji: '📊', name: 'Data Analyst', prefix: 'You are a senior data analyst. ' },
   ]
 
-  function startAnimation() {
-    clearTimeout(timerRef.current)
-    setVisibleCards(0)
-    let i = 0
-    function showNext() {
-      i++
-      setVisibleCards(i)
-      if (i < roleCards.length) {
-        timerRef.current = setTimeout(showNext, 600)
-      }
-    }
-    timerRef.current = setTimeout(showNext, 400)
-  }
-
   useEffect(() => {
-    if (active) startAnimation()
-    return () => clearTimeout(timerRef.current)
+    if (active) setVisibleCards(1)
   }, [active])
 
   async function handleTryRun() {
@@ -694,8 +665,8 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
       </div>
 
       <div className="pe-role-cards">
-        {roleCards.map((card, i) => (
-          <div key={card.name} className={`pe-role-resp-card ${card.accentClass} ${i < visibleCards ? 'pe-role-resp-card-visible' : ''}`}>
+        {roleCards.slice(0, visibleCards).map((card) => (
+          <div key={card.name} className={`pe-role-resp-card ${card.accentClass} pe-role-resp-card-visible`}>
             <div className="pe-role-resp-header">
               <span className="pe-role-resp-emoji">{card.emoji}</span>
               <span className="pe-role-resp-name">{card.name} perspective</span>
@@ -703,19 +674,22 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
             <div className="pe-role-resp-text">{card.response}</div>
           </div>
         ))}
-        {visibleCards === 0 && (
-          <button className="pe-replay-btn" onClick={startAnimation} style={{ marginTop: 8 }}>▶ Play demo</button>
+        {visibleCards > 0 && visibleCards < roleCards.length && (
+          <button className="pe-replay-btn" onClick={() => setVisibleCards(v => v + 1)}>
+            Show next role &rarr;
+          </button>
+        )}
+        {visibleCards >= roleCards.length && (
+          <>
+            <div className="pe-role-takeaway">
+              Same question — 4 completely different expert angles. That's the power of role prompting.
+            </div>
+            <button className="pe-replay-btn" onClick={() => { setVisibleCards(0); requestAnimationFrame(() => setVisibleCards(1)) }}>
+              ▶ Replay
+            </button>
+          </>
         )}
       </div>
-
-      {visibleCards >= roleCards.length && (
-        <>
-          <div className="pe-role-takeaway">
-            Same question — 4 completely different expert angles. That's the power of role prompting.
-          </div>
-          <button className="pe-replay-btn" onClick={startAnimation}>▶ Replay</button>
-        </>
-      )}
 
       <div className="pe-role-library">
         <div className="pe-role-library-label">🎭 Role Library — click to fill the prompt:</div>
@@ -1067,7 +1041,7 @@ function PatternsViz({ active }) {
 
       {showRules && (
         <div className="pe-golden-rules how-pop-in">
-          <div className="pe-golden-rules-title">⚡ The Golden Rules</div>
+          <div className="pe-golden-rules-title">The Golden Rules</div>
           <div className="pe-golden-rules-grid">
             {goldenRules.map((r, i) => (
               <div key={i} className="pe-golden-rule pe-golden-rule-visible" style={{ animationDelay: `${i * 0.06}s` }}>
@@ -1144,35 +1118,35 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
 
   const explanations = {
     0: {
-      title: '🎯 Zero-Shot Prompting — Be Specific',
+      title: 'Zero-Shot Prompting — Be Specific',
       content: "Zero-shot means giving the AI a task with no examples — just your instructions. Most people write vague prompts and get vague results.\n\nThe formula for a good zero-shot prompt:\n[Role] + [Task] + [Format] + [Context]\n\nExample: 'You are a senior marketing expert. Write 3 bullet points about email marketing benefits for small business owners. Keep each under 20 words.'",
     },
     1: {
-      title: '📚 Few-Shot Prompting — Show Don\'t Tell',
+      title: 'Few-Shot Prompting — Show Don\'t Tell',
       content: "Instead of explaining what you want, SHOW the AI with examples. This is called few-shot prompting — giving a 'few shots' (examples) before your actual question.\n\nThe more specific and relevant your examples, the better the AI understands the pattern you want it to follow.\n\nWorks amazingly well for:\n• Consistent tone/style matching\n• Data extraction and formatting\n• Classification tasks\n• Writing in someone's specific style",
     },
     2: {
-      title: '🧠 Chain of Thought — Make AI Show Its Work',
+      title: 'Chain of Thought — Make AI Show Its Work',
       content: "Chain of Thought (CoT) prompting makes the AI reason through problems step by step instead of jumping to an answer. This dramatically improves accuracy on complex tasks.\n\nThe magic phrase: 'Think step by step' or 'Let's work through this carefully'\n\nWhen to use CoT:\n• Math and logic problems\n• Complex multi-step reasoning\n• Debugging and analysis\n• Any task where you want to verify the reasoning",
     },
     3: {
-      title: '🌳 Tree of Thoughts — Explore Multiple Paths',
+      title: 'Tree of Thoughts — Explore Multiple Paths',
       content: "Tree of Thoughts extends Chain of Thought by exploring MULTIPLE reasoning paths simultaneously, like a tree branching out.\n\nThe AI considers different approaches, evaluates each one, prunes dead ends, and follows the most promising path.\n\nThis is how expert humans solve hard problems — they don't just follow one approach, they consider alternatives.\n\nBest for:\n• Creative problem solving\n• Strategic planning\n• Complex decisions with multiple valid approaches\n• Research and analysis tasks",
     },
     4: {
-      title: '🎭 Role Prompting — Unlock Expert Perspectives',
+      title: 'Role Prompting — Unlock Expert Perspectives',
       content: "Assigning a role to the AI dramatically changes the quality and perspective of responses. The AI draws on different knowledge and communication styles based on the role you give it.\n\nPowerful role formats:\n• 'You are a senior [job title] with 20 years experience in [field]'\n• 'Act as a [role] who specializes in [niche]'\n• 'You are an expert [role] reviewing this for [specific audience]'\n\nPro tip: Combine role + audience for maximum effect.",
     },
     5: {
-      title: '⚙️ System Prompts — Configure AI Behavior',
+      title: 'System Prompts — Configure AI Behavior',
       content: "The system prompt is a special instruction that sets the AI's behavior for the ENTIRE conversation. Users don't see it — it's your hidden configuration layer.\n\nThis is how companies build custom AI assistants:\n• Customer service bots with specific personalities\n• Internal tools that only discuss company topics\n• AI assistants constrained to specific domains\n\nWhat to put in system prompts:\n• Role and expertise\n• Tone and communication style\n• Constraints and limitations\n• Output format preferences\n• Company/context specific knowledge",
     },
     6: {
-      title: '🔗 Prompt Chaining — Divide and Conquer',
+      title: 'Prompt Chaining — Divide and Conquer',
       content: "Complex tasks often fail with a single prompt because you're asking the AI to do too much at once. Prompt chaining breaks the task into steps where each output feeds the next.\n\nThis is how professional AI workflows are built:\n• Step 1: Research and gather information\n• Step 2: Analyze and extract key points\n• Step 3: Structure and format\n• Step 4: Polish and finalize\n\nReal world example — writing a business report:\nPrompt 1: 'Analyze these 5 data points about our Q3 sales'\nPrompt 2: 'Based on this analysis, identify the 3 main risks'\nPrompt 3: 'Write an executive summary combining both outputs'",
     },
     7: {
-      title: '⚡ Prompt Patterns — The Golden Rules',
+      title: 'Prompt Patterns — The Golden Rules',
       content: "After learning all these techniques, here are the rules that apply to every single prompt you write.\n\nRemember: bad output doesn't mean the AI is bad — it means your prompt needs improvement. Treat prompting as a skill to practice, not a one-time task.",
     },
   }
@@ -1208,7 +1182,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            ✍️ <strong>Prompt Engineering is the most valuable AI skill you can learn right now.</strong> The same AI gives completely different results based on how you ask. Let's learn how to ask better.
+            <strong>Prompt Engineering is the most valuable AI skill you can learn right now.</strong> The same AI gives completely different results based on how you ask. Let's learn how to ask better.
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -1330,7 +1304,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
               <tbody>
                 {QUICK_REFERENCE.map((item) => (
                   <tr key={item.technique}>
-                    <td className="pe-ref-technique">{item.emoji} {item.technique}</td>
+                    <td className="pe-ref-technique">{item.technique}</td>
                     <td>{item.when}</td>
                     <td className="pe-ref-phrase">{item.phrase}</td>
                   </tr>

@@ -681,27 +681,27 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
 
   const explanations = {
     0: {
-      title: '📦 Stage 1: Data Collection',
+      title: 'Stage 1: Data Collection',
       content: "Before training can begin, we need massive amounts of text for the model to learn from. Modern LLMs train on 10–15 TRILLION tokens — roughly equivalent to reading every book ever written, 10,000 times.\n\nThe internet is the primary source, but quality matters more than quantity. Researchers carefully select and balance different types of content.",
     },
     1: {
-      title: '🧹 Stage 2: Data Cleaning',
+      title: 'Stage 2: Data Cleaning',
       content: "Raw internet data is messy — full of spam, duplicates, toxic content, and low quality text. Researchers spend enormous effort cleaning data because garbage in = garbage out.\n\nTypically only 40–60% of collected data survives cleaning. The quality of this stage is often the biggest factor in how good the final model is.",
     },
     2: {
-      title: '🔤 Stage 3: Tokenization',
+      title: 'Stage 3: Tokenization',
       content: "All the cleaned text gets converted to tokens — numbers the model can process mathematically. The entire training dataset becomes a massive sequence of token IDs.\n\n💡 You've already seen this in action in the Tokenizer tab!",
     },
     3: {
-      title: '🧠 Stage 4: Pre-Training',
+      title: 'Stage 4: Pre-Training',
       content: "This is the main training phase — the model learns by trying to predict the next token in the training data, billions of times. Every wrong prediction updates the model's weights slightly.\n\nAfter months of training on thousands of GPUs, the model has learned grammar, facts, reasoning patterns, and much more — just from predicting the next word.\n\n💡 At this stage the model can complete text but doesn't yet know how to follow instructions or have a conversation.",
     },
     4: {
-      title: '🎯 Stage 5: Supervised Fine-Tuning (SFT)',
+      title: 'Stage 5: Supervised Fine-Tuning (SFT)',
       content: "The pre-trained model is powerful but wild — it just completes text, it doesn't know how to be helpful. Fine-tuning teaches it to have conversations and follow instructions.\n\nHuman trainers write thousands of example conversations showing the ideal AI behavior. The model is then trained on these examples to match that style.\n\n💡 This is why ChatGPT answers questions instead of just completing your sentence.",
     },
     5: {
-      title: '🏆 Stage 6: RLHF — The Secret Sauce',
+      title: 'Stage 6: RLHF — The Secret Sauce',
       content: "This is what separates ChatGPT from a raw language model. Human raters compare pairs of responses and pick the better one. A 'reward model' learns to predict human preferences.\n\nThen the main model is optimized using reinforcement learning to generate responses the reward model rates highly — essentially learning to be more helpful and less harmful by chasing human approval.\n\n💡 The thumbs up/down buttons in ChatGPT? That's RLHF data collection happening in real time.",
     },
   }
@@ -739,7 +739,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            🏗️ <strong>Ever wondered how ChatGPT was actually built?</strong> This is the full story — from raw internet data to a working AI assistant. No PhD required.
+            <strong>Ever wondered how ChatGPT was actually built?</strong> This is the full story — from raw internet data to a working AI assistant. No PhD required.
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -807,7 +807,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
                   {stage === 2 && onSwitchTab && (
                     <button
                       className="how-secondary-btn"
-                      style={{ marginTop: '8px', fontSize: '13px', padding: '8px 18px' }}
+                      style={{ marginTop: '8px', fontSize: '13px', padding: '8px 18px', width: 'fit-content' }}
                       onClick={() => onSwitchTab('tokenizer')}
                     >
                       → Try the Tokenizer yourself

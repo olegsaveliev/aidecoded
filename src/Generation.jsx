@@ -720,7 +720,7 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
       )}
 
       {/* 9. Click hint */}
-      {candidates.length > 0 && !simulating && !streaming && (
+      {candidates.length > 0 && !simulating && !streaming && doneMode === null && (
         <div className="gen-click-hint">
           Click any token to choose it — or use the buttons above
         </div>

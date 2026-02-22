@@ -33,6 +33,21 @@ function getPageContext({ showHome, showLanding, activeTab, subPage }) {
   return parts.join(' → ') || activeTab
 }
 
+function getInitialPos() {
+  try {
+    const saved = localStorage.getItem('feedbackBtnPos')
+    if (saved) {
+      const parsed = JSON.parse(saved)
+      // Clamp to current viewport in case window was resized
+      return {
+        x: Math.min(Math.max(0, parsed.x), window.innerWidth - 140),
+        y: Math.min(Math.max(0, parsed.y), window.innerHeight - 60),
+      }
+    }
+  } catch {}
+  return { x: window.innerWidth - 120, y: window.innerHeight - 80 }
+}
+
 function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
   const [isOpen, setIsOpen] = useState(false)
   const [type, setType] = useState('bug')
@@ -42,7 +57,74 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
   const [messageError, setMessageError] = useState('')
   const modalRef = useRef(null)
 
+  // Draggable state
+  const [pos, setPos] = useState(getInitialPos)
+  const [dragging, setDragging] = useState(false)
+  const hasDragged = useRef(false)
+  const dragStart = useRef({ x: 0, y: 0 })
+  const buttonRef = useRef(null)
+
   const pageContext = getPageContext({ showHome, showLanding, activeTab, subPage })
+
+  // --- Drag: mouse handlers ---
+  const onMouseDown = (e) => {
+    setDragging(true)
+    hasDragged.current = false
+    dragStart.current = { x: e.clientX - pos.x, y: e.clientY - pos.y }
+  }
+
+  useEffect(() => {
+    if (!dragging) return
+    const onMouseMove = (e) => {
+      hasDragged.current = true
+      setPos({
+        x: Math.min(Math.max(0, e.clientX - dragStart.current.x), window.innerWidth - 140),
+        y: Math.min(Math.max(0, e.clientY - dragStart.current.y), window.innerHeight - 60),
+      })
+    }
+    const onMouseUp = () => setDragging(false)
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
+  }, [dragging])
+
+  // --- Drag: touch handlers ---
+  const onTouchStart = (e) => {
+    const touch = e.touches[0]
+    setDragging(true)
+    hasDragged.current = false
+    dragStart.current = { x: touch.clientX - pos.x, y: touch.clientY - pos.y }
+  }
+
+  useEffect(() => {
+    if (!dragging) return
+    const onTouchMove = (e) => {
+      e.preventDefault()
+      hasDragged.current = true
+      const touch = e.touches[0]
+      setPos({
+        x: Math.min(Math.max(0, touch.clientX - dragStart.current.x), window.innerWidth - 140),
+        y: Math.min(Math.max(0, touch.clientY - dragStart.current.y), window.innerHeight - 60),
+      })
+    }
+    const onTouchEnd = () => setDragging(false)
+    window.addEventListener('touchmove', onTouchMove, { passive: false })
+    window.addEventListener('touchend', onTouchEnd)
+    return () => {
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [dragging])
+
+  // --- Save position to localStorage after drag ends ---
+  useEffect(() => {
+    if (!dragging && hasDragged.current) {
+      localStorage.setItem('feedbackBtnPos', JSON.stringify(pos))
+    }
+  }, [dragging])
 
   // Close on Escape
   useEffect(() => {
@@ -82,6 +164,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
   }, [isOpen])
 
   function handleOpen() {
+    if (hasDragged.current) return
     setIsOpen(true)
     setStatus('idle')
     setMessageError('')
@@ -143,7 +226,19 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
 
   return (
     <>
-      <button className="feedback-btn" onClick={handleOpen} aria-label="Send feedback">
+      <button
+        ref={buttonRef}
+        className={`feedback-btn${dragging ? ' feedback-btn-dragging' : ''}`}
+        onMouseDown={onMouseDown}
+        onTouchStart={onTouchStart}
+        onClick={handleOpen}
+        aria-label="Send feedback"
+        style={{
+          left: pos.x,
+          top: pos.y,
+          cursor: dragging ? 'grabbing' : 'grab',
+        }}
+      >
         <span className="feedback-btn-emoji">💬</span>
         <span className="feedback-btn-label">Feedback</span>
       </button>

@@ -103,7 +103,7 @@ function Tokenizer({ onGoHome }) {
       {showInfo && (
         <div className="tok-info-banner">
           <div className="tok-info-banner-text">
-            <strong>💡 What is a token?</strong>
+            <strong>What is a token?</strong>
             <ul>
               <li>A token is roughly 3–4 characters or about &frac34; of a word</li>
               <li>Common words like &ldquo;the&rdquo; or &ldquo;is&rdquo; are usually 1 token</li>

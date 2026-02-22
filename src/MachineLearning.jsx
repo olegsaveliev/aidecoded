@@ -1109,35 +1109,35 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
 
   const explanations = {
     0: {
-      title: '🤖 Stage 1: What is Machine Learning?',
+      title: 'Stage 1: What is Machine Learning?',
       content: "Machine Learning is the science of teaching computers to learn from examples instead of explicit rules.\n\nTraditional programming: humans write the rules\nMachine Learning: the algorithm finds the rules itself\n\nThe key insight: if you show a computer enough examples with correct answers, it can figure out the underlying pattern — often better than humans can.\n\nEvery time you use a spam filter, Netflix recommendation, or fraud detection system — that's ML working silently.",
     },
     1: {
-      title: '🌳 Stage 2: Three Types of ML',
+      title: 'Stage 2: Three Types of ML',
       content: "All ML falls into three categories based on how the algorithm learns:\n\nSupervised: Teacher provides answers → most common in business\nUnsupervised: No answers provided → finds hidden structure\nReinforcement: Trial and error with rewards → used in games and robotics\n\nThe LLMs we've been studying use ALL THREE: Pre-training is self-supervised, RLHF is reinforcement learning!",
     },
     2: {
-      title: '📚 Stage 3: How Supervised Learning Works',
+      title: 'Stage 3: How Supervised Learning Works',
       content: "The training loop is simple but powerful:\n1. Make a prediction\n2. Compare to correct answer\n3. Calculate the error (loss)\n4. Adjust model parameters to reduce error\n5. Repeat millions of times\n\nThis is called gradient descent — the algorithm always moves in the direction that reduces error most.\n\nThe test set is crucial: it tells you if the model actually learned general patterns or just memorized the training data (called overfitting).",
     },
     3: {
-      title: '🧠 Stage 4: Neural Networks',
+      title: 'Stage 4: Neural Networks',
       content: "Neural networks are inspired by the brain — interconnected nodes that process information in layers.\n\nEach connection has a weight (importance). Each node applies an activation function. Training adjusts millions of weights to minimize error.\n\nKey insight: deep networks (many layers) can learn incredibly complex patterns. This is why they call it 'deep learning' — it's neural networks with many hidden layers.\n\nThe Transformer models powering ChatGPT are neural networks with a special 'attention' mechanism you already learned about!",
     },
     4: {
-      title: '⚖️ Stage 5: The Goldilocks Problem',
+      title: 'Stage 5: The Goldilocks Problem',
       content: "The biggest challenge in ML is generalization — does the model learn real patterns or just memorize data?\n\nUnderfitting: Model too simple, misses the pattern\nOverfitting: Model too complex, memorizes noise\n\nSolutions for overfitting:\n- More training data (most effective)\n- Dropout (randomly disable neurons during training)\n- Regularization (penalize complexity)\n- Cross-validation (use multiple train/test splits)\n- Early stopping (stop training before overfitting starts)\n\nWhen ChatGPT sometimes 'hallucinates', it's partly because the model learned spurious patterns from training data.",
     },
     5: {
-      title: '⚡ Stage 6: The ML Algorithm Toolkit',
+      title: 'Stage 6: The ML Algorithm Toolkit',
       content: "Different problems need different algorithms. Knowing when to use which is the art of ML engineering.\n\nGeneral rule:\n- Start with simple (Linear/Logistic Regression)\n- Try ensemble methods (Random Forest, XGBoost)\n- Use neural networks only when simpler methods fail\n- Complex ≠ better for most business problems\n\nXGBoost wins more Kaggle competitions than deep learning for structured tabular data!",
     },
     6: {
-      title: '🌍 Stage 7: ML is Already Everywhere',
+      title: 'Stage 7: ML is Already Everywhere',
       content: "You interact with ML dozens of times per day without realizing it.\n\nEvery recommendation, every search result, every fraud alert, every photo filter — these are all ML models making real-time predictions.\n\nFor IT managers: the question is no longer 'should we use ML?' but 'which problems in our business would benefit most from ML?'",
     },
     7: {
-      title: '🔄 Stage 8: The Real ML Workflow',
+      title: 'Stage 8: The Real ML Workflow',
       content: "The dirty secret of ML: 80% of time is spent on data, not models.\n\n'Data Scientists spend 80% of their time cleaning data and 20% complaining about it.'\n\nThe ML lifecycle is never truly finished — models degrade over time as the world changes (called data drift or concept drift).\n\nGood MLOps practices keep models fresh and reliable in production.",
     },
   }
@@ -1173,7 +1173,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            🤖 <strong>Welcome to Machine Learning</strong> — This is the foundation of all modern AI. From spam filters to recommendation engines to self-driving cars — it all starts here. Let's build your mental model from scratch.
+            <strong>Welcome to Machine Learning</strong> — This is the foundation of all modern AI. From spam filters to recommendation engines to self-driving cars — it all starts here. Let's build your mental model from scratch.
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -1289,7 +1289,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
               <tbody>
                 {QUICK_REFERENCE.map((item) => (
                   <tr key={item.technique}>
-                    <td className="pe-ref-technique">{item.emoji} {item.technique}</td>
+                    <td className="pe-ref-technique">{item.technique}</td>
                     <td>{item.when}</td>
                     <td className="pe-ref-phrase">{item.phrase}</td>
                   </tr>

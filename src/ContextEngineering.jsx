@@ -685,27 +685,27 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
 
   const explanations = {
     0: {
-      title: '🧩 Stage 1: What is Context?',
+      title: 'Stage 1: What is Context?',
       content: "Context is everything the AI can see when generating its response. This includes:\n\n- Your system prompt (instructions)\n- The conversation history\n- Any documents you've pasted in\n- Examples you've provided\n\nThe context window is the AI's entire working memory — it can only use what's inside it. Nothing more, nothing less.\n\nThis is why copying and pasting relevant information into your prompt dramatically improves results.",
     },
     1: {
-      title: '📦 Stage 2: The Context Window',
+      title: 'Stage 2: The Context Window',
       content: "Think of the context window as a whiteboard — the AI can only see what's written on it right now.\n\nDifferent models have different sized whiteboards:\n- GPT-3.5: 16,000 tokens (~12,000 words)\n- GPT-4o: 128,000 tokens (~96,000 words)\n- Claude 3: 200,000 tokens (~150,000 words)\n- Gemini 1.5: 1,000,000 tokens (~750,000 words)\n\nWhen the whiteboard fills up, old content falls off the edge. This is why very long conversations sometimes make AI 'forget' things you said earlier.",
     },
     2: {
-      title: '☠️ Stage 3: Context Poisoning',
+      title: 'Stage 3: Context Poisoning',
       content: "Bad context is worse than no context. If you fill the context window with contradictory, irrelevant, or outdated information, the AI gets confused and produces worse results than if you'd asked simply.\n\nCommon context mistakes:\n- Pasting entire documents when only 1 section is relevant\n- Including old email threads with conflicting information\n- Mixing different topics in one conversation\n- Not updating context when facts change\n\nRule: Every piece of context should earn its place.",
     },
     3: {
-      title: '🔍 Stage 4: RAG — Teaching AI Your Documents',
+      title: 'Stage 4: RAG — Teaching AI Your Documents',
       content: "RAG solves the biggest enterprise AI problem: how do you make AI know about YOUR specific documents, policies, and data without retraining it?\n\nAnswer: Store your docs in a vector database, retrieve relevant chunks at query time, inject them into the context window.\n\nThis is how:\n- ChatGPT plugins work\n- Custom AI assistants know your company docs\n- AI can answer questions about your internal knowledge base\n\nYou don't need to train a new model — just engineer the context better.",
     },
     4: {
-      title: '⚡ Stage 5: Pro Context Strategies',
+      title: 'Stage 5: Pro Context Strategies',
       content: "These are the techniques used by AI engineers building production systems. Apply them to immediately improve your AI results.\n\nThe Sandwich Method ensures instructions aren't forgotten in long contexts. Chunking prevents wasted tokens. Persona Anchoring keeps AI consistent. Context Refresh prevents drift.\n\nMaster these four strategies and you'll handle any context challenge.",
     },
     5: {
-      title: '🎯 Stage 6: Context by Use Case',
+      title: 'Stage 6: Context by Use Case',
       content: "Different tasks need different context. The art is knowing what to include and what to leave out.\n\nGolden rule: Include context that changes the answer. Exclude context that doesn't matter for this specific task.\n\nFor email writing — include tone and style. For data analysis — include schema and definitions. For business decisions — include constraints and past precedents. For technical help — include error messages and what you've tried.",
     },
   }
@@ -740,7 +740,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            🧩 <strong>Welcome to Context Engineering</strong> — While prompt engineering teaches you how to ask, context engineering teaches you what to include. Master this and your AI results will transform overnight.
+            <strong>Welcome to Context Engineering</strong> — While prompt engineering teaches you how to ask, context engineering teaches you what to include. Master this and your AI results will transform overnight.
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -854,7 +854,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
               <tbody>
                 {QUICK_REFERENCE.map((item) => (
                   <tr key={item.technique}>
-                    <td className="pe-ref-technique">{item.emoji} {item.technique}</td>
+                    <td className="pe-ref-technique">{item.technique}</td>
                     <td>{item.when}</td>
                     <td className="pe-ref-phrase">{item.phrase}</td>
                   </tr>
