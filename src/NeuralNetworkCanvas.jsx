@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
+import ModuleIcon from './ModuleIcon.jsx'
 import './NeuralNetworkCanvas.css'
 
 const GROUP_COLORS = {
@@ -11,18 +12,18 @@ const GROUP_COLORS = {
 
 const NODES = [
   // Tools cluster (top-left area)
-  { id: 'playground', emoji: '\u{1F4AC}', label: 'Playground', group: 'tools', px: 0.12, py: 0.25, desc: 'Chat with AI and tune parameters in real time' },
-  { id: 'tokenizer', emoji: '\u{1F524}', label: 'Tokenizer', group: 'tools', px: 0.08, py: 0.50, desc: 'See how AI reads your text as tokens' },
-  { id: 'generation', emoji: '\u26A1', label: 'Generation', group: 'tools', px: 0.18, py: 0.72, desc: 'Watch AI predict the next word live' },
+  { id: 'playground', label: 'Playground', group: 'tools', px: 0.12, py: 0.25, desc: 'Chat with AI and tune parameters in real time' },
+  { id: 'tokenizer', label: 'Tokenizer', group: 'tools', px: 0.08, py: 0.50, desc: 'See how AI reads your text as tokens' },
+  { id: 'generation', label: 'Generation', group: 'tools', px: 0.18, py: 0.72, desc: 'Watch AI predict the next word live' },
   // Foundations cluster (center)
-  { id: 'how-llms-work', emoji: '\u{1F9E0}', label: 'How LLMs Work', group: 'foundations', px: 0.38, py: 0.20, desc: 'An interactive journey inside AI' },
-  { id: 'machine-learning', emoji: '\u{1F916}', label: 'Machine Learning', group: 'foundations', px: 0.32, py: 0.62, desc: 'How machines learn from data' },
+  { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', px: 0.38, py: 0.20, desc: 'An interactive journey inside AI' },
+  { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', px: 0.32, py: 0.62, desc: 'How machines learn from data' },
   // Advanced cluster (center-right)
-  { id: 'model-training', emoji: '\u{1F3D7}\uFE0F', label: 'Model Training', group: 'foundations', px: 0.58, py: 0.30, desc: 'How AI models are built from scratch' },
-  { id: 'rag', emoji: '\u{1F50D}', label: 'RAG', group: 'advanced', px: 0.62, py: 0.65, desc: 'How AI learns from YOUR documents' },
+  { id: 'model-training', label: 'Model Training', group: 'foundations', px: 0.58, py: 0.30, desc: 'How AI models are built from scratch' },
+  { id: 'rag', label: 'RAG', group: 'advanced', px: 0.62, py: 0.65, desc: 'How AI learns from YOUR documents' },
   // Skills cluster (right side)
-  { id: 'prompt-engineering', emoji: '\u270D\uFE0F', label: 'Prompt Eng.', group: 'skills', px: 0.82, py: 0.22, desc: 'Write better prompts for better results' },
-  { id: 'context-engineering', emoji: '\u{1F9E9}', label: 'Context Eng.', group: 'skills', px: 0.85, py: 0.60, desc: 'Give AI the right context every time' },
+  { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.82, py: 0.22, desc: 'Write better prompts for better results' },
+  { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.85, py: 0.60, desc: 'Give AI the right context every time' },
 ]
 
 const CONNECTIONS = [
@@ -361,15 +362,10 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                     className={`nn-node-bg ${isHovered ? 'nn-node-bg-hover' : ''}`}
                   />
 
-                  {/* Emoji */}
-                  <text
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                    fontSize="24"
-                    className="nn-node-emoji"
-                  >
-                    {node.emoji}
-                  </text>
+                  {/* Module icon */}
+                  <foreignObject x="-12" y="-12" width="24" height="24">
+                    <ModuleIcon module={node.id} size={24} className={isHovered ? 'module-icon-active' : ''} />
+                  </foreignObject>
 
                   {/* Label below node */}
                   <text

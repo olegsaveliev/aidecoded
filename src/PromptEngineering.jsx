@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { promptEngineeringQuiz } from './quizData.js'
@@ -1154,7 +1155,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   if (stage === -1) {
     return (
       <EntryScreen
-        icon="✍️"
+        icon={<ModuleIcon module="prompt-engineering" size={48} />}
         title="Prompt Engineering"
         description="Learn 8 powerful techniques to get dramatically better results from any AI — with live examples you can try yourself."
         buttonText="Start Learning"

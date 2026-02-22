@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import ToolChips from './ToolChips.jsx'
 import Quiz from './Quiz.jsx'
 import { modelTrainingQuiz } from './quizData.js'
@@ -709,7 +710,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon="🏗️"
+        icon={<ModuleIcon module="model-training" size={48} />}
         title="How AI Models Are Built"
         description="Follow the complete journey from raw internet data to a working AI assistant, in 6 interactive stages. No PhD required."
         buttonText="Start the Journey"

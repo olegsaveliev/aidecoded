@@ -2,18 +2,19 @@ import { useState, useEffect } from 'react'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import NeuralNetworkCanvas from './NeuralNetworkCanvas.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import './LandingPage.css'
 
 const TAGLINE = 'Your interactive journey into AI'
 const TAGLINE_CHAR_DELAY = 40
 
 const MOBILE_MODULES = [
-  { id: 'playground', icon: '\uD83D\uDCAC', label: 'Playground' },
-  { id: 'tokenizer', icon: '\uD83E\uDDE9', label: 'Tokenizer' },
-  { id: 'how-llms-work', icon: '\uD83E\uDDE0', label: 'How LLMs Work' },
-  { id: 'generation', icon: '\u2728', label: 'Generation' },
-  { id: 'prompt-engineering', icon: '\uD83C\uDFAF', label: 'Prompting' },
-  { id: 'rag', icon: '\uD83D\uDD0D', label: 'RAG' },
+  { id: 'playground', label: 'Playground' },
+  { id: 'tokenizer', label: 'Tokenizer' },
+  { id: 'how-llms-work', label: 'How LLMs Work' },
+  { id: 'generation', label: 'Generation' },
+  { id: 'prompt-engineering', label: 'Prompting' },
+  { id: 'rag', label: 'RAG' },
 ]
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
@@ -84,7 +85,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
           <div className="landing-mobile-grid">
             {MOBILE_MODULES.map((m) => (
               <button key={m.id} className="landing-mobile-card" onClick={() => handleNodeSelect(m.id)}>
-                <div className="landing-mobile-card-icon">{m.icon}</div>
+                <div className="landing-mobile-card-icon"><ModuleIcon module={m.id} size={28} /></div>
                 <div className="landing-mobile-card-label">{m.label}</div>
               </button>
             ))}

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { machineLearningQuiz } from './quizData.js'
@@ -1145,7 +1146,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon="🤖"
+        icon={<ModuleIcon module="machine-learning" size={48} />}
         title="Machine Learning"
         subtitle="How machines actually learn from data"
         description="Before ChatGPT, before transformers, before all the AI buzz — there was Machine Learning. Understanding ML gives you the foundation to understand everything else in AI. No math degree required."

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ModuleIcon from './ModuleIcon.jsx'
 import './HomeScreen.css'
 
 const FILTER_COLORS = {
@@ -15,7 +16,6 @@ const FILTERS = Object.keys(FILTER_COLORS)
 const CARDS = [
   {
     id: 'playground',
-    icon: '\u{1F4AC}',
     title: 'Playground',
     description: 'Chat directly with AI and experiment with parameters in real time',
     tag: 'Interactive',
@@ -24,7 +24,6 @@ const CARDS = [
   },
   {
     id: 'tokenizer',
-    icon: '\u{1F524}',
     title: 'Tokenizer',
     description: 'See exactly how AI reads your text \u2014 broken into tokens in real time',
     tag: 'Visual',
@@ -33,7 +32,6 @@ const CARDS = [
   },
   {
     id: 'generation',
-    icon: '\u26A1',
     title: 'Token Generation',
     description: 'Watch AI predict the next word live \u2014 Manual or Simulate',
     tag: 'Interactive',
@@ -42,7 +40,6 @@ const CARDS = [
   },
   {
     id: 'how-llms-work',
-    icon: '\u{1F9E0}',
     title: 'How LLMs Work',
     description: 'An interactive 5-stage journey from your prompt to the AI response',
     tag: 'Journey',
@@ -51,7 +48,6 @@ const CARDS = [
   },
   {
     id: 'model-training',
-    icon: '\u{1F3D7}\uFE0F',
     title: 'Model Training',
     description: 'Discover how AI models like ChatGPT are built from scratch \u2014 data to deployment',
     tag: 'Journey',
@@ -60,7 +56,6 @@ const CARDS = [
   },
   {
     id: 'prompt-engineering',
-    icon: '✍️',
     title: 'Prompt Engineering',
     description: 'Learn how to write better prompts and get dramatically better results from any AI',
     tag: 'Practical',
@@ -69,7 +64,6 @@ const CARDS = [
   },
   {
     id: 'context-engineering',
-    icon: '🧩',
     title: 'Context Engineering',
     description: 'Learn how to give AI the right context to get dramatically better results every time',
     tag: 'Practical',
@@ -78,7 +72,6 @@ const CARDS = [
   },
   {
     id: 'rag',
-    icon: '🔍',
     title: 'RAG',
     description: 'How AI learns from YOUR documents — Retrieval Augmented Generation explained',
     tag: 'Journey',
@@ -87,7 +80,6 @@ const CARDS = [
   },
   {
     id: 'machine-learning',
-    icon: '🤖',
     title: 'Machine Learning',
     description: 'How machines actually learn from data — the foundation of all modern AI',
     tag: 'Technical',
@@ -157,7 +149,7 @@ function HomeScreen({ onSelectTab }) {
 
       {filteredCards.length === 0 ? (
         <div className="home-no-results">
-          <span className="home-no-results-icon">🔍</span>
+          <span className="home-no-results-icon"><ModuleIcon module="rag" size={24} /></span>
           <span className="home-no-results-text">
             No modules found for &lsquo;{searchQuery}&rsquo;
           </span>
@@ -175,7 +167,7 @@ function HomeScreen({ onSelectTab }) {
                 <span className="home-card-group">{card.group}</span>
                 <span className={`home-card-tag home-tag-${card.tag.toLowerCase()}`}>{card.tag}</span>
               </span>
-              <span className="home-card-title">{card.title}</span>
+              <span className="home-card-title"><ModuleIcon module={card.id} size={20} />{card.title}</span>
               <span className="home-card-desc">{card.description}</span>
             </button>
           ))}

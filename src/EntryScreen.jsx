@@ -1,4 +1,4 @@
-function EntryScreen({ icon, title, description, buttonText, onStart }) {
+function EntryScreen({ icon, title, subtitle, description, buttonText, onStart }) {
   return (
     <div className="entry-screen">
       <div className="entry-screen-icon">{icon}</div>

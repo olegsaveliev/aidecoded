@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useMemo } from 'react'
 import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import { tokenizerQuiz } from './quizData.js'
 
@@ -67,7 +68,7 @@ function Tokenizer({ onGoHome }) {
   if (showEntry) {
     return (
       <EntryScreen
-        icon="🔤"
+        icon={<ModuleIcon module="tokenizer" size={48} />}
         title="Token Visualizer"
         description="Type any text and watch how AI breaks it into tokens in real time. Understand why AI has token limits not word limits — and how it actually reads your text."
         buttonText="Start Tokenizing"

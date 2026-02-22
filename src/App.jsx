@@ -18,6 +18,7 @@ import FeedbackWidget from './FeedbackWidget.jsx'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import logoImg from './assets/logo_dark.png'
 import './App.css'
 
@@ -689,7 +690,7 @@ function App() {
 
         {!showHome && activeTab === 'playground' && showPlaygroundEntry && messages.length === 0 && (
           <EntryScreen
-            icon="💬"
+            icon={<ModuleIcon module="playground" size={48} />}
             title="AI Playground"
             description="Chat directly with AI and experiment with temperature, model selection and parameters in real time. See how small changes dramatically affect responses."
             buttonText="Open Playground"

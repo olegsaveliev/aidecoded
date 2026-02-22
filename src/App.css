@@ -325,7 +325,7 @@
 }
 
 .header-icon-btn:hover {
-  color: #1D1D1F;
+  color: #0071E3;
 }
 
 [data-theme="dark"] .header-icon-btn {
@@ -333,7 +333,7 @@
 }
 
 [data-theme="dark"] .header-icon-btn:hover {
-  color: #E8E3DD;
+  color: #0071E3;
 }
 
 .header-canvas {

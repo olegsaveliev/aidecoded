@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { contextEngineeringQuiz } from './quizData.js'
@@ -713,7 +714,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
   if (stage === -1) {
     return (
       <EntryScreen
-        icon="🧩"
+        icon={<ModuleIcon module="context-engineering" size={48} />}
         title="Context Engineering"
         description="Prompt Engineering is about HOW you ask. Context Engineering is about WHAT you include. Learn how to craft the perfect context window to get consistently great AI results."
         buttonText="Start Learning"

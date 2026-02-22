@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import { generationQuiz } from './quizData.js'
 
@@ -421,7 +422,7 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
   if (showEntry) {
     return (
       <EntryScreen
-        icon="⚡"
+        icon={<ModuleIcon module="generation" size={48} />}
         title="Token Generation"
         description="Watch AI predict the next word live, one token at a time. Choose manually, simulate step by step, or let it run automatically — just like ChatGPT under the hood."
         buttonText="Start Generating"

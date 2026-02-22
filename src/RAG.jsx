@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { ragQuiz } from './quizData.js'
@@ -739,7 +740,7 @@ function RAG({ onSwitchTab, onGoHome }) {
   if (stage === -1) {
     return (
       <EntryScreen
-        icon="🔍"
+        icon={<ModuleIcon module="rag" size={48} />}
         title="RAG — Retrieval Augmented Generation"
         description="Ever wonder how ChatGPT plugins work? Or how companies build AI that knows their internal docs? That's RAG — the most powerful enterprise AI technique available today. No model training required."
         buttonText="Start Learning"

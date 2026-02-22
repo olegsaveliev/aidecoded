@@ -133,11 +133,11 @@
 }
 
 .nav-dropdown-item-icon {
-  font-size: 18px;
-  line-height: 1;
   flex-shrink: 0;
   width: 24px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-dropdown-item-name {
@@ -290,11 +290,11 @@
 }
 
 .nav-mobile-item-icon {
-  font-size: 22px;
-  line-height: 1;
   width: 28px;
-  text-align: center;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-mobile-item-name {

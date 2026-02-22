@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
 import { createPortal } from 'react-dom'
+import ModuleIcon from './ModuleIcon.jsx'
 import './NavDropdown.css'
 
 const NAV_GROUPS = [
@@ -8,9 +9,9 @@ const NAV_GROUPS = [
     label: 'Tools',
     color: '#0071E3',
     items: [
-      { id: 'playground', icon: '💬', name: 'Playground', tag: 'Interactive' },
-      { id: 'tokenizer', icon: '🔤', name: 'Tokenizer', tag: 'Visual' },
-      { id: 'generation', icon: '⚡', name: 'Generation', tag: 'Interactive' },
+      { id: 'playground', name: 'Playground', tag: 'Interactive' },
+      { id: 'tokenizer', name: 'Tokenizer', tag: 'Visual' },
+      { id: 'generation', name: 'Generation', tag: 'Interactive' },
     ],
   },
   {
@@ -18,9 +19,9 @@ const NAV_GROUPS = [
     label: 'Foundations',
     color: '#AF52DE',
     items: [
-      { id: 'how-llms-work', icon: '🧠', name: 'How LLMs Work', tag: 'Journey' },
-      { id: 'model-training', icon: '🏗️', name: 'Model Training', tag: 'Journey' },
-      { id: 'machine-learning', icon: '🤖', name: 'Machine Learning', tag: 'Technical' },
+      { id: 'how-llms-work', name: 'How LLMs Work', tag: 'Journey' },
+      { id: 'model-training', name: 'Model Training', tag: 'Journey' },
+      { id: 'machine-learning', name: 'Machine Learning', tag: 'Technical' },
     ],
   },
   {
@@ -28,8 +29,8 @@ const NAV_GROUPS = [
     label: 'Skills',
     color: '#34C759',
     items: [
-      { id: 'prompt-engineering', icon: '✍️', name: 'Prompt Engineering', tag: 'Practical' },
-      { id: 'context-engineering', icon: '🧩', name: 'Context Engineering', tag: 'Practical' },
+      { id: 'prompt-engineering', name: 'Prompt Engineering', tag: 'Practical' },
+      { id: 'context-engineering', name: 'Context Engineering', tag: 'Practical' },
     ],
   },
   {
@@ -37,7 +38,7 @@ const NAV_GROUPS = [
     label: 'Advanced',
     color: '#FF9500',
     items: [
-      { id: 'rag', icon: '🔍', name: 'RAG', tag: 'Journey' },
+      { id: 'rag', name: 'RAG', tag: 'Journey' },
     ],
   },
 ]
@@ -185,7 +186,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
                 className={`nav-dropdown-item${activeTab === item.id ? ' nav-dropdown-item-active' : ''}`}
                 onClick={() => handleItemClick(item.id)}
               >
-                <span className="nav-dropdown-item-icon">{item.icon}</span>
+                <span className="nav-dropdown-item-icon"><ModuleIcon module={item.id} size={18} className={activeTab === item.id ? 'module-icon-active' : ''} /></span>
                 <span className="nav-dropdown-item-name">{item.name}</span>
                 <span className="nav-dropdown-item-tag" data-tag={item.tag}>{item.tag}</span>
               </button>
@@ -221,7 +222,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
                     className={`nav-mobile-item${activeTab === item.id ? ' nav-mobile-item-active' : ''}`}
                     onClick={() => handleItemClick(item.id)}
                   >
-                    <span className="nav-mobile-item-icon">{item.icon}</span>
+                    <span className="nav-mobile-item-icon"><ModuleIcon module={item.id} size={18} className={activeTab === item.id ? 'module-icon-active' : ''} /></span>
                     <span className="nav-mobile-item-name">{item.name}</span>
                     <span className="nav-mobile-item-tag" data-tag={item.tag}>{item.tag}</span>
                   </button>
