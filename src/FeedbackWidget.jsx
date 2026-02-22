@@ -49,8 +49,7 @@ function getInitialPos() {
   return { x: window.innerWidth - 90, y: window.innerHeight - 90 }
 }
 
-function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
-  const [visible, setVisible] = useState(() => !sessionStorage.getItem('feedbackClosed'))
+function FeedbackWidget({ showHome, showLanding, activeTab, subPage, minimized, onMinimize, onRestore }) {
   const [isOpen, setIsOpen] = useState(false)
   const [type, setType] = useState('bug')
   const [message, setMessage] = useState('')
@@ -187,11 +186,10 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
   function handleDismiss(e) {
     e.stopPropagation()
     setShowTooltip(false)
-    setVisible(false)
-    sessionStorage.setItem('feedbackClosed', 'true')
+    onMinimize()
   }
 
-  if (!visible) return null
+  if (minimized) return null
 
   function handleOpen() {
     if (hasDragged.current) return

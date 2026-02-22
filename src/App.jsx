@@ -103,6 +103,18 @@ function App() {
     localStorage.setItem('theme', darkMode ? 'dark' : 'light')
   }, [darkMode])
 
+  const [feedbackMinimized, setFeedbackMinimized] = useState(() => !!sessionStorage.getItem('feedbackMinimized'))
+
+  function handleFeedbackMinimize() {
+    setFeedbackMinimized(true)
+    sessionStorage.setItem('feedbackMinimized', 'true')
+  }
+
+  function handleFeedbackRestore() {
+    setFeedbackMinimized(false)
+    sessionStorage.removeItem('feedbackMinimized')
+  }
+
   const [showLanding, setShowLanding] = useState(true)
   const [fadingOut, setFadingOut] = useState(false)
   const [showBootScreen, setShowBootScreen] = useState(false)
@@ -504,7 +516,7 @@ function App() {
     return (
       <>
         <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} />
-        <FeedbackWidget showLanding activeTab={activeTab} showHome={showHome} subPage={subPage} />
+        <FeedbackWidget showLanding activeTab={activeTab} showHome={showHome} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
       </>
     )
   }
@@ -623,16 +635,35 @@ function App() {
             <NavDropdown activeTab={activeTab} onSelectTab={handleSelectTab} showHome={showHome} openGroupRequest={navGroupToOpen} onGroupOpened={() => setNavGroupToOpen(null)} />
           </div>
           <div className="header-right">
+            {feedbackMinimized && (
+              <button className="header-icon-btn" onClick={handleFeedbackRestore} aria-label="Share Feedback" title="Share Feedback">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </button>
+            )}
             <button
-              className="theme-toggle"
+              className="header-icon-btn"
               onClick={() => setDarkMode((d) => !d)}
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >
-              <span className={`theme-toggle-track ${darkMode ? 'theme-toggle-dark' : ''}`}>
-                <span className="theme-toggle-icon theme-toggle-sun">☀️</span>
-                <span className="theme-toggle-icon theme-toggle-moon">🌙</span>
-                <span className="theme-toggle-thumb" />
-              </span>
+              {darkMode ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
             </button>
           </div>
         </header>
@@ -818,7 +849,7 @@ function App() {
         )}
         </div>
       </main>
-      <FeedbackWidget showHome={showHome} activeTab={activeTab} subPage={subPage} />
+      <FeedbackWidget showHome={showHome} activeTab={activeTab} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
     </div>
   )
 }
