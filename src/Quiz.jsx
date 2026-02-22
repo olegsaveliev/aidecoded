@@ -120,10 +120,10 @@ function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentMod
 
     timerRef.current = setTimeout(() => {
       if (current < questions.length - 1) {
+        setSelected(null)
         setTransitioning(true)
         setTimeout(() => {
           setCurrent((c) => c + 1)
-          setSelected(null)
           setTransitioning(false)
         }, 250)
       } else {
