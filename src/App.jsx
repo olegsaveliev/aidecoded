@@ -157,6 +157,17 @@ function App() {
   function handleGoHome() {
     setHomeTransition(true)
     setSubPage(null)
+    setHomeFilter(null)
+    setTimeout(() => {
+      setShowHome(true)
+      setHomeTransition(false)
+    }, 200)
+  }
+
+  function handleBreadcrumbGroupClick(groupLabel) {
+    setHomeTransition(true)
+    setSubPage(null)
+    setHomeFilter(groupLabel)
     setTimeout(() => {
       setShowHome(true)
       setHomeTransition(false)
@@ -180,7 +191,7 @@ function App() {
 
   const [activeTab, setActiveTab] = useState('playground')
   const [subPage, setSubPage] = useState(null)
-  const [navGroupToOpen, setNavGroupToOpen] = useState(null)
+  const [homeFilter, setHomeFilter] = useState(null)
   const [tabKey, setTabKey] = useState(0)
   const [model, setModel] = useState('gpt-4o-mini')
 
@@ -636,7 +647,7 @@ function App() {
             </div>
           </div>
           <div className="header-center">
-            <NavDropdown activeTab={activeTab} onSelectTab={handleSelectTab} showHome={showHome} openGroupRequest={navGroupToOpen} onGroupOpened={() => setNavGroupToOpen(null)} />
+            <NavDropdown activeTab={activeTab} onSelectTab={handleSelectTab} showHome={showHome} />
           </div>
           <div className="header-right">
             {feedbackMinimized && (
@@ -675,8 +686,8 @@ function App() {
         <div className={`tab-content-wrapper ${homeTransition ? 'tab-content-fading' : ''}`}>
         {showHome && (
           <>
-            <Breadcrumb activeTab={activeTab} showHome={true} />
-            <HomeScreen onSelectTab={handleSelectTab} />
+            <Breadcrumb activeTab={activeTab} showHome={true} homeFilter={homeFilter} onGoHome={handleGoHome} />
+            <HomeScreen onSelectTab={handleSelectTab} homeFilter={homeFilter} onClearFilter={() => setHomeFilter(null)} />
           </>
         )}
 
@@ -686,7 +697,7 @@ function App() {
             showHome={false}
             subPage={subPage}
             onGoHome={handleGoHome}
-            onGroupClick={(groupId) => setNavGroupToOpen(groupId)}
+            onGroupClick={handleBreadcrumbGroupClick}
             onTabClick={handleTabReset}
           />
         )}

@@ -149,6 +149,14 @@
   filter: brightness(1.1);
 }
 
+.home-filter-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: #fff;
+}
+
 [data-theme="dark"] .home-filter-btn:not(.home-filter-active) {
   background: #312E2B;
   color: #E8E3DD;

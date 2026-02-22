@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ModuleIcon from './ModuleIcon.jsx'
 import { CrossIcon } from './ContentIcons.jsx'
 import './HomeScreen.css'
@@ -127,19 +127,43 @@ const CARDS = [
   },
 ]
 
-function HomeScreen({ onSelectTab }) {
+const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
+
+function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const [filter, setFilter] = useState('All')
+  const [activeGroup, setActiveGroup] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const cardsRef = useRef(null)
+
+  // Apply group pre-filter from breadcrumb navigation
+  useEffect(() => {
+    if (homeFilter && GROUP_NAMES.includes(homeFilter)) {
+      setActiveGroup(homeFilter)
+      setFilter('All')
+      setTimeout(() => {
+        cardsRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }, 100)
+    } else {
+      setActiveGroup(null)
+    }
+  }, [homeFilter])
+
+  function handleFilterClick(f) {
+    setFilter(f)
+    setActiveGroup(null)
+    onClearFilter?.()
+  }
 
   const filteredCards = CARDS.filter((card) => {
+    const matchesGroup = !activeGroup || card.group === activeGroup
     const matchesFilter = filter === 'All' || card.tag === filter
-    if (!searchQuery.trim()) return matchesFilter
+    if (!searchQuery.trim()) return matchesGroup && matchesFilter
     const q = searchQuery.toLowerCase()
     const matchesSearch =
       card.title.toLowerCase().includes(q) ||
       card.description.toLowerCase().includes(q) ||
       card.tag.toLowerCase().includes(q)
-    return matchesFilter && matchesSearch
+    return matchesGroup && matchesFilter && matchesSearch
   })
 
   return (
@@ -170,16 +194,25 @@ function HomeScreen({ onSelectTab }) {
       </div>
 
       <div className="home-filters">
+        {activeGroup && (
+          <button
+            className="home-filter-btn home-filter-active home-filter-group"
+            onClick={() => { setActiveGroup(null); onClearFilter?.() }}
+          >
+            {activeGroup}
+            <CrossIcon size={10} color="#fff" />
+          </button>
+        )}
         {FILTERS.map((f) => (
           <button
             key={f}
-            className={`home-filter-btn${filter === f ? ' home-filter-active' : ''}`}
+            className={`home-filter-btn${filter === f && !activeGroup ? ' home-filter-active' : ''}`}
             style={
-              filter === f
+              filter === f && !activeGroup
                 ? { background: FILTER_COLORS[f], color: '#fff' }
                 : undefined
             }
-            onClick={() => setFilter(f)}
+            onClick={() => handleFilterClick(f)}
           >
             {f}
           </button>
@@ -194,7 +227,7 @@ function HomeScreen({ onSelectTab }) {
           </span>
         </div>
       ) : (
-        <div className="home-grid">
+        <div className="home-grid" ref={cardsRef}>
           {filteredCards.map((card, i) => (
             <button
               key={card.id}

@@ -62,7 +62,7 @@ function getGroupForTab(tabId) {
   return null
 }
 
-function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGroupOpened }) {
+function NavDropdown({ activeTab, onSelectTab, showHome }) {
   const [openGroup, setOpenGroup] = useState(null)
   const [menuPos, setMenuPos] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -116,18 +116,6 @@ function NavDropdown({ activeTab, onSelectTab, showHome, openGroupRequest, onGro
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [closeAll])
-
-  // Handle external request to open a group (from breadcrumb)
-  useEffect(() => {
-    if (!openGroupRequest) return
-    const btn = triggerRefs.current[openGroupRequest]
-    if (btn) {
-      const rect = btn.getBoundingClientRect()
-      setMenuPos({ top: rect.bottom + 6, left: rect.left })
-    }
-    setOpenGroup(openGroupRequest)
-    onGroupOpened?.()
-  }, [openGroupRequest, onGroupOpened])
 
   function handleItemClick(tabId) {
     onSelectTab(tabId)
