@@ -301,7 +301,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage, minimized, 
 
             {status === 'success' ? (
               <div className="feedback-success">
-                <div className="feedback-success-icon">✅</div>
+                <div className="feedback-success-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#34C759" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg></div>
                 <div className="feedback-success-title">Thank you! We'll look into it.</div>
                 <div className="feedback-success-subtitle">
                   Your feedback helps make AI Decoded better

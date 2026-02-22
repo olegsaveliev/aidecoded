@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { WarningIcon, SkullIcon, SparklesIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { contextEngineeringQuiz } from './quizData.js'
@@ -41,12 +42,12 @@ const CE_TOOLS = {
 }
 
 const STAGES = [
-  { key: 'what-is-context', label: 'What is Context?', emoji: '🧩' },
-  { key: 'context-window', label: 'Context Window', emoji: '📦' },
-  { key: 'context-poisoning', label: 'Context Poisoning', emoji: '☠️' },
-  { key: 'rag', label: 'RAG', emoji: '🔍' },
-  { key: 'strategies', label: 'Strategies', emoji: '⚡' },
-  { key: 'use-cases', label: 'Use Cases', emoji: '🎯' },
+  { key: 'what-is-context', label: 'What is Context?' },
+  { key: 'context-window', label: 'Context Window' },
+  { key: 'context-poisoning', label: 'Context Poisoning' },
+  { key: 'rag', label: 'RAG' },
+  { key: 'strategies', label: 'Strategies' },
+  { key: 'use-cases', label: 'Use Cases' },
 ]
 
 const STAGE_TOOLTIPS = {
@@ -59,12 +60,12 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { emoji: '🧩', technique: 'Context Awareness', when: 'Every AI interaction', phrase: 'Include what changes the answer' },
-  { emoji: '📦', technique: 'Window Management', when: 'Long conversations', phrase: 'Monitor token usage' },
-  { emoji: '☠️', technique: 'Quality Control', when: 'Complex tasks', phrase: 'Every piece earns its place' },
-  { emoji: '🔍', technique: 'RAG', when: 'Enterprise knowledge', phrase: 'Retrieve, inject, generate' },
-  { emoji: '⚡', technique: 'Sandwich Method', when: 'Long content', phrase: 'Instructions + Content + Instructions' },
-  { emoji: '🎯', technique: 'Use Case Matching', when: 'Specific tasks', phrase: 'Match context to task type' },
+  { technique: 'Context Awareness', when: 'Every AI interaction', phrase: 'Include what changes the answer' },
+  { technique: 'Window Management', when: 'Long conversations', phrase: 'Monitor token usage' },
+  { technique: 'Quality Control', when: 'Complex tasks', phrase: 'Every piece earns its place' },
+  { technique: 'RAG', when: 'Enterprise knowledge', phrase: 'Retrieve, inject, generate' },
+  { technique: 'Sandwich Method', when: 'Long content', phrase: 'Instructions + Content + Instructions' },
+  { technique: 'Use Case Matching', when: 'Specific tasks', phrase: 'Match context to task type' },
 ]
 
 /* ═══════════════════════════════════
@@ -179,11 +180,11 @@ function ContextWindowViz({ active }) {
   const timerRef = useRef(null)
 
   const windowSections = [
-    { label: 'System Prompt', emoji: '🔵', pct: 10, color: '#0071e3', tokens: 12800 },
-    { label: 'Examples / Few-shot', emoji: '🟢', pct: 20, color: '#34c759', tokens: 25600 },
-    { label: 'Retrieved Documents', emoji: '🟡', pct: 40, color: '#ff9500', tokens: 51200 },
-    { label: 'Conversation History', emoji: '🔴', pct: 20, color: '#ff3b30', tokens: 25600 },
-    { label: 'Current Message', emoji: '🟣', pct: 10, color: '#af52de', tokens: 12800 },
+    { label: 'System Prompt', pct: 10, color: '#0071e3', tokens: 12800 },
+    { label: 'Examples / Few-shot', pct: 20, color: '#34c759', tokens: 25600 },
+    { label: 'Retrieved Documents', pct: 40, color: '#ff9500', tokens: 51200 },
+    { label: 'Conversation History', pct: 20, color: '#ff3b30', tokens: 25600 },
+    { label: 'Current Message', pct: 10, color: '#af52de', tokens: 12800 },
   ]
 
   useEffect(() => {
@@ -224,7 +225,7 @@ function ContextWindowViz({ active }) {
             }}
           >
             <span className="ce-window-section-label">
-              {s.emoji} {s.label} (~{s.pct}%)
+              <span className="ce-window-section-dot" style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', marginRight: 6, background: s.color }} /> {s.label} (~{s.pct}%)
             </span>
           </div>
         ))}
@@ -232,7 +233,7 @@ function ContextWindowViz({ active }) {
 
       {animStep > windowSections.length && (
         <div className="ce-window-warning how-pop-in">
-          <span className="ce-window-warning-icon">⚠️</span>
+          <span className="ce-window-warning-icon"><WarningIcon size={16} /></span>
           Context window full — oldest messages will be dropped
         </div>
       )}
@@ -304,7 +305,7 @@ function ContextPoisoningViz({ active }) {
 
       <div className="ce-poison-split">
         <div className="ce-poison-panel ce-poison-bad">
-          <div className="ce-poison-panel-title">☠️ Poisoned Context</div>
+          <div className="ce-poison-panel-title"><SkullIcon size={16} /> Poisoned Context</div>
           {badItems.map((item, i) => (
             <div key={i} className={`ce-poison-item ${i < visibleCards ? 'ce-poison-item-visible' : ''}`}>
               <span className="ce-poison-icon">{item.icon}</span>
@@ -313,7 +314,7 @@ function ContextPoisoningViz({ active }) {
           ))}
         </div>
         <div className="ce-poison-panel ce-poison-good">
-          <div className="ce-poison-panel-title">✨ Clean Context</div>
+          <div className="ce-poison-panel-title"><SparklesIcon size={16} /> Clean Context</div>
           {goodItems.map((item, i) => (
             <div key={i} className={`ce-poison-item ${i < visibleCards ? 'ce-poison-item-visible' : ''}`}>
               <span className="ce-poison-icon">{item.icon}</span>
@@ -831,19 +832,19 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
 
       {showFinal && (
         <div className="how-final how-fade-in">
-          <div className="how-final-celebration">🎉 You're now a Context Engineer!</div>
+          <div className="how-final-celebration">You're now a Context Engineer!</div>
 
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.emoji}</div>
+                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}
           </div>
 
           <div className="pe-reference-wrapper">
-            <div className="pe-reference-title">📋 Your Context Engineering Toolkit</div>
+            <div className="pe-reference-title">Your Context Engineering Toolkit</div>
             <table className="pe-reference">
               <thead>
                 <tr>

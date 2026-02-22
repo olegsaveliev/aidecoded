@@ -3,6 +3,7 @@ import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { MemoIcon, TypeIcon, HashIcon, EyeIcon, ZapIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { howLLMsWorkQuiz } from './quizData.js'
@@ -47,7 +48,7 @@ const STAGE_TOOLTIPS = {
   Generation: 'The model predicts the most likely next token, adds it, then predicts again \u2014 repeating until the response is complete. One token at a time.',
 }
 
-const STAGE_EMOJIS = ['📝', '🔤', '🔢', '👁️', '⚡']
+const STAGE_ICONS = [<MemoIcon size={18} />, <TypeIcon size={18} />, <HashIcon size={18} />, <EyeIcon size={18} />, <ZapIcon size={18} />]
 
 const TOKEN_PASTELS = [
   { bgVar: '--token-pastels-1-bg', borderVar: '--token-pastels-1-border' },
@@ -1060,19 +1061,19 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
             <div className="how-final-recap-title">Journey Recap</div>
             <div className="how-final-recap-items">
               <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_EMOJIS[0]}</span>
+                <span className="how-final-recap-emoji">{STAGE_ICONS[0]}</span>
                 <span>Your prompt: {prompt.split(/\s+/).length} words &rarr; {allTokens.length} tokens</span>
               </div>
               <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_EMOJIS[2]}</span>
+                <span className="how-final-recap-emoji">{STAGE_ICONS[2]}</span>
                 <span>Embeddings: {allTokens.length} vectors calculated</span>
               </div>
               <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_EMOJIS[3]}</span>
+                <span className="how-final-recap-emoji">{STAGE_ICONS[3]}</span>
                 <span>Attention: every token compared to every other token</span>
               </div>
               <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_EMOJIS[4]}</span>
+                <span className="how-final-recap-emoji">{STAGE_ICONS[4]}</span>
                 <span>Generation: response built one token at a time ({genTokenCount} tokens)</span>
               </div>
             </div>

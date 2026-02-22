@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
+import { SeedlingIcon, TargetIcon, StarIcon, TrophyIcon } from './ContentIcons.jsx'
 import './Quiz.css'
 
 const SCORE_MESSAGES = [
-  { min: 0, max: 40, text: 'Keep exploring! Review the material and try again', emoji: '🌱' },
-  { min: 50, max: 70, text: "Good progress! You're getting there", emoji: '🎯' },
-  { min: 80, max: 90, text: 'Great work! You really understand this', emoji: '🌟' },
-  { min: 100, max: 100, text: "Perfect score! You're an AI expert!", emoji: '🏆' },
+  { min: 0, max: 40, text: 'Keep exploring! Review the material and try again', icon: <SeedlingIcon size={48} /> },
+  { min: 50, max: 70, text: "Good progress! You're getting there", icon: <TargetIcon size={48} /> },
+  { min: 80, max: 90, text: 'Great work! You really understand this', icon: <StarIcon size={48} /> },
+  { min: 100, max: 100, text: "Perfect score! You're an AI expert!", icon: <TrophyIcon size={48} /> },
 ]
 
 function getScoreMessage(score) {
@@ -150,7 +151,7 @@ function Quiz({ questions, tabName, onBack, onGoHome, onNextModule, nextModuleNa
     return (
       <div className="quiz-container quiz-fade-in">
         <div className="quiz-result-card">
-          <div className="quiz-result-emoji">{msg.emoji}</div>
+          <div className="quiz-result-emoji">{msg.icon}</div>
           <ScoreCircle score={score} total={total} />
           <div className="quiz-result-message">{msg.text}</div>
 

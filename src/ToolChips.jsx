@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { ToolsIcon } from './ContentIcons.jsx'
 
 function ToolChips({ tools }) {
   const [activeTool, setActiveTool] = useState(null)
@@ -47,7 +48,7 @@ function ToolChips({ tools }) {
 
   return (
     <div className="mt-tools-section">
-      <div className="mt-tools-title">🛠️ Tools used in industry:</div>
+      <div className="mt-tools-title"><ToolsIcon size={14} /> Tools used in industry:</div>
       <div className="mt-tools-chips">
         {tools.map((tool) => (
           <div

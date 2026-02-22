@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { CheckIcon, CrossIcon, FileIcon, QuestionIcon, SearchIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { ragQuiz } from './quizData.js'
@@ -49,13 +50,13 @@ const RAG_TOOLS = {
 }
 
 const STAGES = [
-  { key: 'problem', label: 'The Problem', emoji: '🎯' },
-  { key: 'pipeline', label: 'How RAG Works', emoji: '⚙️' },
-  { key: 'embeddings', label: 'Vector Embeddings', emoji: '🔢' },
-  { key: 'chunking', label: 'Chunking', emoji: '✂️' },
-  { key: 'vector-dbs', label: 'Vector Databases', emoji: '🗄️' },
-  { key: 'real-world', label: 'Real World', emoji: '🌍' },
-  { key: 'build', label: 'Build It', emoji: '🛠️' },
+  { key: 'problem', label: 'The Problem' },
+  { key: 'pipeline', label: 'How RAG Works' },
+  { key: 'embeddings', label: 'Vector Embeddings' },
+  { key: 'chunking', label: 'Chunking' },
+  { key: 'vector-dbs', label: 'Vector Databases' },
+  { key: 'real-world', label: 'Real World' },
+  { key: 'build', label: 'Build It' },
 ]
 
 const STAGE_TOOLTIPS = {
@@ -69,13 +70,13 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { emoji: '🎯', technique: 'Problem Fit', when: 'Company-specific AI', phrase: 'Retrieve, inject, generate' },
-  { emoji: '⚙️', technique: 'RAG Pipeline', when: 'Every RAG system', phrase: 'Index once, query many' },
-  { emoji: '🔢', technique: 'Embeddings', when: 'Semantic search', phrase: 'Meaning = similar vectors' },
-  { emoji: '✂️', technique: 'Chunking', when: 'Document prep', phrase: '200-500 tokens with overlap' },
-  { emoji: '🗄️', technique: 'Vector DB', when: 'Production RAG', phrase: 'ANN search at scale' },
-  { emoji: '🌍', technique: 'Use Cases', when: 'Enterprise AI', phrase: 'Knowledge that knows you' },
-  { emoji: '🛠️', technique: 'Implementation', when: 'Building RAG', phrase: 'Start simple, iterate' },
+  { technique: 'Problem Fit', when: 'Company-specific AI', phrase: 'Retrieve, inject, generate' },
+  { technique: 'RAG Pipeline', when: 'Every RAG system', phrase: 'Index once, query many' },
+  { technique: 'Embeddings', when: 'Semantic search', phrase: 'Meaning = similar vectors' },
+  { technique: 'Chunking', when: 'Document prep', phrase: '200-500 tokens with overlap' },
+  { technique: 'Vector DB', when: 'Production RAG', phrase: 'ANN search at scale' },
+  { technique: 'Use Cases', when: 'Enterprise AI', phrase: 'Knowledge that knows you' },
+  { technique: 'Implementation', when: 'Building RAG', phrase: 'Start simple, iterate' },
 ]
 
 /* ═══════════════════════════════════
@@ -97,14 +98,14 @@ function ProblemViz({ active }) {
       <div className="rag-demo-label">Without RAG vs With RAG:</div>
       <div className="rag-comparison">
         <div className="rag-comp-panel rag-comp-bad how-fade-in">
-          <div className="rag-comp-label">❌ Without RAG</div>
+          <div className="rag-comp-label"><CrossIcon size={14} /> Without RAG</div>
           <div className="rag-comp-prompt">User: "What is our company refund policy?"</div>
           <div className="rag-comp-divider" />
           <div className="rag-comp-response">AI: "I don't have access to your company's specific refund policy. Please check your company documentation."</div>
           <div className="rag-comp-verdict rag-verdict-bad">AI is useless for company-specific questions</div>
         </div>
         <div className={`rag-comp-panel rag-comp-good ${showRight ? 'how-fade-in' : 'rag-comp-hidden'}`}>
-          <div className="rag-comp-label">✅ With RAG</div>
+          <div className="rag-comp-label"><CheckIcon size={14} /> With RAG</div>
           <div className="rag-comp-prompt">User: "What is our company refund policy?"</div>
           <div className="rag-comp-divider" />
           <div className="rag-comp-response">AI: "According to your policy document (Section 3.2): Customers may request refunds within 30 days of purchase for unused products. Digital products are non-refundable unless defective."</div>
@@ -273,7 +274,7 @@ function EmbeddingsViz({ active }) {
                 className={`rag-embed-chunk ${animDone ? 'rag-embed-chunk-visible' : ''} ${isMatched ? 'rag-embed-chunk-matched' : ''}`}
                 style={{ animationDelay: `${chunk.id * 0.1}s` }}
               >
-                <span className="rag-embed-chunk-icon">📄</span>
+                <span className="rag-embed-chunk-icon"><FileIcon size={14} /></span>
                 <span className="rag-embed-chunk-text">{chunk.label}</span>
                 {isMatched && <span className="rag-embed-chunk-score">Match</span>}
               </div>
@@ -379,8 +380,8 @@ function ChunkingViz({ active }) {
               ))}
             </div>
             <div className="rag-chunking-pros">
-              <span className="rag-chunking-pro">✅ {s.pro}</span>
-              <span className="rag-chunking-con">❌ {s.con}</span>
+              <span className="rag-chunking-pro"><CheckIcon size={14} /> {s.pro}</span>
+              <span className="rag-chunking-con"><CrossIcon size={14} /> {s.con}</span>
             </div>
           </div>
         ))}
@@ -461,12 +462,12 @@ function VectorDBViz() {
           ))}
           {searchActive && (
             <div className="rag-vdb-query-dot" style={{ left: '50%', top: '50%' }}>
-              <span>❓</span>
+              <span><QuestionIcon size={16} /></span>
             </div>
           )}
         </div>
         <button className="rag-vdb-search-btn" onClick={runSearch} disabled={searchActive}>
-          {searchActive ? 'Searching 1M documents... 23ms' : '🔍 Run similarity search'}
+          {searchActive ? 'Searching 1M documents... 23ms' : <><SearchIcon size={14} /> Run similarity search</>}
         </button>
       </div>
 
@@ -858,19 +859,19 @@ function RAG({ onSwitchTab, onGoHome }) {
 
       {showFinal && (
         <div className="how-final how-fade-in">
-          <div className="how-final-celebration">🎉 You're now a RAG Expert!</div>
+          <div className="how-final-celebration">You're now a RAG Expert!</div>
 
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.emoji}</div>
+                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}
           </div>
 
           <div className="pe-reference-wrapper">
-            <div className="pe-reference-title">📋 Your RAG Toolkit</div>
+            <div className="pe-reference-title">Your RAG Toolkit</div>
             <table className="pe-reference">
               <thead>
                 <tr>

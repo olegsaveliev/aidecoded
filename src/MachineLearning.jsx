@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { CheckIcon, CrossIcon, RobotIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { machineLearningQuiz } from './quizData.js'
@@ -55,14 +56,14 @@ const ML_TOOLS = {
 }
 
 const STAGES = [
-  { key: 'what-is-ml', label: 'What is ML?', emoji: '🤖' },
-  { key: 'types', label: 'Types of ML', emoji: '🌳' },
-  { key: 'supervised', label: 'Supervised Learning', emoji: '📚' },
-  { key: 'neural-networks', label: 'Neural Networks', emoji: '🧠' },
-  { key: 'overfitting', label: 'Overfitting', emoji: '⚖️' },
-  { key: 'algorithms', label: 'Algorithms', emoji: '⚡' },
-  { key: 'business', label: 'Real Use Cases', emoji: '🌍' },
-  { key: 'lifecycle', label: 'ML Lifecycle', emoji: '🔄' },
+  { key: 'what-is-ml', label: 'What is ML?' },
+  { key: 'types', label: 'Types of ML' },
+  { key: 'supervised', label: 'Supervised Learning' },
+  { key: 'neural-networks', label: 'Neural Networks' },
+  { key: 'overfitting', label: 'Overfitting' },
+  { key: 'algorithms', label: 'Algorithms' },
+  { key: 'business', label: 'Real Use Cases' },
+  { key: 'lifecycle', label: 'ML Lifecycle' },
 ]
 
 const STAGE_TOOLTIPS = {
@@ -77,14 +78,14 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { emoji: '🤖', technique: 'ML Fundamentals', when: 'Understanding AI', phrase: 'Data in, rules out' },
-  { emoji: '🌳', technique: 'ML Types', when: 'Choosing approach', phrase: 'Supervised, Unsupervised, RL' },
-  { emoji: '📚', technique: 'Training Loop', when: 'Building models', phrase: 'Predict, compare, adjust' },
-  { emoji: '🧠', technique: 'Neural Networks', when: 'Complex patterns', phrase: 'Layers learn features' },
-  { emoji: '⚖️', technique: 'Generalization', when: 'Model evaluation', phrase: 'Not too simple, not too complex' },
-  { emoji: '⚡', technique: 'Algorithm Choice', when: 'Problem solving', phrase: 'Start simple, then iterate' },
-  { emoji: '🌍', technique: 'Business Impact', when: 'Real applications', phrase: 'ML is already everywhere' },
-  { emoji: '🔄', technique: 'ML Lifecycle', when: 'Production ML', phrase: '80% data, 20% models' },
+  { technique: 'ML Fundamentals', when: 'Understanding AI', phrase: 'Data in, rules out' },
+  { technique: 'ML Types', when: 'Choosing approach', phrase: 'Supervised, Unsupervised, RL' },
+  { technique: 'Training Loop', when: 'Building models', phrase: 'Predict, compare, adjust' },
+  { technique: 'Neural Networks', when: 'Complex patterns', phrase: 'Layers learn features' },
+  { technique: 'Generalization', when: 'Model evaluation', phrase: 'Not too simple, not too complex' },
+  { technique: 'Algorithm Choice', when: 'Problem solving', phrase: 'Start simple, then iterate' },
+  { technique: 'Business Impact', when: 'Real applications', phrase: 'ML is already everywhere' },
+  { technique: 'ML Lifecycle', when: 'Production ML', phrase: '80% data, 20% models' },
 ]
 
 /* ═══════════════════════════════════
@@ -261,7 +262,7 @@ function TypesViz({ active }) {
       )}
 
       <div className="ml-types-tree">
-        <div className="ml-types-root">🤖 Machine Learning</div>
+        <div className="ml-types-root"><RobotIcon size={18} /> Machine Learning</div>
         <div className="ml-types-branches">
           {branches.map((b, i) => (
             <div
@@ -709,7 +710,7 @@ function OverfittingViz({ active }) {
           </svg>
           <div className="ml-overfit-scores">
             <span>Train error: <strong className="ml-score-good">LOW</strong></span>
-            <span>Test error: <strong className="ml-score-good">LOW ✅</strong></span>
+            <span>Test error: <strong className="ml-score-good">LOW <CheckIcon size={14} /></strong></span>
           </div>
         </div>
 
@@ -724,7 +725,7 @@ function OverfittingViz({ active }) {
           </svg>
           <div className="ml-overfit-scores">
             <span>Train error: <strong className="ml-score-good">VERY LOW</strong></span>
-            <span>Test error: <strong className="ml-score-bad">HIGH ❌</strong></span>
+            <span>Test error: <strong className="ml-score-bad">HIGH <CrossIcon size={14} /></strong></span>
           </div>
         </div>
       </div>
@@ -1266,19 +1267,19 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
 
       {showFinal && (
         <div className="how-final how-fade-in">
-          <div className="how-final-celebration">🎉 You're now an ML Expert!</div>
+          <div className="how-final-celebration">You're now an ML Expert!</div>
 
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.emoji}</div>
+                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}
           </div>
 
           <div className="pe-reference-wrapper">
-            <div className="pe-reference-title">📋 Your Machine Learning Toolkit</div>
+            <div className="pe-reference-title">Your Machine Learning Toolkit</div>
             <table className="pe-reference">
               <thead>
                 <tr>

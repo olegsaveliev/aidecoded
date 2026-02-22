@@ -716,7 +716,7 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
       {/* 8. Token limit note */}
       {phase === 'active' && !streaming && (
         <div className="gen-manual-note">
-          📚 Manual mode is limited to {SIM_STEPS} tokens — designed for learning how token prediction works step by step. Use Automatic for full sentence generation.
+          Manual mode is limited to {SIM_STEPS} tokens — designed for learning how token prediction works step by step. Use Automatic for full sentence generation.
         </div>
       )}
 

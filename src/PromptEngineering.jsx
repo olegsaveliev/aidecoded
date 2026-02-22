@@ -5,6 +5,7 @@ import ModuleIcon from './ModuleIcon.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { promptEngineeringQuiz } from './quizData.js'
+import { CheckIcon, CrossIcon, TipIcon, GearIcon, ChatIcon, RobotIcon, TheaterIcon, WrenchIcon, MemoIcon, SearchIcon, BarChartIcon, PencilIcon } from './ContentIcons.jsx'
 
 const API_KEY = import.meta.env.OPENAI_API_KEY
 
@@ -52,14 +53,14 @@ const PE_TOOLS = {
 }
 
 const STAGES = [
-  { key: 'zero-shot', label: 'Zero-Shot', emoji: '🎯' },
-  { key: 'few-shot', label: 'Few-Shot', emoji: '📚' },
-  { key: 'cot', label: 'Chain of Thought', emoji: '🧠' },
-  { key: 'tot', label: 'Tree of Thoughts', emoji: '🌳' },
-  { key: 'role', label: 'Role Prompting', emoji: '🎭' },
-  { key: 'system', label: 'System Prompts', emoji: '⚙️' },
-  { key: 'chaining', label: 'Prompt Chaining', emoji: '🔗' },
-  { key: 'patterns', label: 'Patterns', emoji: '⚡' },
+  { key: 'zero-shot', label: 'Zero-Shot' },
+  { key: 'few-shot', label: 'Few-Shot' },
+  { key: 'cot', label: 'Chain of Thought' },
+  { key: 'tot', label: 'Tree of Thoughts' },
+  { key: 'role', label: 'Role Prompting' },
+  { key: 'system', label: 'System Prompts' },
+  { key: 'chaining', label: 'Prompt Chaining' },
+  { key: 'patterns', label: 'Patterns' },
 ]
 
 const STAGE_TOOLTIPS = {
@@ -74,14 +75,14 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { emoji: '🎯', technique: 'Zero-Shot', when: 'Clear, well-defined tasks', phrase: '[Role] + [Task] + [Format]' },
-  { emoji: '📚', technique: 'Few-Shot', when: 'Pattern tasks, classification', phrase: '"Here are examples..."' },
-  { emoji: '🧠', technique: 'Chain of Thought', when: 'Complex reasoning', phrase: '"Think step by step"' },
-  { emoji: '🌳', technique: 'Tree of Thoughts', when: 'Hard problems', phrase: '"Consider 3 approaches..."' },
-  { emoji: '🎭', technique: 'Role Prompting', when: 'Expert answers', phrase: '"You are a senior..."' },
-  { emoji: '⚙️', technique: 'System Prompts', when: 'Consistent behavior', phrase: 'Set in system prompt' },
-  { emoji: '🔗', technique: 'Prompt Chaining', when: 'Complex tasks', phrase: 'Break into steps' },
-  { emoji: '⚡', technique: 'Patterns', when: 'Always', phrase: 'Specific + Format + Constraints' },
+  { technique: 'Zero-Shot', when: 'Clear, well-defined tasks', phrase: '[Role] + [Task] + [Format]' },
+  { technique: 'Few-Shot', when: 'Pattern tasks, classification', phrase: '"Here are examples..."' },
+  { technique: 'Chain of Thought', when: 'Complex reasoning', phrase: '"Think step by step"' },
+  { technique: 'Tree of Thoughts', when: 'Hard problems', phrase: '"Consider 3 approaches..."' },
+  { technique: 'Role Prompting', when: 'Expert answers', phrase: '"You are a senior..."' },
+  { technique: 'System Prompts', when: 'Consistent behavior', phrase: 'Set in system prompt' },
+  { technique: 'Prompt Chaining', when: 'Complex tasks', phrase: 'Break into steps' },
+  { technique: 'Patterns', when: 'Always', phrase: 'Specific + Format + Constraints' },
 ]
 
 async function callOpenAI({ model, temperature, topP, maxTokens, messages }) {
@@ -103,7 +104,7 @@ async function callOpenAI({ model, temperature, topP, maxTokens, messages }) {
 function TryItSection({ prompt, setPrompt, result, loading, error, onRun }) {
   return (
     <div className="pe-tryit">
-      <div className="pe-tryit-label">✏️ Edit the prompt and see how the result changes</div>
+      <div className="pe-tryit-label">Edit the prompt and see how the result changes</div>
       <textarea
         className="pe-tryit-textarea"
         value={prompt}
@@ -222,11 +223,11 @@ function ZeroShotViz({ active, model, temperature, topP, maxTokens }) {
 
   return (
     <div className="pe-viz">
-      <div className="pe-demo-label">👇 See the difference specificity makes:</div>
+      <div className="pe-demo-label">See the difference specificity makes:</div>
 
       <div className="pe-split">
         <div className="pe-split-panel pe-split-bad">
-          <div className="pe-split-label">❌ VAGUE PROMPT</div>
+          <div className="pe-split-label"><CrossIcon size={14} /> VAGUE PROMPT</div>
           <div className="pe-split-prompt">
             <span className="pe-prompt-text">{badPromptText}</span>
             {showCursor('bad-prompt') && <span className="pe-typing-cursor">|</span>}
@@ -246,7 +247,7 @@ function ZeroShotViz({ active, model, temperature, topP, maxTokens }) {
         </div>
 
         <div className="pe-split-panel pe-split-good">
-          <div className="pe-split-label">✅ SPECIFIC PROMPT</div>
+          <div className="pe-split-label"><CheckIcon size={14} /> SPECIFIC PROMPT</div>
           {goodPromptText ? (
             <>
               <div className="pe-split-prompt">
@@ -277,7 +278,7 @@ function ZeroShotViz({ active, model, temperature, topP, maxTokens }) {
       )}
 
       <div className="pe-tips">
-        <strong>💡 Quick wins:</strong>
+        <strong><TipIcon size={14} /> Quick wins:</strong>
         <ul>
           <li>Add a role: "You are a..."</li>
           <li>Specify format: "Write as bullet points / table / email"</li>
@@ -325,7 +326,7 @@ Classification:`)
       tagColor: 'var(--text-tertiary)',
       prompt: 'Classify this email:\n"Server is down" → ?',
       response: 'This could be urgent or informational depending on context. Without more information about the severity...',
-      verdict: '😕 Confused — no pattern to follow',
+      verdict: 'Confused — no pattern to follow',
       verdictClass: 'pe-fs-verdict-bad',
     },
     {
@@ -334,7 +335,7 @@ Classification:`)
       tagColor: '#ff9500',
       prompt: 'Classify this email:\nExample: "Server is down" = Urgent\n\nNow classify: "Please review proposal by Friday" → ?',
       response: 'Normal',
-      verdict: '🤔 Better — but still guessing a bit',
+      verdict: 'Better — but still guessing a bit',
       verdictClass: 'pe-fs-verdict-ok',
     },
     {
@@ -343,7 +344,7 @@ Classification:`)
       tagColor: '#34c759',
       prompt: 'Classify this email:\n"Server is down" = Urgent\n"Newsletter attached" = Low Priority\n"Review proposal by Friday" = Normal\n\nNow: "Payment system stopped 10 mins ago" → ?',
       response: 'Urgent ✓',
-      verdict: '🎯 Confident and correct — pattern learned!',
+      verdict: 'Confident and correct — pattern learned!',
       verdictClass: 'pe-fs-verdict-good',
     },
   ]
@@ -447,7 +448,7 @@ function ChainOfThoughtViz({ active, model, temperature, topP, maxTokens }) {
     <div className="pe-viz">
       <div className="pe-cot-comparison">
         <div className="pe-cot-panel">
-          <div className="pe-cot-panel-title">❌ Without CoT</div>
+          <div className="pe-cot-panel-title"><CrossIcon size={14} /> Without CoT</div>
           <div className="pe-cot-question">
             "A store sells 3 types of apples. Red costs $1.20, Green costs $0.90, Yellow costs $1.50. If I buy 4 red, 3 green, 6 yellow what do I pay?"
           </div>
@@ -458,7 +459,7 @@ function ChainOfThoughtViz({ active, model, temperature, topP, maxTokens }) {
         </div>
 
         <div className="pe-cot-panel">
-          <div className="pe-cot-panel-title">✅ With CoT</div>
+          <div className="pe-cot-panel-title"><CheckIcon size={14} /> With CoT</div>
           <div className="pe-cot-question">
             Same question + <span className="pe-cot-magic">"Think step by step."</span>
           </div>
@@ -471,7 +472,7 @@ function ChainOfThoughtViz({ active, model, temperature, topP, maxTokens }) {
             ))}
           </div>
           {visibleSteps >= cotSteps.length && (
-            <div className="pe-cot-verdict how-pop-in">✅ Every step is verifiable!</div>
+            <div className="pe-cot-verdict how-pop-in"><CheckIcon size={14} /> Every step is verifiable!</div>
           )}
         </div>
       </div>
@@ -588,7 +589,7 @@ The question is: A company has $100k budget. Should they invest in hiring 2 new 
       </div>
 
       <div className="pe-tips">
-        <strong>📋 Prompt Template:</strong>
+        <strong>Prompt Template:</strong>
         <div className="pe-code-block">
           "Imagine 3 different experts solving this problem.{'\n'}
           Each expert writes one step of their thinking,{'\n'}
@@ -618,32 +619,32 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
 
   const roleCards = [
     {
-      emoji: '👨‍💼', name: 'CEO', accentClass: 'pe-role-accent-blue',
+      name: 'CEO', accentClass: 'pe-role-accent-blue',
       response: 'Focus on competitive advantage. Companies adopting AI now will outpace those who wait. The question isn\'t whether to invest — it\'s how fast.',
     },
     {
-      emoji: '👩‍💻', name: 'CTO', accentClass: 'pe-role-accent-purple',
+      name: 'CTO', accentClass: 'pe-role-accent-purple',
       response: 'Evaluate integration complexity first. Consider security, existing infrastructure compatibility, and your team\'s technical readiness before committing.',
     },
     {
-      emoji: '💰', name: 'CFO', accentClass: 'pe-role-accent-green',
+      name: 'CFO', accentClass: 'pe-role-accent-green',
       response: 'Run the numbers: average productivity gain is 20-40%. At your team size, calculate break-even point. Most companies see ROI within 6 months.',
     },
     {
-      emoji: '👥', name: 'HR Director', accentClass: 'pe-role-accent-orange',
+      name: 'HR Director', accentClass: 'pe-role-accent-orange',
       response: 'Change management is critical. Budget for training, expect 3-month adoption curve, and address team concerns about job security proactively.',
     },
   ]
 
   const roleChips = [
-    { emoji: '🔬', name: 'Research Scientist', prefix: 'You are a research scientist. ' },
-    { emoji: '👨‍⚖️', name: 'Lawyer', prefix: 'You are an experienced lawyer. ' },
-    { emoji: '🏥', name: 'Doctor', prefix: 'You are a medical doctor. ' },
-    { emoji: '💼', name: 'Consultant', prefix: 'You are a senior business consultant. ' },
-    { emoji: '🎨', name: 'UX Designer', prefix: 'You are a UX designer with 15 years experience. ' },
-    { emoji: '👨‍🏫', name: 'Teacher', prefix: 'You are a patient, experienced teacher. ' },
-    { emoji: '🔒', name: 'Security Expert', prefix: 'You are a senior cybersecurity expert. ' },
-    { emoji: '📊', name: 'Data Analyst', prefix: 'You are a senior data analyst. ' },
+    { name: 'Research Scientist', prefix: 'You are a research scientist. ' },
+    { name: 'Lawyer', prefix: 'You are an experienced lawyer. ' },
+    { name: 'Doctor', prefix: 'You are a medical doctor. ' },
+    { name: 'Consultant', prefix: 'You are a senior business consultant. ' },
+    { name: 'UX Designer', prefix: 'You are a UX designer with 15 years experience. ' },
+    { name: 'Teacher', prefix: 'You are a patient, experienced teacher. ' },
+    { name: 'Security Expert', prefix: 'You are a senior cybersecurity expert. ' },
+    { name: 'Data Analyst', prefix: 'You are a senior data analyst. ' },
   ]
 
   useEffect(() => {
@@ -669,7 +670,6 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
         {roleCards.slice(0, visibleCards).map((card) => (
           <div key={card.name} className={`pe-role-resp-card ${card.accentClass} pe-role-resp-card-visible`}>
             <div className="pe-role-resp-header">
-              <span className="pe-role-resp-emoji">{card.emoji}</span>
               <span className="pe-role-resp-name">{card.name} perspective</span>
             </div>
             <div className="pe-role-resp-text">{card.response}</div>
@@ -693,11 +693,11 @@ function RolePromptingViz({ active, model, temperature, topP, maxTokens }) {
       </div>
 
       <div className="pe-role-library">
-        <div className="pe-role-library-label">🎭 Role Library — click to fill the prompt:</div>
+        <div className="pe-role-library-label"><TheaterIcon size={14} /> Role Library — click to fill the prompt:</div>
         <div className="pe-role-chips">
           {roleChips.map((chip) => (
             <button key={chip.name} className="pe-role-chip" onClick={() => setTryPrompt(chip.prefix + 'Explain the importance of data privacy in 3 bullet points.')}>
-              {chip.emoji} {chip.name}
+              {chip.name}
             </button>
           ))}
         </div>
@@ -753,23 +753,23 @@ function SystemPromptsViz({ active, model, temperature, topP, maxTokens, onSwitc
     <div className="pe-viz">
       <div className="pe-arch">
         <div className="pe-arch-box pe-arch-system">
-          <div className="pe-arch-box-label">⚙️ System Prompt</div>
+          <div className="pe-arch-box-label"><GearIcon size={14} /> System Prompt</div>
           <div className="pe-arch-box-desc">Hidden configuration layer</div>
         </div>
         <div className="pe-arch-arrow">+</div>
         <div className="pe-arch-box pe-arch-user">
-          <div className="pe-arch-box-label">💬 User Message</div>
+          <div className="pe-arch-box-label"><ChatIcon size={14} /> User Message</div>
           <div className="pe-arch-box-desc">Your actual question</div>
         </div>
         <div className="pe-arch-arrow">→</div>
         <div className="pe-arch-box pe-arch-ai">
-          <div className="pe-arch-box-label">🤖 AI Response</div>
+          <div className="pe-arch-box-label"><RobotIcon size={14} /> AI Response</div>
           <div className="pe-arch-box-desc">Shaped by both</div>
         </div>
       </div>
 
       <div className="pe-builder">
-        <div className="pe-builder-section-title">🔧 Build a System Prompt:</div>
+        <div className="pe-builder-section-title"><WrenchIcon size={14} /> Build a System Prompt:</div>
 
         <div className="pe-builder-row">
           <div className="pe-builder-label">Role:</div>
@@ -817,12 +817,12 @@ function SystemPromptsViz({ active, model, temperature, topP, maxTokens, onSwitc
 
       {onSwitchTab && (
         <div className="pe-playground-link">
-          💡 You can already use system prompts in the <button className="pe-link-btn" onClick={() => onSwitchTab('playground')}>Playground tab →</button>
+          <TipIcon size={14} /> You can already use system prompts in the <button className="pe-link-btn" onClick={() => onSwitchTab('playground')}>Playground tab →</button>
         </div>
       )}
 
       <div className="pe-tryit">
-        <div className="pe-tryit-label">✏️ Test your system prompt — type a question below:</div>
+        <div className="pe-tryit-label">Test your system prompt — type a question below:</div>
         {trySystem && <div className="pe-tryit-system-badge">System: {trySystem}</div>}
         <textarea className="pe-tryit-textarea" value={tryPrompt} onChange={(e) => setTryPrompt(e.target.value)} rows={2} />
         <div className="pe-tryit-actions">
@@ -853,9 +853,9 @@ function PromptChainingViz({ active, model, temperature, topP, maxTokens }) {
   const timerRef = useRef(null)
 
   const pipelineSteps = [
-    { icon: '📝', label: 'Step 1: Research', desc: '"List top 3 challenges facing remote teams"', accentClass: 'pe-pipe-blue' },
-    { icon: '🔍', label: 'Step 2: Analyze', desc: '"For each challenge suggest one solution"', accentClass: 'pe-pipe-purple' },
-    { icon: '📊', label: 'Step 3: Summarize', desc: '"Write a 2-sentence executive summary"', accentClass: 'pe-pipe-orange' },
+    { icon: <MemoIcon size={14} />, label: 'Step 1: Research', desc: '"List top 3 challenges facing remote teams"', accentClass: 'pe-pipe-blue' },
+    { icon: <SearchIcon size={14} />, label: 'Step 2: Analyze', desc: '"For each challenge suggest one solution"', accentClass: 'pe-pipe-purple' },
+    { icon: <BarChartIcon size={14} />, label: 'Step 3: Summarize', desc: '"Write a 2-sentence executive summary"', accentClass: 'pe-pipe-orange' },
   ]
 
   function startAnimation() {
@@ -919,7 +919,7 @@ function PromptChainingViz({ active, model, temperature, topP, maxTokens }) {
               <div className="pe-pipe-box-desc">{step.desc}</div>
               {stepResults[i] && (
                 <div className="pe-pipe-box-result how-pop-in">
-                  <div className="pe-pipe-box-result-label">✅ Output:</div>
+                  <div className="pe-pipe-box-result-label"><CheckIcon size={14} /> Output:</div>
                   <div className="pe-pipe-box-result-text">{stepResults[i]}</div>
                 </div>
               )}
@@ -927,7 +927,7 @@ function PromptChainingViz({ active, model, temperature, topP, maxTokens }) {
             {i < pipelineSteps.length - 1 && (
               <div className={`pe-pipe-connector ${i < visibleSteps - 1 ? 'pe-pipe-connector-visible' : ''}`}>
                 <div className="pe-pipe-connector-line" />
-                <div className="pe-pipe-connector-label">{runningStep === i + 1 && !stepResults[i + 1] ? '⏳ feeding output into next step...' : '↓ output feeds into'}</div>
+                <div className="pe-pipe-connector-label">{runningStep === i + 1 && !stepResults[i + 1] ? 'feeding output into next step...' : '↓ output feeds into'}</div>
               </div>
             )}
           </div>
@@ -981,14 +981,14 @@ function PatternsViz({ active }) {
   ]
 
   const goldenRules = [
-    { emoji: '🎯', rule: 'Specific beats vague — always' },
-    { emoji: '📝', rule: 'Format instructions get formatted output' },
-    { emoji: '🎭', rule: 'Role + expertise = expert answers' },
-    { emoji: '✂️', rule: 'One task per prompt for complex work' },
-    { emoji: '🔄', rule: 'Iterate — bad output = better prompt needed' },
-    { emoji: '📏', rule: 'Constraints help — word limits, bullet counts' },
-    { emoji: '🧪', rule: 'Show examples when you can' },
-    { emoji: '❓', rule: 'Ask AI to explain its reasoning' },
+    { rule: 'Specific beats vague — always' },
+    { rule: 'Format instructions get formatted output' },
+    { rule: 'Role + expertise = expert answers' },
+    { rule: 'One task per prompt for complex work' },
+    { rule: 'Iterate — bad output = better prompt needed' },
+    { rule: 'Constraints help — word limits, bullet counts' },
+    { rule: 'Show examples when you can' },
+    { rule: 'Ask AI to explain its reasoning' },
   ]
 
   function startAnimation() {
@@ -1017,7 +1017,7 @@ function PatternsViz({ active }) {
     <div className="pe-viz">
       <div className="pe-patterns">
         <div className="pe-patterns-col">
-          <div className="pe-patterns-col-header pe-patterns-header-dont">❌ DON'T</div>
+          <div className="pe-patterns-col-header pe-patterns-header-dont"><CrossIcon size={14} /> DON'T</div>
           {dontCards.map((text, i) => (
             <div key={i} className={`pe-pattern-card pe-pattern-dont ${i < visibleCards ? 'pe-pattern-card-visible' : ''}`}>
               <span className="pe-pattern-num">{i + 1}</span>
@@ -1026,7 +1026,7 @@ function PatternsViz({ active }) {
           ))}
         </div>
         <div className="pe-patterns-col">
-          <div className="pe-patterns-col-header pe-patterns-header-do">✅ DO</div>
+          <div className="pe-patterns-col-header pe-patterns-header-do"><CheckIcon size={14} /> DO</div>
           {doCards.map((text, i) => (
             <div key={i} className={`pe-pattern-card pe-pattern-do ${i < visibleCards ? 'pe-pattern-card-visible' : ''}`}>
               <span className="pe-pattern-num">{i + 1}</span>
@@ -1046,7 +1046,6 @@ function PatternsViz({ active }) {
           <div className="pe-golden-rules-grid">
             {goldenRules.map((r, i) => (
               <div key={i} className="pe-golden-rule pe-golden-rule-visible" style={{ animationDelay: `${i * 0.06}s` }}>
-                <span className="pe-golden-rule-emoji">{r.emoji}</span>
                 <span className="pe-golden-rule-text">{r.rule}</span>
               </div>
             ))}
@@ -1281,19 +1280,19 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
       {/* Final summary */}
       {showFinal && (
         <div className="how-final how-fade-in">
-          <div className="how-final-celebration">🎉 You're now a Prompt Engineer!</div>
+          <div className="how-final-celebration">You're now a Prompt Engineer!</div>
 
           <div className="pe-final-grid">
             {QUICK_REFERENCE.map((item) => (
               <div key={item.technique} className="pe-final-card">
-                <div className="pe-final-card-emoji">{item.emoji}</div>
+                <div className="pe-final-card-emoji">{item.technique.charAt(0)}</div>
                 <div className="pe-final-card-name">{item.technique}</div>
               </div>
             ))}
           </div>
 
           <div className="pe-reference-wrapper">
-            <div className="pe-reference-title">📋 Your Prompt Engineering Toolkit</div>
+            <div className="pe-reference-title">Your Prompt Engineering Toolkit</div>
             <table className="pe-reference">
               <thead>
                 <tr>

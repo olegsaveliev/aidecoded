@@ -3,17 +3,18 @@ import { encode, decode } from 'gpt-tokenizer'
 import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { FileCabinetIcon, CrossIcon } from './ContentIcons.jsx'
 import ToolChips from './ToolChips.jsx'
 import Quiz from './Quiz.jsx'
 import { modelTrainingQuiz } from './quizData.js'
 
 const STAGES = [
-  { key: 'collection', label: 'Data Collection', emoji: '📦' },
-  { key: 'cleaning', label: 'Data Cleaning', emoji: '🧹' },
-  { key: 'tokenization', label: 'Tokenization', emoji: '🔤' },
-  { key: 'pretraining', label: 'Pre-Training', emoji: '🧠' },
-  { key: 'sft', label: 'Fine-Tuning', emoji: '🎯' },
-  { key: 'rlhf', label: 'RLHF', emoji: '🏆' },
+  { key: 'collection', label: 'Data Collection' },
+  { key: 'cleaning', label: 'Data Cleaning' },
+  { key: 'tokenization', label: 'Tokenization' },
+  { key: 'pretraining', label: 'Pre-Training' },
+  { key: 'sft', label: 'Fine-Tuning' },
+  { key: 'rlhf', label: 'RLHF' },
 ]
 
 const STAGE_TOOLTIPS = {
@@ -34,19 +35,19 @@ const TOKEN_PASTELS = [
 ]
 
 const DATA_SOURCES = [
-  { emoji: '🌐', label: 'Web Pages', sub: 'Common Crawl', color: '#0071e3' },
-  { emoji: '📚', label: 'Books', sub: 'Project Gutenberg', color: '#5856d6' },
-  { emoji: '💻', label: 'Code', sub: 'GitHub', color: '#34c759' },
-  { emoji: '📰', label: 'Wikipedia', sub: 'Encyclopedia', color: '#ff9500' },
-  { emoji: '🗣️', label: 'Forums', sub: 'Reddit', color: '#ff3b30' },
-  { emoji: '📄', label: 'Papers', sub: 'ArXiv', color: '#af52de' },
+  { label: 'Web Pages', sub: 'Common Crawl', color: '#0071e3' },
+  { label: 'Books', sub: 'Project Gutenberg', color: '#5856d6' },
+  { label: 'Code', sub: 'GitHub', color: '#34c759' },
+  { label: 'Wikipedia', sub: 'Encyclopedia', color: '#ff9500' },
+  { label: 'Forums', sub: 'Reddit', color: '#ff3b30' },
+  { label: 'Papers', sub: 'ArXiv', color: '#af52de' },
 ]
 
 const FILTER_STAGES = [
-  { icon: '❌', label: 'Duplicates removed', pct: 20 },
-  { icon: '❌', label: 'Toxic content filtered', pct: 10 },
-  { icon: '❌', label: 'Low quality text rejected', pct: 15 },
-  { icon: '❌', label: 'Personal data scrubbed', pct: 10 },
+  { label: 'Duplicates removed', pct: 20 },
+  { label: 'Toxic content filtered', pct: 10 },
+  { label: 'Low quality text rejected', pct: 15 },
+  { label: 'Personal data scrubbed', pct: 10 },
 ]
 
 const TOOLS_BY_STAGE = {
@@ -165,7 +166,7 @@ function DataCollectionViz({ active }) {
             className={`mt-source-card ${activeSources.includes(i) ? 'mt-source-active' : ''}`}
             style={{ '--source-color': src.color }}
           >
-            <span className="mt-source-emoji">{src.emoji}</span>
+            <span className="mt-source-emoji" style={{ width: 20, height: 20, borderRadius: '50%', background: src.color, opacity: 0.25, display: 'inline-block' }} />
             <div className="mt-source-info">
               <div className="mt-source-label">{src.label}</div>
               <div className="mt-source-sub">{src.sub}</div>
@@ -200,7 +201,7 @@ function DataCollectionViz({ active }) {
 
       <div className="mt-collection-target">
         <div className="mt-target-box">
-          <div className="mt-target-icon">🗄️</div>
+          <div className="mt-target-icon"><FileCabinetIcon size={24} /></div>
           <div className="mt-target-label">Training Dataset</div>
         </div>
         <div className="mt-counter">
@@ -248,7 +249,7 @@ function DataCleaningViz({ active }) {
               key={i}
               className={`mt-filter-stage ${activeFilters.includes(i) ? 'mt-filter-active' : ''}`}
             >
-              <span className="mt-filter-icon">{filter.icon}</span>
+              <span className="mt-filter-icon"><CrossIcon size={14} /></span>
               <span className="mt-filter-label">{filter.label}</span>
               <span className="mt-filter-pct">-{filter.pct}%</span>
             </div>
@@ -849,7 +850,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
       {/* Final summary */}
       {showFinal && (
         <div className="how-final how-fade-in">
-          <div className="how-final-celebration">🎉 You now understand how AI is built!</div>
+          <div className="how-final-celebration">You now understand how AI is built!</div>
 
           <FinalTimeline />
 
