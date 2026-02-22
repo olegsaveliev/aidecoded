@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useLayoutEffect } from 'react'
+import { createPortal } from 'react-dom'
 import { NAV_GROUPS, getGroupForTab } from './NavDropdown.jsx'
 import './FeedbackWidget.css'
 
@@ -40,12 +41,12 @@ function getInitialPos() {
       const parsed = JSON.parse(saved)
       // Clamp to current viewport in case window was resized
       return {
-        x: Math.min(Math.max(0, parsed.x), window.innerWidth - 140),
+        x: Math.min(Math.max(0, parsed.x), window.innerWidth - 100),
         y: Math.min(Math.max(0, parsed.y), window.innerHeight - 60),
       }
     }
   } catch {}
-  return { x: window.innerWidth - 120, y: window.innerHeight - 80 }
+  return { x: window.innerWidth - 90, y: window.innerHeight - 90 }
 }
 
 function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
@@ -60,15 +61,19 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
   // Draggable state
   const [pos, setPos] = useState(getInitialPos)
   const [dragging, setDragging] = useState(false)
+  const [showTooltip, setShowTooltip] = useState(false)
+  const [tooltipPos, setTooltipPos] = useState(null)
   const hasDragged = useRef(false)
   const dragStart = useRef({ x: 0, y: 0 })
   const buttonRef = useRef(null)
+  const tooltipRef = useRef(null)
 
   const pageContext = getPageContext({ showHome, showLanding, activeTab, subPage })
 
   // --- Drag: mouse handlers ---
   const onMouseDown = (e) => {
     setDragging(true)
+    setShowTooltip(false)
     hasDragged.current = false
     dragStart.current = { x: e.clientX - pos.x, y: e.clientY - pos.y }
   }
@@ -78,7 +83,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
     const onMouseMove = (e) => {
       hasDragged.current = true
       setPos({
-        x: Math.min(Math.max(0, e.clientX - dragStart.current.x), window.innerWidth - 140),
+        x: Math.min(Math.max(0, e.clientX - dragStart.current.x), window.innerWidth - 100),
         y: Math.min(Math.max(0, e.clientY - dragStart.current.y), window.innerHeight - 60),
       })
     }
@@ -106,7 +111,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
       hasDragged.current = true
       const touch = e.touches[0]
       setPos({
-        x: Math.min(Math.max(0, touch.clientX - dragStart.current.x), window.innerWidth - 140),
+        x: Math.min(Math.max(0, touch.clientX - dragStart.current.x), window.innerWidth - 100),
         y: Math.min(Math.max(0, touch.clientY - dragStart.current.y), window.innerHeight - 60),
       })
     }
@@ -163,8 +168,24 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
+  // Tooltip positioning
+  useLayoutEffect(() => {
+    if (!showTooltip || !buttonRef.current) return
+    const r = buttonRef.current.getBoundingClientRect()
+    setTooltipPos({ left: r.left + r.width / 2, top: r.top - 10 })
+  }, [showTooltip, pos])
+
+  function handleMouseEnter() {
+    if (!dragging && !isOpen) setShowTooltip(true)
+  }
+
+  function handleMouseLeave() {
+    setShowTooltip(false)
+  }
+
   function handleOpen() {
     if (hasDragged.current) return
+    setShowTooltip(false)
     setIsOpen(true)
     setStatus('idle')
     setMessageError('')
@@ -226,22 +247,41 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage }) {
 
   return (
     <>
-      <button
+      <div
         ref={buttonRef}
-        className={`feedback-btn${dragging ? ' feedback-btn-dragging' : ''}`}
+        className={`feedback-bubble-wrap${dragging ? ' feedback-bubble-dragging' : ''}`}
         onMouseDown={onMouseDown}
         onTouchStart={onTouchStart}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={handleOpen}
-        aria-label="Send feedback"
+        role="button"
+        tabIndex={0}
+        aria-label="Share Feedback"
         style={{
           left: pos.x,
           top: pos.y,
           cursor: dragging ? 'grabbing' : 'grab',
         }}
       >
-        <span className="feedback-btn-emoji">💬</span>
-        <span className="feedback-btn-label">Feedback</span>
-      </button>
+        <div className="feedback-bubble-large" />
+        <div className="feedback-bubble-small">
+          <span />
+          <span />
+          <span />
+        </div>
+      </div>
+
+      {showTooltip && !dragging && tooltipPos && createPortal(
+        <span
+          ref={tooltipRef}
+          className="feedback-tooltip"
+          style={{ left: tooltipPos.left, top: tooltipPos.top }}
+        >
+          Share Feedback
+        </span>,
+        document.body
+      )}
 
       {isOpen && (
         <div className="feedback-backdrop" onClick={handleBackdropClick}>

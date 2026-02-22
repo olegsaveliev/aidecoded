@@ -1,48 +1,125 @@
 /* =============================================
-   Floating Feedback Button
+   Floating Feedback Button — iMessage two-bubble
    ============================================= */
-.feedback-btn {
+.feedback-bubble-wrap {
   position: fixed;
   z-index: 9998;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #0071E3;
-  color: white;
-  border: none;
-  border-radius: 100px;
-  padding: 10px 18px;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: inherit;
+  width: 48px;
+  height: 48px;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
   touch-action: none;
-  box-shadow: 0 4px 16px rgba(0, 113, 227, 0.3);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
-.feedback-btn:hover {
+/* Large blue bubble */
+.feedback-bubble-large {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #1E90FF, #0071E3);
+  border-radius: 50% 50% 50% 6px;
+  box-shadow: 0 4px 16px rgba(0, 113, 227, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feedback-bubble-wrap:hover .feedback-bubble-large {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(0, 113, 227, 0.5);
+}
+
+/* Small white bubble with dots */
+.feedback-bubble-small {
+  position: absolute;
+  bottom: 1px;
+  right: -3px;
+  width: 28px;
+  height: 22px;
+  background: white;
+  border-radius: 50% 50% 6px 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.feedback-bubble-wrap:hover .feedback-bubble-small {
   transform: scale(1.05);
-  box-shadow: 0 6px 24px rgba(0, 113, 227, 0.45);
 }
 
-.feedback-btn:active {
-  transform: scale(0.98);
+[data-theme="dark"] .feedback-bubble-small {
+  background: #2C2C2E;
 }
 
-.feedback-btn-dragging {
+/* Animated dots */
+.feedback-bubble-small span {
+  width: 5px;
+  height: 5px;
+  background: #0071E3;
+  border-radius: 50%;
+  display: block;
+  animation: feedbackTypingBounce 1.2s infinite ease-in-out;
+}
+
+[data-theme="dark"] .feedback-bubble-small span {
+  background: #60A5FA;
+}
+
+.feedback-bubble-small span:nth-child(1) { animation-delay: 0s; }
+.feedback-bubble-small span:nth-child(2) { animation-delay: 0.2s; }
+.feedback-bubble-small span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes feedbackTypingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* Dragging state */
+.feedback-bubble-dragging {
   cursor: grabbing;
-  opacity: 0.85;
+  opacity: 0.9;
+}
+
+.feedback-bubble-dragging .feedback-bubble-large {
   transform: scale(0.95);
-  box-shadow: 0 8px 28px rgba(0, 113, 227, 0.4);
   transition: none;
 }
 
-.feedback-btn-emoji {
-  font-size: 16px;
+.feedback-bubble-dragging .feedback-bubble-small {
+  transform: scale(0.95);
+  transition: none;
+}
+
+/* Tooltip */
+.feedback-tooltip {
+  position: fixed;
+  z-index: 99999;
+  background: #1D1D1F;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
   line-height: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  animation: feedbackTooltipIn 0.15s ease-out;
+}
+
+@keyframes feedbackTooltipIn {
+  from { opacity: 0; transform: translate(-50%, -100%) translateY(4px); }
+  to { opacity: 1; transform: translate(-50%, -100%) translateY(0); }
+}
+
+[data-theme="dark"] .feedback-tooltip {
+  background: #E8E3DD;
+  color: #1C1917;
 }
 
 /* =============================================
@@ -383,20 +460,24 @@
    Mobile
    ============================================= */
 @media (max-width: 768px) {
-  .feedback-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    padding: 0;
-    justify-content: center;
+  .feedback-bubble-wrap {
+    width: 44px;
+    height: 44px;
   }
 
-  .feedback-btn-emoji {
-    font-size: 20px;
+  .feedback-bubble-large {
+    width: 44px;
+    height: 44px;
   }
 
-  .feedback-btn-label {
-    display: none;
+  .feedback-bubble-small {
+    width: 26px;
+    height: 20px;
+  }
+
+  .feedback-bubble-small span {
+    width: 4px;
+    height: 4px;
   }
 
   .feedback-backdrop {
