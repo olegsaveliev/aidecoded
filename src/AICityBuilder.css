@@ -732,6 +732,8 @@
 
   .acb-case-card {
     padding: 16px;
+    border: none;
+    background: transparent;
   }
 
   .acb-case-complaint {

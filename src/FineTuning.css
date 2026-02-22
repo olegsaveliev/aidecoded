@@ -927,6 +927,11 @@
     padding: 16px;
   }
 
+  .ft-decision-node {
+    border: none;
+    background: transparent;
+  }
+
   .ft-decision-buttons {
     flex-wrap: wrap;
   }
