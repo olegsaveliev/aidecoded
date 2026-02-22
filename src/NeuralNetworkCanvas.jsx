@@ -86,6 +86,16 @@ const REF_H = 480
 
 const PARTICLE_BG_COUNT = 35
 
+/* ── Drag constants ── */
+
+const TOTAL_ANIM_TIME = Math.max(...DOT_DELAYS) + 500
+const NODE_PADDING = 30
+
+const ORIGINAL_POSITIONS = {}
+for (const node of NODES) {
+  ORIGINAL_POSITIONS[node.id] = { x: node.px * REF_W, y: node.py * REF_H }
+}
+
 function NeuralNetworkCanvas({ onSelectTab }) {
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
@@ -95,6 +105,20 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   const [clickedNode, setClickedNode] = useState(null)
   const [animKey, setAnimKey] = useState(0)
   const [tooltip, setTooltip] = useState(null)
+
+  // Drag state
+  const [draggable, setDraggable] = useState(false)
+  const [draggingId, setDraggingId] = useState(null)
+  const [nodePositions, setNodePositions] = useState(ORIGINAL_POSITIONS)
+  const [positionsModified, setPositionsModified] = useState(false)
+  const [motionKey, setMotionKey] = useState(0)
+  const [showHint, setShowHint] = useState(false)
+  const [hintFading, setHintFading] = useState(false)
+
+  const hasDragged = useRef(false)
+  const dragOffset = useRef({ x: 0, y: 0 })
+  const nodePositionsRef = useRef(nodePositions)
+  nodePositionsRef.current = nodePositions
 
   // Measure container (for background canvas only)
   useEffect(() => {
@@ -173,12 +197,35 @@ function NeuralNetworkCanvas({ onSelectTab }) {
     return () => cancelAnimationFrame(animId)
   }, [dimensions])
 
-  const nodePositions = useMemo(() => {
-    const map = {}
-    for (const node of NODES) {
-      map[node.id] = { x: node.px * REF_W, y: node.py * REF_H }
+  // Enable dragging after entrance animation completes
+  useEffect(() => {
+    setDraggable(false)
+    const timer = setTimeout(() => setDraggable(true), TOTAL_ANIM_TIME)
+    return () => clearTimeout(timer)
+  }, [animKey])
+
+  // Hint: show after animation, fade out after 3s
+  useEffect(() => {
+    setShowHint(false)
+    setHintFading(false)
+    const show = setTimeout(() => setShowHint(true), TOTAL_ANIM_TIME)
+    const fade = setTimeout(() => setHintFading(true), TOTAL_ANIM_TIME + 3000)
+    const hide = setTimeout(() => setShowHint(false), TOTAL_ANIM_TIME + 3500)
+    return () => { clearTimeout(show); clearTimeout(fade); clearTimeout(hide) }
+  }, [animKey])
+
+  // Convert screen coordinates to SVG viewBox coordinates
+  const screenToSVG = useCallback((clientX, clientY) => {
+    const svg = svgRef.current
+    if (!svg) return { x: 0, y: 0 }
+    const rect = svg.getBoundingClientRect()
+    const scale = Math.min(rect.width / REF_W, rect.height / REF_H)
+    const offsetX = (rect.width - REF_W * scale) / 2
+    const offsetY = (rect.height - REF_H * scale) / 2
+    return {
+      x: (clientX - rect.left - offsetX) / scale,
+      y: (clientY - rect.top - offsetY) / scale,
     }
-    return map
   }, [])
 
   const connectedTo = useMemo(() => {
@@ -202,9 +249,141 @@ function NeuralNetworkCanvas({ onSelectTab }) {
     [onSelectTab]
   )
 
+  const handleNodeClickRef = useRef(handleNodeClick)
+  handleNodeClickRef.current = handleNodeClick
+
+  // Window event listeners during drag
+  useEffect(() => {
+    if (!draggingId) return
+
+    const currentDragId = draggingId
+
+    const onMouseMove = (e) => {
+      hasDragged.current = true
+      const svgPos = screenToSVG(e.clientX, e.clientY)
+      setNodePositions(prev => ({
+        ...prev,
+        [currentDragId]: {
+          x: Math.max(NODE_PADDING, Math.min(REF_W - NODE_PADDING, svgPos.x - dragOffset.current.x)),
+          y: Math.max(NODE_PADDING, Math.min(REF_H - NODE_PADDING, svgPos.y - dragOffset.current.y)),
+        },
+      }))
+    }
+
+    const onMouseUp = () => {
+      if (hasDragged.current) {
+        setPositionsModified(true)
+        setMotionKey(k => k + 1)
+      } else {
+        handleNodeClickRef.current(currentDragId)
+      }
+      setDraggingId(null)
+    }
+
+    const onTouchMove = (e) => {
+      e.preventDefault()
+      hasDragged.current = true
+      const touch = e.touches[0]
+      const svgPos = screenToSVG(touch.clientX, touch.clientY)
+      setNodePositions(prev => ({
+        ...prev,
+        [currentDragId]: {
+          x: Math.max(NODE_PADDING, Math.min(REF_W - NODE_PADDING, svgPos.x - dragOffset.current.x)),
+          y: Math.max(NODE_PADDING, Math.min(REF_H - NODE_PADDING, svgPos.y - dragOffset.current.y)),
+        },
+      }))
+    }
+
+    const onTouchEnd = () => {
+      if (hasDragged.current) {
+        setPositionsModified(true)
+        setMotionKey(k => k + 1)
+      } else {
+        handleNodeClickRef.current(currentDragId)
+      }
+      setDraggingId(null)
+    }
+
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+    window.addEventListener('touchmove', onTouchMove, { passive: false })
+    window.addEventListener('touchend', onTouchEnd)
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [draggingId, screenToSVG])
+
+  const onNodeMouseDown = useCallback((e, nodeId) => {
+    if (!draggable) return
+    e.preventDefault()
+    const svgPos = screenToSVG(e.clientX, e.clientY)
+    hasDragged.current = false
+    dragOffset.current = {
+      x: svgPos.x - nodePositionsRef.current[nodeId].x,
+      y: svgPos.y - nodePositionsRef.current[nodeId].y,
+    }
+    setDraggingId(nodeId)
+    setHoveredNode(null)
+    setTooltip(null)
+    setShowHint(false)
+  }, [draggable, screenToSVG])
+
+  const onNodeTouchStart = useCallback((e, nodeId) => {
+    if (!draggable) return
+    const touch = e.touches[0]
+    const svgPos = screenToSVG(touch.clientX, touch.clientY)
+    hasDragged.current = false
+    dragOffset.current = {
+      x: svgPos.x - nodePositionsRef.current[nodeId].x,
+      y: svgPos.y - nodePositionsRef.current[nodeId].y,
+    }
+    setDraggingId(nodeId)
+    setHoveredNode(null)
+    setTooltip(null)
+    setShowHint(false)
+  }, [draggable, screenToSVG])
+
   const handleReplay = useCallback(() => {
     setAnimKey((k) => k + 1)
+    setDraggable(false)
+    setNodePositions(ORIGINAL_POSITIONS)
+    setPositionsModified(false)
+    setMotionKey((k) => k + 1)
   }, [])
+
+  const handleReset = useCallback(() => {
+    const start = {}
+    for (const node of NODES) {
+      start[node.id] = { x: nodePositions[node.id].x, y: nodePositions[node.id].y }
+    }
+    setDraggable(false)
+    const startTime = performance.now()
+
+    function animate() {
+      const t = Math.min((performance.now() - startTime) / 500, 1)
+      // easeInOutQuad
+      const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
+      const newPos = {}
+      for (const node of NODES) {
+        newPos[node.id] = {
+          x: start[node.id].x + (ORIGINAL_POSITIONS[node.id].x - start[node.id].x) * ease,
+          y: start[node.id].y + (ORIGINAL_POSITIONS[node.id].y - start[node.id].y) * ease,
+        }
+      }
+      setNodePositions(newPos)
+      if (t < 1) {
+        requestAnimationFrame(animate)
+      } else {
+        setPositionsModified(false)
+        setMotionKey((k) => k + 1)
+        setDraggable(true)
+      }
+    }
+    requestAnimationFrame(animate)
+  }, [nodePositions])
 
   const { width, height } = dimensions // for background canvas
   const nodeRadius = 32
@@ -220,6 +399,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
         className="nn-canvas-svg"
         viewBox={`0 0 ${REF_W} ${REF_H}`}
         preserveAspectRatio="xMidYMid meet"
+        style={{ cursor: draggingId ? 'grabbing' : undefined }}
       >
         <defs>
           {Object.entries(GROUP_COLORS).map(([group, color]) => (
@@ -268,6 +448,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
               />
               {/* Dots fade in after line is drawn */}
               <g
+                key={`dots-${i}-${motionKey}`}
                 className="nn-dots-appear"
                 style={{ animationDelay: `${dotDelay}ms` }}
               >
@@ -297,16 +478,22 @@ function NeuralNetworkCanvas({ onSelectTab }) {
           const pos = nodePositions[node.id]
           if (!pos) return null
           const color = GROUP_COLORS[node.group]
-          const isHovered = hoveredNode === node.id
-          const isConnected = connectedTo.has(node.id)
+          const isDragging = draggingId === node.id
+          const isHovered = hoveredNode === node.id && !isDragging
+          const isConnected = connectedTo.has(node.id) && !isDragging
           const isClicked = clickedNode === node.id
           const enterDelay = NODE_DELAYS[node.id]
+
+          const nodeCursor = draggable
+            ? (isDragging ? 'grabbing' : 'grab')
+            : 'pointer'
 
           return (
             <g
               key={node.id}
               transform={`translate(${pos.x}, ${pos.y})`}
               onMouseEnter={() => {
+                if (draggingId) return
                 setHoveredNode(node.id)
                 const svg = svgRef.current
                 if (svg) {
@@ -323,11 +510,17 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                 }
               }}
               onMouseLeave={() => {
+                if (draggingId) return
                 setHoveredNode(null)
                 setTooltip(null)
               }}
-              onClick={() => handleNodeClick(node.id)}
-              style={{ cursor: 'pointer' }}
+              onMouseDown={(e) => onNodeMouseDown(e, node.id)}
+              onTouchStart={(e) => onNodeTouchStart(e, node.id)}
+              onClick={() => {
+                if (draggable) return
+                handleNodeClick(node.id)
+              }}
+              style={{ cursor: nodeCursor }}
             >
               {/* Entrance animation wrapper */}
               <g
@@ -335,7 +528,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                 style={{ animationDelay: `${enterDelay}ms` }}
               >
                 {/* Interaction wrapper */}
-                <g className={`nn-node-inner ${isHovered ? 'nn-node-hovered' : ''} ${isConnected ? 'nn-node-connected' : ''} ${isClicked ? 'nn-node-clicked' : ''}`}>
+                <g className={`nn-node-inner ${isDragging ? 'nn-node-dragging' : (isHovered ? 'nn-node-hovered' : '')} ${isConnected ? 'nn-node-connected' : ''} ${isClicked ? 'nn-node-clicked' : ''}`}>
                   {/* Click ripple effect */}
                   {isClicked && (
                     <circle
@@ -367,15 +560,15 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                     r={nodeRadius + 3}
                     fill="none"
                     stroke={color}
-                    strokeWidth={isHovered ? 3 : 2}
-                    opacity={isHovered || isConnected ? 1 : 0.6}
+                    strokeWidth={isHovered || isDragging ? 3 : 2}
+                    opacity={isHovered || isConnected || isDragging ? 1 : 0.6}
                     className="nn-node-ring"
                   />
 
                   {/* Node background */}
                   <circle
                     r={nodeRadius}
-                    className={`nn-node-bg ${isHovered ? 'nn-node-bg-hover' : ''}`}
+                    className={`nn-node-bg ${isHovered ? 'nn-node-bg-hover' : ''} ${isDragging ? 'nn-node-bg-dragging' : ''}`}
                   />
 
                   {/* Module icon */}
@@ -401,10 +594,24 @@ function NeuralNetworkCanvas({ onSelectTab }) {
         })}
       </svg>
 
-      {/* Replay button */}
-      <button className="nn-replay-btn" onClick={handleReplay}>
-        Replay
-      </button>
+      {/* Bottom buttons */}
+      <div className="nn-bottom-buttons">
+        <button className="nn-replay-btn" onClick={handleReplay}>
+          Replay
+        </button>
+        {positionsModified && (
+          <button className="nn-replay-btn nn-reset-btn" onClick={handleReset}>
+            Reset Layout
+          </button>
+        )}
+      </div>
+
+      {/* Drag hint */}
+      {showHint && (
+        <div className={`nn-drag-hint ${hintFading ? 'nn-drag-hint-out' : ''}`}>
+          Drag the nodes to explore
+        </div>
+      )}
 
       {/* Mobile fallback grid */}
       <div className="nn-mobile-grid">

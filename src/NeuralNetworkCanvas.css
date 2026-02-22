@@ -100,7 +100,7 @@
   transition: opacity 0.3s ease;
 }
 
-/* ── Node inner group (hover / click) ── */
+/* ── Node inner group (hover / click / drag) ── */
 
 .nn-node-inner {
   transition: transform 0.2s ease;
@@ -113,6 +113,11 @@
 
 .nn-node-connected {
   transform: scale(1.05);
+}
+
+.nn-node-dragging {
+  transform: scale(1.1);
+  transition: none;
 }
 
 .nn-node-clicked {
@@ -141,12 +146,20 @@
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
 }
 
+.nn-node-bg-dragging {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.2));
+}
+
 [data-theme="dark"] .nn-node-bg {
   fill: #292524;
 }
 
 [data-theme="dark"] .nn-node-bg-hover {
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+[data-theme="dark"] .nn-node-bg-dragging {
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
 }
 
 /* ── Node ring ── */
@@ -220,14 +233,19 @@
 }
 
 /* ══════════════════════════════════
-   REPLAY BUTTON
+   BOTTOM BUTTONS (Replay + Reset)
    ══════════════════════════════════ */
 
-.nn-replay-btn {
+.nn-bottom-buttons {
   position: absolute;
   bottom: 12px;
   right: 16px;
   z-index: 3;
+  display: flex;
+  gap: 8px;
+}
+
+.nn-replay-btn {
   background: var(--bg-primary, #ffffff);
   border: 1px solid var(--border-light, #e5e5e5);
   border-radius: 8px;
@@ -255,6 +273,56 @@
 [data-theme="dark"] .nn-replay-btn:hover {
   background: #44403C;
   color: #E8E3DD;
+}
+
+.nn-reset-btn {
+  animation: nnFadeIn 0.2s ease-out;
+}
+
+@keyframes nnFadeIn {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ══════════════════════════════════
+   DRAG HINT
+   ══════════════════════════════════ */
+
+.nn-drag-hint {
+  position: absolute;
+  bottom: 38px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--text-tertiary, #86868b);
+  z-index: 3;
+  pointer-events: none;
+  animation: nnHintIn 0.3s ease-out;
+}
+
+.nn-drag-hint-out {
+  animation: nnHintOut 0.5s ease-in forwards;
+}
+
+@keyframes nnHintIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes nnHintOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+[data-theme="dark"] .nn-drag-hint {
+  color: #78716C;
 }
 
 /* ══════════════════════════════════
