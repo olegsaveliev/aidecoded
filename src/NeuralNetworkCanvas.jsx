@@ -24,6 +24,7 @@ const NODES = [
   // Skills cluster (right side)
   { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.82, py: 0.22, desc: 'Write better prompts for better results' },
   { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.85, py: 0.60, desc: 'Give AI the right context every time' },
+  { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.48, py: 0.78, desc: 'Turn a general AI into a domain expert' },
 ]
 
 const CONNECTIONS = [
@@ -40,6 +41,9 @@ const CONNECTIONS = [
   ['model-training', 'prompt-engineering'],
   ['rag', 'context-engineering'],
   ['prompt-engineering', 'context-engineering'],
+  ['fine-tuning', 'model-training'],
+  ['fine-tuning', 'rag'],
+  ['fine-tuning', 'machine-learning'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -54,6 +58,7 @@ const NODE_DELAYS = {
   'rag': 1400,
   'prompt-engineering': 1700,
   'context-engineering': 1900,
+  'fine-tuning': 1600,
 }
 
 const NODE_APPEAR_DUR = 500
@@ -297,12 +302,14 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                 const svg = svgRef.current
                 if (svg) {
                   const svgRect = svg.getBoundingClientRect()
-                  const scaleX = svgRect.width / REF_W
-                  const scaleY = svgRect.height / REF_H
+                  // Account for preserveAspectRatio="xMidYMid meet" letterboxing
+                  const scale = Math.min(svgRect.width / REF_W, svgRect.height / REF_H)
+                  const offsetX = (svgRect.width - REF_W * scale) / 2
+                  const offsetY = (svgRect.height - REF_H * scale) / 2
                   setTooltip({
                     text: node.desc,
-                    x: svgRect.left + pos.x * scaleX,
-                    y: svgRect.top + pos.y * scaleY + nodeRadius * scaleY + 8,
+                    x: svgRect.left + offsetX + pos.x * scale,
+                    y: svgRect.top + offsetY + pos.y * scale + nodeRadius * scale + 8,
                   })
                 }
               }}

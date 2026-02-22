@@ -40,7 +40,7 @@ function spaceToken(token, prior) {
 
 const MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo']
 
-function Generation({ model: defaultModel, maxTokens, onGoHome }) {
+function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
   const [showEntry, setShowEntry] = useState(true)
   const [genModel, setGenModel] = useState(defaultModel || 'gpt-4o-mini')
   const [temperature, setTemperature] = useState(0.7)
@@ -439,7 +439,9 @@ function Generation({ model: defaultModel, maxTokens, onGoHome }) {
           questions={generationQuiz}
           tabName="Generation"
           onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome}
+          onStartOver={() => { setShowQuiz(false); setShowEntry(true) }}
+          onSwitchTab={onSwitchTab}
+          currentModuleId="generation"
         />
       </div>
     )

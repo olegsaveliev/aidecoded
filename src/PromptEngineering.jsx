@@ -6,6 +6,7 @@ import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { promptEngineeringQuiz } from './quizData.js'
 import { CheckIcon, CrossIcon, TipIcon, GearIcon, ChatIcon, RobotIcon, TheaterIcon, WrenchIcon, MemoIcon, SearchIcon, BarChartIcon, PencilIcon, TargetIcon, FileIcon, LinkIcon, TreeIcon, RefreshIcon, BookIcon, PlayIcon } from './ContentIcons.jsx'
+import SuggestedModules from './SuggestedModules.jsx'
 
 const API_KEY = import.meta.env.OPENAI_API_KEY
 
@@ -1171,7 +1172,9 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
           questions={promptEngineeringQuiz}
           tabName="Prompt Engineering"
           onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+          onStartOver={() => reset()}
+          onSwitchTab={onSwitchTab}
+          currentModuleId="prompt-engineering"
         />
       </div>
     )
@@ -1318,20 +1321,12 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            {onSwitchTab && (
-              <>
-                <button className="how-start-btn" onClick={() => onSwitchTab('playground')}>
-                  → Practice in Playground
-                </button>
-                <button className="how-secondary-btn" onClick={() => onSwitchTab('model-training')}>
-                  → Try Model Training next
-                </button>
-              </>
-            )}
             <button className="how-secondary-btn" onClick={reset}>
               Start over
             </button>
           </div>
+
+          <SuggestedModules currentModuleId="prompt-engineering" onSwitchTab={onSwitchTab} />
         </div>
       )}
     </div>

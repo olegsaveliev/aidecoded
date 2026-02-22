@@ -7,6 +7,7 @@ import { FileCabinetIcon, CrossIcon, CpuIcon, ChatIcon, UserIcon, GraduationIcon
 import ToolChips from './ToolChips.jsx'
 import Quiz from './Quiz.jsx'
 import { modelTrainingQuiz } from './quizData.js'
+import SuggestedModules from './SuggestedModules.jsx'
 
 const STAGES = [
   { key: 'collection', label: 'Data Collection' },
@@ -727,9 +728,9 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
           questions={modelTrainingQuiz}
           tabName="Model Training"
           onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
-          onNextModule={onSwitchTab ? () => onSwitchTab('prompt-engineering') : undefined}
-          nextModuleName="Prompt Engineering"
+          onStartOver={() => reset()}
+          onSwitchTab={onSwitchTab}
+          currentModuleId="model-training"
         />
       </div>
     )
@@ -858,20 +859,12 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            {onSwitchTab && (
-              <>
-                <button className="how-start-btn" onClick={() => onSwitchTab('playground')}>
-                  → See it in action (Playground)
-                </button>
-                <button className="how-secondary-btn" onClick={() => onSwitchTab('how-llms-work')}>
-                  → Watch generation happen
-                </button>
-              </>
-            )}
             <button className="how-secondary-btn" onClick={reset}>
               Start over
             </button>
           </div>
+
+          <SuggestedModules currentModuleId="model-training" onSwitchTab={onSwitchTab} />
         </div>
       )}
     </div>

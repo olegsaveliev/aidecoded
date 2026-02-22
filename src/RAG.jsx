@@ -6,6 +6,7 @@ import { CheckIcon, CrossIcon, FileIcon, QuestionIcon, SearchIcon, ScissorsIcon,
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { ragQuiz } from './quizData.js'
+import SuggestedModules from './SuggestedModules.jsx'
 import './RAG.css'
 
 const RAG_TOOLS = {
@@ -757,7 +758,9 @@ function RAG({ onSwitchTab, onGoHome }) {
           questions={ragQuiz}
           tabName="RAG"
           onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+          onStartOver={() => reset()}
+          onSwitchTab={onSwitchTab}
+          currentModuleId="rag"
         />
       </div>
     )
@@ -896,20 +899,12 @@ function RAG({ onSwitchTab, onGoHome }) {
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            {onSwitchTab && (
-              <>
-                <button className="how-start-btn" onClick={() => onSwitchTab('playground')}>
-                  → Practice in Playground
-                </button>
-                <button className="how-secondary-btn" onClick={() => onSwitchTab('context-engineering')}>
-                  → Try Context Engineering next
-                </button>
-              </>
-            )}
             <button className="how-secondary-btn" onClick={reset}>
               Start over
             </button>
           </div>
+
+          <SuggestedModules currentModuleId="rag" onSwitchTab={onSwitchTab} />
         </div>
       )}
     </div>

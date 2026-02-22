@@ -9,6 +9,7 @@ import PromptEngineering from './PromptEngineering.jsx'
 import ContextEngineering from './ContextEngineering.jsx'
 import RAG from './RAG.jsx'
 import MachineLearning from './MachineLearning.jsx'
+import FineTuning from './FineTuning.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -826,9 +827,9 @@ function App() {
           </div>
         )}
 
-        {!showHome && activeTab === 'tokenizer' && <Tokenizer onGoHome={handleGoHome} />}
+        {!showHome && activeTab === 'tokenizer' && <Tokenizer onSwitchTab={setActiveTab} onGoHome={handleGoHome} />}
         {!showHome && activeTab === 'generation' && (
-          <Generation model={model} maxTokens={maxTokens} onGoHome={handleGoHome} />
+          <Generation model={model} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'how-llms-work' && (
           <HowLLMsWork key={tabKey} model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} onSubPageChange={setSubPage} />
@@ -847,6 +848,9 @@ function App() {
         )}
         {!showHome && activeTab === 'machine-learning' && (
           <MachineLearning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'fine-tuning' && (
+          <FineTuning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         </div>
       </main>

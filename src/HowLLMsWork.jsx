@@ -7,6 +7,7 @@ import { MemoIcon, TypeIcon, HashIcon, EyeIcon, ZapIcon, TipIcon } from './Conte
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { howLLMsWorkQuiz } from './quizData.js'
+import SuggestedModules from './SuggestedModules.jsx'
 
 const API_KEY = import.meta.env.OPENAI_API_KEY
 
@@ -460,9 +461,9 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
           questions={howLLMsWorkQuiz}
           tabName="How LLMs Work"
           onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
-          onNextModule={onSwitchTab ? () => onSwitchTab('model-training') : undefined}
-          nextModuleName="Model Training"
+          onStartOver={() => reset()}
+          onSwitchTab={onSwitchTab}
+          currentModuleId="how-llms-work"
         />
       </div>
     )
@@ -1091,15 +1092,12 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            <button className="how-start-btn" onClick={reset}>
-              Try another prompt
+            <button className="how-secondary-btn" onClick={reset}>
+              Start over
             </button>
-            {onSwitchTab && (
-              <button className="how-secondary-btn" onClick={() => onSwitchTab('playground')}>
-                Go to Playground
-              </button>
-            )}
           </div>
+
+          <SuggestedModules currentModuleId="how-llms-work" onSwitchTab={onSwitchTab} />
         </div>
       )}
     </div>

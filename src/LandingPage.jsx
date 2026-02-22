@@ -15,6 +15,7 @@ const MOBILE_MODULES = [
   { id: 'generation', label: 'Generation', color: '#0071E3' },
   { id: 'prompt-engineering', label: 'Prompting', color: '#34C759' },
   { id: 'rag', label: 'RAG', color: '#FF9500' },
+  { id: 'fine-tuning', label: 'Fine-Tuning', color: '#5856D6' },
 ]
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {

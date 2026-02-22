@@ -30,7 +30,7 @@ const FUN_FACTS = [
   'Shakespeare\u2019s complete works \u2248 1.2 million tokens',
 ]
 
-function Tokenizer({ onGoHome }) {
+function Tokenizer({ onSwitchTab, onGoHome }) {
   const [showEntry, setShowEntry] = useState(true)
   const [text, setText] = useState('')
   const [showWelcome, setShowWelcome] = useState(true)
@@ -84,7 +84,9 @@ function Tokenizer({ onGoHome }) {
           questions={tokenizerQuiz}
           tabName="Tokenizer"
           onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome}
+          onStartOver={() => { setShowQuiz(false); setShowEntry(true) }}
+          onSwitchTab={onSwitchTab}
+          currentModuleId="tokenizer"
         />
       </div>
     )

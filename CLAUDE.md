@@ -24,6 +24,7 @@ Interactive React app for learning how Large Language Models work.
 | `context-engineering` | ContextEngineering.jsx | ContextEngineering.css | contextEngineeringQuiz | Practical | #34C759 |
 | `rag` | RAG.jsx | RAG.css | ragQuiz | Journey | #FF9500 |
 | `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | Technical | #5856D6 |
+| `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
 
 ## Color System — Two Color Layers
 
@@ -138,6 +139,8 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/quizData.js` — All quiz question banks
 - `src/Tooltip.jsx` — Info tooltip component
 - `src/FeedbackWidget.jsx` / `src/FeedbackWidget.css` — Feedback bubble + modal
+- `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
+- `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 
 ---
 
@@ -261,6 +264,29 @@ border-top: 2px solid <color>;  /* #34C759 good, #FF9500 bad */
 
 **Border radius values:** `6px` (icon buttons), `8px` (inputs, segments), `10px` (buttons), `12px` (cards, var(--radius)), `14px` (quiz options), `18-22px` (pills/chips)
 
+### Tip Box Pattern
+
+All tip/lightbulb boxes across every module MUST use the same yellow color pattern:
+
+```css
+background: rgba(234, 179, 8, 0.06);  /* light yellow tint */
+border-left: 2px solid #eab308;        /* yellow left border */
+```
+
+```jsx
+<div className="how-info-tip">  {/* or ft-tip, or any tip class */}
+  <TipIcon size={16} color="#eab308" />
+  Tip text here...
+</div>
+```
+
+**Rules:**
+- Background: always `rgba(234, 179, 8, 0.06)` (light/dark mode)
+- Border-left: always `2px solid #eab308`
+- Icon: always `<TipIcon>` with `color="#eab308"`
+- Dark mode: same background tint (no change needed)
+- CSS classes: `how-info-tip` (App.css), `ft-tip` (FineTuning.css)
+
 ---
 
 ## Typography
@@ -362,22 +388,77 @@ Implemented via `[data-theme="dark"]` attribute on `<html>`.
 
 ---
 
+## Standardized Module Screens
+
+### Final Screen (after completing all stages, before quiz)
+
+Every stage-based module's `showFinal` screen follows this structure:
+1. Celebration message + toolkit/recap content (module-specific)
+2. **Exactly 2 buttons** in `.how-final-actions`:
+   - `quiz-launch-btn` — "Test Your Knowledge →" (filled, launches quiz)
+   - `how-secondary-btn` — "Start over" (outline, calls `reset()`)
+3. `<SuggestedModules>` component — divider + "What to learn next" + 3 random module cards
+
+```jsx
+<div className="how-final-actions">
+  <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>Test Your Knowledge &rarr;</button>
+  <button className="how-secondary-btn" onClick={reset}>Start over</button>
+</div>
+<SuggestedModules currentModuleId="module-id" onSwitchTab={onSwitchTab} />
+```
+
+**No other buttons** (no "Practice in Playground", no "Try X next"). Module suggestions are handled by `SuggestedModules`.
+
+### Quiz End Screen (after completing quiz)
+
+The `Quiz.jsx` component renders a standardized end screen:
+1. Score circle + message (keep as-is)
+2. **Exactly 2 buttons** in `.quiz-result-actions`:
+   - `quiz-btn-secondary` — "Start Over" (outline, calls `onStartOver`)
+   - `quiz-btn-primary` — "Take Quiz Again" (filled, retries quiz)
+3. Divider + "What to explore next" + 3 random module cards
+
+**Quiz props:** `questions`, `tabName`, `onBack`, `onStartOver`, `onSwitchTab`, `currentModuleId`
+
+### Shared Module Data
+
+- `src/moduleData.js` — `ALL_MODULES` array with id, title, description, tag, tagColor
+- `src/SuggestedModules.jsx` — Reusable "What to learn next" component
+- `getRandomModules(excludeId, count)` — Returns random modules excluding current
+
+### NeuralNetworkCanvas Tooltips
+
+Tooltips use `createPortal` to `document.body` with `position: fixed`. Must account for SVG `preserveAspectRatio="xMidYMid meet"` letterboxing:
+
+```jsx
+const scale = Math.min(svgRect.width / REF_W, svgRect.height / REF_H)
+const offsetX = (svgRect.width - REF_W * scale) / 2
+const offsetY = (svgRect.height - REF_H * scale) / 2
+// tooltip.x = svgRect.left + offsetX + pos.x * scale
+// tooltip.y = svgRect.top + offsetY + pos.y * scale + nodeRadius * scale + 8
+```
+
+---
+
 ## Adding a New Tutorial Tab
 
 1. Create `src/TabName.jsx` following the stage-based pattern (see ContextEngineering.jsx)
 2. Create `src/TabName.css` with module-specific styles
 3. Add quiz questions to `src/quizData.js`
 4. Update `src/NavDropdown.jsx`: add item to the appropriate NAV_GROUPS entry
-5. Update `src/App.jsx`: import component, add render condition
+5. Update `src/App.jsx`: import component, add render condition (pass `onSwitchTab={setActiveTab}`)
 6. Update `src/HomeScreen.jsx`: add card to CARDS array — set `tag` field and use `FILTER_COLORS[tag]` for icon color
 7. Update `src/LandingPage.jsx`: add to MOBILE_MODULES with tag color
 8. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color
 9. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
-10. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`
-11. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
-12. All content icons inside colored containers must match the container's border/accent color
-13. Use `border: 1.5px solid transparent` on all filled buttons
-14. Update this file
+10. Add module to `src/moduleData.js` ALL_MODULES array
+11. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`
+12. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
+13. All content icons inside colored containers must match the container's border/accent color
+14. Use `border: 1.5px solid transparent` on all filled buttons
+15. Final screen: exactly 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
+16. Quiz: pass `onStartOver`, `onSwitchTab`, `currentModuleId` props
+17. Update this file
 
 ## Conventions
 
@@ -397,3 +478,7 @@ Implemented via `[data-theme="dark"]` attribute on `<html>`.
 - No emojis or Unicode symbols in UI — all SVG icons
 - Mobile-first: test at 375px, 480px, 768px
 - Grid collapse pattern: 3/4-col → 2-col (768px) → 1-col (480px)
+- Final screens: exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules component
+- Quiz end screens: exactly 2 buttons (Start Over + Take Quiz Again) + explore next cards
+- Tip boxes: always yellow — `rgba(234, 179, 8, 0.06)` bg, `#eab308` border-left, `TipIcon color="#eab308"`
+- NeuralNetworkCanvas tooltips must account for SVG letterboxing (xMidYMid meet)

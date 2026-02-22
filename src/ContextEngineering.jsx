@@ -6,6 +6,7 @@ import { WarningIcon, SkullIcon, SparklesIcon, CrossIcon, CheckIcon, QuestionIco
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { contextEngineeringQuiz } from './quizData.js'
+import SuggestedModules from './SuggestedModules.jsx'
 import './ContextEngineering.css'
 
 const CE_TOOLS = {
@@ -731,7 +732,9 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
           questions={contextEngineeringQuiz}
           tabName="Context Engineering"
           onBack={() => setShowQuiz(false)}
-          onGoHome={onGoHome ? () => { reset(); onGoHome() } : undefined}
+          onStartOver={() => reset()}
+          onSwitchTab={onSwitchTab}
+          currentModuleId="context-engineering"
         />
       </div>
     )
@@ -869,20 +872,12 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            {onSwitchTab && (
-              <>
-                <button className="how-start-btn" onClick={() => onSwitchTab('playground')}>
-                  → Practice in Playground
-                </button>
-                <button className="how-secondary-btn" onClick={() => onSwitchTab('prompt-engineering')}>
-                  → Try Prompt Engineering next
-                </button>
-              </>
-            )}
             <button className="how-secondary-btn" onClick={reset}>
               Start over
             </button>
           </div>
+
+          <SuggestedModules currentModuleId="context-engineering" onSwitchTab={onSwitchTab} />
         </div>
       )}
     </div>

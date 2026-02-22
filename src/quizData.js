@@ -421,3 +421,56 @@ export const machineLearningQuiz = [
     correct: 1,
   },
 ]
+
+export const fineTuningQuiz = [
+  {
+    question: 'What is the main advantage of fine-tuning over prompting?',
+    options: ['It\'s cheaper', 'More consistent behavior and domain expertise', 'Faster to set up', 'Works without examples'],
+    correct: 1,
+  },
+  {
+    question: 'What does LoRA stand for?',
+    options: ['Large Output Ranking Algorithm', 'Low-Rank Adaptation', 'Loss Optimization and Regularization', 'Layered Output Reduction Approach'],
+    correct: 1,
+  },
+  {
+    question: 'What is the minimum recommended number of training examples?',
+    options: ['5', '10', '50-100', '10,000'],
+    correct: 2,
+  },
+  {
+    question: 'What is catastrophic forgetting?',
+    options: ['Model forgets training data', 'Model loses general knowledge when fine-tuned', 'Training data gets deleted', 'Model forgets the system prompt'],
+    correct: 1,
+  },
+  {
+    question: 'LoRA reduces trainable parameters by approximately:',
+    options: ['2x', '10x', '100x', '1000x'],
+    correct: 2,
+  },
+  {
+    question: 'What is the best approach for frequently changing information?',
+    options: ['Fine-tuning', 'Training from scratch', 'RAG', 'Prompting'],
+    correct: 2,
+  },
+  {
+    question: 'What is LLM-as-judge evaluation?',
+    options: ['A legal AI system', 'Using a powerful LLM to rate another model', 'Human lawyers evaluating AI', 'An automated benchmark'],
+    correct: 1,
+  },
+  {
+    question: 'Fine-tuning is most effective for:',
+    options: ['Teaching new facts', 'Replacing RAG', 'Consistent style, tone and domain behavior', 'Reducing hallucinations'],
+    correct: 2,
+  },
+  {
+    question: 'What is QLoRA?',
+    options: ['A type of neural network', 'Quantized LoRA \u2014 more memory efficient', 'A quality evaluation metric', 'A dataset format'],
+    correct: 1,
+  },
+  {
+    question: 'When should you train from scratch instead of fine-tuning?',
+    options: ['When fine-tuning fails', 'For any specialized domain', 'Truly unique domain and massive budget', 'When you have 1000+ examples'],
+    correct: 2,
+  },
+]

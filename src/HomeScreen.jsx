@@ -95,6 +95,14 @@ const CARDS = [
     accent: '#AF52DE',
     group: 'Foundations',
   },
+  {
+    id: 'fine-tuning',
+    title: 'Fine-Tuning',
+    description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style',
+    tag: 'Technical',
+    accent: '#5856D6',
+    group: 'Foundations',
+  },
 ]
 
 function HomeScreen({ onSelectTab }) {

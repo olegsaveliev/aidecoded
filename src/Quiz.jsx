@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { SeedlingIcon, TargetIcon, StarIcon, TrophyIcon } from './ContentIcons.jsx'
+import ModuleIcon from './ModuleIcon.jsx'
+import { getRandomModules } from './moduleData.js'
 import './Quiz.css'
 
 const SCORE_MESSAGES = [
@@ -91,7 +93,7 @@ function ScoreCircle({ score, total }) {
   )
 }
 
-function Quiz({ questions, tabName, onBack, onGoHome, onNextModule, nextModuleName }) {
+function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentModuleId }) {
   const [current, setCurrent] = useState(0)
   const [score, setScore] = useState(0)
   const [selected, setSelected] = useState(null) // index of selected answer
@@ -145,6 +147,11 @@ function Quiz({ questions, tabName, onBack, onGoHome, onNextModule, nextModuleNa
     }
   }, [])
 
+  const suggestions = useMemo(
+    () => (currentModuleId ? getRandomModules(currentModuleId, 3) : []),
+    [currentModuleId, showResult]  // eslint-disable-line react-hooks/exhaustive-deps
+  )
+
   // Final score screen
   if (showResult) {
     const msg = getScoreMessage(score)
@@ -156,20 +163,43 @@ function Quiz({ questions, tabName, onBack, onGoHome, onNextModule, nextModuleNa
           <div className="quiz-result-message">{msg.text}</div>
 
           <div className="quiz-result-actions">
+            {onStartOver && (
+              <button className="quiz-btn quiz-btn-secondary" onClick={onStartOver}>
+                Start Over
+              </button>
+            )}
             <button className="quiz-btn quiz-btn-primary" onClick={handleRetry}>
-              Try Again
+              Take Quiz Again
             </button>
-            {onGoHome && (
-              <button className="quiz-btn quiz-btn-secondary" onClick={onGoHome}>
-                Go to Home
-              </button>
-            )}
-            {onNextModule && nextModuleName && (
-              <button className="quiz-btn quiz-btn-primary" onClick={onNextModule}>
-                Next Module &rarr;
-              </button>
-            )}
           </div>
+
+          {onSwitchTab && suggestions.length > 0 && (
+            <>
+              <div className="quiz-result-divider" />
+              <div className="quiz-explore-section">
+                <div className="quiz-explore-heading">What to explore next</div>
+                <div className="quiz-explore-cards">
+                  {suggestions.map((m) => (
+                    <button
+                      key={m.id}
+                      className="quiz-explore-card"
+                      style={{ borderLeftColor: m.tagColor }}
+                      onClick={() => onSwitchTab(m.id)}
+                    >
+                      <span className="quiz-explore-card-title">
+                        <ModuleIcon module={m.id} size={20} style={{ color: m.tagColor }} />
+                        {m.title}
+                      </span>
+                      <span className="quiz-explore-card-desc">{m.description}</span>
+                      <span className="quiz-explore-card-tag" style={{ color: m.tagColor, borderColor: m.tagColor }}>
+                        {m.tag}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     )
