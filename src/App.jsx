@@ -27,8 +27,6 @@ import { useAuth, FREE_MODULES } from './AuthContext'
 import logoImg from './assets/logo_dark.png'
 import './App.css'
 
-const API_KEY = import.meta.env.OPENAI_API_KEY
-
 const MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo']
 
 function estimateTokens(text) {
@@ -393,10 +391,6 @@ function App() {
   async function handleSend() {
     const text = input.trim()
     if (!text) return
-    if (!API_KEY || API_KEY === 'your-api-key-here') {
-      setError('Please set your OpenAI API key in the .env file.')
-      return
-    }
 
     const userMsg = { role: 'user', content: text }
     const updatedMessages = [...messages, userMsg]
@@ -414,11 +408,10 @@ function App() {
     )
 
     try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
           model,
@@ -520,10 +513,6 @@ function App() {
 
   async function handleSendDirect(text) {
     if (!text) return
-    if (!API_KEY || API_KEY === 'your-api-key-here') {
-      setError('Please set your OpenAI API key in the .env file.')
-      return
-    }
 
     const userMsg = { role: 'user', content: text }
     const updatedMessages = [...messages, userMsg]
@@ -541,11 +530,10 @@ function App() {
     )
 
     try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
           model,

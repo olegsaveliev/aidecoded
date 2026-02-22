@@ -10,8 +10,6 @@ import ToolChips from './ToolChips.jsx'
 import { howLLMsWorkQuiz } from './quizData.js'
 import SuggestedModules from './SuggestedModules.jsx'
 
-const API_KEY = import.meta.env.OPENAI_API_KEY
-
 const STAGES = ['Prompt', 'Tokenization', 'Embeddings', 'Attention', 'Generation']
 
 const HOW_TOOLS = {
@@ -215,18 +213,13 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     setEmbeddingProgress([])
 
     async function fetchEmbeddings() {
-      if (!API_KEY || API_KEY === 'your-api-key-here') {
-        setEmbedLoading(false)
-        return
-      }
       const tokenTexts = allTokens.map((t) => t.text.trim() || ' ')
 
       try {
-        const res = await fetch('https://api.openai.com/v1/embeddings', {
+        const res = await fetch('/api/embeddings', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${API_KEY}`,
           },
           body: JSON.stringify({
             model: 'text-embedding-3-small',
@@ -297,18 +290,15 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     genStartedRef.current = true
     setStage(4)
 
-    if (!API_KEY || API_KEY === 'your-api-key-here') return
-
     const abort = new AbortController()
     genAbortRef.current = abort
     setGenPhase('logprobs')
 
     try {
-      const logRes = await fetch('https://api.openai.com/v1/chat/completions', {
+      const logRes = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
           model,
@@ -346,11 +336,10 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
 
       setGenPhase('streaming')
 
-      const streamRes = await fetch('https://api.openai.com/v1/chat/completions', {
+      const streamRes = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
           model,

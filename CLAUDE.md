@@ -5,7 +5,8 @@ Interactive React app for learning how Large Language Models work.
 ## Architecture
 
 - **Framework**: React + Vite
-- **API**: OpenAI (Chat Completions, Embeddings)
+- **API**: OpenAI (Chat Completions, Embeddings) via server-side proxy (`/api/chat.js`, `/api/embeddings.js`)
+- **API Proxy**: Vercel Edge Runtime functions in `/api/` — frontend calls `/api/chat` and `/api/embeddings`, proxy adds `OPENAI_API_KEY` server-side
 - **Auth**: Supabase Auth (Google OAuth + email/password) with PostgreSQL progress tracking
 - **Styling**: Per-module CSS files, CSS variables for theming (light/dark)
 - **State**: React useState/useEffect, AuthContext for auth/progress state
@@ -129,6 +130,8 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 
 ## Key Files
 
+- `api/chat.js` — Vercel Edge Runtime proxy for OpenAI Chat Completions (streaming + non-streaming)
+- `api/embeddings.js` — Vercel Edge Runtime proxy for OpenAI Embeddings
 - `src/App.jsx` — Main router, sidebar, grouped header, playground chat
 - `src/App.css` — Bulk of component styles + mobile responsive rules
 - `src/index.css` — CSS variables (light/dark), global resets, base typography

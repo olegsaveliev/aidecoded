@@ -9,8 +9,6 @@ import { promptEngineeringQuiz } from './quizData.js'
 import { CheckIcon, CrossIcon, TipIcon, GearIcon, ChatIcon, RobotIcon, TheaterIcon, WrenchIcon, MemoIcon, SearchIcon, BarChartIcon, PencilIcon, TargetIcon, FileIcon, LinkIcon, TreeIcon, RefreshIcon, BookIcon, PlayIcon } from './ContentIcons.jsx'
 import SuggestedModules from './SuggestedModules.jsx'
 
-const API_KEY = import.meta.env.OPENAI_API_KEY
-
 const PE_TOOLS = {
   0: [
     { name: 'OpenAI Playground', color: '#0071E3', desc: 'Interactive web UI to test prompts with GPT models' },
@@ -88,10 +86,9 @@ const QUICK_REFERENCE = [
 ]
 
 async function callOpenAI({ model, temperature, topP, maxTokens, messages }) {
-  if (!API_KEY) throw new Error('Please set your OpenAI API key in the .env file.')
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+  const res = await fetch('/api/chat', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${API_KEY}` },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ model, messages, temperature, max_tokens: maxTokens, top_p: topP }),
   })
   if (!res.ok) {

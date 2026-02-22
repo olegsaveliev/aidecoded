@@ -7,8 +7,6 @@ import Quiz from './Quiz.jsx'
 import { generationQuiz } from './quizData.js'
 import { CheckIcon } from './ContentIcons.jsx'
 
-const API_KEY = import.meta.env.OPENAI_API_KEY
-
 const BAR_COLORS = [
   '#0071e3',
   '#2997ff',
@@ -104,16 +102,10 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
   }
 
   const fetchCandidates = useCallback(async (text) => {
-    if (!API_KEY || API_KEY === 'your-api-key-here') {
-      setError('Please set your OpenAI API key in the .env file.')
-      return null
-    }
-
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    const res = await fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
         model: genModel,
@@ -277,11 +269,6 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
 
   // ── Automatic (streaming) mode ──
   async function startAutomatic() {
-    if (!API_KEY || API_KEY === 'your-api-key-here') {
-      setError('Please set your OpenAI API key in the .env file.')
-      return
-    }
-
     setError('')
     setTokens([])
     setCandidates([])
@@ -294,11 +281,10 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
     abortRef.current = abort
 
     try {
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${API_KEY}`,
         },
         body: JSON.stringify({
           model: genModel,
