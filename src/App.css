@@ -190,7 +190,7 @@
 .sidebar-btn {
   width: 100%;
   background: var(--bg-input);
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 8px;
   color: var(--text-secondary);
   padding: 8px 14px;
@@ -4177,7 +4177,7 @@
 /* ── Replay button ── */
 .pe-replay-btn {
   background: none;
-  border: 1px solid var(--border);
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   height: 36px;
   padding: 0 20px;

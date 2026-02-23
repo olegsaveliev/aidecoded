@@ -31,7 +31,7 @@ const CARDS = [
     title: 'Playground',
     description: 'Chat directly with AI and experiment with parameters in real time',
     tag: 'Interactive',
-    accent: '#0071e3',
+
     group: 'Tools',
   },
   {
@@ -39,7 +39,7 @@ const CARDS = [
     title: 'Tokenizer',
     description: 'See exactly how AI reads your text \u2014 broken into tokens in real time',
     tag: 'Visual',
-    accent: '#8b5cf6',
+
     group: 'Tools',
   },
   {
@@ -47,7 +47,7 @@ const CARDS = [
     title: 'Token Generation',
     description: 'Watch AI predict the next word live \u2014 Manual or Simulate',
     tag: 'Interactive',
-    accent: '#eab308',
+
     group: 'Tools',
   },
   {
@@ -55,7 +55,7 @@ const CARDS = [
     title: 'How LLMs Work',
     description: 'An interactive 5-stage journey from your prompt to the AI response',
     tag: 'Journey',
-    accent: '#ec4899',
+
     group: 'Foundations',
   },
   {
@@ -63,7 +63,7 @@ const CARDS = [
     title: 'Model Training',
     description: 'Discover how AI models like ChatGPT are built from scratch \u2014 data to deployment',
     tag: 'Journey',
-    accent: '#f97316',
+
     group: 'Foundations',
   },
   {
@@ -71,7 +71,7 @@ const CARDS = [
     title: 'Prompt Engineering',
     description: 'Learn how to write better prompts and get dramatically better results from any AI',
     tag: 'Practical',
-    accent: '#22c55e',
+
     group: 'Skills',
   },
   {
@@ -79,7 +79,7 @@ const CARDS = [
     title: 'Context Engineering',
     description: 'Learn how to give AI the right context to get dramatically better results every time',
     tag: 'Practical',
-    accent: '#00c7be',
+
     group: 'Skills',
   },
   {
@@ -87,7 +87,7 @@ const CARDS = [
     title: 'RAG',
     description: 'How AI learns from YOUR documents — Retrieval Augmented Generation explained',
     tag: 'Journey',
-    accent: '#5856D6',
+
     group: 'Advanced',
   },
   {
@@ -95,7 +95,7 @@ const CARDS = [
     title: 'Machine Learning',
     description: 'How machines actually learn from data — the foundation of all modern AI',
     tag: 'Technical',
-    accent: '#AF52DE',
+
     group: 'Foundations',
   },
   {
@@ -103,7 +103,7 @@ const CARDS = [
     title: 'Deep Learning',
     description: 'Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT',
     tag: 'Technical',
-    accent: '#5856D6',
+
     group: 'Foundations',
   },
   {
@@ -111,7 +111,7 @@ const CARDS = [
     title: 'Fine-Tuning',
     description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style',
     tag: 'Technical',
-    accent: '#5856D6',
+
     group: 'Foundations',
   },
   {
@@ -119,7 +119,7 @@ const CARDS = [
     title: 'AI City Builder',
     description: 'Solve AI mysteries. Diagnose failures. Build your city with every case you crack.',
     tag: 'Game',
-    accent: '#F59E0B',
+
     group: 'Play',
     isGame: true,
     difficulty: 'Beginner Friendly',
@@ -129,7 +129,7 @@ const CARDS = [
     title: 'AI Lab Explorer',
     description: 'Walk through an AI research lab. Unlock each room by completing hands-on challenges.',
     tag: 'Game',
-    accent: '#F59E0B',
+
     group: 'Play',
     isGame: true,
     difficulty: 'Interactive',
@@ -139,7 +139,7 @@ const CARDS = [
     title: 'Prompt Heist',
     description: 'Craft the perfect prompt to outsmart AI security systems and pull off 5 legendary heists.',
     tag: 'Game',
-    accent: '#F59E0B',
+
     group: 'Play',
     isGame: true,
     difficulty: 'Intermediate',
@@ -275,7 +275,7 @@ function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
                 key={card.id}
                 className={`home-card${card.isGame ? ' home-card-game' : ''}${locked ? ' home-card-locked' : ''}`}
                 style={{
-                  borderLeftColor: TAG_BORDER_COLORS[card.tag] || card.accent,
+                  borderLeftColor: TAG_BORDER_COLORS[card.tag],
                   animationDelay: `${i * 0.08}s`,
                   ...(card.isGame ? { border: '1.5px solid #F59E0B', borderLeft: '1.5px solid #F59E0B' } : {}),
                 }}

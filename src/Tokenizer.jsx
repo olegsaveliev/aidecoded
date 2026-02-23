@@ -57,7 +57,7 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
 
   useEffect(() => {
     if (tokenData.length > 0) markModuleComplete('tokenizer')
-  }, [tokenData.length > 0])
+  }, [tokenData.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Rotate fun facts every 8 seconds
   useEffect(() => {

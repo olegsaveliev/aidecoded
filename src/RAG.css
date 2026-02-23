@@ -325,7 +325,7 @@
   padding: 8px 12px;
   margin-bottom: 6px;
   background: var(--bg-surface);
-  border: 1px solid var(--border-light);
+  border: 1.5px solid var(--border-light);
   border-radius: 8px;
   font-size: 13px;
   font-family: inherit;
@@ -758,7 +758,7 @@
   font-family: inherit;
   color: var(--text-secondary);
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   padding: 3px 10px;
   cursor: pointer;
