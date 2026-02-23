@@ -146,7 +146,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/NavDropdown.jsx` — Grouped dropdown navigation component
 - `src/HomeScreen.jsx` — Module card grid with filter tags and group labels
 - `src/LandingPage.jsx` — Landing page with neural network canvas
-- `src/NeuralNetworkCanvas.jsx` — Interactive node graph on landing page
+- `src/NeuralNetworkCanvas.jsx` — Interactive node graph on landing page (force-directed layout, viewBox 960×600)
 - `src/EntryScreen.jsx` — Reusable entry/intro screen for each module
 - `src/Quiz.jsx` / `src/Quiz.css` — Reusable quiz component
 - `src/quizData.js` — All quiz question banks
@@ -861,6 +861,17 @@ The `Quiz.jsx` component renders a standardized end screen:
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" component
 - `getRandomModules(excludeId, count)` — Returns random modules excluding current
 
+### NeuralNetworkCanvas Layout
+
+Node positions are computed by `computeLayout()` — a force-directed simulation that runs once at module load (~0.5ms):
+- **Repulsion**: pushes any pair of nodes closer than `nodeR * 2 + 52` apart
+- **X attraction** (0.08): strong pull toward original `px` layer column
+- **Y attraction** (0.005): weak pull allows vertical redistribution
+- **Boundary constraints**: proportional padding (`refH * 0.07` top, `refH * 0.08` bottom)
+- **Early exit**: stops when total displacement < 0.5px per iteration
+
+New nodes only need approximate `px`/`py` hints — the simulation auto-resolves overlaps. ViewBox is `960×600` (`REF_W × REF_H`).
+
 ### NeuralNetworkCanvas Tooltips
 
 Tooltips use `createPortal` to `document.body` with `position: fixed`. Must account for SVG `preserveAspectRatio="xMidYMid meet"` letterboxing:
@@ -884,7 +895,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 5. Update `src/App.jsx`: import component, add render condition (pass `onSwitchTab={setActiveTab}`)
 6. Update `src/HomeScreen.jsx`: add card to CARDS array — set `tag` field and use `FILTER_COLORS[tag]` for icon color
 7. Update `src/LandingPage.jsx`: add to MOBILE_MODULES with tag color
-8. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color
+8. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color and approximate `px`/`py` (force layout auto-resolves overlaps)
 9. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
 10. Add module to `src/moduleData.js` ALL_MODULES array
 11. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`
@@ -925,6 +936,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Final screens: exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules component
 - Quiz end screens: exactly 2 buttons (Start Over + Take Quiz Again) + explore next cards
 - Tip boxes: always yellow — `rgba(234, 179, 8, 0.06)` bg, `#eab308` border-left, `TipIcon color="#eab308"`
+- NeuralNetworkCanvas uses force-directed layout (`computeLayout`) — new nodes only need approximate `px`/`py` hints; overlaps are auto-resolved
 - NeuralNetworkCanvas tooltips must account for SVG letterboxing (xMidYMid meet)
 - Free modules (playground, tokenizer, generation) don't require login
 - All other modules show lock icon + dimmed card until authenticated
