@@ -3290,7 +3290,7 @@
   border-radius: 10px;
   padding: 10px 14px;
   min-width: 200px;
-  max-width: 260px;
+  max-width: min(260px, calc(100vw - 24px));
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   z-index: 9999;
   animation: popupFadeIn 0.15s ease-out;
@@ -3300,6 +3300,16 @@
 @keyframes popupFadeIn {
   from { opacity: 0; transform: translate(-50%, calc(-100% + 4px)); }
   to { opacity: 1; transform: translate(-50%, -100%); }
+}
+
+.mt-tool-popup-flipped {
+  transform: translate(-50%, 0);
+  animation: popupFadeInFlipped 0.15s ease-out;
+}
+
+@keyframes popupFadeInFlipped {
+  from { opacity: 0; transform: translate(-50%, -4px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 .mt-tool-popup-name {

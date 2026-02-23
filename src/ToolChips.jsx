@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { ToolsIcon } from './ContentIcons.jsx'
 
@@ -7,14 +7,52 @@ function ToolChips({ tools }) {
   const [popupPos, setPopupPos] = useState(null)
   const chipRefs = useRef({})
   const popupRef = useRef(null)
+  const clampedRef = useRef(false)
 
   function openPopup(name) {
+    clampedRef.current = false
     const el = chipRefs.current[name]
     if (!el) return
     const r = el.getBoundingClientRect()
-    setPopupPos({ left: r.left + r.width / 2, top: r.top - 8 })
+    setPopupPos({ left: r.left + r.width / 2, top: r.top - 8, bottom: r.bottom + 8, flipped: false })
     setActiveTool(name)
   }
+
+  // Clamp popup within viewport
+  useLayoutEffect(() => {
+    if (!popupPos || !popupRef.current || clampedRef.current) return
+    clampedRef.current = true
+    const rect = popupRef.current.getBoundingClientRect()
+    const pad = 12
+    let dl = 0
+    let dt = 0
+    let flipped = popupPos.flipped
+
+    // Horizontal clamp
+    if (rect.left < pad) dl = pad - rect.left
+    else if (rect.right > window.innerWidth - pad) dl = window.innerWidth - pad - rect.right
+
+    // Vertical: if clipped above, flip below
+    if (!flipped && rect.top < pad) {
+      flipped = true
+      const flippedBottom = popupPos.bottom + rect.height
+      if (flippedBottom > window.innerHeight - pad) {
+        dt = window.innerHeight - pad - flippedBottom
+      }
+    } else if (flipped && rect.bottom > window.innerHeight - pad) {
+      dt = window.innerHeight - pad - rect.bottom
+    }
+
+    if (dl || dt || flipped !== popupPos.flipped) {
+      setPopupPos((p) => ({
+        ...p,
+        left: p.left + dl,
+        top: p.top + dt,
+        bottom: p.bottom + dt,
+        flipped,
+      }))
+    }
+  }, [popupPos])
 
   function closePopup() {
     setActiveTool(null)
@@ -68,8 +106,12 @@ function ToolChips({ tools }) {
       {activeTool && popupPos && activeToolData && createPortal(
         <div
           ref={popupRef}
-          className="mt-tool-popup"
-          style={{ left: popupPos.left, top: popupPos.top }}
+          className={`mt-tool-popup${popupPos.flipped ? ' mt-tool-popup-flipped' : ''}`}
+          style={{
+            left: popupPos.left,
+            top: popupPos.flipped ? popupPos.bottom : popupPos.top,
+            transform: popupPos.flipped ? 'translate(-50%, 0)' : undefined,
+          }}
         >
           <div className="mt-tool-popup-name" style={{ color: activeToolData.color }}>{activeToolData.name}</div>
           <div className="mt-tool-popup-desc">{activeToolData.desc}</div>

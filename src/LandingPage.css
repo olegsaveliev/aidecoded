@@ -294,6 +294,9 @@
     height: 44px;
     padding: 0 20px;
     font-size: 14px;
+  }
+
+  .landing-typed .landing-cta {
     opacity: 1;
     animation: none;
   }
