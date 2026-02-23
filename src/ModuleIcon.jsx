@@ -67,6 +67,9 @@ const ICON_PATHS = {
       <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </>
   ),
+  'agentic-ai': (
+    <path d="M12 2a4 4 0 0 1 4 4v2h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h2V6a4 4 0 0 1 4-4zM9 14h.01M15 14h.01M9 18h6" strokeLinecap="round" strokeLinejoin="round" />
+  ),
   'fine-tuning': (
     <>
       <line x1="4" y1="21" x2="4" y2="14" />

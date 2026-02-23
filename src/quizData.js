@@ -537,3 +537,66 @@ export const deepLearningQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const agenticAIQuiz = [
+  {
+    question: 'What is the key difference between a chatbot and an agent?',
+    options: ['Agents use better language models', 'Agents take multi-step actions toward goals', 'Agents are faster than chatbots', 'Agents only work with text'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the ReAct framework?',
+    options: ['A way to build faster neural networks', 'Reason, Act, Observe repeated in a loop', 'A multi-agent communication protocol', 'A memory management system'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What do tools give an agent?',
+    options: ['Better language understanding', 'Faster response times', 'Ability to interact with external systems', 'Longer context windows'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the orchestrator in a multi-agent system?',
+    options: ['The most powerful LLM in the system', 'The agent that manages and assigns tasks', 'The agent that writes final outputs', 'The quality control agent'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the main challenge with agent memory?',
+    options: ['Memory is too expensive to implement', 'Balancing context size with information retention', 'Agents cannot store any information', 'Memory only works in cloud systems'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is episodic memory in agents?',
+    options: ['Memory of how to perform tasks', 'Memory stored in vector databases', 'Summaries and records of past sessions', 'The agent\'s current context window'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why do multi-agent systems outperform single agents on complex tasks?',
+    options: ['They use more computing power', 'Specialists work in parallel on subtasks', 'They have larger context windows', 'They cost less to run'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does a critic agent do?',
+    options: ['Manages the other agents', 'Performs web searches', 'Reviews and improves other agents\' outputs', 'Handles user communication'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is computer use in the context of agents?',
+    options: ['Using computers to train AI models', 'Agents that control browsers and interfaces', 'AI that designs computer hardware', 'Using multiple computers in parallel'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What do most experts see as the human role in an agentic AI world?',
+    options: ['Operating the servers that run agents', 'Writing all the code for agents', 'Judgment, creativity and directing agents', 'Training the underlying models'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+]

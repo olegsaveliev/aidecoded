@@ -43,6 +43,7 @@ const NAV_GROUPS = [
     color: '#FF9500',
     items: [
       { id: 'rag', name: 'RAG', tag: 'Journey' },
+      { id: 'agentic-ai', name: 'Agentic AI', tag: 'Technical' },
     ],
   },
   {

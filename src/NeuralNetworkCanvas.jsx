@@ -21,11 +21,12 @@ const NODES = [
   { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', px: 0.30, py: 0.18, desc: 'An interactive journey inside AI' },
   { id: 'deep-learning', label: 'Deep Learning', group: 'foundations', px: 0.30, py: 0.48, desc: 'Neural networks powering every AI breakthrough' },
   { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', px: 0.30, py: 0.78, desc: 'How machines learn from data' },
-  // Layer 3 — Hidden (Applied): 4 nodes
+  // Layer 3 — Hidden (Applied): 5 nodes
   { id: 'model-training', label: 'Model Training', group: 'foundations', px: 0.52, py: 0.12, desc: 'How AI models are built from scratch' },
-  { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.52, py: 0.38, desc: 'Turn a general AI into a domain expert' },
-  { id: 'rag', label: 'RAG', group: 'advanced', px: 0.52, py: 0.64, desc: 'How AI learns from YOUR documents' },
-  { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', px: 0.52, py: 0.86, desc: 'Outsmart AI security with the perfect prompt' },
+  { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.52, py: 0.34, desc: 'Turn a general AI into a domain expert' },
+  { id: 'rag', label: 'RAG', group: 'advanced', px: 0.52, py: 0.54, desc: 'How AI learns from YOUR documents' },
+  { id: 'agentic-ai', label: 'Agentic AI', group: 'advanced', px: 0.52, py: 0.72, desc: 'AI that plans, acts and learns autonomously' },
+  { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', px: 0.52, py: 0.88, desc: 'Outsmart AI security with the perfect prompt' },
   // Layer 4 — Output (Skills + Play): 4 nodes
   { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.78, py: 0.12, desc: 'Write better prompts for better results' },
   { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.78, py: 0.38, desc: 'Give AI the right context every time' },
@@ -50,6 +51,7 @@ const CONNECTIONS = [
   ['deep-learning', 'fine-tuning'],
   ['machine-learning', 'fine-tuning'],
   ['machine-learning', 'rag'],
+  ['machine-learning', 'agentic-ai'],
   ['machine-learning', 'prompt-heist'],
   // Layer 3 → Layer 4
   ['model-training', 'prompt-engineering'],
@@ -58,6 +60,9 @@ const CONNECTIONS = [
   ['fine-tuning', 'ai-lab-explorer'],
   ['rag', 'context-engineering'],
   ['rag', 'ai-lab-explorer'],
+  ['rag', 'agentic-ai'],
+  ['agentic-ai', 'context-engineering'],
+  ['agentic-ai', 'ai-lab-explorer'],
   ['prompt-heist', 'ai-city-builder'],
   ['prompt-heist', 'ai-lab-explorer'],
   ['prompt-heist', 'token-budget'],
@@ -79,13 +84,14 @@ const NODE_DELAYS = {
   'model-training': 1200,
   'fine-tuning': 1350,
   'rag': 1500,
-  'prompt-heist': 1650,
+  'agentic-ai': 1650,
+  'prompt-heist': 1800,
   // Layer 4
-  'prompt-engineering': 1900,
-  'context-engineering': 2050,
-  'ai-lab-explorer': 2200,
-  'ai-city-builder': 2350,
-  'token-budget': 1800,
+  'prompt-engineering': 2050,
+  'context-engineering': 2200,
+  'ai-lab-explorer': 2350,
+  'ai-city-builder': 2500,
+  'token-budget': 1950,
 }
 
 const NODE_APPEAR_DUR = 500

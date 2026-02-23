@@ -8,6 +8,7 @@ import ModelTraining from './ModelTraining.jsx'
 import PromptEngineering from './PromptEngineering.jsx'
 import ContextEngineering from './ContextEngineering.jsx'
 import RAG from './RAG.jsx'
+import AgenticAI from './AgenticAI.jsx'
 import MachineLearning from './MachineLearning.jsx'
 import DeepLearning from './DeepLearning.jsx'
 import FineTuning from './FineTuning.jsx'
@@ -899,6 +900,9 @@ function App() {
         )}
         {!showHome && activeTab === 'rag' && (
           <RAG model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'agentic-ai' && (
+          <AgenticAI onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'machine-learning' && (
           <MachineLearning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />

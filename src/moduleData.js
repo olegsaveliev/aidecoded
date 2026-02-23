@@ -9,6 +9,7 @@ const ALL_MODULES = [
   { id: 'prompt-engineering', title: 'Prompt Engineering', description: 'Learn how to write better prompts and get dramatically better results from any AI', tag: 'Practical', tagColor: '#34C759' },
   { id: 'context-engineering', title: 'Context Engineering', description: 'Learn how to give AI the right context to get dramatically better results every time', tag: 'Practical', tagColor: '#34C759' },
   { id: 'rag', title: 'RAG', description: 'How AI learns from YOUR documents — Retrieval Augmented Generation explained', tag: 'Journey', tagColor: '#FF9500' },
+  { id: 'agentic-ai', title: 'Agentic AI', description: 'AI that plans, acts and learns on its own — understand the systems changing what AI can do', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'machine-learning', title: 'Machine Learning', description: 'How machines actually learn from data — the foundation of all modern AI', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'deep-learning', title: 'Deep Learning', description: 'Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'fine-tuning', title: 'Fine-Tuning', description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style', tag: 'Technical', tagColor: '#5856D6' },

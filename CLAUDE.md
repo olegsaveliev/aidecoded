@@ -25,6 +25,7 @@ Interactive React app for learning how Large Language Models work.
 | `prompt-engineering` | PromptEngineering.jsx | App.css | promptEngineeringQuiz | Practical | #34C759 |
 | `context-engineering` | ContextEngineering.jsx | ContextEngineering.css | contextEngineeringQuiz | Practical | #34C759 |
 | `rag` | RAG.jsx | RAG.css | ragQuiz | Journey | #FF9500 |
+| `agentic-ai` | AgenticAI.jsx | AgenticAI.css | agenticAIQuiz | Technical | #5856D6 |
 | `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | Technical | #5856D6 |
 | `deep-learning` | DeepLearning.jsx | DeepLearning.css | deepLearningQuiz | Technical | #5856D6 |
 | `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
@@ -45,7 +46,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
-| Technical | #5856D6 (indigo) | Machine Learning, Deep Learning, Fine-Tuning |
+| Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget |
 
 **Where tag colors are used:**
@@ -61,7 +62,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning |
 | Skills | #34C759 | Prompt Engineering, Context Engineering |
-| Advanced | #FF9500 | RAG |
+| Advanced | #FF9500 | RAG, Agentic AI |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
@@ -150,6 +151,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/quizData.js` — All quiz question banks
 - `src/Tooltip.jsx` — Info tooltip component
 - `src/FeedbackWidget.jsx` / `src/FeedbackWidget.css` — Feedback bubble + modal
+- `src/AgenticAI.jsx` / `src/AgenticAI.css` — Agentic AI tutorial (agents, loops, tools, memory, multi-agent, building, real agents, frontier)
 - `src/DeepLearning.jsx` / `src/DeepLearning.css` — Deep Learning tutorial (neurons, networks, backprop, CNN, transformers)
 - `src/AICityBuilder.jsx` / `src/AICityBuilder.css` — AI City Builder game (detective cases, SVG city)
 - `src/AILabExplorer.jsx` / `src/AILabExplorer.css` — AI Lab Explorer game (6-room lab, hands-on challenges)
@@ -402,6 +404,67 @@ Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start
 
 ---
 
+## Agentic AI Module (`src/AgenticAI.jsx`)
+
+Interactive 8-stage tutorial covering AI agents — from chatbot vs agent comparison to the frontier of autonomous AI. Stage-based with stepper navigation. CSS prefix: `.aai-`. All interactive animations use `setTimeout` chains (not `setInterval`) to avoid closure bugs.
+
+### Entry Screen
+- Title: "Agentic AI", subtitle: "AI That Does, Not Just Says"
+- Description explains what the learner will discover (agents that book flights, write code, browse the web)
+- Button text: "Meet the Agents"
+
+### Welcome Banner
+Numbered 3-step guide: (1) walk through 8 stages from chatbot basics to the frontier, (2) build an agent step by step, (3) see real agents in production today
+
+### Stages
+8 stages: What Are Agents? → Agent Loop → Tools → Memory → Multi-Agent → Build an Agent → Real Agents → The Frontier. Each stage has info card, animated visualization, ToolChips, and optional TipIcon tip.
+
+### Stage Visualizations
+- **Stage 0 (What Are Agents?)**: `ChatbotVsAgentViz` — side-by-side panels comparing chatbot (linear flow) vs agent (loop flow), autonomy spectrum bar with labeled markers
+- **Stage 1 (Agent Loop)**: `AgentLoopViz` — 5-node loop animation (Perceive → Think → Act → Observe → Repeat), runs 3 loops then shows ReAct trace
+- **Stage 2 (Tools)**: `ToolExplorerViz` — 6 clickable tool categories (Search, Compute, Comms, Files, APIs, Browser) with JSON-style tool call examples
+- **Stage 3 (Memory)**: `MemoryViz` — 4 memory type cards (In-Context, External, Procedural, Episodic)
+- **Stage 4 (Multi-Agent)**: `MultiAgentViz` — orchestrator + 5 specialist agent cards with "Run Team" animation (fan-out → working → collecting → done)
+- **Stage 5 (Build an Agent)**: `BuildAgentViz` — 6-step interactive builder (Define Goal → Add LLM → Add Tools → Add Memory → System Prompt → Run It) with trace output
+- **Stage 6 (Real Agents)**: `RealAgentsViz` — 8 real agent category cards revealed one at a time via "Show next" button
+- **Stage 7 (The Frontier)**: `FrontierViz` — clickable timeline (2024–2027) + 3 starter project cards
+
+### Animation Pattern
+All animations use `setTimeout` chains with `timersRef = useRef([])` pattern:
+```jsx
+function clearTimers() {
+  timersRef.current.forEach(clearTimeout)
+  timersRef.current = []
+}
+// Each step captured directly in its own closure — no shared mutable counter
+items.forEach((item, i) => {
+  timersRef.current.push(setTimeout(() => {
+    setState(item) // item captured by value, not by reference
+  }, delay * (i + 1)))
+})
+```
+Never use `setInterval` with mutable counters — React's batched state updates read closure variables lazily, causing off-by-one bugs where the first item is skipped.
+
+### Progressive Learning Tips
+Milestone-based tips triggered at key stages. No auto-dismiss — user clicks X. Max one visible at a time. Tracked via `dismissedTips` Set with `fadeTimerRef` for cleanup.
+
+| Trigger | Tip |
+|---|---|
+| Stage 0 (What Are Agents?) | "Look at the two panels above — same request, completely different behavior..." |
+| Stage 1 (Agent Loop) | "Click 'Run Agent' to watch the loop in action..." |
+| Stage 3 (Memory) | "Remember RAG from earlier? External memory for agents works exactly the same way..." |
+| Stage 5 (Build an Agent) | "Walk through all 6 steps to build your agent..." |
+
+All tips reset on "Start over". CSS: reuses `.learn-tip` classes from Playground.
+
+### Dark Mode
+Active/highlighted states use `#7c7aef` (lighter indigo) in dark mode for visibility against dark backgrounds. Multi-agent active cards and build step current indicators use `box-shadow: 0 0 0 1px #7c7aef` for extra contrast.
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview
@@ -458,7 +521,7 @@ create table quiz_results (
 | Playground | Entry screen dismissed | First AI response |
 | Tokenizer | Entry screen dismissed | First text tokenized |
 | Generation | Entry screen dismissed | First token generated |
-| Tutorial modules (7) | Entry screen dismissed | Reach final screen |
+| Tutorial modules (8) | Entry screen dismissed | Reach final screen |
 | AI City Builder | Game started | First case solved |
 | AI Lab Explorer | Game started | First room completed |
 | Prompt Heist | Game started | All 5 heists completed |

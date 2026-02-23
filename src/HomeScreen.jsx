@@ -91,6 +91,14 @@ const CARDS = [
     group: 'Advanced',
   },
   {
+    id: 'agentic-ai',
+    title: 'Agentic AI',
+    description: 'AI that plans, acts and learns on its own. Understand the systems that are changing what AI can actually do in the world.',
+    tag: 'Technical',
+
+    group: 'Advanced',
+  },
+  {
     id: 'machine-learning',
     title: 'Machine Learning',
     description: 'How machines actually learn from data — the foundation of all modern AI',
@@ -157,7 +165,7 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
 
-const TOTAL_MODULES = 15 // all modules including tools and games
+const TOTAL_MODULES = 16 // all modules including tools and games
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()
