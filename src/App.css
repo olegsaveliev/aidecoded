@@ -1418,6 +1418,13 @@
   letter-spacing: -0.03em;
 }
 
+.entry-screen-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: 0 0 16px;
+  font-weight: 500;
+}
+
 .entry-screen-description {
   font-size: 18px;
   color: var(--text-secondary);
