@@ -4,6 +4,7 @@ import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import usePersistedState from './usePersistedState.js'
 import { FileCabinetIcon, CrossIcon, CpuIcon, ChatIcon, UserIcon, GraduationIcon, RefreshIcon, GlobeIcon, BookIcon, CodeIcon, FileIcon, MemoIcon } from './ContentIcons.jsx'
 import ToolChips from './ToolChips.jsx'
 import Quiz from './Quiz.jsx'
@@ -632,9 +633,9 @@ function FinalTimeline() {
 
 function ModelTraining({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
-  const [stage, setStage] = useState(-1) // -1 = welcome
+  const [stage, setStage] = usePersistedState('model-training', -1) // -1 = welcome
   const [maxStageReached, setMaxStageReached] = useState(-1)
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(stage === -1)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)

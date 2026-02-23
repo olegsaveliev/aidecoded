@@ -3,6 +3,7 @@ import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import usePersistedState from './usePersistedState.js'
 import { TipIcon, WarningIcon, CheckIcon, LayersIcon, CpuIcon, ZapIcon, EyeIcon, SearchIcon, GearIcon, RocketIcon, TrendingUpIcon, BarChartIcon, CodeIcon, FlaskIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -995,9 +996,9 @@ const TOOLKIT_ITEMS = [
 /* ── Main component ── */
 function DeepLearning({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
-  const [stage, setStage] = useState(-1)
+  const [stage, setStage] = usePersistedState('deep-learning', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(stage === -1)
   const [showFinal, setShowFinal] = useState(false)
   const [fading, setFading] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)

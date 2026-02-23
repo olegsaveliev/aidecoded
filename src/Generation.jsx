@@ -3,6 +3,7 @@ import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import usePersistedState from './usePersistedState.js'
 import Quiz from './Quiz.jsx'
 import { generationQuiz } from './quizData.js'
 import { CheckIcon } from './ContentIcons.jsx'
@@ -41,7 +42,7 @@ const MODELS = ['gpt-4o-mini', 'gpt-4o', 'gpt-3.5-turbo']
 
 function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
-  const [showEntry, setShowEntry] = useState(true)
+  const [showEntry, setShowEntry] = usePersistedState('generation-entry', true)
   const [genModel, setGenModel] = useState(defaultModel || 'gpt-4o-mini')
   const [temperature, setTemperature] = useState(0.7)
   const [topP, setTopP] = useState(1)
@@ -58,7 +59,7 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
   const [doneMode, setDoneMode] = useState(null)       // 'sim' | 'auto' | null
   const [flashBar, setFlashBar] = useState(-1)
   const [showTopK, setShowTopK] = useState(true)
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(showEntry)
   const [showLearnTip, setShowLearnTip] = useState(false)
   const [learnTipFading, setLearnTipFading] = useState(false)
   const [hasRunOnce, setHasRunOnce] = useState(false)

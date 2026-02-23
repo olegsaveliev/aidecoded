@@ -4,6 +4,7 @@ import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import usePersistedState from './usePersistedState.js'
 import Quiz from './Quiz.jsx'
 import { tokenizerQuiz } from './quizData.js'
 
@@ -33,9 +34,9 @@ const FUN_FACTS = [
 
 function Tokenizer({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
-  const [showEntry, setShowEntry] = useState(true)
+  const [showEntry, setShowEntry] = usePersistedState('tokenizer-entry', true)
   const [text, setText] = useState('')
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(showEntry)
   const [showInfo, setShowInfo] = useState(true)
   const [factIndex, setFactIndex] = useState(0)
   const [factFading, setFactFading] = useState(false)

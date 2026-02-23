@@ -3,6 +3,7 @@ import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import usePersistedState from './usePersistedState.js'
 import { CheckIcon, CrossIcon, RobotIcon, GraduationIcon, SearchIcon, GamepadIcon, BarChartIcon, ScissorsIcon, DumbbellIcon, TrendingUpIcon, RocketIcon, TreeIcon, PineTreeIcon, LinkIcon, TargetIcon, ZapIcon, BankIcon, HospitalIcon, CartIcon, CarIcon, PhoneIcon, FactoryIcon, InboxIcon, BroomIcon, WrenchIcon, EyeIcon, BookIcon, RefreshIcon, GearIcon, RepeatIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -1058,9 +1059,9 @@ function LifecycleViz({ active }) {
    ═══════════════════════════════════ */
 function MachineLearning({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
-  const [stage, setStage] = useState(-1)
+  const [stage, setStage] = usePersistedState('machine-learning', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(stage === -1)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)

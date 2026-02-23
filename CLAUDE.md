@@ -155,6 +155,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/PromptHeist.jsx` / `src/PromptHeist.css` — Prompt Heist game (5 heists, prompt engineering through gameplay)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
+- `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
 - `src/supabase.js` — Supabase client (null-safe, handles missing env vars)
 - `src/AuthContext.jsx` — Auth provider: user state, progress, quiz results, module started/complete tracking
 - `src/AuthModal.jsx` — Sign In/Sign Up modal (Google OAuth + email/password)
@@ -244,6 +245,28 @@ Cards show SVG icon badges in bottom-right corner:
 - Avatar dropdown slides up as bottom sheet on mobile
 - Form inputs use `font-size: 16px` to prevent iOS auto-zoom
 - All auth buttons/inputs have 44px min-height for touch targets
+
+### Session Persistence (Refresh Behavior)
+
+Logged-in users stay on their current screen after page refresh. Non-logged-in users always land on the landing page.
+
+**Two sessionStorage keys** (both cleared on sign-out in App.jsx):
+- `nav_state` — `{ activeTab, showHome }` — which tab/screen the user is on
+- `module_stages` — `{ "model-training": 2, "generation-entry": false, ... }` — per-module stage/entry state
+
+**`usePersistedState(key, defaultValue)`** hook (`src/usePersistedState.js`):
+- Drop-in `useState` replacement that persists value to `module_stages` in sessionStorage
+- Reads from sessionStorage on mount (presence implies valid logged-in session)
+- Writes on every value change when user is logged in
+- Resets value back to `defaultValue` on sign-out (detects user truthy → null transition via ref)
+- Used by all stage-based modules (`stage`, default `-1`) and entry-based modules (`showEntry`, default `true`)
+- `showWelcome` initializes from stage/entry state: `useState(stage === -1)` or `useState(showEntry)`
+
+**App.jsx nav persistence:**
+- `readNav()` helper reads `nav_state` from sessionStorage in `useState` initializers
+- During OAuth redirect, `activeTab` initializes to `pendingAuthReturn` to avoid flash of Playground
+- Effect persists `{ activeTab, showHome }` whenever navigation changes (only when logged in and past landing/boot)
+- On sign-out: clears `nav_state` + `module_stages` from sessionStorage, redirects to landing page
 
 ---
 
@@ -566,7 +589,8 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 18. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
 19. Call `markModuleComplete('<module-id>')` when module is completed (final screen or first meaningful action)
 20. Update `TOTAL_MODULES` in `HomeScreen.jsx` if adding a completable module
-21. Update this file
+21. Use `usePersistedState('<module-id>', -1)` for stage state (or `usePersistedState('<module-id>-entry', true)` for entry-based); init `showWelcome` from stage: `useState(stage === -1)`
+22. Update this file
 
 ## Conventions
 
@@ -594,10 +618,13 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - All other modules show lock icon + dimmed card until authenticated
 - Every module must call `markModuleStarted` on entry screen dismiss and `markModuleComplete` on completion
 - Auth header button (sign-in icon / avatar) is always last in header-right, after dark mode toggle
-- OAuth redirect preserves current tab via sessionStorage `auth_return_tab`
+- OAuth redirect preserves current tab via sessionStorage `auth_return_tab`; `activeTab` initializes to pending tab to prevent flash
+- Sign-out redirects to landing page and resets all module stages to defaults
 - Progress badges (bottom-right of cards): blue clock (in progress), green checkbox (done), yellow star (quiz)
 - Supabase client is null-safe — all calls guarded with `if (!supabase) return`
 - Started modules tracked in localStorage (keyed by user ID), completed in Supabase `progress` table
+- Logged-in users persist navigation + module stage to sessionStorage via `usePersistedState` hook; non-logged-in users always start fresh
+- New modules must use `usePersistedState(moduleId, -1)` for stage (or `usePersistedState(moduleId + '-entry', true)` for entry-based modules)
 - Stage → final screen uses fade transition: `setFading(true)` → 250ms → `setShowFinal(true)` + scroll-to-top via DOM ancestor walking
 - Quiz results use fade transition: `setTransitioning(true)` → 300ms → `setShowResult(true)` + scroll-to-top via DOM ancestor walking
 - Scroll-to-top pattern: walk up DOM from root element, reset every `scrollTop > 0`, then `window.scrollTo(0, 0)`

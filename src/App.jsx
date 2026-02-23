@@ -143,11 +143,19 @@ function App() {
   }
 
   const [pendingAuthReturn, setPendingAuthReturn] = useState(() => sessionStorage.getItem('auth_return_tab'))
-  const [showLanding, setShowLanding] = useState(!pendingAuthReturn)
+
+  // Restore navigation state for logged-in users on refresh
+  // (nav_state is only set when logged in, cleared on sign-out)
+  function readNav() {
+    if (pendingAuthReturn) return null
+    try { return JSON.parse(sessionStorage.getItem('nav_state')) } catch { return null }
+  }
+
+  const [showLanding, setShowLanding] = useState(() => readNav() ? false : !pendingAuthReturn)
   const [fadingOut, setFadingOut] = useState(false)
   const [showBootScreen, setShowBootScreen] = useState(false)
   const [bootFadingOut, setBootFadingOut] = useState(false)
-  const [showHome, setShowHome] = useState(false)
+  const [showHome, setShowHome] = useState(() => readNav()?.showHome ?? false)
   const [homeTransition, setHomeTransition] = useState(false)
 
   function handleGetStarted() {
@@ -225,7 +233,13 @@ function App() {
     setTabKey((k) => k + 1)
   }
 
-  const [activeTab, setActiveTab] = useState('playground')
+  const [activeTab, setActiveTab] = useState(() => {
+    const nav = readNav()
+    if (nav) return nav.activeTab
+    // During OAuth redirect, start on the pending tab to avoid a flash
+    if (pendingAuthReturn && pendingAuthReturn !== 'landing' && pendingAuthReturn !== 'home') return pendingAuthReturn
+    return 'playground'
+  })
 
   // Restore tab after OAuth redirect
   useEffect(() => {
@@ -249,6 +263,18 @@ function App() {
     }, 3000)
     return () => clearTimeout(timeout)
   }, [user, pendingAuthReturn])
+
+  // Persist navigation state for logged-in users
+  useEffect(() => {
+    if (user && !showLanding && !showBootScreen) {
+      sessionStorage.setItem('nav_state', JSON.stringify({ activeTab, showHome }))
+    }
+    if (!user) {
+      sessionStorage.removeItem('nav_state')
+      sessionStorage.removeItem('module_stages')
+    }
+  }, [user, activeTab, showHome, showLanding, showBootScreen])
+
   const [subPage, setSubPage] = useState(null)
   const [homeFilter, setHomeFilter] = useState(null)
   const [tabKey, setTabKey] = useState(0)
@@ -281,112 +307,10 @@ function App() {
   const chatEndRef = useRef(null)
   const inputRef = useRef(null)
   const learnTipTimer = useRef(null)
-  const headerCanvasRef = useRef(null)
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
-
-  // Header neural network animation
-  useEffect(() => {
-    const canvas = headerCanvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    let animId
-    let particles = []
-    const PARTICLE_COUNT = 30
-    const CONNECTION_DIST = 100
-
-    function resize() {
-      const header = canvas.parentElement
-      canvas.width = header.offsetWidth
-      canvas.height = header.offsetHeight
-    }
-
-    function initParticles() {
-      particles = []
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.3,
-          vy: (Math.random() - 0.5) * 0.3,
-          radius: Math.random() * 1.5 + 0.5,
-        })
-      }
-    }
-
-    function getThemeColors() {
-      const style = getComputedStyle(document.documentElement)
-      return {
-        particleFill: style.getPropertyValue('--particle-fill').trim(),
-        particleLine: style.getPropertyValue('--particle-line').trim(),
-      }
-    }
-
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const colors = getThemeColors()
-
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x
-          const dy = particles[i].y - particles[j].y
-          const dist = Math.sqrt(dx * dx + dy * dy)
-          if (dist < CONNECTION_DIST) {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-            const baseOpacity = isDark ? 0.15 : 0.12
-            const opacity = (1 - dist / CONNECTION_DIST) * baseOpacity
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = isDark ? `rgba(168, 162, 158, ${opacity})` : `rgba(0, 113, 227, ${opacity})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        }
-      }
-
-      for (const p of particles) {
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)
-        ctx.fillStyle = colors.particleFill
-        ctx.fill()
-      }
-    }
-
-    function update() {
-      for (const p of particles) {
-        p.x += p.vx
-        p.y += p.vy
-        if (p.x < 0) p.x = canvas.width
-        if (p.x > canvas.width) p.x = 0
-        if (p.y < 0) p.y = canvas.height
-        if (p.y > canvas.height) p.y = 0
-      }
-    }
-
-    function loop() {
-      update()
-      draw()
-      animId = requestAnimationFrame(loop)
-    }
-
-    function handleResize() {
-      resize()
-      initParticles()
-    }
-
-    resize()
-    initParticles()
-    loop()
-
-    window.addEventListener('resize', handleResize)
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [showLanding])
 
   const totalTokens = useMemo(() => {
     let total = 0
@@ -691,7 +615,6 @@ function App() {
 
       <main className="main">
         <header className="header header-grouped">
-          <canvas ref={headerCanvasRef} className="header-canvas" />
           <div className="header-left">
             <div className="header-brand header-brand-clickable" onClick={handleGoHome} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleGoHome()}>
               <TypewriterTitle className="header-title" />
@@ -754,7 +677,7 @@ function App() {
                       <div className="avatar-dropdown-email">{user.email}</div>
                     </div>
                     <div className="avatar-dropdown-divider" />
-                    <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false) }}>
+                    <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false); setShowLanding(true); setShowHome(false) }}>
                       Sign Out
                     </button>
                   </div>

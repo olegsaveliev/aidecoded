@@ -4,6 +4,7 @@ import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import usePersistedState from './usePersistedState.js'
 import { MemoIcon, TypeIcon, HashIcon, EyeIcon, ZapIcon, TipIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -74,9 +75,9 @@ const SUGGESTIONS = [
 
 function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome, onSubPageChange }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
-  const [showEntry, setShowEntry] = useState(true)
+  const [stage, setStage] = usePersistedState('how-llms-work', -1) // -1 = not started
+  const [showEntry, setShowEntry] = useState(stage === -1)
   const [prompt, setPrompt] = useState('The weather today is')
-  const [stage, setStage] = useState(-1) // -1 = not started
   const [visibleTokens, setVisibleTokens] = useState([])
   const [embeddingProgress, setEmbeddingProgress] = useState([])
   const [attentionVisible, setAttentionVisible] = useState(false)
@@ -89,7 +90,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   const [showFinal, setShowFinal] = useState(false)
   const [startTime, setStartTime] = useState(0)
   const [elapsed, setElapsed] = useState(0)
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(stage === -1)
   const [hoveredDot, setHoveredDot] = useState(null)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showQuiz, setShowQuiz] = useState(false)

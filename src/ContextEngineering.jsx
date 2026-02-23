@@ -3,6 +3,7 @@ import Tooltip from './Tooltip.jsx'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import usePersistedState from './usePersistedState.js'
 import { WarningIcon, SkullIcon, SparklesIcon, CrossIcon, CheckIcon, QuestionIcon, HashIcon, SearchIcon, FileIcon, PackageIcon, RobotIcon, LayersIcon, ScissorsIcon, TheaterIcon, RefreshIcon, MailIcon, BarChartIcon, BriefcaseIcon, WrenchIcon, EyeIcon, TargetIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
@@ -636,9 +637,9 @@ function UseCasesViz({ active }) {
    ═══════════════════════════════════ */
 function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
-  const [stage, setStage] = useState(-1)
+  const [stage, setStage] = usePersistedState('context-engineering', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [showWelcome, setShowWelcome] = useState(stage === -1)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
