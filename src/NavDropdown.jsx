@@ -59,6 +59,14 @@ const NAV_GROUPS = [
       { id: 'ai-ethics-tribunal', name: 'AI Ethics Tribunal', tag: 'Game' },
     ],
   },
+  {
+    id: 'professional',
+    label: 'Professional',
+    color: '#0EA5E9',
+    items: [
+      { id: 'ai-native-pm', name: 'AI-Native PM', tag: 'Professional' },
+    ],
+  },
 ]
 
 function getGroupForTab(tabId) {

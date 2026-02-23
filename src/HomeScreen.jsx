@@ -12,6 +12,7 @@ const FILTER_COLORS = {
   Practical: '#34C759',
   Technical: '#5856D6',
   Game: '#F59E0B',
+  Professional: '#0EA5E9',
 }
 
 const FILTERS = Object.keys(FILTER_COLORS)
@@ -23,6 +24,7 @@ const TAG_BORDER_COLORS = {
   Practical: 'rgba(52, 199, 89, 0.5)',
   Technical: 'rgba(88, 86, 214, 0.5)',
   Game: 'rgba(245, 158, 11, 0.5)',
+  Professional: 'rgba(14, 165, 233, 0.5)',
 }
 
 const CARDS = [
@@ -178,11 +180,18 @@ const CARDS = [
     isGame: true,
     difficulty: 'Thought-Provoking',
   },
+  {
+    id: 'ai-native-pm',
+    title: 'AI-Native PM',
+    description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',
+    tag: 'Professional',
+    group: 'Professional',
+  },
 ]
 
-const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
+const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
 
-const TOTAL_MODULES = 18 // all modules including tools and games
+const TOTAL_MODULES = 19 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

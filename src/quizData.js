@@ -663,3 +663,66 @@ export const generativeAIQuiz = [
     accentColor: '#FF9500',
   },
 ]
+
+export const aiNativePMQuiz = [
+  {
+    question: 'What do AI engineers actually need from PMs instead of PRDs?',
+    options: ['More detailed user stories', 'System instructions and evals', 'Better acceptance criteria', 'More frequent standups'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What is a system instruction?',
+    options: ['A technical spec for developers', 'A precise behavioral specification for the AI', 'A user story for AI features', 'A prompt written by engineers'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What are evals?',
+    options: ['Performance reviews for the AI team', 'User feedback surveys', 'Measurable test cases for AI behavior', 'Documentation of AI features'],
+    correct: 2,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What is structured logic in AI PM work?',
+    options: ['Writing code for the AI', 'Explicit IF/THEN rules that define AI behavior', 'The project management methodology', 'The AI model architecture'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What should system instructions include?',
+    options: ['Business requirements and KPIs', 'Identity, scope, behavior, constraints, escalation', 'User personas and journey maps', 'Technical architecture decisions'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What are safety evals designed to test?',
+    options: ['Performance and speed of AI responses', 'Whether the AI avoids behavior it must never do', 'Grammar and spelling of outputs', 'Response time benchmarks'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What causes model drift?',
+    options: ['Too many users accessing the system', 'Model updates, input changes, or prompt changes', 'Running out of API credits', 'Poor system instruction quality'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'When should you write evals?',
+    options: ['After the AI feature ships', 'During user acceptance testing', 'Before writing system instructions', 'Only when bugs are found'],
+    correct: 2,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What is the right response when model drift is detected?',
+    options: ['Immediately upgrade to the latest model', 'Rewrite the entire system instruction', 'Revert or fix forward, update evals, document', 'Ask the model provider to fix it'],
+    correct: 2,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What is the most important thing that distinguishes AI-native PMs?',
+    options: ['They can write code', 'They understand model architectures', 'They produce testable behavioral specifications', 'They have data science backgrounds'],
+    correct: 2,
+    accentColor: '#0EA5E9',
+  },
+]
