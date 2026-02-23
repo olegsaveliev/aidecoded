@@ -3,6 +3,8 @@ import TypewriterTitle from './TypewriterTitle.jsx'
 import NeuralNetworkCanvas from './NeuralNetworkCanvas.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
+import { LockIcon } from './ContentIcons.jsx'
+import { useAuth, FREE_MODULES } from './AuthContext'
 import './LandingPage.css'
 
 const TAGLINE = 'Your interactive journey into AI'
@@ -23,6 +25,7 @@ const MOBILE_MODULES = [
 ]
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
+  const { user } = useAuth()
   const [titleDone, setTitleDone] = useState(false)
   const [taglineCharCount, setTaglineCharCount] = useState(0)
   const [typingDone, setTypingDone] = useState(false)
@@ -88,12 +91,20 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
 
         {typingDone && (
           <div className="landing-mobile-grid">
-            {MOBILE_MODULES.map((m) => (
-              <button key={m.id} className="landing-mobile-card" onClick={() => handleNodeSelect(m.id)}>
-                <div className="landing-mobile-card-icon"><ModuleIcon module={m.id} size={28} style={{ color: m.color }} /></div>
-                <div className="landing-mobile-card-label">{m.label}</div>
-              </button>
-            ))}
+            {MOBILE_MODULES.map((m) => {
+              const locked = !user && !FREE_MODULES.includes(m.id)
+              return (
+                <button key={m.id} className={`landing-mobile-card${locked ? ' landing-mobile-card-locked' : ''}`} onClick={() => handleNodeSelect(m.id)}>
+                  {locked && (
+                    <span className="landing-mobile-card-lock">
+                      <LockIcon size={12} color="var(--text-tertiary, #86868b)" />
+                    </span>
+                  )}
+                  <div className="landing-mobile-card-icon"><ModuleIcon module={m.id} size={28} style={{ color: m.color }} /></div>
+                  <div className="landing-mobile-card-label">{m.label}</div>
+                </button>
+              )
+            })}
           </div>
         )}
 

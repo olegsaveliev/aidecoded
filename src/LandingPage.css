@@ -172,6 +172,7 @@
 }
 
 .landing-mobile-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -205,6 +206,17 @@
   font-weight: 600;
   color: var(--text-primary, #1d1d1f);
   text-align: center;
+}
+
+.landing-mobile-card-locked {
+  opacity: 0.5;
+  filter: grayscale(30%);
+}
+
+.landing-mobile-card-lock {
+  position: absolute;
+  top: 6px;
+  right: 6px;
 }
 
 /* ── Theme toggle on landing ── */
