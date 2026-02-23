@@ -302,12 +302,13 @@ function App() {
   }, [activeTab])
 
   const [showWelcome, setShowWelcome] = useState(true)
-  const [showLearnTip, setShowLearnTip] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
   const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const [tempChanged, setTempChanged] = useState(false)
 
   const chatEndRef = useRef(null)
   const inputRef = useRef(null)
-  const learnTipTimer = useRef(null)
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -365,9 +366,11 @@ function App() {
       }
 
       const data = await res.json()
+      const assistantContent = data.choices[0].message.content
       const assistantMsg = {
         role: 'assistant',
-        content: data.choices[0].message.content,
+        content: assistantContent,
+        meta: { model, temperature, tokens: estimateTokens(assistantContent) },
       }
       setMessages((prev) => [...prev, assistantMsg])
       markModuleComplete('playground')
@@ -410,28 +413,25 @@ function App() {
     URL.revokeObjectURL(url)
   }
 
-  // Show learning tip after first AI response
+  // Progressive learning tips at milestones
+  const assistantCount = messages.filter(m => m.role === 'assistant').length
+
   useEffect(() => {
-    if (messages.length === 2 && messages[1].role === 'assistant') {
-      setShowLearnTip(true)
-      learnTipTimer.current = setTimeout(() => {
-        setLearnTipFading(true)
-        setTimeout(() => {
-          setShowLearnTip(false)
-          setLearnTipFading(false)
-        }, 400)
-      }, 8000)
+    if (assistantCount === 1 && !dismissedTips.has('first') && !learnTip) {
+      setLearnTip({ id: 'first', text: 'Nice! Now try changing Temperature to 1.5 in the sidebar and send the same message — see how the response changes.' })
+    } else if (assistantCount >= 3 && !systemPrompt.trim() && !dismissedTips.has('system') && !learnTip) {
+      setLearnTip({ id: 'system', text: 'Try setting a System Prompt above — click "Pirate" and ask the same question to see a completely different personality!' })
+    } else if (assistantCount >= 5 && !tempChanged && !dismissedTips.has('temp') && !learnTip) {
+      setLearnTip({ id: 'temp', text: 'You haven\'t changed Temperature yet! Slide it to 0.1 for focused answers or 1.5 for creative ones.' })
     }
-    return () => {
-      if (learnTipTimer.current) clearTimeout(learnTipTimer.current)
-    }
-  }, [messages.length])
+  }, [assistantCount, systemPrompt, tempChanged, dismissedTips])
 
   function dismissLearnTip() {
-    if (learnTipTimer.current) clearTimeout(learnTipTimer.current)
+    if (!learnTip) return
+    setDismissedTips(prev => new Set(prev).add(learnTip.id))
     setLearnTipFading(true)
     setTimeout(() => {
-      setShowLearnTip(false)
+      setLearnTip(null)
       setLearnTipFading(false)
     }, 400)
   }
@@ -487,9 +487,11 @@ function App() {
       }
 
       const data = await res.json()
+      const assistantContent = data.choices[0].message.content
       const assistantMsg = {
         role: 'assistant',
-        content: data.choices[0].message.content,
+        content: assistantContent,
+        meta: { model, temperature, tokens: estimateTokens(assistantContent) },
       }
       setMessages((prev) => [...prev, assistantMsg])
       markModuleComplete('playground')
@@ -556,14 +558,21 @@ function App() {
               </span>
               <span className="slider-value">{temperature.toFixed(2)}</span>
             </label>
+            {/* Capped at 1.5 — values above ~1.3 produce increasingly garbled output that has no educational value */}
             <input
               type="range"
               min="0"
-              max="2"
+              max="1.5"
               step="0.01"
               value={temperature}
-              onChange={(e) => setTemperature(parseFloat(e.target.value))}
+              onChange={(e) => { setTemperature(parseFloat(e.target.value)); setTempChanged(true) }}
             />
+            <span className="slider-mood">
+              {temperature <= 0.3 ? 'Focused — predictable, factual answers'
+                : temperature <= 0.8 ? 'Balanced — good mix of accuracy and variety'
+                : temperature <= 1.3 ? 'Creative — more surprising and varied'
+                : 'Very creative — highly varied, less predictable'}
+            </span>
 
             <label className="slider-label">
               <span className="slider-name">
@@ -580,6 +589,12 @@ function App() {
               value={maxTokens}
               onChange={(e) => setMaxTokens(parseInt(e.target.value))}
             />
+            <span className="slider-mood">
+              {maxTokens <= 300 ? 'Short — a few sentences'
+                : maxTokens <= 700 ? 'Medium — a paragraph or two'
+                : maxTokens <= 1500 ? 'Long — detailed explanations'
+                : 'Maximum — full essays'}
+            </span>
 
             <label className="slider-label">
               <span className="slider-name">
@@ -596,6 +611,11 @@ function App() {
               value={topP}
               onChange={(e) => setTopP(parseFloat(e.target.value))}
             />
+            <span className="slider-mood">
+              {topP <= 0.5 ? 'Narrow — only the most likely words'
+                : topP <= 0.9 ? 'Focused — common words preferred'
+                : 'Full range — all words considered'}
+            </span>
           </div>
 
           <div className="sidebar-actions">
@@ -711,7 +731,8 @@ function App() {
           <EntryScreen
             icon={<ModuleIcon module="playground" size={48} style={{ color: '#0071e3' }} />}
             title="AI Playground"
-            description="Chat directly with AI and experiment with temperature, model selection and parameters in real time. See how small changes dramatically affect responses."
+            subtitle="Your first conversation with AI"
+            description="This is where you talk directly to an AI model — the same technology behind ChatGPT. You'll learn how parameters like Temperature and Max Tokens change the AI's behavior, and how System Prompts let you control its personality."
             buttonText="Open Playground"
             onStart={() => { setShowPlaygroundEntry(false); markModuleStarted('playground') }}
           />
@@ -720,14 +741,19 @@ function App() {
         {!showHome && activeTab === 'playground' && !(showPlaygroundEntry && messages.length === 0) && (
           <div className="chat-container">
             {messages.length > 0 && (
-              <button className="entry-start-over" onClick={() => { setMessages([]); setInput(''); setError(''); setShowPlaygroundEntry(true); setShowWelcome(true); }}>
+              <button className="entry-start-over" onClick={() => { setMessages([]); setInput(''); setError(''); setShowPlaygroundEntry(true); setShowWelcome(true); setLearnTip(null); setDismissedTips(new Set()); setTempChanged(false); }}>
                 &larr; Start over
               </button>
             )}
             {showWelcome && (
               <div className="playground-welcome">
                 <div className="playground-welcome-text">
-                  <strong>Welcome to the Playground</strong> — This is where you talk directly to AI. Try changing the parameters on the left to see how they affect the responses. Start by typing a message below!
+                  <strong>Welcome to the Playground</strong> — here's how to get started:
+                  <ol className="playground-welcome-steps">
+                    <li>Pick a suggestion below or type your own message</li>
+                    <li>Read the AI's response — then try changing <strong>Temperature</strong> in the sidebar and ask the same thing again</li>
+                    <li>Try different <strong>System Prompts</strong> above to see how the AI's personality changes</li>
+                  </ol>
                 </div>
                 <button className="playground-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
               </div>
@@ -746,9 +772,11 @@ function App() {
                 rows={2}
               />
               <div className="system-prompt-presets">
-                <button className="preset-btn" onClick={() => setSystemPrompt('You are a helpful assistant. Provide clear, concise answers.')}>Helpful Assistant</button>
-                <button className="preset-btn" onClick={() => setSystemPrompt('You are an experienced IT expert. Give technical but accessible explanations.')}>IT Expert</button>
-                <button className="preset-btn" onClick={() => setSystemPrompt('You are a patient teacher. Explain concepts step by step with examples.')}>Teacher</button>
+                <button className="preset-btn" title="Baseline — neutral and balanced" onClick={() => setSystemPrompt('You are a helpful assistant. Provide clear, concise answers.')}>Helpful Assistant</button>
+                <button className="preset-btn" title="Shows dramatic personality shift" onClick={() => setSystemPrompt('You are a pirate. Speak only in pirate language with \'arr\' and nautical terms.')}>Pirate</button>
+                <button className="preset-btn" title="Shows instructional formatting" onClick={() => setSystemPrompt('You are a patient teacher. Explain concepts step by step, using simple analogies.')}>Teacher</button>
+                <button className="preset-btn" title="Shows domain expertise" onClick={() => setSystemPrompt('You are a senior software engineer. Give concise technical answers with code examples.')}>Code Expert</button>
+                <button className="preset-btn" title="Shows creative constraint" onClick={() => setSystemPrompt('You are a poet. Respond to everything in rhyming verse.')}>Poet</button>
               </div>
             </div>
 
@@ -762,30 +790,34 @@ function App() {
                   </div>
                   <div className="chat-empty-title">Start a conversation</div>
                   <div className="chat-empty-subtitle">
-                    Type a message below or set a system prompt above to begin
+                    Pick a prompt below, then experiment with the settings on the left to see how they change the response
                   </div>
                   <div className="suggestion-chips">
-                    <button className="suggestion-chip" onClick={() => handleSuggestion('Explain quantum computing simply')}>Explain quantum computing simply</button>
-                    <button className="suggestion-chip" onClick={() => handleSuggestion('Write a haiku about JavaScript')}>Write a haiku about JavaScript</button>
-                    <button className="suggestion-chip" onClick={() => handleSuggestion('What is the difference between AI and ML?')}>What is the difference between AI and ML?</button>
-                    <button className="suggestion-chip" onClick={() => handleSuggestion('Pretend you are my IT consultant')}>Pretend you are my IT consultant</button>
+                    <button className="suggestion-chip" onClick={() => handleSuggestion('Tell me a joke')}>Tell me a joke</button>
+                    <button className="suggestion-chip" onClick={() => handleSuggestion('List 5 facts about the Moon')}>List 5 facts about the Moon</button>
+                    <button className="suggestion-chip" onClick={() => handleSuggestion('Explain what an API is to a 10-year-old')}>Explain what an API is to a 10-year-old</button>
+                    <button className="suggestion-chip" onClick={() => handleSuggestion('Write a short story about a robot')}>Write a short story about a robot</button>
                   </div>
                 </div>
               )}
               {messages.map((msg, i) => (
-                <div
-                  key={i}
-                  className={`chat-bubble ${msg.role === 'user' ? 'chat-user' : 'chat-assistant'}`}
-                >
-                  <div className="chat-content">
-                    {msg.role === 'assistant' ? (
-                      <div className="markdown-body">
-                        <ReactMarkdown>{msg.content}</ReactMarkdown>
-                      </div>
-                    ) : (
-                      <div className="chat-text">{msg.content}</div>
-                    )}
+                <div key={i} className={`chat-bubble-wrap ${msg.role === 'user' ? 'chat-bubble-wrap-user' : 'chat-bubble-wrap-assistant'}`}>
+                  <div className={`chat-bubble ${msg.role === 'user' ? 'chat-user' : 'chat-assistant'}`}>
+                    <div className="chat-content">
+                      {msg.role === 'assistant' ? (
+                        <div className="markdown-body">
+                          <ReactMarkdown>{msg.content}</ReactMarkdown>
+                        </div>
+                      ) : (
+                        <div className="chat-text">{msg.content}</div>
+                      )}
+                    </div>
                   </div>
+                  {msg.role === 'assistant' && msg.meta && (
+                    <div className="chat-meta">
+                      {msg.meta.model} &middot; temp {msg.meta.temperature.toFixed(2)} &middot; {msg.meta.tokens} tokens
+                    </div>
+                  )}
                 </div>
               ))}
               {loading && (
@@ -800,9 +832,12 @@ function App() {
                 </div>
               )}
               {error && <div className="error-msg">{error}</div>}
-              {showLearnTip && (
-                <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} onClick={dismissLearnTip}>
-                  Try sliding Temperature to 1.5 and asking the same question again — notice how the response changes!
+              {learnTip && (
+                <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+                  <span className="learn-tip-text">{learnTip.text}</span>
+                  <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                  </button>
                 </div>
               )}
               <div ref={chatEndRef} />

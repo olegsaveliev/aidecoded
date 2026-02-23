@@ -125,6 +125,15 @@
   font-variant-numeric: tabular-nums;
 }
 
+.slider-mood {
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
 /* iOS-style sliders */
 .sidebar input[type='range'] {
   -webkit-appearance: none;
@@ -528,12 +537,41 @@
   line-height: 1.5;
 }
 
+/* Chat bubble wrappers (for response metadata) */
+.chat-bubble-wrap {
+  display: flex;
+  flex-direction: column;
+  max-width: 72%;
+  animation: fadeIn 0.25s ease;
+}
+
+.chat-bubble-wrap-user {
+  align-self: flex-end;
+}
+
+.chat-bubble-wrap-assistant {
+  align-self: flex-start;
+}
+
+.chat-meta {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  padding-left: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Chat bubbles */
 .chat-bubble {
   max-width: 72%;
   display: flex;
   flex-direction: column;
   animation: fadeIn 0.25s ease;
+}
+
+.chat-bubble-wrap .chat-bubble {
+  max-width: 100%;
+  animation: none;
 }
 
 @keyframes fadeIn {
@@ -2538,6 +2576,24 @@
   flex: 1;
 }
 
+.playground-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.playground-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.playground-welcome-steps strong {
+  color: var(--text-primary);
+}
+
 .playground-welcome-dismiss {
   background: none;
   border: 1px solid rgba(0, 113, 227, 0.2);
@@ -2677,6 +2733,9 @@
 
 /* Learning Callout */
 .learn-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
   background: #ffffff;
   border: 1px solid #E5E5EA;
   border-left: 2px solid #0071E3;
@@ -2685,9 +2744,28 @@
   font-size: 13px;
   line-height: 1.5;
   color: var(--text-secondary);
-  cursor: pointer;
   animation: fadeIn 0.4s ease;
   transition: opacity 0.4s ease;
+}
+
+.learn-tip-text {
+  flex: 1;
+}
+
+.learn-tip-dismiss {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s;
+}
+
+.learn-tip-dismiss:hover {
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] .learn-tip {
@@ -5398,6 +5476,10 @@
     max-width: 88%;
   }
 
+  .chat-bubble-wrap {
+    max-width: 88%;
+  }
+
   .chat-empty {
     padding: 40px 16px;
   }
@@ -5426,9 +5508,32 @@
   }
 
   .preset-btn {
-    flex: 1;
-    min-width: 0;
+    flex: 0 1 auto;
     text-align: center;
+  }
+
+  .slider-mood {
+    font-size: 11px;
+    margin-bottom: 6px;
+  }
+
+  .chat-meta {
+    font-size: 11px;
+    padding-left: 2px;
+  }
+
+  .learn-tip-dismiss {
+    min-width: 36px;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+  }
+
+  .playground-welcome-steps {
+    padding-left: 18px;
+    gap: 2px;
   }
 
   /* ── Welcome banners ── */

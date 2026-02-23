@@ -163,6 +163,60 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 
 ---
 
+## Playground Module (inline in App.jsx)
+
+The Playground is an interactive AI chat with educational scaffolding to teach beginners how LLM parameters work.
+
+### Entry Screen
+- Title: "AI Playground", subtitle: "Your first conversation with AI"
+- Description explains what the learner will discover (Temperature, Max Tokens, System Prompts)
+
+### Welcome Banner
+Numbered 3-step guide: (1) pick a suggestion, (2) change Temperature and resend, (3) try different System Prompts
+
+### Sidebar Parameters
+Each slider has a **mood label** (`<span className="slider-mood">`) below it that updates in real time:
+
+| Parameter | Range | Default | Mood Labels |
+|---|---|---|---|
+| Temperature | 0–1.5 | 0.7 | Focused (0–0.3) / Balanced (0.31–0.8) / Creative (0.81–1.3) / Very creative (1.31–1.5) |
+| Max Tokens | 100–2000 | 500 | Short (100–300) / Medium (301–700) / Long (701–1500) / Maximum (1501–2000) |
+| Top-p | 0–1 | 1.0 | Narrow (0–0.5) / Focused (0.51–0.9) / Full range (0.91–1.0) |
+
+Temperature is capped at 1.5 (not 2.0) — values above ~1.3 produce garbled output with no educational value.
+
+### System Prompt Presets (5)
+| Label | Prompt | Teaching purpose |
+|---|---|---|
+| Helpful Assistant | "You are a helpful assistant. Provide clear, concise answers." | Baseline |
+| Pirate | "You are a pirate. Speak only in pirate language with 'arr' and nautical terms." | Dramatic personality shift |
+| Teacher | "You are a patient teacher. Explain concepts step by step, using simple analogies." | Instructional formatting |
+| Code Expert | "You are a senior software engineer. Give concise technical answers with code examples." | Domain expertise |
+| Poet | "You are a poet. Respond to everything in rhyming verse." | Creative constraint |
+
+### Suggestion Chips (4)
+Designed for parameter experimentation: "Tell me a joke", "List 5 facts about the Moon", "Explain what an API is to a 10-year-old", "Write a short story about a robot"
+
+### Progressive Learning Tips
+Milestone-based tips (no auto-dismiss — user clicks X to close). Tracked via `dismissedTips` Set and `tempChanged` boolean. Max one visible at a time.
+
+| Trigger | Tip |
+|---|---|
+| 1st AI response | "Try changing Temperature to 1.5 and send the same message" |
+| 3rd response (if no system prompt set) | "Click Pirate and ask the same question" |
+| 5th response (if temperature never changed) | "Slide Temperature to 0.1 or 1.5" |
+
+All tips reset on "Start over". CSS: `.learn-tip` with flex layout, `.learn-tip-dismiss` SVG X button, `role="status" aria-live="polite"` for accessibility.
+
+### Response Metadata
+Each assistant message stores `meta: { model, temperature, tokens }` and displays it below the bubble:
+```
+gpt-4o-mini · temp 0.70 · 127 tokens
+```
+CSS: `.chat-meta` (11px, tertiary color, tabular-nums). Wrapped in `.chat-bubble-wrap` div that handles alignment and animation.
+
+---
+
 ## Authentication & Progress
 
 ### Overview
