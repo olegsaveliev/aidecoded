@@ -2677,7 +2677,7 @@
   line-height: 1.5;
   padding: 10px 14px;
   border-radius: 8px;
-  max-width: 260px;
+  max-width: min(260px, calc(100vw - 24px));
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   z-index: 99999;
   pointer-events: auto;

@@ -30,6 +30,7 @@ export default function Tooltip({ text }) {
     const rect = tooltipRef.current.getBoundingClientRect()
     const pad = 12
     let dl = 0
+    let dt = 0
     let flipped = pos.flipped
 
     // Horizontal clamp
@@ -39,8 +40,23 @@ export default function Tooltip({ text }) {
     // Vertical: if clipped above viewport, flip below the icon
     if (!flipped && rect.top < pad) flipped = true
 
-    if (dl || flipped !== pos.flipped) {
-      setPos((p) => ({ ...p, left: p.left + dl, flipped }))
+    // Vertical: if clipped below viewport (when flipped), nudge up
+    if (flipped && rect.bottom > window.innerHeight - pad) {
+      dt = window.innerHeight - pad - rect.bottom
+    }
+    // Vertical: if still clipped above after flip, nudge down
+    if (!flipped && (rect.top + dt) < pad) {
+      dt = pad - rect.top
+    }
+
+    if (dl || dt || flipped !== pos.flipped) {
+      setPos((p) => ({
+        ...p,
+        left: p.left + dl,
+        top: p.top + dt,
+        bottom: p.bottom + dt,
+        flipped,
+      }))
     }
   }, [pos])
 
