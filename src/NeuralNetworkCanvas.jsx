@@ -36,6 +36,7 @@ const NODES = [
   { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.78, py: 0.86, desc: 'Solve AI mysteries, build your city' },
   { id: 'token-budget', label: 'Token Budget', group: 'play', px: 0.42, py: 0.92, desc: 'Rewrite prompts to fit strict token budgets' },
   { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', group: 'play', px: 0.28, py: 0.88, desc: 'Navigate ethical dilemmas in AI systems' },
+  { id: 'pm-simulator', label: 'PM Simulator', group: 'play', px: 0.15, py: 0.82, desc: 'Ship an AI feature as the PM — or watch it fail' },
   { id: 'ai-native-pm', label: 'AI-Native PM', group: 'professional', px: 0.20, py: 0.65, desc: 'What AI engineers actually need from PMs' },
 ]
 
@@ -73,6 +74,8 @@ const CONNECTIONS = [
   ['tokenizer', 'token-budget'],
   ['ai-city-builder', 'ai-ethics-tribunal'],
   ['machine-learning', 'ai-ethics-tribunal'],
+  ['ai-ethics-tribunal', 'pm-simulator'],
+  ['ai-native-pm', 'pm-simulator'],
   ['how-llms-work', 'generative-ai'],
   ['model-training', 'generative-ai'],
   ['deep-learning', 'generative-ai'],
@@ -108,6 +111,7 @@ const NODE_DELAYS = {
   'ai-city-builder': 2500,
   'token-budget': 1950,
   'ai-ethics-tribunal': 2100,
+  'pm-simulator': 2250,
   'ai-native-pm': 2650,
 }
 

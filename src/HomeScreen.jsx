@@ -181,6 +181,15 @@ const CARDS = [
     difficulty: 'Thought-Provoking',
   },
   {
+    id: 'pm-simulator',
+    title: 'PM Simulator',
+    description: 'You are the PM. Write system instructions, design evals, fix hallucinations. Ship the AI feature — or watch it fail.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Professional',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',
@@ -191,7 +200,7 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
 
-const TOTAL_MODULES = 19 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
+const TOTAL_MODULES = 20 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

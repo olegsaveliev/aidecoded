@@ -266,13 +266,14 @@
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text-secondary);
-  padding: 10px 14px;
+  padding: 12px 16px;
   background: rgba(234, 179, 8, 0.06);
+  border: none;
   border-left: 2px solid #eab308;
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 16px;
   animation: fadeSlideUp 0.2s ease-out;
   line-height: 1.5;
@@ -1284,6 +1285,10 @@
 
 [data-theme="dark"] .ale-problem-option {
   background: #1C1917;
+}
+
+[data-theme="dark"] .ale-help-box {
+  background: rgba(234, 179, 8, 0.08);
 }
 
 [data-theme="dark"] .ale-complete-row {
