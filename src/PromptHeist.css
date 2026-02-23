@@ -1054,7 +1054,7 @@
   }
 
   .ph-vault-panel {
-    height: 200px;
+    height: auto;
     padding: 16px;
     position: static;
   }
@@ -1121,7 +1121,7 @@
 
 @media (max-width: 480px) {
   .ph-vault-panel {
-    height: 160px;
+    height: auto;
     padding: 12px;
   }
 

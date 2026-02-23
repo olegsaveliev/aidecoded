@@ -611,23 +611,9 @@
   align-items: center;
 }
 
-.ale-slider-target-zone {
-  position: absolute;
-  top: 50%;
-  height: 8px;
-  transform: translateY(-50%);
-  background: rgba(52, 199, 89, 0.2);
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 0;
-  border: 1px solid rgba(52, 199, 89, 0.35);
-}
-
 .ale-slider-track-wrap input[type="range"] {
   width: 100%;
   accent-color: #F59E0B;
-  position: relative;
-  z-index: 1;
 }
 
 .ale-slider-hint {

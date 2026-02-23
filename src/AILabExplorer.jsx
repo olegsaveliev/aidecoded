@@ -767,10 +767,6 @@ function Room3Slider({ label, value, target, onChange }) {
         <span className="ale-slider-value" style={inTarget ? { color: '#34C759' } : undefined}>{value}</span>
       </div>
       <div className="ale-slider-track-wrap">
-        <div
-          className="ale-slider-target-zone"
-          style={{ left: `${target[0]}%`, width: `${target[1] - target[0]}%` }}
-        />
         <input type="range" min="0" max="100" value={value} onChange={(e) => onChange(parseInt(e.target.value))} />
       </div>
       {hint && <div className="ale-slider-hint">{hint}</div>}
