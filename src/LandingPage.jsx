@@ -114,11 +114,9 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
           </div>
         )}
 
-        <div className="landing-cta-area">
-          <button className="landing-cta" onClick={onGetStarted}>
-            Explore All Modules &rarr;
-          </button>
-        </div>
+        <button className="landing-cta" onClick={onGetStarted}>
+          Explore All Modules &rarr;
+        </button>
         <p className="landing-hint">Click any node to jump directly to a module</p>
       </div>
     </div>
