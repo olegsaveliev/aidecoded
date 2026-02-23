@@ -7,6 +7,7 @@ import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
 import Quiz from './Quiz.jsx'
 import { tokenizerQuiz } from './quizData.js'
+import SuggestedModules from './SuggestedModules.jsx'
 
 const TOKEN_COLORS = [
   { bgVar: '--token-pastels-1-bg', borderVar: '--token-pastels-1-border' },
@@ -41,7 +42,12 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
   const [factIndex, setFactIndex] = useState(0)
   const [factFading, setFactFading] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const [inputCount, setInputCount] = useState(0)
   const factTimer = useRef(null)
+  const prevTextRef = useRef('')
 
   const tokenData = useMemo(() => {
     if (!text) return []
@@ -60,6 +66,35 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
     if (tokenData.length > 0) markModuleComplete('tokenizer')
   }, [tokenData.length]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Track distinct inputs (user typed something meaningful or clicked a suggestion)
+  useEffect(() => {
+    if (text.length >= 5 && text !== prevTextRef.current) {
+      prevTextRef.current = text
+      setInputCount((c) => c + 1)
+    }
+  }, [text])
+
+  // Progressive learning tips at milestones
+  useEffect(() => {
+    if (inputCount === 1 && !dismissedTips.has('first') && !learnTip) {
+      setLearnTip({ id: 'first', text: 'Look at the character-to-token ratio below — common English averages about 4 characters per token. Try a rare word like "Supercalifragilisticexpialidocious" to see it change!' })
+    } else if (inputCount >= 2 && !dismissedTips.has('compare') && !learnTip) {
+      setLearnTip({ id: 'compare', text: 'Notice how different inputs produce very different token counts! This is why AI costs are based on tokens, not words — some text is more "expensive" than others.' })
+    } else if (inputCount >= 4 && !dismissedTips.has('explore') && !learnTip) {
+      setLearnTip({ id: 'explore', text: 'You\'re getting the hang of it! Try typing in another language or pasting some code — tokenization works very differently for non-English text.' })
+    }
+  }, [inputCount, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissLearnTip() {
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
+    setLearnTipFading(true)
+    setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 400)
+  }
+
   // Rotate fun facts every 8 seconds
   useEffect(() => {
     factTimer.current = setInterval(() => {
@@ -77,7 +112,8 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
       <EntryScreen
         icon={<ModuleIcon module="tokenizer" size={48} style={{ color: '#AF52DE' }} />}
         title="Token Visualizer"
-        description="Type any text and watch how AI breaks it into tokens in real time. Understand why AI has token limits not word limits — and how it actually reads your text."
+        subtitle="See how AI reads your text"
+        description="Before an AI can understand anything you write, it first breaks your text into tokens — small pieces that are its actual vocabulary. You'll see this happen in real time, and learn why AI has token limits, not word limits."
         buttonText="Start Tokenizing"
         onStart={() => { setShowEntry(false); markModuleStarted('tokenizer') }}
       />
@@ -99,12 +135,31 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
     )
   }
 
+  function handleStartOver() {
+    setText('')
+    setShowEntry(true)
+    setShowWelcome(true)
+    setShowInfo(true)
+    setLearnTip(null)
+    setDismissedTips(new Set())
+    setInputCount(0)
+    prevTextRef.current = ''
+  }
+
   return (
     <div className="tokenizer">
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {showWelcome && (
         <div className="tok-welcome">
           <div className="tok-welcome-text">
-            <strong>Welcome to the Tokenizer</strong> — Type any text below and watch how AI breaks it into tokens in real time. Tokens are the building blocks AI uses to read and understand language — not words, not characters, but something in between!
+            <strong>Welcome to the Tokenizer</strong> — here's how to explore:
+            <ol className="tok-welcome-steps">
+              <li>Type text below or pick a suggestion — watch the colored tokens appear instantly</li>
+              <li>Compare the <strong>character count</strong> vs <strong>token count</strong> — notice they're different!</li>
+              <li>Try different inputs: common words, rare words, code — see how tokenization changes</li>
+            </ol>
           </div>
           <button className="tok-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -200,6 +255,15 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
         </div>
       )}
 
+      {learnTip && (
+        <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+          <span className="learn-tip-text">{learnTip.text}</span>
+          <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+          </button>
+        </div>
+      )}
+
       <div className="tok-funfact">
         <div className="tok-funfact-label">Did you know?</div>
         <div className={`tok-funfact-text ${factFading ? 'tok-funfact-fading' : ''}`}>
@@ -207,11 +271,13 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
         </div>
       </div>
 
-      <div style={{ textAlign: 'center', marginTop: 24 }}>
+      <div className="how-final-actions">
         <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
           Test Your Knowledge &rarr;
         </button>
+        <button className="how-secondary-btn" onClick={handleStartOver}>Start over</button>
       </div>
+      <SuggestedModules currentModuleId="tokenizer" onSwitchTab={onSwitchTab} />
     </div>
   )
 }

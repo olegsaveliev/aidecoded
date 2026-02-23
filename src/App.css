@@ -2865,6 +2865,24 @@
   flex: 1;
 }
 
+.tok-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tok-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.tok-welcome-steps strong {
+  color: var(--text-primary);
+}
+
 .tok-welcome-dismiss {
   background: none;
   border: 1px solid rgba(0, 113, 227, 0.2);
@@ -5531,7 +5549,8 @@
     padding: 8px;
   }
 
-  .playground-welcome-steps {
+  .playground-welcome-steps,
+  .tok-welcome-steps {
     padding-left: 18px;
     gap: 2px;
   }

@@ -217,6 +217,49 @@ CSS: `.chat-meta` (11px, tertiary color, tabular-nums). Wrapped in `.chat-bubble
 
 ---
 
+## Tokenizer Module (`src/Tokenizer.jsx`)
+
+Interactive token visualizer using `gpt-tokenizer` (same BPE tokenizer as GPT-4/ChatGPT). Not stage-based — it's a tool with educational scaffolding.
+
+### Entry Screen
+- Title: "Token Visualizer", subtitle: "See how AI reads your text"
+- Description explains what the learner will discover (tokens, token limits, real-time visualization)
+
+### Welcome Banner
+Numbered 3-step guide: (1) type text or pick a suggestion, (2) compare character count vs token count, (3) try different inputs to see the pattern
+
+### Info Banner
+Dismissable "What is a token?" section with 6 bullet points explaining token basics. Separate from welcome banner — can be dismissed independently.
+
+### Suggestions (4)
+Each teaches a tokenization concept:
+
+| Text | Label | What it shows |
+|---|---|---|
+| "The quick brown fox jumps over the lazy dog" | Common words | ~1 token per word |
+| "ChatGPT is an AI assistant built by OpenAI" | Proper nouns | Brand names split into pieces |
+| "Supercalifragilisticexpialidocious" | Long rare word | Extreme splitting |
+| "SELECT * FROM users WHERE id = 1" | Code syntax | Operators as tokens |
+
+### Progressive Learning Tips
+Milestone-based tips triggered by input count (tracks distinct inputs >= 5 chars). No auto-dismiss — user clicks X. Max one visible at a time. Tracked via `dismissedTips` Set and `inputCount` counter.
+
+| Trigger | Tip |
+|---|---|
+| 1st input | "Look at the character-to-token ratio — try a rare word to see it change" |
+| 2nd input | "Different inputs produce different token counts — this is why AI costs are token-based" |
+| 4th input | "Try another language or code — tokenization works very differently" |
+
+All tips reset on "Start over". CSS: reuses `.learn-tip` classes from Playground.
+
+### Fun Facts
+6 rotating facts (8s interval with fade transition). Supplemental content — always visible, just cycling.
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview
