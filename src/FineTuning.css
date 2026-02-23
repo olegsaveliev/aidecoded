@@ -380,25 +380,30 @@
 
 .ft-lora-diagram {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 12px;
   margin-bottom: 16px;
-  padding: 24px 16px;
+  padding: 28px 20px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
 }
 
-.ft-lora-section {
+.ft-lora-equation {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ft-lora-term {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
-.ft-lora-section:first-child {
+.ft-lora-term:first-child {
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -409,18 +414,17 @@
   transform: scale(1) !important;
 }
 
-.ft-lora-update {
+.ft-lora-decomp {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 14px;
 }
 
-.ft-lora-matrix {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+.ft-lora-operator {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
 }
 
 .ft-lora-matrix-label {
@@ -431,52 +435,45 @@
 
 .ft-lora-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
   gap: 3px;
 }
 
-.ft-lora-grid-small-a {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.ft-lora-grid-small-b {
+.ft-lora-grid-w {
   grid-template-columns: repeat(6, 1fr);
 }
 
+.ft-lora-grid-a {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ft-lora-grid-b {
+  grid-template-columns: repeat(7, 1fr);
+}
+
 .ft-lora-cell {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   background: var(--bg-surface);
-  border: 1px solid var(--border-light);
-  border-radius: 2px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
 }
 
 .ft-lora-cell-active {
-  background: rgba(88, 86, 214, 0.2);
-  border-color: #5856D6;
+  background: rgba(88, 86, 214, 0.15);
+  border-color: rgba(88, 86, 214, 0.5);
 }
 
 .ft-lora-params {
   font-size: 12px;
   font-weight: 600;
   color: var(--text-secondary);
+  margin-top: 2px;
 }
 
 .ft-lora-params-small {
   color: #5856D6;
-}
-
-.ft-lora-plus,
-.ft-lora-times {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--text-tertiary);
-}
-
-.ft-lora-small-matrices {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .ft-lora-badge {
@@ -487,7 +484,6 @@
   background: #5856D6;
   border-radius: 20px;
   padding: 6px 18px;
-  margin-top: 8px;
 }
 
 /* ═══════════════════════════════════
@@ -923,8 +919,18 @@
   }
 
   .ft-lora-diagram {
-    flex-direction: column;
     padding: 16px;
+  }
+
+  .ft-lora-equation {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .ft-lora-cell {
+    width: 16px;
+    height: 16px;
   }
 
   .ft-decision-node {
@@ -936,12 +942,17 @@
     flex-wrap: wrap;
   }
 
+  /* Mobile touch targets */
   .ft-next-step-btn,
   .ft-replay-btn {
     min-height: 44px;
   }
 
   .ft-decision-btn {
+    min-height: 44px;
+  }
+
+  .ft-checklist-item {
     min-height: 44px;
   }
 }
@@ -964,6 +975,14 @@
 
   .ft-industry-cards {
     grid-template-columns: 1fr;
+  }
+
+  .ft-lora-equation {
+    gap: 10px;
+  }
+
+  .ft-lora-decomp {
+    gap: 8px;
   }
 
   .ft-lora-grid {

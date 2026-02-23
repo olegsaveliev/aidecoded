@@ -83,14 +83,14 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'Fine-Tuning Basics', when: 'Understanding FT', phrase: 'Specialize, don\'t retrain', icon: <BookIcon size={24} color="#8E8E93" /> },
-  { technique: 'Decision Framework', when: 'Choosing approach', phrase: 'Prompt < RAG < FT < Scratch', icon: <TargetIcon size={24} color="#8E8E93" /> },
-  { technique: 'Training Process', when: 'Running FT', phrase: 'Start from pre-trained weights', icon: <GearIcon size={24} color="#8E8E93" /> },
-  { technique: 'Data Quality', when: 'Preparing data', phrase: '50 perfect > 5000 mediocre', icon: <BarChartIcon size={24} color="#8E8E93" /> },
-  { technique: 'LoRA', when: 'Reducing cost', phrase: '0.06% params, 100x cheaper', icon: <ZapIcon size={24} color="#8E8E93" /> },
-  { technique: 'Evaluation', when: 'Measuring quality', phrase: 'LLM-as-judge + human eval', icon: <EyeIcon size={24} color="#8E8E93" /> },
-  { technique: 'Industry Use', when: 'Real applications', phrase: 'Med, Legal, Code, Finance', icon: <TrendingUpIcon size={24} color="#8E8E93" /> },
-  { technique: 'Deployment', when: 'Going to production', phrase: 'A/B test, monitor, retrain', icon: <RocketIcon size={24} color="#8E8E93" /> },
+  { technique: 'Fine-Tuning Basics', when: 'Understanding FT', phrase: 'Specialize, don\'t retrain', icon: <BookIcon size={24} color="#5856D6" /> },
+  { technique: 'Decision Framework', when: 'Choosing approach', phrase: 'Prompt < RAG < FT < Scratch', icon: <TargetIcon size={24} color="#5856D6" /> },
+  { technique: 'Training Process', when: 'Running FT', phrase: 'Start from pre-trained weights', icon: <GearIcon size={24} color="#5856D6" /> },
+  { technique: 'Data Quality', when: 'Preparing data', phrase: '50 perfect > 5000 mediocre', icon: <BarChartIcon size={24} color="#5856D6" /> },
+  { technique: 'LoRA', when: 'Reducing cost', phrase: '0.06% params, 100x cheaper', icon: <ZapIcon size={24} color="#5856D6" /> },
+  { technique: 'Evaluation', when: 'Measuring quality', phrase: 'LLM-as-judge + human eval', icon: <EyeIcon size={24} color="#5856D6" /> },
+  { technique: 'Industry Use', when: 'Real applications', phrase: 'Med, Legal, Code, Finance', icon: <TrendingUpIcon size={24} color="#5856D6" /> },
+  { technique: 'Deployment', when: 'Going to production', phrase: 'A/B test, monitor, retrain', icon: <RocketIcon size={24} color="#5856D6" /> },
 ]
 
 /* ===================================
@@ -378,42 +378,43 @@ function LoRAViz({ active }) {
       <div className="ft-demo-label">How LoRA reduces parameters:</div>
 
       <div className="ft-lora-diagram">
-        <div className={`ft-lora-section ${animPhase >= 1 ? 'ft-lora-visible' : ''}`}>
-          <div className="ft-lora-matrix ft-lora-matrix-big">
+        <div className="ft-lora-equation">
+          <div className={`ft-lora-term ${animPhase >= 1 ? 'ft-lora-visible' : ''}`}>
             <div className="ft-lora-matrix-label">W (Original)</div>
-            <div className="ft-lora-grid">
-              {Array.from({ length: 36 }).map((_, i) => (
+            <div className="ft-lora-grid ft-lora-grid-w">
+              {Array.from({ length: 42 }).map((_, i) => (
                 <div key={i} className="ft-lora-cell" />
               ))}
             </div>
             <div className="ft-lora-params">7B parameters</div>
           </div>
-        </div>
 
-        {animPhase >= 2 && (
-          <div className="ft-lora-section ft-lora-update how-pop-in">
-            <div className="ft-lora-plus">=</div>
-            <div className="ft-lora-small-matrices">
-              <div className="ft-lora-matrix ft-lora-matrix-small">
+          {animPhase >= 2 && (<>
+            <div className="ft-lora-operator how-pop-in">=</div>
+            <div className="ft-lora-decomp how-pop-in">
+              <div className="ft-lora-term">
                 <div className="ft-lora-matrix-label">A</div>
-                <div className="ft-lora-grid ft-lora-grid-small-a">
-                  {Array.from({ length: 12 }).map((_, i) => (
+                <div className="ft-lora-grid ft-lora-grid-a">
+                  {Array.from({ length: 14 }).map((_, i) => (
                     <div key={i} className="ft-lora-cell ft-lora-cell-active" />
                   ))}
                 </div>
               </div>
-              <div className="ft-lora-times">&times;</div>
-              <div className="ft-lora-matrix ft-lora-matrix-small">
+              <div className="ft-lora-operator">&times;</div>
+              <div className="ft-lora-term">
                 <div className="ft-lora-matrix-label">B</div>
-                <div className="ft-lora-grid ft-lora-grid-small-b">
-                  {Array.from({ length: 12 }).map((_, i) => (
+                <div className="ft-lora-grid ft-lora-grid-b">
+                  {Array.from({ length: 14 }).map((_, i) => (
                     <div key={i} className="ft-lora-cell ft-lora-cell-active" />
                   ))}
                 </div>
               </div>
             </div>
-            <div className="ft-lora-params ft-lora-params-small">~4M parameters (0.06%)</div>
-          </div>
+          </>)}
+        </div>
+
+        {animPhase >= 2 && (
+          <div className="ft-lora-params ft-lora-params-small how-pop-in">~4M parameters (0.06%)</div>
         )}
 
         {animPhase >= 3 && (
@@ -672,6 +673,10 @@ function FineTuning({ onSwitchTab, onGoHome }) {
   const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -716,12 +721,46 @@ function FineTuning({ onSwitchTab, onGoHome }) {
     if (stage > 0) setStage(stage - 1)
   }
 
+  function dismissLearnTip() {
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 300)
+  }
+
   function reset() {
     setStage(-1)
     setMaxStageReached(-1)
     setShowFinal(false)
     setShowQuiz(false)
+    setShowWelcome(true)
+    setLearnTip(null)
+    setLearnTipFading(false)
+    setDismissedTips(new Set())
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
   }
+
+  // Progressive learn tips — milestone-based
+  useEffect(() => {
+    if (stage === 0 && !dismissedTips.has('stage0')) {
+      setLearnTip({ key: 'stage0', text: 'Watch the three panels below — they show the same question answered by a base model, RAG, and a fine-tuned model. Notice how dramatically the quality improves.' })
+    } else if (stage === 1 && !dismissedTips.has('stage1')) {
+      setLearnTip({ key: 'stage1', text: 'Click through the decision tree to find the right approach for your use case. Most people fine-tune when they should be using RAG — this tree helps you avoid that mistake.' })
+    } else if (stage === 3 && !dismissedTips.has('stage3')) {
+      setLearnTip({ key: 'stage3', text: 'Compare the good and bad examples below. The #1 reason fine-tuning fails is bad training data — every example teaches the model what "good" looks like.' })
+    } else if (stage === 4 && !dismissedTips.has('stage4')) {
+      setLearnTip({ key: 'stage4', text: 'LoRA is a game-changer: it means you can fine-tune a 7B parameter model on a single consumer GPU. Watch the animation to see how it works.' })
+    } else if (stage === 7 && !dismissedTips.has('stage7')) {
+      setLearnTip({ key: 'stage7', text: 'This checklist is your real-world guide. Try clicking through all 20 items — skipping steps is the #1 cause of failed fine-tuning projects.' })
+    }
+  }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    }
+  }, [])
 
   const vizComponents = {
     0: <WhatIsFTViz active={stage === 0} />,
@@ -737,16 +776,18 @@ function FineTuning({ onSwitchTab, onGoHome }) {
   const explanations = {
     0: {
       title: 'Stage 1: What is Fine-Tuning?',
-      content: "A pre-trained model like GPT-4 knows a little about everything. Fine-tuning continues training it on YOUR specific data \u2014 making it an expert in your domain.\n\nThink of it like hiring a smart generalist consultant and sending them to a 3-month specialist bootcamp. Same brain, much more focused expertise.\n\nApproaches by effort and control:\n\n\u2022 Prompting \u2014 zero effort, least control\n\n\u2022 RAG \u2014 low effort, good for facts\n\n\u2022 Fine-tuning \u2014 medium effort, best for style/behavior\n\n\u2022 Training from scratch \u2014 maximum effort, full control",
-      tip: 'GPT-3.5 fine-tuned on medical data outperforms GPT-4 on medical tasks \u2014 specialization beats raw size.',
+      content: "A pre-trained model like GPT-4 knows a little about everything. It can write poems, explain physics, and summarize legal documents \u2014 but it's not an expert in any one of those.\n\nFine-tuning continues training it on YOUR specific data \u2014 making it a specialist. Think of it like hiring a brilliant generalist doctor and sending them through a 3-year cardiology fellowship. Same brain, massively deeper expertise in one area.\n\nHere's the spectrum of customization approaches, from easiest to most powerful:\n\n\u2022 Prompting \u2014 zero effort, least control. Just tell the model what to do in the prompt.\n\n\u2022 RAG \u2014 low effort, good for facts. Feed relevant documents alongside the question.\n\n\u2022 Fine-tuning \u2014 medium effort, best for style and behavior. Permanently teach the model your domain.\n\n\u2022 Training from scratch \u2014 maximum effort, full control. Build a model from zero (requires millions of dollars).",
+      tip: 'GPT-3.5 fine-tuned on medical data outperforms GPT-4 on medical tasks \u2014 a smaller specialist beats a larger generalist.',
     },
     1: {
       title: 'Stage 2: When to Fine-Tune vs RAG vs Prompt',
-      content: "Choosing the wrong approach wastes time and money.\n\nUSE PROMPTING WHEN: Task is straightforward, budget is tight, speed matters.\n\nUSE RAG WHEN: You need specific facts, info changes frequently, data privacy matters.\n\nUSE FINE-TUNING WHEN: You need specific tone or style, task is highly repetitive, behavior must be very consistent, you have 100+ quality examples.\n\nTRAIN FROM SCRATCH WHEN: Truly unique domain, large AI lab, budget over $10M.",
+      content: "This is the most important decision in the entire module. Choosing the wrong approach wastes weeks of work and thousands of dollars. Use the decision tree below to find your answer.\n\nUSE PROMPTING WHEN: Task is straightforward, budget is tight, or you need results today. Most tasks should start here.\n\nUSE RAG WHEN: You need specific facts from your documents, information changes frequently, or data privacy matters. RAG retrieves relevant context at query time.\n\nUSE FINE-TUNING WHEN: You need a specific tone or writing style, the task is highly repetitive, behavior must be very consistent across thousands of queries, and you have 100+ quality examples to train on.\n\nTRAIN FROM SCRATCH WHEN: Truly unique domain (new language, rare data), you're a large AI lab with GPU clusters, and budget exceeds $10M. Almost nobody needs this.",
+      tip: 'Start with prompting. If that fails, try RAG. Only fine-tune when the first two approaches clearly aren\'t enough. This saves 90% of teams from wasted effort.',
     },
     2: {
       title: 'Stage 3: How Fine-Tuning Actually Works',
-      content: "Fine-tuning continues training on your dataset \u2014 starting from pre-trained weights, not random ones.\n\nThe process:\n\n1. Start with pre-trained model weights\n\n2. Prepare training examples (prompt \u2192 ideal response)\n\n3. Run training for a few epochs\n\n4. Weights shift slightly toward your domain\n\n5. Evaluate on held-out test examples\n\n6. Deploy the fine-tuned model\n\nKey insight: You're steering existing knowledge in a specific direction \u2014 not teaching from scratch.",
+      content: "Here's what happens under the hood. Fine-tuning continues training on your dataset \u2014 but starting from pre-trained weights, not random ones. This is crucial: the model already knows language, reasoning, and general knowledge. You're just steering it.\n\nThe process:\n\n1. Start with pre-trained model weights (billions of parameters already trained on the internet)\n\n2. Prepare training examples as prompt \u2192 ideal response pairs\n\n3. Run training for a few epochs (usually 1\u20133 passes through your data)\n\n4. Weights shift slightly toward your domain patterns\n\n5. Evaluate on held-out test examples to check quality\n\n6. Deploy the fine-tuned model to production\n\nKey insight: You're nudging existing knowledge in a specific direction \u2014 like teaching an experienced doctor a new specialty, not sending someone to medical school from scratch.",
+      tip: 'Most fine-tuning runs take minutes to hours, not days. The model already knows 99% of what it needs \u2014 you\'re just teaching the last 1%.',
     },
     3: {
       title: 'Stage 4: Data is Everything',
@@ -756,25 +797,28 @@ function FineTuning({ onSwitchTab, onGoHome }) {
     },
     4: {
       title: 'Stage 5: LoRA \u2014 Fine-Tuning Without the Cost',
-      content: "Full fine-tuning updates ALL parameters \u2014 expensive and slow. LoRA achieves similar results updating only a tiny fraction.\n\nHow LoRA works: Instead of updating full weight matrix W, add two small matrices A and B: W' = W + A\u00D7B\n\nResults:\n\nFull fine-tuning: 7 billion parameters\n\nLoRA: ~4 million parameters (0.06%)\n\nQuality difference: minimal\n\nCost difference: 100x cheaper",
-      tip: 'This is why you can fine-tune LLaMA on a single GPU.',
+      content: "Full fine-tuning updates ALL 7 billion parameters of a model \u2014 requiring expensive multi-GPU setups and hours of compute time. LoRA (Low-Rank Adaptation) is a breakthrough that achieves nearly the same quality while updating only 0.06% of parameters.\n\nThe key insight: fine-tuning doesn't need to change every weight. It only needs to make small adjustments. LoRA captures these adjustments in two tiny matrices (A and B) that are added to the original weights: W' = W + A\u00D7B\n\nThe numbers are dramatic:\n\nFull fine-tuning: 7 billion parameters updated. Needs 8+ GPUs. Costs $$$.\n\nLoRA: ~4 million parameters updated (0.06%). Runs on a single GPU. 100x cheaper.\n\nQuality difference: minimal in most benchmarks.",
+      tip: 'LoRA is why the open-source fine-tuning revolution happened. Before LoRA, only big labs could fine-tune. Now anyone with a single GPU can do it.',
     },
     5: {
       title: 'Stage 6: How Do You Know It\'s Working?',
-      content: "Evaluation is the hardest part. No single accuracy metric exists.\n\n1. Automated metrics: Perplexity, ROUGE score, BLEU score\n\n2. Human evaluation: A/B test base vs fine-tuned model. Rate accuracy, tone, helpfulness.\n\n3. LLM-as-judge: Use GPT-4 to rate your model responses. Fast and scalable.\n\n4. Task-specific benchmarks: Known correct answers, measure match.",
+      content: "You've trained your model. But how do you know it actually improved? Evaluation is the hardest part of fine-tuning because there's no single accuracy number to look at.\n\nFour evaluation approaches (use them together, not separately):\n\n1. Automated metrics \u2014 Perplexity (how surprised is the model?), ROUGE/BLEU scores (how close to reference answers?). Fast but imperfect.\n\n2. Human evaluation \u2014 A/B test base vs fine-tuned model. Have domain experts rate accuracy, tone, and helpfulness. Slow but most reliable.\n\n3. LLM-as-judge \u2014 Use GPT-4 or Claude to rate your model's responses. Surprisingly effective and 100x faster than human eval.\n\n4. Task-specific benchmarks \u2014 Create a test set with known correct answers and measure exact match. Best for factual tasks.",
+      tip: 'The comparison table below shows a common pattern: fine-tuned models win on domain tasks but may lose on general conversation. Always check both.',
       warnings: [
-        'Catastrophic forgetting \u2014 loses general knowledge',
-        'Overfitting \u2014 perfect on training, bad on new data',
-        'Reward hacking \u2014 optimizes metric not quality',
+        'Catastrophic forgetting \u2014 the model loses general knowledge it had before fine-tuning',
+        'Overfitting \u2014 memorizes training data perfectly but fails on new inputs',
+        'Reward hacking \u2014 optimizes the metric you measure instead of actual quality',
       ],
     },
     6: {
       title: 'Stage 7: Fine-Tuning in the Wild',
-      content: "Fine-tuning powers some of the most impressive AI products used by millions today.",
+      content: "Theory is great, but does fine-tuning actually work in production? Absolutely. Some of the most impressive AI products you use every day are fine-tuned models.\n\nThe pattern is always the same: take a powerful base model, fine-tune it on high-quality domain data, and deploy it as a specialist. The result is a model that speaks the language of that industry \u2014 using the right terminology, following the right protocols, and producing output that domain experts trust.\n\nClick through the industries below to see real companies using this approach.",
+      tip: 'Notice a pattern: every successful fine-tuning project starts with a clear, specific task \u2014 not "make the model better at everything."',
     },
     7: {
       title: 'Stage 8: Your Fine-Tuning Roadmap',
-      content: "Work through this checklist systematically. Skipping steps is the number one cause of failed fine-tuning projects.",
+      content: "You've learned the theory. Now here's your practical roadmap. This checklist covers everything from planning to production \u2014 work through it systematically.\n\nWhy a checklist matters: The #1 cause of failed fine-tuning projects is skipping steps. Teams jump straight to training without validating their data, or deploy without proper evaluation. Each section below represents a critical phase \u2014 complete them in order.",
+      tip: 'Print this checklist or save it. When you start your first real fine-tuning project, working through these 20 items in order will save you from the most common pitfalls.',
     },
   }
 
@@ -811,9 +855,25 @@ function FineTuning({ onSwitchTab, onGoHome }) {
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Welcome to Fine-Tuning</strong> — This is how you take a general-purpose AI and turn it into a domain expert. Medical AI, legal AI, coding AI — it all starts here.
+            <strong>Welcome to Fine-Tuning</strong> — here's how to explore:
+            <ol className="module-welcome-steps">
+              <li>Walk through <strong>8 stages</strong> — from what fine-tuning is to a complete deployment checklist</li>
+              <li>Use the <strong>interactive demos</strong> — decision trees, side-by-side comparisons, and a hands-on checklist</li>
+              <li>At the end, review your <strong>Fine-Tuning toolkit</strong> and test your knowledge with a quiz</li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
+        </div>
+      )}
+
+      {/* Learn tip */}
+      {learnTip && (
+        <div className={`learn-tip${learnTipFading ? ' learn-tip-fading' : ''}`} role="status" aria-live="polite">
+          <TipIcon size={16} color="#eab308" />
+          <span className="learn-tip-text">{learnTip.text}</span>
+          <button className="learn-tip-dismiss" onClick={() => { setDismissedTips(prev => new Set(prev).add(learnTip.key)); dismissLearnTip() }} aria-label="Dismiss tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+          </button>
         </div>
       )}
 

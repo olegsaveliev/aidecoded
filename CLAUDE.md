@@ -702,6 +702,8 @@ border-left: 2px solid #eab308;        /* yellow left border */
 - `.ml-comparison, .ml-algo-cards, .ml-business-cards, .ml-overfit-panels` → `1fr` at 720px
 - `.ce-model-cards, .ce-usecase-cards` → `1fr 1fr` at 720px, `1fr` at 480px
 - `.rag-realworld-cards, .rag-chunking-cards` → `1fr` at 720px
+- `.dl-comparison, .dl-techniques-grid, .dl-project-cards` → `1fr` at 768px
+- `.ft-data-examples, .ft-industry-cards` → `1fr` at 768px
 
 **Tokenizer:**
 - `.tok-suggestions` → `flex-direction: column`

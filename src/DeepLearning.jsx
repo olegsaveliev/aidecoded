@@ -98,9 +98,11 @@ const NEXT_LABELS = [
 const EXPLANATIONS = [
   {
     title: 'Stage 1: What is Deep Learning?',
-    content: `Machine learning taught computers to learn from data. Deep learning taught them to think in layers.
+    content: `Think about how you recognize a friend's face. You don't analyze individual pixels — your brain processes edges, shapes, features, and identity in layers. Deep learning works the same way: stacking layers of simple pattern-detectors to understand complex things.
 
-What makes it "deep": Shallow learning uses 1\u20132 layers of processing. Deep learning uses dozens or hundreds of layers. Each layer finds increasingly abstract patterns.
+Machine learning taught computers to learn from data. Deep learning taught them to think in layers — and that single idea changed everything.
+
+What makes it "deep": Shallow learning uses 1\u20132 layers of processing. Deep learning uses dozens or hundreds. Each layer finds increasingly abstract patterns:
 
 - Layer 1 sees: raw pixels
 - Layer 5 sees: edges and shapes
@@ -129,12 +131,14 @@ How information flows: Data enters input layer \u2192 each neuron processes + pa
   },
   {
     title: 'Stage 4: Learning from Mistakes',
-    content: `A fresh neural network is completely random \u2014 it knows nothing. Training teaches it everything.
+    content: `How do you learn to throw a basketball? You throw, miss, adjust, and repeat. Neural networks learn exactly the same way — just millions of times faster.
+
+A fresh neural network is completely random \u2014 it knows nothing. Training teaches it everything through a loop:
 
 - FORWARD PASS \u2014 Feed a training example through the network. Get a prediction (probably wrong at first).
-- CALCULATE LOSS \u2014 Compare prediction to the correct answer. High loss = very wrong. Zero loss = perfect.
-- BACKWARD PASS (Backpropagation) \u2014 Work backwards through network. Calculate how much each weight contributed to the error. This is the gradient.
-- UPDATE WEIGHTS \u2014 Adjust each weight to reduce loss. The learning rate controls step size \u2014 too big and you overshoot, too small and it takes forever.
+- CALCULATE LOSS \u2014 Compare prediction to the correct answer. Loss is a number: high = very wrong, zero = perfect.
+- BACKWARD PASS (Backpropagation) \u2014 The key insight: work backwards through the network. For each weight, calculate "if I increased this weight slightly, would the loss go up or down?" This measurement is called the gradient.
+- UPDATE WEIGHTS \u2014 Nudge each weight in the direction that reduces loss. The learning rate controls how big each nudge is \u2014 too big and you overshoot, too small and training takes forever.
 - REPEAT \u2014 Thousands or millions of times. Each pass: slightly less wrong. Eventually: surprisingly right.
 
 Gradient descent finds the minimum of the loss function \u2014 like rolling a ball downhill to find the lowest point in a landscape.`,
@@ -156,44 +160,44 @@ Full CNN pipeline:
   },
   {
     title: 'Stage 6: From Reading Left-to-Right to Reading Everything at Once',
-    content: `Images are 2D grids. Text is sequences. Different problem, different architecture.
+    content: `Images are 2D grids — CNNs handle those. Text is sequences of words. That required a completely different approach, and three generations of architecture:
 
-- RNNs (1980s\u20132010s) \u2014 Read text left to right, one word at a time. Maintain a "memory" of what came before. Problem: memory fades \u2014 forgets early words by the end of long text.
-- LSTMs (1997) \u2014 Smarter memory with gates. Decide what to remember and what to forget. Better for long sequences, but still limited.
-- THE TRANSFORMER (2017) \u2014 "Attention is All You Need." Reads ALL words simultaneously. Calculates relationships between every word pair. No recurrence, fully parallelizable.
+- RNNs (1980s\u20132010s) \u2014 Read text left to right, one word at a time. Maintain a "memory" of what came before. Problem: by the end of a long paragraph, the model has already forgotten the beginning. Like reading a book but forgetting page 1 by page 10.
+- LSTMs (1997) \u2014 Smarter memory with gates that decide what to remember and what to forget. Better, but still struggled with long documents.
+- THE TRANSFORMER (2017) \u2014 The breakthrough. Instead of reading sequentially, it reads ALL words at once and uses "attention" to figure out which words relate to each other. No memory problem because nothing is sequential.
 
-Attention mechanism example: "The cat sat on the mat because it was tired." For the word "it" \u2014 attends heavily to "cat" (0.92), slightly to "mat" (0.08). This is how the model resolves references.
+Attention mechanism example: "The cat sat on the mat because it was tired." What does "it" refer to? The transformer calculates: "it" attends to "cat" (0.92) much more than "mat" (0.08). It figured out the reference — just from the math of attention.
 
-This single idea powers GPT, BERT, DALL-E, Whisper, and AlphaFold.`,
+This single architecture now powers GPT, BERT, DALL-E, Whisper, and AlphaFold. It is the most important invention in modern AI.`,
   },
   {
     title: 'Stage 7: The Tricks That Make It All Work',
-    content: `Raw deep learning theory is beautiful but fragile. These engineering tricks are what make it practical.
+    content: `Everything you've learned so far is the theory. But here's a secret: raw deep learning theory alone doesn't work in practice. These six engineering tricks are what make it actually trainable.
 
-- BATCH NORMALIZATION \u2014 Normalize layer inputs during training. Prevents internal covariate shift. Networks train up to 10x faster.
-- DROPOUT \u2014 Randomly disable neurons during training. Forces the network to learn redundant representations. Prevents overfitting.
-- RESIDUAL CONNECTIONS \u2014 Add input directly to output: y = F(x) + x. Gradients flow directly through skip connections, enabling 100+ layer networks.
-- DATA AUGMENTATION \u2014 Artificially expand training data. Images: flip, rotate, crop. Text: synonym replacement. Can double effective dataset size.
-- LEARNING RATE SCHEDULING \u2014 Start high (fast, rough), reduce over time (slow, precise). Common: cosine annealing, warmup + decay.
-- WEIGHT INITIALIZATION \u2014 Random is not enough. He initialization for ReLU, Xavier for sigmoid/tanh.`,
+- BATCH NORMALIZATION \u2014 Normalize layer inputs during training so they don't drift wildly. Result: networks train up to 10x faster and more stably.
+- DROPOUT \u2014 Randomly disable neurons during training (like removing team members to force others to step up). Prevents the network from memorizing training data.
+- RESIDUAL CONNECTIONS \u2014 Add input directly to output: y = F(x) + x. This simple shortcut lets gradients flow through 100+ layers without vanishing. Before this trick, 20 layers was the limit.
+- DATA AUGMENTATION \u2014 Artificially expand training data by flipping, rotating, and cropping images (or replacing synonyms in text). Can double your effective dataset for free.
+- LEARNING RATE SCHEDULING \u2014 Start with big steps (fast, rough learning), then slow down for precision. Like walking quickly to the right neighborhood, then carefully finding the exact house.
+- WEIGHT INITIALIZATION \u2014 How you set the initial weights matters enormously. He initialization for ReLU, Xavier for sigmoid/tanh. Bad initialization = the network never learns.`,
   },
   {
     title: 'Stage 8: The Next Frontier',
-    content: `Deep learning has already changed the world. What comes next will change it even more.
+    content: `You've now learned the full deep learning stack. Let's look at what it has already enabled \u2014 and where it's headed.
 
-What just became possible:
+What deep learning has made possible:
 
-- Foundation Models \u2014 train once on everything, adapt to anything
-- Multimodal AI \u2014 see, hear, and read simultaneously
-- Generative AI \u2014 create images, videos, music, and code from descriptions
-- Scientific AI \u2014 AlphaFold solved protein folding, a 50-year grand challenge
+- Foundation Models \u2014 train once on everything, adapt to anything. GPT-4, Claude, and LLaMA are all foundation models.
+- Multimodal AI \u2014 models that see, hear, and read simultaneously. GPT-4o processes text, images, and audio in one model.
+- Generative AI \u2014 create images (DALL-E, Midjourney), videos (Sora), music (Suno), and code (Copilot, Cursor) from descriptions.
+- Scientific AI \u2014 AlphaFold solved protein folding, a 50-year grand challenge, in months.
 
-What is coming next:
+What is actively being built:
 
-- Reasoning models that think step by step and check their own work
-- Agents that take actions in the world, not just generate text
-- Embodied AI \u2014 robots that understand language and manipulate the physical world
-- Neuromorphic chips \u2014 hardware built like brains, 1000x more efficient
+- Reasoning models that think step by step, catch their own mistakes, and solve complex problems (o1, Claude)
+- AI agents that browse the web, write code, use tools, and complete real tasks autonomously
+- Embodied AI \u2014 robots that understand language and manipulate objects in the physical world
+- Neuromorphic chips \u2014 hardware built like brains, potentially 1000x more energy-efficient
 
 The open questions: How do we make AI reliably honest? Can AI truly reason or is it sophisticated pattern matching? What happens when AI designs better AI?`,
   },
@@ -295,7 +299,7 @@ function NeuronViz({ active }) {
       if (activation === 'relu') y = Math.max(0, x)
       else if (activation === 'sigmoid') y = 1 / (1 + Math.exp(-x))
       else y = Math.tanh(x)
-      const px = ((x + 3) / 6) * 100
+      const px = ((x + 3) / 6) * 300
       const py = (1 - (y + 1) / 3) * 100
       pts.push(`${px},${py}`)
     }
@@ -360,9 +364,9 @@ function NeuronViz({ active }) {
           ))}
         </div>
         <div className="dl-activation-graph">
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-            <line x1="0" y1="66.7" x2="100" y2="66.7" stroke="var(--border-light)" strokeWidth="0.5" />
-            <line x1="50" y1="0" x2="50" y2="100" stroke="var(--border-light)" strokeWidth="0.5" />
+          <svg viewBox="0 0 300 100">
+            <line x1="0" y1="66.7" x2="300" y2="66.7" stroke="var(--border-light)" strokeWidth="0.5" />
+            <line x1="150" y1="0" x2="150" y2="100" stroke="var(--border-light)" strokeWidth="0.5" />
             <polyline points={activationPoints()} fill="none" stroke="#5856D6" strokeWidth="2" />
           </svg>
         </div>
@@ -935,12 +939,12 @@ function FutureViz({ active }) {
   const [expandedCard, setExpandedCard] = useState(null)
 
   const futureItems = [
-    { year: '2024', title: 'Multimodal models, AI agents', detail: 'GPT-4o processes text, images, and audio together. AI agents browse the web, write code, and use tools autonomously.' },
-    { year: '2025', title: 'Reliable reasoning, autonomous agents', detail: 'Models that think step by step, catch their own mistakes, and reliably solve complex multi-step problems.' },
-    { year: '2026', title: 'Embodied AI breakthroughs', detail: 'Robots that understand natural language instructions and can manipulate objects in the physical world with dexterity.' },
-    { year: '2027', title: 'AI-designed AI architectures', detail: 'Neural architecture search at scale — AI systems designing more efficient AI systems in a recursive loop of improvement.' },
-    { year: '2028', title: 'Scientific AI solving major problems', detail: 'AI accelerating drug discovery, materials science, climate modeling, and fundamental physics research.' },
-    { year: '2030', title: '???', detail: 'The pace of progress makes specific predictions beyond a few years unreliable. The fundamentals you learned here will remain relevant.' },
+    { year: '2024', title: 'Multimodal models, AI agents', detail: 'GPT-4o processes text, images, and audio together. AI agents browse the web, write code, and use tools autonomously. AI generates video, music, and 3D models.' },
+    { year: '2025', title: 'Reasoning models, coding agents', detail: 'Models like o1 and Claude think step by step, catch mistakes, and solve complex multi-step problems. AI coding assistants write entire applications.' },
+    { year: '2026', title: 'Autonomous agents everywhere', detail: 'AI agents that plan, use tools, and complete real-world tasks with minimal human supervision. Computer-use agents interact with software like humans do.' },
+    { year: '2027+', title: 'Embodied AI & scientific discovery', detail: 'Robots that understand language and manipulate the physical world. AI accelerating drug discovery, materials science, and fundamental physics research.' },
+    { year: '2030+', title: 'AI-designed AI', detail: 'Neural architecture search at scale — AI systems designing more efficient AI systems. The pace of progress makes specific predictions unreliable.' },
+    { year: '???', title: 'The fundamentals remain', detail: 'Models will change every 6 months. But neurons, backpropagation, CNNs, attention, and training tricks — the fundamentals you learned here — will remain relevant for decades.' },
   ]
 
   const projects = [
@@ -1002,6 +1006,10 @@ function DeepLearning({ onSwitchTab, onGoHome }) {
   const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [fading, setFading] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const activeStepRef = useRef(null)
 
   function goToStage(target) {
@@ -1036,12 +1044,24 @@ function DeepLearning({ onSwitchTab, onGoHome }) {
     if (stage > 0) setStage(stage - 1)
   }
 
+  function dismissLearnTip() {
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 300)
+  }
+
   function reset() {
     setStage(-1)
     setMaxStageReached(-1)
     setShowFinal(false)
     setShowQuiz(false)
     setShowWelcome(true)
+    setLearnTip(null)
+    setLearnTipFading(false)
+    setDismissedTips(new Set())
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
   }
 
   useEffect(() => {
@@ -1053,6 +1073,27 @@ function DeepLearning({ onSwitchTab, onGoHome }) {
       activeStepRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
     }
   }, [stage])
+
+  // Progressive learn tips — milestone-based
+  useEffect(() => {
+    if (stage === 0 && !dismissedTips.has('stage0')) {
+      setLearnTip({ key: 'stage0', text: 'You\'re at the beginning! This hierarchy shows where deep learning fits in the AI family. Click the timeline events below to explore key breakthroughs.' })
+    } else if (stage === 1 && !dismissedTips.has('stage1')) {
+      setLearnTip({ key: 'stage1', text: 'Drag the weight sliders to see how a neuron decides. Try making "known sender" very negative — the email becomes spam even from trusted contacts!' })
+    } else if (stage === 3 && !dismissedTips.has('stage3')) {
+      setLearnTip({ key: 'stage3', text: 'Click Train Step repeatedly and watch the loss drop. Each step is like turning a dial slightly to reduce error — that\'s gradient descent in action.' })
+    } else if (stage === 5 && !dismissedTips.has('stage5')) {
+      setLearnTip({ key: 'stage5', text: 'Click the word "it" in the heatmap — see how the model connects it to "cat"? This one insight is why Transformers power every modern AI.' })
+    } else if (stage === 7 && !dismissedTips.has('stage7')) {
+      setLearnTip({ key: 'stage7', text: 'You\'ve covered the entire deep learning stack — from a single neuron to the Transformer. The starter projects below are real things you can build today.' })
+    }
+  }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    }
+  }, [])
 
   const vizComponents = {
     0: <HierarchyViz active={stage === 0} />,
@@ -1067,20 +1108,20 @@ function DeepLearning({ onSwitchTab, onGoHome }) {
 
   const tipContent = [
     'Deep learning existed since the 1980s but needed two things to take off: massive datasets and fast GPUs. Both arrived around 2012 \u2014 and the AI revolution began.',
-    'The activation function is what makes neural networks non-linear \u2014 without it, 100 layers would be no better than 1.',
-    'A network with 1 hidden layer can approximate ANY function \u2014 but needs astronomical width. Deep networks achieve the same with far fewer total neurons.',
-    null,
+    'The activation function is what makes neural networks non-linear \u2014 without it, stacking 100 layers would mathematically collapse into a single layer. Non-linearity is what gives depth its power.',
+    'A network with 1 hidden layer can approximate ANY function \u2014 but needs astronomical width. Deep networks achieve the same with far fewer total neurons. That\'s the magic of depth.',
+    'Backpropagation is the single most important algorithm in deep learning. Every AI model you use \u2014 ChatGPT, DALL-E, self-driving cars \u2014 learned everything it knows through this exact loop.',
     'ResNet (2015) introduced skip connections \u2014 letting gradients jump over layers. This allowed networks 152 layers deep. Before ResNet, 20 layers was the practical limit.',
-    'Transformers are so powerful because attention is computed in parallel \u2014 not sequentially like RNNs. This meant they could finally be trained on internet-scale data.',
-    null,
+    'Transformers are so powerful because attention is computed in parallel \u2014 not sequentially like RNNs. This meant they could finally be trained on internet-scale data using GPU farms.',
+    'You\'ve now seen all the core tricks. In practice, combining these techniques is an art \u2014 and it\'s what separates a research paper from a working product.',
     'The most important skill is not knowing today\u2019s models \u2014 it is understanding the fundamentals. Models change every 6 months. Fundamentals last forever. You now have the fundamentals.',
   ]
 
   const warningContent = [
     null, null, null,
-    'Vanishing gradients: in very deep networks, gradients shrink to almost zero by the time they reach early layers \u2014 early layers stop learning. Solved by: residual connections, batch normalization, better activations.',
+    'Vanishing gradients: in very deep networks, gradients shrink to near zero by the time they reach early layers \u2014 so those layers stop learning. This is why residual connections (Stage 7) were invented: they let gradients bypass layers entirely.',
     null, null,
-    'Without these tricks, deep networks fail to train reliably. Even small architectural choices can make the difference between a network that learns and one that doesn\u2019t.',
+    'Without these tricks, even the best architecture fails to train. The difference between a model that learns and one that doesn\u2019t is often just the right combination of these techniques.',
     null,
   ]
 
@@ -1166,9 +1207,25 @@ function DeepLearning({ onSwitchTab, onGoHome }) {
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Welcome to Deep Learning</strong> — You are about to understand the technology that changed the world. Neural networks sound intimidating — but you will get it, we promise.
+            <strong>Welcome to Deep Learning</strong> — here's how to explore:
+            <ol className="module-welcome-steps">
+              <li>Walk through <strong>8 stages</strong> — from a single neuron to the Transformer architecture that powers ChatGPT</li>
+              <li>Play with the <strong>interactive demos</strong> — drag sliders, click neurons, and watch data flow through networks</li>
+              <li>At the end, review your <strong>Deep Learning toolkit</strong> and test your knowledge with a quiz</li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
+        </div>
+      )}
+
+      {/* Learn tip */}
+      {learnTip && (
+        <div className={`learn-tip${learnTipFading ? ' learn-tip-fading' : ''}`} role="status" aria-live="polite">
+          <TipIcon size={16} color="#eab308" />
+          <span className="learn-tip-text">{learnTip.text}</span>
+          <button className="learn-tip-dismiss" onClick={() => { setDismissedTips(prev => new Set(prev).add(learnTip.key)); dismissLearnTip() }} aria-label="Dismiss tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+          </button>
         </div>
       )}
 

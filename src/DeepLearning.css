@@ -29,6 +29,10 @@
   background: #1C1917;
 }
 
+[data-theme="dark"] .dl-neuron-slider::-webkit-slider-thumb {
+  border-color: #292524;
+}
+
 .dl-stepper .how-step-active .how-step-label {
   color: var(--text-primary);
 }
@@ -1201,6 +1205,30 @@
 
   .dl-future-card-detail {
     padding-left: 16px;
+  }
+
+  /* Mobile touch targets */
+  .dl-network-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .dl-activation-tab {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .dl-conv-filter-tab {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .dl-outcome-dismiss {
+    min-height: 44px;
+  }
+
+  .dl-future-card-header {
+    min-height: 44px;
   }
 }
 
