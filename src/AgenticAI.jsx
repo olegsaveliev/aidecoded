@@ -378,7 +378,7 @@ function ToolExplorerViz({ active }) {
       <div className="aai-tools-ring">
         <div className="aai-tools-center">
           <RobotIcon size={20} color="#5856D6" />
-          <span>Agent Brain</span>
+          <span>Agent</span>
         </div>
         <div className="aai-tools-nodes">
           {TOOL_CATEGORIES.map((cat) => {
