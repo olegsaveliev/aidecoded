@@ -110,7 +110,7 @@ const DOT_DELAYS = CONN_DELAYS.map((d) => d + CONN_DRAW_DUR)
 /* ── Layout helpers ── */
 
 const REF_W = 960
-const REF_H = 480
+const REF_H = 600
 
 const PARTICLE_BG_COUNT = 35
 
@@ -119,17 +119,77 @@ const PARTICLE_BG_COUNT = 35
 const TOTAL_ANIM_TIME = Math.max(...DOT_DELAYS) + 500
 const NODE_PADDING = 30
 
-const ORIGINAL_POSITIONS = {}
-for (const node of NODES) {
-  ORIGINAL_POSITIONS[node.id] = { x: node.px * REF_W, y: node.py * REF_H }
+/* ── Force-directed layout to prevent node overlap ── */
+
+function computeLayout(nodes, refW, refH, nodeR) {
+  // circle (r+3 ring) + label below = ~95px vertical footprint per node
+  const repulsionDist = nodeR * 2 + 52 // target separation including label clearance
+  const padX = nodeR + 30
+  const padTop = Math.round(refH * 0.07)
+  const padBottom = Math.round(refH * 0.08) // extra room for bottom labels
+
+  const pos = nodes.map(n => ({
+    id: n.id,
+    x: n.px * refW,
+    y: n.py * refH,
+    origX: n.px * refW,
+    origY: n.py * refH,
+  }))
+
+  for (let iter = 0; iter < 400; iter++) {
+    let totalDelta = 0
+
+    // Repulsion: push overlapping nodes apart
+    for (let i = 0; i < pos.length; i++) {
+      for (let j = i + 1; j < pos.length; j++) {
+        const dx = pos[j].x - pos[i].x
+        const dy = pos[j].y - pos[i].y
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        if (dist < repulsionDist && dist > 0.01) {
+          const overlap = (repulsionDist - dist) / dist
+          const fx = dx * overlap * 0.25
+          const fy = dy * overlap * 0.25
+          pos[i].x -= fx
+          pos[i].y -= fy
+          pos[j].x += fx
+          pos[j].y += fy
+          totalDelta += Math.abs(fx) + Math.abs(fy)
+        }
+      }
+    }
+
+    // X attraction strong (0.08) to preserve left-to-right layer columns
+    // Y attraction weak (0.005) so nodes can freely redistribute vertically
+    for (let i = 0; i < pos.length; i++) {
+      pos[i].x += (pos[i].origX - pos[i].x) * 0.08
+      pos[i].y += (pos[i].origY - pos[i].y) * 0.005
+    }
+
+    // Boundary constraints
+    for (const p of pos) {
+      p.x = Math.max(padX, Math.min(refW - padX, p.x))
+      p.y = Math.max(padTop, Math.min(refH - padBottom, p.y))
+    }
+
+    // Early exit when layout has settled
+    if (totalDelta < 0.5) break
+  }
+
+  const result = {}
+  for (const p of pos) {
+    result[p.id] = { x: Math.round(p.x * 10) / 10, y: Math.round(p.y * 10) / 10 }
+  }
+  return result
 }
+
+const ORIGINAL_POSITIONS = computeLayout(NODES, REF_W, REF_H, 32)
 
 function NeuralNetworkCanvas({ onSelectTab }) {
   const { isModuleLocked } = useAuth()
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
   const svgRef = useRef(null)
-  const [dimensions, setDimensions] = useState({ width: 960, height: 480 })
+  const [dimensions, setDimensions] = useState({ width: REF_W, height: REF_H })
   const [hoveredNode, setHoveredNode] = useState(null)
   const [clickedNode, setClickedNode] = useState(null)
   const [animKey, setAnimKey] = useState(0)
