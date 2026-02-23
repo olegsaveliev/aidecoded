@@ -641,6 +641,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [fading, setFading] = useState(false)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -663,9 +664,21 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
     if (stage < STAGES.length - 1) {
       setStage(stage + 1)
     } else {
-      setShowFinal(true)
-      setStage(STAGES.length)
-      markModuleComplete('context-engineering')
+      setFading(true)
+      setTimeout(() => {
+        setShowFinal(true)
+        setStage(STAGES.length)
+        markModuleComplete('context-engineering')
+        setFading(false)
+        requestAnimationFrame(() => {
+          let el = document.querySelector('.ce-root')
+          while (el) {
+            if (el.scrollTop > 0) el.scrollTop = 0
+            el = el.parentElement
+          }
+          window.scrollTo(0, 0)
+        })
+      }, 250)
     }
   }
 
@@ -744,7 +757,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
   }
 
   return (
-    <div className="how-llms ce-root">
+    <div className={`how-llms ce-root${fading ? ' how-fading' : ''}`}>
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">

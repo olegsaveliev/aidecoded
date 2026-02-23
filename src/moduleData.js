@@ -10,6 +10,7 @@ const ALL_MODULES = [
   { id: 'context-engineering', title: 'Context Engineering', description: 'Learn how to give AI the right context to get dramatically better results every time', tag: 'Practical', tagColor: '#34C759' },
   { id: 'rag', title: 'RAG', description: 'How AI learns from YOUR documents — Retrieval Augmented Generation explained', tag: 'Journey', tagColor: '#FF9500' },
   { id: 'machine-learning', title: 'Machine Learning', description: 'How machines actually learn from data — the foundation of all modern AI', tag: 'Technical', tagColor: '#5856D6' },
+  { id: 'deep-learning', title: 'Deep Learning', description: 'Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'fine-tuning', title: 'Fine-Tuning', description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'ai-lab-explorer', title: 'AI Lab Explorer', description: 'Walk through an AI research lab. Unlock each room by completing hands-on challenges.', tag: 'Game', tagColor: '#F59E0B' },
 ]

@@ -129,7 +129,19 @@ function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentMod
           setTransitioning(false)
         }, 250)
       } else {
-        setShowResult(true)
+        setTransitioning(true)
+        setTimeout(() => {
+          setShowResult(true)
+          setTransitioning(false)
+          requestAnimationFrame(() => {
+            let el = document.querySelector('.quiz-container')
+            while (el) {
+              if (el.scrollTop > 0) el.scrollTop = 0
+              el = el.parentElement
+            }
+            window.scrollTo(0, 0)
+          })
+        }, 300)
       }
     }, 1500)
   }
@@ -216,7 +228,7 @@ function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentMod
 
   // Question screen
   return (
-    <div className="quiz-container quiz-fade-in">
+    <div className={`quiz-container quiz-fade-in${transitioning && current === questions.length - 1 ? ' quiz-fading-out' : ''}`}>
       {/* Progress bar */}
       <div className="quiz-header">
         <div className="quiz-progress-info">

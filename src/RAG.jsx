@@ -662,6 +662,7 @@ function RAG({ onSwitchTab, onGoHome }) {
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [fading, setFading] = useState(false)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -684,9 +685,21 @@ function RAG({ onSwitchTab, onGoHome }) {
     if (stage < STAGES.length - 1) {
       setStage(stage + 1)
     } else {
-      setShowFinal(true)
-      setStage(STAGES.length)
-      markModuleComplete('rag')
+      setFading(true)
+      setTimeout(() => {
+        setShowFinal(true)
+        setStage(STAGES.length)
+        markModuleComplete('rag')
+        setFading(false)
+        requestAnimationFrame(() => {
+          let el = document.querySelector('.rag-root')
+          while (el) {
+            if (el.scrollTop > 0) el.scrollTop = 0
+            el = el.parentElement
+          }
+          window.scrollTo(0, 0)
+        })
+      }, 250)
     }
   }
 
@@ -770,7 +783,7 @@ function RAG({ onSwitchTab, onGoHome }) {
   }
 
   return (
-    <div className="how-llms rag-root">
+    <div className={`how-llms rag-root${fading ? ' how-fading' : ''}`}>
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">

@@ -670,6 +670,7 @@ function FineTuning({ onSwitchTab, onGoHome }) {
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [fading, setFading] = useState(false)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -692,9 +693,21 @@ function FineTuning({ onSwitchTab, onGoHome }) {
     if (stage < STAGES.length - 1) {
       setStage(stage + 1)
     } else {
-      setShowFinal(true)
-      setStage(STAGES.length)
-      markModuleComplete('fine-tuning')
+      setFading(true)
+      setTimeout(() => {
+        setShowFinal(true)
+        setStage(STAGES.length)
+        markModuleComplete('fine-tuning')
+        setFading(false)
+        requestAnimationFrame(() => {
+          let el = document.querySelector('.ft-root')
+          while (el) {
+            if (el.scrollTop > 0) el.scrollTop = 0
+            el = el.parentElement
+          }
+          window.scrollTo(0, 0)
+        })
+      }, 250)
     }
   }
 
@@ -793,7 +806,7 @@ function FineTuning({ onSwitchTab, onGoHome }) {
   }
 
   return (
-    <div className="how-llms ft-root">
+    <div className={`how-llms ft-root${fading ? ' how-fading' : ''}`}>
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">

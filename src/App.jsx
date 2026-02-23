@@ -9,6 +9,7 @@ import PromptEngineering from './PromptEngineering.jsx'
 import ContextEngineering from './ContextEngineering.jsx'
 import RAG from './RAG.jsx'
 import MachineLearning from './MachineLearning.jsx'
+import DeepLearning from './DeepLearning.jsx'
 import FineTuning from './FineTuning.jsx'
 import AICityBuilder from './AICityBuilder.jsx'
 import AILabExplorer from './AILabExplorer.jsx'
@@ -932,6 +933,9 @@ function App() {
         )}
         {!showHome && activeTab === 'machine-learning' && (
           <MachineLearning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'deep-learning' && (
+          <DeepLearning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'fine-tuning' && (
           <FineTuning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />

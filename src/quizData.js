@@ -474,3 +474,66 @@ export const fineTuningQuiz = [
     correct: 2,
   },
 ]
+
+export const deepLearningQuiz = [
+  {
+    question: 'What makes a neural network "deep"?',
+    options: ['It uses a lot of data', 'It has many layers of processing', 'It runs on powerful hardware', 'It uses complex mathematics'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does an activation function do?',
+    options: ['Speeds up training', 'Reduces overfitting', 'Introduces non-linearity', 'Normalizes inputs'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is backpropagation?',
+    options: ['Running data forward through the network', 'Calculating how each weight contributed to error', 'Adding more layers to the network', 'Reducing the learning rate'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What problem do CNNs solve for images?',
+    options: ['Images are too large', 'Pixels have no relationship to each other', 'Features appear at different locations', 'Images have too many colors'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What was revolutionary about the Transformer?',
+    options: ['It used more layers', 'It processed all words simultaneously', 'It used better activation functions', 'It required less training data'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does dropout do during training?',
+    options: ['Removes training examples', 'Randomly disables neurons to prevent overfitting', 'Reduces learning rate automatically', 'Normalizes layer outputs'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What are residual connections?',
+    options: ['Connections between different networks', 'Skip connections that add input to output', 'Connections that carry gradients only', 'Links between layers that skip pooling'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the vanishing gradient problem?',
+    options: ['Gradients become too large in deep networks', 'Gradients shrink to near zero in early layers', 'Loss function stops decreasing', 'Network weights become negative'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What did AlphaFold achieve?',
+    options: ['Beat humans at chess', 'Generated realistic images', 'Solved protein structure prediction', 'Translated between 100 languages'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is a foundation model?',
+    options: ['The first layer of a neural network', 'A model trained on everything, adapted to anything', 'A model used only for research', 'The base architecture before fine-tuning'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+]
