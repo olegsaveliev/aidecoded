@@ -260,6 +260,43 @@ Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start
 
 ---
 
+## Generation Module (`src/Generation.jsx`)
+
+Interactive token-by-token generation visualizer. Shows real OpenAI API logprobs (top-5 candidates) and lets users build sentences manually or watch automatic streaming.
+
+### Entry Screen
+- Title: "Token Generation", subtitle: "Watch AI think, one word at a time"
+- Description explains what the learner will discover (predictions, probability, temperature effects)
+
+### Welcome Banner
+Numbered 3-step guide: (1) click Manual to see predictions and pick tokens, (2) click Automatic for full-speed completion, (3) change Temperature and compare
+
+### Top-k Card
+Dismissable "What is Top-k sampling?" explanation. Covers Top-k, Temperature, and Top-p in plain language.
+
+### Parameters
+Temperature capped at 1.5 (consistent with Playground). Tracks `tempChanged` for learn tip trigger.
+
+### Modes
+- **Manual**: User clicks probability bars to pick tokens. Simulation mode auto-picks top token for up to 15 steps.
+- **Automatic**: Streaming completion with real-time probability bar updates.
+
+### Progressive Learning Tips
+Milestone-based tips (no auto-dismiss). Tracked via `dismissedTips` Set, `manualPicks` counter, `hasUsedAuto` and `tempChanged` booleans.
+
+| Trigger | Tip |
+|---|---|
+| 1st manual pick | "You just picked a token! Notice how probability bars change with each word" |
+| After automatic mode | "That's how ChatGPT works — hundreds of token picks per second" |
+| 3+ manual picks (temp not changed) | "Try Temperature at 0 vs 1.5 — watch probabilities spread out" |
+
+CSS: reuses `.learn-tip` classes from Playground (old `.gen-learn-tip` removed).
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview

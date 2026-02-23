@@ -7,6 +7,7 @@ import usePersistedState from './usePersistedState.js'
 import Quiz from './Quiz.jsx'
 import { generationQuiz } from './quizData.js'
 import { CheckIcon } from './ContentIcons.jsx'
+import SuggestedModules from './SuggestedModules.jsx'
 
 const BAR_COLORS = [
   '#0071e3',
@@ -60,44 +61,42 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
   const [flashBar, setFlashBar] = useState(-1)
   const [showTopK, setShowTopK] = useState(true)
   const [showWelcome, setShowWelcome] = useState(showEntry)
-  const [showLearnTip, setShowLearnTip] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
   const [learnTipFading, setLearnTipFading] = useState(false)
-  const [hasRunOnce, setHasRunOnce] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const [manualPicks, setManualPicks] = useState(0)
+  const [hasUsedAuto, setHasUsedAuto] = useState(false)
+  const [tempChanged, setTempChanged] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
   const simRef = useRef(false)
   const timerRef = useRef(null)
   const tokensRef = useRef([])
   const simCountRef = useRef(0)
   const abortRef = useRef(null)
-  const learnTipTimer = useRef(null)
 
   useEffect(() => {
     tokensRef.current = tokens
   }, [tokens])
 
-  // Show learning tip the first time generation starts
+  // Progressive learning tips at milestones
   useEffect(() => {
-    if (phase === 'active' && !hasRunOnce) {
-      setHasRunOnce(true)
-      setShowLearnTip(true)
-      learnTipTimer.current = setTimeout(() => {
-        setLearnTipFading(true)
-        setTimeout(() => {
-          setShowLearnTip(false)
-          setLearnTipFading(false)
-        }, 400)
-      }, 10000)
+    if (manualPicks === 1 && !dismissedTips.has('first') && !learnTip) {
+      setLearnTip({ id: 'first', text: 'You just picked a token! Notice how the probability bars changed — each word you choose creates new context that shifts the AI\'s predictions.' })
+    } else if (hasUsedAuto && !dismissedTips.has('auto') && !learnTip) {
+      setLearnTip({ id: 'auto', text: 'That\'s how ChatGPT works — hundreds of token picks per second. Each word is still chosen by probability, just like you did manually!' })
+    } else if (manualPicks >= 3 && !tempChanged && !dismissedTips.has('temp') && !learnTip) {
+      setLearnTip({ id: 'temp', text: 'Try changing Temperature to 0 — the top bar will dominate. Then try 1.5 — probabilities spread out, making surprising choices more likely.' })
     }
-    return () => {
-      if (learnTipTimer.current) clearTimeout(learnTipTimer.current)
-    }
-  }, [phase, hasRunOnce])
+  }, [manualPicks, hasUsedAuto, tempChanged, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const fadeTimerRef = useRef(null)
 
   function dismissLearnTip() {
-    if (learnTipTimer.current) clearTimeout(learnTipTimer.current)
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
     setLearnTipFading(true)
-    setTimeout(() => {
-      setShowLearnTip(false)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
       setLearnTipFading(false)
     }, 400)
   }
@@ -164,6 +163,7 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
     const spaced = spaceToken(tokenText, tokensRef.current)
     const newTokens = [...tokensRef.current, spaced]
     setTokens(newTokens)
+    setManualPicks((c) => c + 1)
     markModuleComplete('generation')
 
     setLoading(true)
@@ -356,6 +356,7 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
       setStreaming(false)
       setDoneMode('auto')
       setPhase('done')
+      setHasUsedAuto(true)
     } catch (err) {
       if (err.name === 'AbortError') return
       setError(err.message)
@@ -372,6 +373,7 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
     setStreaming(false)
     setDoneMode('auto')
     setPhase('done')
+    setHasUsedAuto(true)
   }
 
   function handleReset() {
@@ -393,12 +395,24 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
     setDoneMode(null)
   }
 
+  function handleStartOver() {
+    handleReset()
+    setShowEntry(true)
+    setShowWelcome(true)
+    setShowTopK(true)
+    setLearnTip(null)
+    setDismissedTips(new Set())
+    setManualPicks(0)
+    setHasUsedAuto(false)
+    setTempChanged(false)
+  }
+
   useEffect(() => {
     return () => {
       simRef.current = false
       if (timerRef.current) clearTimeout(timerRef.current)
       if (abortRef.current) abortRef.current.abort()
-      if (learnTipTimer.current) clearTimeout(learnTipTimer.current)
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
     }
   }, [])
 
@@ -415,7 +429,8 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
       <EntryScreen
         icon={<ModuleIcon module="generation" size={48} style={{ color: '#0071E3' }} />}
         title="Token Generation"
-        description="Watch AI predict the next word live, one token at a time. Choose manually, simulate step by step, or let it run automatically — just like ChatGPT under the hood."
+        subtitle="Watch AI think, one word at a time"
+        description="This is how ChatGPT actually works — it predicts the next word based on probability. You'll see real AI predictions, pick tokens yourself, and learn how Temperature changes what the AI chooses."
         buttonText="Start Generating"
         onStart={() => { setShowEntry(false); markModuleStarted('generation') }}
       />
@@ -439,10 +454,18 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
 
   return (
     <div className="generation">
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {showWelcome && (
         <div className="gen-welcome">
           <div className="gen-welcome-text">
-            <strong>Welcome to Generation</strong> — Watch AI predict the next word in real time. This is literally how ChatGPT works under the hood — one token at a time, based on probability. Try all three modes!
+            <strong>Welcome to Generation</strong> — here's how to explore:
+            <ol className="gen-welcome-steps">
+              <li>Click <strong>Manual</strong> to see the AI's top 5 predictions — then click a bar to pick a word yourself</li>
+              <li>Click <strong>Automatic</strong> to watch the AI complete the sentence at full speed</li>
+              <li>Change <strong>Temperature</strong> and try again — watch how the probability bars change</li>
+            </ol>
           </div>
           <button className="gen-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -481,13 +504,14 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
             Temperature
             <Tooltip text="Higher temperature = more surprising word choices. Lower = more predictable. Try 0 vs 1.5 and compare!" />
           </span>
+          {/* Capped at 1.5 — values above ~1.3 produce garbled output with no educational value */}
           <input
             type="range"
             min="0"
-            max="2"
+            max="1.5"
             step="0.01"
             value={temperature}
-            onChange={(e) => setTemperature(parseFloat(e.target.value))}
+            onChange={(e) => { setTemperature(parseFloat(e.target.value)); setTempChanged(true) }}
           />
           <span className="slider-value">{temperature.toFixed(2)}</span>
         </div>
@@ -658,9 +682,12 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
       </div>
 
       {/* 6. Learning callout */}
-      {showLearnTip && (
-        <div className={`gen-learn-tip ${learnTipFading ? 'gen-learn-tip-fading' : ''}`} onClick={dismissLearnTip}>
-          Notice how the top token isn't always chosen in Automatic mode? That's temperature sampling — intentional randomness that makes AI responses feel natural and varied!
+      {learnTip && (
+        <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+          <span className="learn-tip-text">{learnTip.text}</span>
+          <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+          </button>
         </div>
       )}
 
@@ -720,12 +747,13 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
         </div>
       )}
 
-      <div style={{ textAlign: 'center', marginTop: 24 }}>
+      <div className="how-final-actions">
         <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
           Test Your Knowledge &rarr;
         </button>
+        <button className="how-secondary-btn" onClick={handleStartOver}>Start over</button>
       </div>
-
+      <SuggestedModules currentModuleId="generation" onSwitchTab={onSwitchTab} />
     </div>
   )
 }

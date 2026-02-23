@@ -3062,6 +3062,24 @@
   flex: 1;
 }
 
+.gen-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gen-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.gen-welcome-steps strong {
+  color: var(--text-primary);
+}
+
 .gen-welcome-dismiss {
   background: none;
   border: 1px solid rgba(0, 113, 227, 0.2);
@@ -3135,30 +3153,6 @@
 }
 
 /* Learning callout */
-.gen-learn-tip {
-  background: #ffffff;
-  border: 1px solid #E5E5EA;
-  border-left: 2px solid #0071E3;
-  border-radius: var(--radius);
-  padding: 10px 16px;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
-  cursor: pointer;
-  animation: fadeIn 0.4s ease;
-  transition: opacity 0.4s ease;
-}
-
-[data-theme="dark"] .gen-learn-tip {
-  background: #1C1917;
-  border-color: #44403C;
-  border-left-color: #0071E3;
-}
-
-.gen-learn-tip-fading {
-  opacity: 0;
-}
-
 /* Responsive mode cards */
 @media (max-width: 680px) {
   .gen-mode-cards {
@@ -5550,7 +5544,8 @@
   }
 
   .playground-welcome-steps,
-  .tok-welcome-steps {
+  .tok-welcome-steps,
+  .gen-welcome-steps {
     padding-left: 18px;
     gap: 2px;
   }
