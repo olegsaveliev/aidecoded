@@ -633,6 +633,14 @@ function AICityBuilder({ onSwitchTab, onGoHome }) {
   const handleNextCase = useCallback(() => {
     if (caseIndex >= 4) {
       setGameComplete(true)
+      requestAnimationFrame(() => {
+        let el = document.querySelector('.acb-completion')
+        while (el) {
+          if (el.scrollTop > 0) el.scrollTop = 0
+          el = el.parentElement
+        }
+        window.scrollTo(0, 0)
+      })
       return
     }
     setCaseIndex((prev) => prev + 1)

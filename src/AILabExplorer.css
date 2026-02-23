@@ -239,6 +239,50 @@
   margin: 0;
 }
 
+.ale-help-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.ale-help-btn:hover {
+  border-color: #eab308;
+  color: #eab308;
+}
+
+.ale-help-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  background: rgba(234, 179, 8, 0.06);
+  border-left: 2px solid #eab308;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  animation: fadeSlideUp 0.2s ease-out;
+  line-height: 1.5;
+}
+
+.ale-help-box svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
 .ale-challenge-intro {
   font-size: 14px;
   color: var(--text-secondary);
@@ -1329,6 +1373,7 @@
   .ale-sort-btn,
   .ale-check-btn,
   .ale-reset-btn,
+  .ale-help-btn,
   .ale-problem-option {
     min-height: 44px;
   }

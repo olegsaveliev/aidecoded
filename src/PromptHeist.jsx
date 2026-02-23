@@ -547,6 +547,15 @@ function PromptHeist({ onSwitchTab, onGoHome }) {
       resetHeistState()
     } else {
       setShowComplete(true)
+      requestAnimationFrame(() => {
+        let el = document.querySelector('.ph-game')
+        while (el) {
+          if (el.scrollTop > 0) el.scrollTop = 0
+          el = el.parentElement
+        }
+        window.scrollTo(0, 0)
+      })
+      return
     }
     gameRef.current?.scrollIntoView({ behavior: 'instant', block: 'start' })
   }

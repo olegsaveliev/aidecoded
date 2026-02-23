@@ -295,7 +295,17 @@ function AILabExplorer({ onSwitchTab, onGoHome }) {
     const newCompleted = new Set(completedRooms)
     newCompleted.add(roomId)
     if (newCompleted.size === 6) {
-      setTimeout(() => setGameComplete(true), 1200)
+      setTimeout(() => {
+        setGameComplete(true)
+        requestAnimationFrame(() => {
+          let el = document.querySelector('.ale-container')
+          while (el) {
+            if (el.scrollTop > 0) el.scrollTop = 0
+            el = el.parentElement
+          }
+          window.scrollTo(0, 0)
+        })
+      }, 1200)
     }
   }
 
@@ -503,7 +513,17 @@ function RoomDone({ room, lesson }) {
 
 /* ── Room Challenge Router ── */
 
+const ROOM_HINTS = [
+  'Look for answers that are vague, contradictory, or factually wrong — those are bad training data.',
+  'Common words are often one token, but rare or long words get split into pieces. Watch for the dashed blue guides that appear after a few seconds.',
+  'Slide each dial until it lands inside the highlighted green zone. All three must be green to proceed.',
+  'Read the question, then click the two words that are most connected. Hint: look for pronouns and what they refer to.',
+  'Not every ingredient is needed. Think about what this specific task requires — fewer is often better.',
+  'Read each problem carefully. The most direct, specific fix is usually the right answer.',
+]
+
 function RoomChallenge({ roomId, rs, updateRS, onComplete, onRetry }) {
+  const [showHelp, setShowHelp] = useState(false)
   const room = ROOMS[roomId - 1]
   const intro = [
     'Raw data arrives at the lab. Sort it into the right bins before training can begin.',
@@ -519,8 +539,19 @@ function RoomChallenge({ roomId, rs, updateRS, onComplete, onRetry }) {
       <div className="ale-challenge-header">
         <span className="ale-room-badge">Room {roomId}</span>
         <h3 className="ale-challenge-title">{room.name}</h3>
+        <button className="ale-help-btn" onClick={() => setShowHelp(!showHelp)} aria-label="Show hint">
+          <TipIcon size={16} color={showHelp ? '#eab308' : 'var(--text-tertiary)'} />
+          {showHelp ? 'Hide Hint' : 'Hint'}
+        </button>
       </div>
       <p className="ale-challenge-intro">{intro[roomId - 1]}</p>
+
+      {showHelp && (
+        <div className="ale-help-box">
+          <TipIcon size={14} color="#eab308" />
+          {ROOM_HINTS[roomId - 1]}
+        </div>
+      )}
 
       {roomId === 1 && <Room1Challenge rs={rs} updateRS={updateRS} onComplete={onComplete} onRetry={onRetry} />}
       {roomId === 2 && <Room2Challenge rs={rs} updateRS={updateRS} onComplete={onComplete} />}
