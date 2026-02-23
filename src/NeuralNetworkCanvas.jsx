@@ -10,6 +10,7 @@ const GROUP_COLORS = {
   skills: '#34C759',
   advanced: '#FF9500',
   play: '#F59E0B',
+  professional: '#0EA5E9',
 }
 
 const NODES = [
@@ -35,6 +36,7 @@ const NODES = [
   { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.78, py: 0.86, desc: 'Solve AI mysteries, build your city' },
   { id: 'token-budget', label: 'Token Budget', group: 'play', px: 0.42, py: 0.92, desc: 'Rewrite prompts to fit strict token budgets' },
   { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', group: 'play', px: 0.28, py: 0.88, desc: 'Navigate ethical dilemmas in AI systems' },
+  { id: 'ai-native-pm', label: 'AI-Native PM', group: 'professional', px: 0.20, py: 0.65, desc: 'What AI engineers actually need from PMs' },
 ]
 
 const CONNECTIONS = [
@@ -75,6 +77,10 @@ const CONNECTIONS = [
   ['model-training', 'generative-ai'],
   ['deep-learning', 'generative-ai'],
   ['generative-ai', 'rag'],
+  ['prompt-engineering', 'ai-native-pm'],
+  ['context-engineering', 'ai-native-pm'],
+  ['agentic-ai', 'ai-native-pm'],
+  ['fine-tuning', 'ai-native-pm'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -102,6 +108,7 @@ const NODE_DELAYS = {
   'ai-city-builder': 2500,
   'token-budget': 1950,
   'ai-ethics-tribunal': 2100,
+  'ai-native-pm': 2650,
 }
 
 const NODE_APPEAR_DUR = 500

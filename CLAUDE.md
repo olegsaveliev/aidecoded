@@ -35,12 +35,13 @@ Interactive React app for learning how Large Language Models work.
 | `prompt-heist` | PromptHeist.jsx | PromptHeist.css | — (game) | Game | #F59E0B |
 | `token-budget` | TokenBudget.jsx | TokenBudget.css | — (game) | Game | #F59E0B |
 | `ai-ethics-tribunal` | AIEthicsTribunal.jsx | AIEthicsTribunal.css | — (game) | Game | #F59E0B |
+| `ai-native-pm` | AINativePM.jsx | AINativePM.css | aiNativePMQuiz | Professional | #0EA5E9 |
 
 ## Color System — Two Color Layers
 
 ### Tag Colors (Primary — used for icons, borders, visual identity)
 
-These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen icons, and landing page icons:
+These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen icons, and landing page icons:
 
 | Tag | Color | Modules |
 |---|---|---|
@@ -50,6 +51,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal |
+| Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
 **Where tag colors are used:**
 - HomeScreen card left borders + card icons: `FILTER_COLORS[card.tag]`
@@ -66,6 +68,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Skills | #34C759 | Prompt Engineering, Context Engineering |
 | Advanced | #FF9500 | RAG, Agentic AI |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal |
+| Professional | #0EA5E9 | AI-Native PM |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 
@@ -129,7 +132,7 @@ Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 
 Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 
-- Desktop: `[Logo + AI Decoded]  [Tools] [Foundations] [Skills] [Advanced] [Play]  [dark mode toggle]`
+- Desktop: `[Logo + AI Decoded]  [Tools] [Foundations] [Skills] [Advanced] [Play] [Professional]  [dark mode toggle]`
 - Mobile (< 768px): Hamburger menu with full-screen overlay
 - Active tab's parent group label turns Apple blue (#0071E3)
 - Breadcrumb shows `Group > Tab Name` on wider screens (>= 900px)
@@ -161,6 +164,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/PromptHeist.jsx` / `src/PromptHeist.css` — Prompt Heist game (5 heists, prompt engineering through gameplay)
 - `src/TokenBudget.jsx` / `src/TokenBudget.css` — Token Budget game (5 levels, prompt compression/optimization)
 - `src/AIEthicsTribunal.jsx` / `src/AIEthicsTribunal.css` — AI Ethics Tribunal game (6 cases, AI ethics dilemmas)
+- `src/AINativePM.jsx` / `src/AINativePM.css` — AI-Native PM tutorial (8 stages: gap, deliverables, system instructions, structured logic, evals, hallucinations, drift, toolkit)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -531,6 +535,7 @@ create table quiz_results (
 | Prompt Heist | Game started | All 5 heists completed |
 | Token Budget | Game started | First level completed |
 | AI Ethics Tribunal | Game started | All 6 cases completed |
+| AI-Native PM | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 
@@ -933,6 +938,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Comparison panel border-tops use `2px` width
 - No `!important` overrides unless absolutely necessary
 - No emojis or Unicode symbols in UI — all SVG icons
+- Never use `\u2014` or other `\uXXXX` escapes in JSX text — use HTML entities (`&mdash;`, `&rarr;`, etc.) or literal characters instead. `\uXXXX` only works inside JavaScript strings (`'...'` / `"..."` / `` `...` ``), not in JSX template text where it renders as literal characters.
 - Mobile-first: test at 375px, 480px, 768px
 - Grid collapse pattern: 3/4-col → 2-col (768px) → 1-col (480px)
 - Final screens: exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules component

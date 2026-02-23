@@ -104,6 +104,9 @@ const ICON_PATHS = {
   'generative-ai': (
     <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-5.6 4.3 2.4-7.4L2.6 9.4h7.6L12 2z" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'ai-native-pm': (
+    <path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2M12 12v4M10 14h4" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
