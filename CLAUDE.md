@@ -29,6 +29,7 @@ Interactive React app for learning how Large Language Models work.
 | `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | Technical | #5856D6 |
 | `deep-learning` | DeepLearning.jsx | DeepLearning.css | deepLearningQuiz | Technical | #5856D6 |
 | `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
+| `generative-ai` | GenerativeAI.jsx | GenerativeAI.css | generativeAIQuiz | Journey | #FF9500 |
 | `ai-city-builder` | AICityBuilder.jsx | AICityBuilder.css | — (game) | Game | #F59E0B |
 | `ai-lab-explorer` | AILabExplorer.jsx | AILabExplorer.css | — (game) | Game | #F59E0B |
 | `prompt-heist` | PromptHeist.jsx | PromptHeist.css | — (game) | Game | #F59E0B |
@@ -45,7 +46,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
-| Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG |
+| Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal |
@@ -61,7 +62,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Group | Color | Tabs |
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
-| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning |
+| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering |
 | Advanced | #FF9500 | RAG, Agentic AI |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal |
@@ -153,6 +154,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/Tooltip.jsx` — Info tooltip component
 - `src/FeedbackWidget.jsx` / `src/FeedbackWidget.css` — Feedback bubble + modal
 - `src/AgenticAI.jsx` / `src/AgenticAI.css` — Agentic AI tutorial (agents, loops, tools, memory, multi-agent, building, real agents, frontier)
+- `src/GenerativeAI.jsx` / `src/GenerativeAI.css` — Generative AI tutorial (discriminative vs generative, diffusion, text, images, audio, video/code, risks, future)
 - `src/DeepLearning.jsx` / `src/DeepLearning.css` — Deep Learning tutorial (neurons, networks, backprop, CNN, transformers)
 - `src/AICityBuilder.jsx` / `src/AICityBuilder.css` — AI City Builder game (detective cases, SVG city)
 - `src/AILabExplorer.jsx` / `src/AILabExplorer.css` — AI Lab Explorer game (6-room lab, hands-on challenges)

@@ -12,6 +12,7 @@ import AgenticAI from './AgenticAI.jsx'
 import MachineLearning from './MachineLearning.jsx'
 import DeepLearning from './DeepLearning.jsx'
 import FineTuning from './FineTuning.jsx'
+import GenerativeAI from './GenerativeAI.jsx'
 import AICityBuilder from './AICityBuilder.jsx'
 import AILabExplorer from './AILabExplorer.jsx'
 import PromptHeist from './PromptHeist.jsx'
@@ -913,6 +914,9 @@ function App() {
         )}
         {!showHome && activeTab === 'fine-tuning' && (
           <FineTuning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'generative-ai' && (
+          <GenerativeAI onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'ai-city-builder' && (
           <AICityBuilder onSwitchTab={setActiveTab} onGoHome={handleGoHome} />

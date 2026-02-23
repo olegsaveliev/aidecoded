@@ -27,6 +27,7 @@ const NODES = [
   { id: 'rag', label: 'RAG', group: 'advanced', px: 0.52, py: 0.54, desc: 'How AI learns from YOUR documents' },
   { id: 'agentic-ai', label: 'Agentic AI', group: 'advanced', px: 0.52, py: 0.72, desc: 'AI that plans, acts and learns autonomously' },
   { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', px: 0.52, py: 0.88, desc: 'Outsmart AI security with the perfect prompt' },
+  { id: 'generative-ai', label: 'Generative AI', group: 'foundations', px: 0.58, py: 0.32, desc: 'How AI creates images, music, video and code' },
   // Layer 4 — Output (Skills + Play): 4 nodes
   { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.78, py: 0.12, desc: 'Write better prompts for better results' },
   { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.78, py: 0.38, desc: 'Give AI the right context every time' },
@@ -70,6 +71,10 @@ const CONNECTIONS = [
   ['tokenizer', 'token-budget'],
   ['ai-city-builder', 'ai-ethics-tribunal'],
   ['machine-learning', 'ai-ethics-tribunal'],
+  ['how-llms-work', 'generative-ai'],
+  ['model-training', 'generative-ai'],
+  ['deep-learning', 'generative-ai'],
+  ['generative-ai', 'rag'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -89,6 +94,7 @@ const NODE_DELAYS = {
   'rag': 1500,
   'agentic-ai': 1650,
   'prompt-heist': 1800,
+  'generative-ai': 1400,
   // Layer 4
   'prompt-engineering': 2050,
   'context-engineering': 2200,

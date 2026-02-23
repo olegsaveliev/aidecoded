@@ -123,6 +123,14 @@ const CARDS = [
     group: 'Foundations',
   },
   {
+    id: 'generative-ai',
+    title: 'Generative AI',
+    description: 'From noise to masterpiece — discover how AI creates images, music, video, code and text that never existed before.',
+    tag: 'Journey',
+
+    group: 'Foundations',
+  },
+  {
     id: 'ai-city-builder',
     title: 'AI City Builder',
     description: 'Solve AI mysteries. Diagnose failures. Build your city with every case you crack.',
@@ -174,7 +182,7 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
 
-const TOTAL_MODULES = 17 // all modules including tools and games
+const TOTAL_MODULES = 18 // all modules including tools and games
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

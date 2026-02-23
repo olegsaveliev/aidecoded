@@ -1,0 +1,1103 @@
+/* ========== GenerativeAI Module (.gai-) ========== */
+
+/* Stepper color override */
+.gai-stepper .how-step-active .how-step-num {
+  background: #FF9500;
+  color: #fff;
+  border-color: #FF9500;
+}
+.gai-stepper .how-step-current .how-step-num {
+  box-shadow: 0 0 0 3px rgba(255, 149, 0, 0.2);
+}
+.gai-stepper .how-step-completed .how-step-num {
+  background: #FF9500;
+  border-color: #FF9500;
+  color: #fff;
+}
+.gai-stepper .how-step-active .how-step-label {
+  color: var(--text-primary);
+}
+
+/* Viz shared */
+.gai-viz {
+  padding: 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+  background: var(--bg-card);
+  margin-top: 16px;
+}
+
+/* Fade-in utility */
+.gai-fade-in {
+  animation: gaiFadeIn 0.3s ease-out;
+}
+@keyframes gaiFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== Stage 1: Discriminative vs Generative ========== */
+
+.gai-compare-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.gai-compare-panel {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+}
+
+.gai-compare-discrim {
+  border-top: 2px solid #FF9500;
+}
+
+.gai-compare-gen {
+  border-top: 2px solid #34C759;
+}
+
+.gai-compare-header {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.gai-compare-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 100px;
+}
+
+.gai-compare-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.gai-compare-input {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gai-compare-arrow {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.gai-compare-output {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.gai-output-created {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.gai-compare-label {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.gai-modality-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.gai-modality-pill {
+  padding: 6px 16px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(255, 149, 0, 0.3);
+  background: rgba(255, 149, 0, 0.06);
+  color: #FF9500;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.gai-modality-pill:hover {
+  background: rgba(255, 149, 0, 0.12);
+  border-color: rgba(255, 149, 0, 0.5);
+}
+
+.gai-modality-active {
+  background: #FF9500;
+  color: #fff;
+  border-color: #FF9500;
+}
+
+.gai-modality-desc {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+/* ========== Stage 2: Diffusion ========== */
+
+.gai-diffusion-viz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.gai-diffusion-display {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.gai-diffusion-shape {
+  position: relative;
+  z-index: 1;
+  transition: filter 0.12s ease;
+}
+
+.gai-noise-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: cover;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gai-diffusion-counter {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.gai-diffusion-bar {
+  width: 200px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.gai-diffusion-fill {
+  height: 100%;
+  background: #FF9500;
+  border-radius: 3px;
+  transition: width 0.12s ease;
+}
+
+.gai-diffusion-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.gai-diff-btn {
+  height: 36px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gai-diff-btn:hover:not(:disabled) {
+  border-color: #FF9500;
+  color: #FF9500;
+  transform: translateY(-1px);
+}
+
+.gai-diff-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.gai-diff-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gai-diff-btn-denoise {
+  background: #FF9500;
+  color: #fff;
+  border-color: transparent;
+}
+
+.gai-diff-btn-denoise:hover:not(:disabled) {
+  background: #E68600;
+  color: #fff;
+  border-color: transparent;
+}
+
+.gai-diff-btn-reset {
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+.gai-diffusion-done {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 300px;
+  font-style: italic;
+}
+
+/* ========== Stage 3: Text Generation ========== */
+
+.gai-textgen-viz {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gai-textgen-prompt {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.gai-textgen-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: 4px;
+}
+
+.gai-textgen-output {
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 48px;
+}
+
+.gai-textgen-prefix {
+  color: var(--text-tertiary);
+}
+
+.gai-textgen-token {
+  color: #FF9500;
+  font-weight: 500;
+}
+
+.gai-textgen-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 18px;
+  background: #FF9500;
+  vertical-align: text-bottom;
+  animation: gaiCursorBlink 0.8s step-end infinite;
+}
+
+@keyframes gaiCursorBlink {
+  50% { opacity: 0; }
+}
+
+.gai-textgen-alts {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.gai-textgen-alt {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+}
+
+.gai-textgen-alt-chosen {
+  color: #34C759;
+  border-color: rgba(52, 199, 89, 0.3);
+  background: rgba(52, 199, 89, 0.06);
+  font-weight: 500;
+}
+
+.gai-textgen-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ========== Stage 4: Image Prompt Builder ========== */
+
+.gai-imgprompt-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gai-imgprompt-category {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gai-imgprompt-cat-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.gai-imgprompt-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.gai-imgprompt-opt {
+  padding: 5px 14px;
+  border-radius: 18px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gai-imgprompt-opt:hover {
+  border-color: #FF9500;
+  color: #FF9500;
+}
+
+.gai-imgprompt-opt-active {
+  background: #FF9500;
+  color: #fff;
+  border-color: #FF9500;
+}
+
+.gai-imgprompt-result {
+  margin-top: 16px;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+}
+
+.gai-imgprompt-result-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.gai-imgprompt-result-text {
+  font-size: 14px;
+  color: #FF9500;
+  font-weight: 500;
+}
+
+.gai-imgprompt-quality {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.gai-imgprompt-quality-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.gai-imgprompt-quality-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.gai-imgprompt-quality-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF9500, #34C759);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.gai-imgprompt-quality-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  min-width: 32px;
+}
+
+/* ========== Stage 5: Audio ========== */
+
+.gai-audio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.gai-audio-card {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #FF9500;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gai-audio-card:hover {
+  border-color: #FF9500;
+  border-left-color: #FF9500;
+}
+
+.gai-audio-card-expanded {
+  border-color: #FF9500;
+}
+
+.gai-audio-card-icon {
+  margin-bottom: 8px;
+}
+
+.gai-audio-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.gai-audio-card-tools {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.gai-audio-card-example {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+}
+
+.gai-audio-example-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ========== Stage 6: Video & Code ========== */
+
+.gai-vc-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.gai-vc-panel {
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+}
+
+.gai-vc-video {
+  border-top: 2px solid #FF9500;
+}
+
+.gai-vc-code {
+  border-top: 2px solid #34C759;
+}
+
+.gai-vc-panel-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.gai-vc-filmstrip {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.gai-vc-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  transition: border-color 0.2s ease;
+}
+
+.gai-vc-frame-active {
+  border-color: #FF9500;
+  background: rgba(255, 149, 0, 0.06);
+}
+
+.gai-vc-frame-num {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.gai-vc-consistency {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-align: center;
+  font-style: italic;
+}
+
+.gai-vc-code-editor {
+  background: #1C1917;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 90px;
+  font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.gai-vc-code-line {
+  color: #E8E3DD;
+  line-height: 1.6;
+}
+
+.gai-vc-code-placeholder {
+  color: #6e6e73;
+  font-style: italic;
+}
+
+.gai-vc-test-pass {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #34C759;
+}
+
+/* ========== Stage 7: Risks ========== */
+
+.gai-risks-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.gai-risk-card {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #FF3B30;
+  background: var(--bg-secondary);
+}
+
+.gai-risk-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.gai-risk-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.gai-risk-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.gai-risk-example {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.gai-responsible-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.gai-responsible-list > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ========== Stage 8: Future ========== */
+
+.gai-timeline {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.gai-timeline-node {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: center;
+}
+
+.gai-timeline-node:hover {
+  border-color: #FF9500;
+}
+
+.gai-timeline-active {
+  border-color: #FF9500;
+  background: rgba(255, 149, 0, 0.06);
+}
+
+.gai-timeline-year {
+  font-size: 18px;
+  font-weight: 700;
+  color: #FF9500;
+}
+
+.gai-timeline-detail {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+.gai-starter-section {
+  margin-top: 4px;
+}
+
+.gai-starter-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.gai-starter-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.gai-starter-card {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #34C759;
+  background: var(--bg-secondary);
+}
+
+.gai-starter-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.gai-starter-card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.gai-starter-card-tools {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+/* ========== Focus-visible states ========== */
+
+.gai-modality-pill:focus-visible,
+.gai-diff-btn:focus-visible,
+.gai-imgprompt-opt:focus-visible {
+  outline: 2px solid #FF9500;
+  outline-offset: 2px;
+}
+
+.gai-audio-card:focus-visible,
+.gai-timeline-node:focus-visible {
+  outline: 2px solid #FF9500;
+  outline-offset: 2px;
+}
+
+/* ========== Warning tip ========== */
+
+.gai-warning-tip {
+  display: flex;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.gai-warning-tip svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ========== Final screen ========== */
+
+.gai-final-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.gai-final-card {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  background: var(--bg-secondary);
+}
+
+.gai-final-card-concept {
+  font-size: 13px;
+  font-weight: 600;
+  color: #FF9500;
+  margin-bottom: 4px;
+}
+
+.gai-final-card-takeaway {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.gai-reference-wrapper {
+  margin-bottom: 24px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gai-reference-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.gai-reference {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.gai-reference th {
+  text-align: left;
+  padding: 8px 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.gai-reference td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+
+.gai-ref-concept {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ========== Dark Mode ========== */
+
+[data-theme="dark"] .gai-viz {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .gai-compare-panel {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-compare-discrim {
+  border-top-color: #FF9500;
+}
+
+[data-theme="dark"] .gai-compare-gen {
+  border-top-color: #34C759;
+}
+
+[data-theme="dark"] .gai-diffusion-display {
+  background: #1C1917;
+}
+
+[data-theme="dark"] .gai-diff-btn {
+  background: #292524;
+  border-color: #44403C;
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .gai-diff-btn-denoise {
+  background: #FF9500;
+  color: #fff;
+  border-color: transparent;
+}
+
+[data-theme="dark"] .gai-diff-btn:hover:not(:disabled) {
+  border-color: #FF9500;
+  color: #FF9500;
+}
+
+[data-theme="dark"] .gai-diff-btn-denoise:hover:not(:disabled) {
+  background: #E68600;
+  color: #fff;
+  border-color: transparent;
+}
+
+[data-theme="dark"] .gai-textgen-output {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-textgen-alt {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-imgprompt-opt {
+  background: #292524;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-imgprompt-opt:hover {
+  border-color: #FF9500;
+  color: #FF9500;
+}
+
+[data-theme="dark"] .gai-imgprompt-opt-active {
+  background: #FF9500;
+  border-color: #FF9500;
+  color: #fff;
+}
+
+[data-theme="dark"] .gai-imgprompt-result {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-audio-card {
+  background: #1C1917;
+  border-color: #44403C;
+  border-left-color: #FF9500;
+}
+
+[data-theme="dark"] .gai-audio-card:hover {
+  border-color: #FF9500;
+  border-left-color: #FF9500;
+}
+
+[data-theme="dark"] .gai-audio-card-example {
+  border-top-color: #44403C;
+}
+
+[data-theme="dark"] .gai-vc-panel {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-vc-video {
+  border-top-color: #FF9500;
+}
+
+[data-theme="dark"] .gai-vc-code {
+  border-top-color: #34C759;
+}
+
+[data-theme="dark"] .gai-vc-frame {
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-risk-card {
+  background: #1C1917;
+  border-color: #44403C;
+  border-left-color: #FF3B30;
+}
+
+[data-theme="dark"] .gai-timeline-node {
+  background: #292524;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-timeline-active {
+  border-color: #FF9500;
+  background: rgba(255, 149, 0, 0.1);
+}
+
+[data-theme="dark"] .gai-starter-card {
+  background: #1C1917;
+  border-color: #44403C;
+  border-left-color: #34C759;
+}
+
+[data-theme="dark"] .gai-final-card {
+  background: #1C1917;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .gai-reference th {
+  border-bottom-color: #44403C;
+}
+
+[data-theme="dark"] .gai-reference td {
+  border-bottom-color: #44403C;
+}
+
+[data-theme="dark"] .gai-modality-pill {
+  border-color: rgba(255, 149, 0, 0.4);
+  background: rgba(255, 149, 0, 0.1);
+}
+
+[data-theme="dark"] .gai-modality-active {
+  background: #FF9500;
+  border-color: #FF9500;
+  color: #fff;
+}
+
+/* ========== Mobile Responsive ========== */
+
+@media (max-width: 768px) {
+  .gai-compare-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .gai-audio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gai-vc-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .gai-risks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gai-starter-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .gai-final-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gai-timeline {
+    flex-direction: column;
+  }
+
+  .gai-timeline-node {
+    min-width: auto;
+  }
+
+  .gai-diff-btn {
+    min-height: 44px;
+  }
+
+  .gai-modality-pill {
+    min-height: 44px;
+    padding: 8px 18px;
+  }
+
+  .gai-imgprompt-opt {
+    min-height: 44px;
+    padding: 8px 16px;
+  }
+
+  .gai-audio-card {
+    min-height: 44px;
+  }
+
+  .gai-timeline-node {
+    min-height: 44px;
+  }
+
+  .gai-textgen-controls {
+    flex-direction: column;
+  }
+
+  .gai-textgen-controls .gai-diff-btn {
+    width: 100%;
+  }
+
+  .gai-diffusion-controls {
+    width: 100%;
+  }
+
+  .gai-diffusion-controls .gai-diff-btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .gai-final-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gai-vc-filmstrip {
+    gap: 4px;
+  }
+
+  .gai-vc-frame svg {
+    width: 30px;
+    height: 22px;
+  }
+}

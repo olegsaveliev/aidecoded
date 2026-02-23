@@ -600,3 +600,66 @@ export const agenticAIQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const generativeAIQuiz = [
+  {
+    question: 'What distinguishes generative AI from discriminative AI?',
+    options: ['It uses more computing power', 'It creates new content rather than classifying existing content', 'It only works with text', 'It requires labeled data'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What is diffusion in image generation?',
+    options: ['Spreading training data across servers', 'Starting from noise and removing it step by step to create images', 'Combining multiple images together', 'Compressing images for faster generation'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'How does autoregressive text generation work?',
+    options: ['Generates all tokens simultaneously', 'Predicts one token at a time using all previous context', 'Copies from training data directly', 'Uses a fixed template'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What does temperature control in text generation?',
+    options: ['Processing speed of the model', 'How much memory the model uses', 'The randomness and creativity of outputs', 'The length of generated text'],
+    correct: 2,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What did generative models learn from to generate images?',
+    options: ['Mathematical formulas for art', 'Billions of image-caption pairs from the internet', 'Rules programmed by designers', '3D models converted to 2D'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'Why is code generation considered more mature than image generation?',
+    options: ['Code is simpler than images', 'Tests provide clear right/wrong feedback signals', 'There is more code than images on the internet', 'Code requires less computing power'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What is a deepfake?',
+    options: ['A very detailed AI-generated image', 'AI-generated realistic fake video or audio of real people', 'A type of image diffusion model', 'A music generation technique'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What makes video generation harder than image generation?',
+    options: ['Videos require more storage', 'Character and physics must stay consistent across many frames', 'Video has more colors than images', 'Training data is harder to collect'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What is negative prompting in image generation?',
+    options: ['Giving the model negative feedback', 'Telling the model what NOT to include in the output', 'Reducing the model temperature', 'Decreasing image resolution'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What do most experts see as the enduring human value in a world of generative AI?',
+    options: ['Faster typing speed', 'Technical knowledge of AI systems', 'Judgment, intention and meaning behind creation', 'The ability to detect AI content'],
+    correct: 2,
+    accentColor: '#FF9500',
+  },
+]

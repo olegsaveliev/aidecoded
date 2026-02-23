@@ -20,6 +20,7 @@ const MOBILE_MODULES = [
   { id: 'agentic-ai', label: 'Agentic AI', color: '#5856D6' },
   { id: 'deep-learning', label: 'Deep Learning', color: '#5856D6' },
   { id: 'fine-tuning', label: 'Fine-Tuning', color: '#5856D6' },
+  { id: 'generative-ai', label: 'Generative AI', color: '#FF9500' },
   { id: 'ai-city-builder', label: 'City Builder', color: '#F59E0B' },
   { id: 'ai-lab-explorer', label: 'Lab Explorer', color: '#F59E0B' },
   { id: 'prompt-heist', label: 'Prompt Heist', color: '#F59E0B' },

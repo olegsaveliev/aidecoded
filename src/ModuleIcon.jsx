@@ -101,6 +101,9 @@ const ICON_PATHS = {
   'ai-ethics-tribunal': (
     <path d="M12 3v18M3 9h18M5 9l2 9M17 9l2 9M19 9c0 3.87-3.13 7-7 7s-7-3.13-7-7" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'generative-ai': (
+    <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-5.6 4.3 2.4-7.4L2.6 9.4h7.6L12 2z" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
