@@ -91,12 +91,6 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
           {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
         </p>
 
-        <div className="landing-cta-area">
-          <button className="landing-cta" onClick={onGetStarted}>
-            Explore All Modules &rarr;
-          </button>
-        </div>
-
         <div className="landing-network-wrapper">
           {typingDone && <NeuralNetworkCanvas onSelectTab={handleNodeSelect} />}
         </div>
@@ -120,6 +114,11 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
           </div>
         )}
 
+        <div className="landing-cta-area">
+          <button className="landing-cta" onClick={onGetStarted}>
+            Explore All Modules &rarr;
+          </button>
+        </div>
         <p className="landing-hint">Click any node to jump directly to a module</p>
       </div>
     </div>

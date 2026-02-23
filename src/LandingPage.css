@@ -277,8 +277,12 @@
   }
 
   .landing-cta-area {
+    position: sticky;
+    bottom: 0;
     width: 100%;
-    padding: 16px 0;
+    padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(to bottom, transparent 0%, var(--bg-primary) 40%);
+    z-index: 2;
     flex-shrink: 0;
     display: flex;
     justify-content: center;
