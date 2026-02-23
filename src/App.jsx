@@ -120,8 +120,15 @@ function App() {
     document.documentElement.classList.add('no-transitions')
     document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
     localStorage.setItem('theme', darkMode ? 'dark' : 'light')
-    const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', darkMode ? '#1C1917' : '#ffffff')
+    const themeColor = darkMode ? '#1C1917' : '#ffffff'
+    let meta = document.querySelector('meta[name="theme-color"]')
+    if (meta) {
+      meta.remove()
+      const newMeta = document.createElement('meta')
+      newMeta.name = 'theme-color'
+      newMeta.content = themeColor
+      document.head.appendChild(newMeta)
+    }
     // Re-enable after paint
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
