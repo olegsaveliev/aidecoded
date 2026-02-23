@@ -26,6 +26,7 @@ const MOBILE_MODULES = [
   { id: 'prompt-heist', label: 'Prompt Heist', color: '#F59E0B' },
   { id: 'token-budget', label: 'Token Budget', color: '#F59E0B' },
   { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', color: '#F59E0B' },
+  { id: 'pm-simulator', label: 'PM Simulator', color: '#F59E0B' },
   { id: 'ai-native-pm', label: 'AI-Native PM', color: '#0EA5E9' },
 ]
 

@@ -1,0 +1,1594 @@
+/* ══════════════════════════════════════════════════
+   PM Simulator — .pms- prefix
+   ══════════════════════════════════════════════════ */
+
+/* ── Entry Screen ──────────────────────────────── */
+.pms-entry-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pms-entry-meta {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ── Game Container ────────────────────────────── */
+.pms-game {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  scroll-margin-top: 20px;
+}
+
+/* ── Mission Header Bar ────────────────────────── */
+.pms-mission-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.pms-mission-badge {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.pms-mission-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+  min-width: 120px;
+}
+
+.pms-mission-stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.pms-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pms-stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pms-stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.pms-days {
+  color: #FF9500;
+}
+
+.pms-progress-bar {
+  width: 80px;
+  height: 6px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.pms-progress-fill {
+  height: 100%;
+  background: #F59E0B;
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Layout: Context + Work ────────────────────── */
+.pms-layout {
+  display: grid;
+  grid-template-columns: 35fr 65fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Context Panel ─────────────────────────────── */
+.pms-context-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+}
+
+.pms-context-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.pms-context-toggle:hover {
+  color: var(--text-primary);
+}
+
+.pms-context-content {
+  padding: 16px;
+}
+
+.pms-context-collapsed .pms-context-toggle {
+  border-bottom: none;
+}
+
+/* ── Messages ──────────────────────────────────── */
+.pms-message {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.pms-message:last-child {
+  margin-bottom: 0;
+}
+
+.pms-message p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.pms-message p:last-child {
+  margin-bottom: 0;
+}
+
+.pms-message-alert {
+  border-left: 2px solid #FF3B30;
+}
+
+.pms-message-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.pms-message-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pms-avatar {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+}
+
+/* ── Brief Card ────────────────────────────────── */
+.pms-brief-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.pms-brief-row {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  padding: 4px 0;
+}
+
+.pms-brief-row strong {
+  color: #0EA5E9;
+}
+
+/* ── Engineering Report ────────────────────────── */
+.pms-eng-report {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 16px;
+  border-left: 2px solid #FF9500;
+}
+
+.pms-eng-report-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.pms-eng-report p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* ── Eval Results (Mission 4 context) ──────────── */
+.pms-eval-results {
+  margin-top: 12px;
+}
+
+.pms-eval-result-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.pms-eval-name {
+  flex: 1;
+  color: var(--text-primary);
+}
+
+.pms-eval-status {
+  font-weight: 600;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.pms-eval-pass {
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.1);
+}
+
+.pms-eval-fail {
+  color: #FF3B30;
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.pms-eval-was {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.pms-drift-row {
+  background: rgba(255, 59, 48, 0.04);
+}
+
+.pms-drift-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #FF3B30;
+  background: rgba(255, 59, 48, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* ── Work Panel ────────────────────────────────── */
+.pms-work-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.pms-work-content {
+  animation: pmsSlideIn 0.3s ease-out;
+}
+
+.pms-work-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 20px;
+}
+
+/* ── Quality Meter (Mission 1) ─────────────────── */
+.pms-quality-meter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.pms-quality-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pms-quality-bar {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pms-quality-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease, background 0.4s ease;
+}
+
+.pms-quality-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  min-width: 48px;
+  text-align: right;
+}
+
+/* ── Section Inputs ────────────────────────────── */
+.pms-section-input {
+  margin-bottom: 16px;
+}
+
+.pms-input-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.pms-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  resize: vertical;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.pms-textarea:focus {
+  outline: none;
+  border-color: #0EA5E9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.pms-textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Submit Button ─────────────────────────────── */
+.pms-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #0EA5E9;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  margin-top: 8px;
+}
+
+.pms-submit-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.pms-submit-btn:active {
+  transform: scale(0.97);
+}
+
+.pms-submit-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pms-submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Eval Tabs (Mission 2) ─────────────────────── */
+.pms-eval-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.pms-eval-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pms-eval-tab:hover {
+  background: var(--bg-surface);
+}
+
+.pms-eval-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: 6px;
+}
+
+.pms-eval-tab-active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.pms-eval-tab-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.pms-eval-counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+/* ── Eval Example ──────────────────────────────── */
+.pms-eval-example {
+  background: rgba(234, 179, 8, 0.06);
+  border: none;
+  border-left: 2px solid #eab308;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.pms-eval-example-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #eab308;
+  margin-bottom: 8px;
+}
+
+.pms-eval-example-content {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.pms-eval-example-content div {
+  margin-bottom: 2px;
+}
+
+/* ── Eval Card ─────────────────────────────────── */
+.pms-eval-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+
+.pms-eval-card-header {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.pms-eval-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.pms-eval-input:last-child {
+  margin-bottom: 0;
+}
+
+.pms-eval-input:focus {
+  outline: none;
+  border-color: #0EA5E9;
+}
+
+.pms-eval-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Decision Cards (Mission 3) ────────────────── */
+.pms-instructions-preview {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.pms-preview-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.pms-preview-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.pms-preview-text p {
+  margin: 0 0 8px;
+}
+
+.pms-preview-highlight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #FF9500;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.pms-decision-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.pms-decision-step {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #0EA5E9;
+  margin-bottom: 8px;
+}
+
+.pms-decision-question {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 14px;
+}
+
+.pms-decision-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pms-choice-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.pms-choice-btn:hover:not(:disabled) {
+  border-color: #0EA5E9;
+  transform: translateY(-1px);
+}
+
+.pms-choice-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.pms-choice-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pms-choice-selected {
+  border-color: #0EA5E9;
+  background: rgba(14, 165, 233, 0.06);
+}
+
+.pms-choice-correct {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.06);
+}
+
+.pms-choice-wrong {
+  border-color: #FF3B30;
+  background: rgba(255, 59, 48, 0.06);
+}
+
+.pms-choice-btn:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.pms-next-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #0EA5E9;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pms-next-step-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.pms-next-step-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Drift (Mission 4) ────────────────────────── */
+.pms-drift-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 59, 48, 0.06);
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #FF3B30;
+  animation: pmsAlertFlash 2s ease-in-out 3;
+}
+
+.pms-drift-step {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.pms-drift-step:last-of-type {
+  border-bottom: none;
+}
+
+.pms-drift-step-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.pms-drift-hint {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+}
+
+/* ── Checklist (Mission 5) ─────────────────────── */
+.pms-checklist {
+  margin-bottom: 20px;
+}
+
+.pms-check-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-primary);
+  transition: background 0.15s ease;
+}
+
+.pms-check-item:hover {
+  background: var(--bg-secondary);
+  margin: 0 -12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 8px;
+}
+
+.pms-check-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+
+.pms-check-expandable {
+  cursor: default;
+}
+
+.pms-check-expandable:hover {
+  background: none;
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.pms-check-signoff {
+  border-bottom: none;
+  font-weight: 600;
+}
+
+.pms-check-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.pms-checked {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.1);
+  animation: pmsCheckComplete 0.3s ease-out;
+}
+
+.pms-check-sub {
+  padding: 8px 0 12px 34px;
+}
+
+/* ── Edge Cases ────────────────────────────────── */
+.pms-edge-case {
+  margin-bottom: 14px;
+}
+
+.pms-edge-input {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.pms-edge-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pms-edge-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pms-edge-btn:hover:not(:disabled) {
+  border-color: #0EA5E9;
+}
+
+.pms-edge-selected {
+  border-color: #0EA5E9;
+  background: rgba(14, 165, 233, 0.08);
+  color: #0EA5E9;
+  font-weight: 600;
+}
+
+.pms-edge-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Pills ─────────────────────────────────────── */
+.pms-pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pms-pill {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.pms-pill:hover:not(:disabled) {
+  border-color: #F59E0B;
+}
+
+.pms-pill-active {
+  border-color: #F59E0B;
+  background: rgba(245, 158, 11, 0.08);
+  color: #F59E0B;
+  font-weight: 600;
+}
+
+.pms-pill:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Threshold Slider ──────────────────────────── */
+.pms-threshold-slider {
+  width: 100%;
+  accent-color: #0EA5E9;
+}
+
+/* ── Ship Button (Mission 5) ───────────────────── */
+.pms-ship-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  margin-top: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  color: #fff;
+  background: #F59E0B;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pms-ship-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.pms-ship-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.pms-ship-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Hints ─────────────────────────────────────── */
+.pms-hints-section {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.pms-hint-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.pms-hint-btn:hover {
+  color: #eab308;
+}
+
+.pms-hint-btn:focus-visible {
+  outline: 2px solid #F59E0B;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.pms-hint-count {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.pms-hint-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
+  background: rgba(234, 179, 8, 0.06);
+  border: none;
+  border-left: 2px solid #eab308;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.pms-hint-box > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pms-hint-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.pms-autofill-btn {
+  color: #34C759;
+}
+
+.pms-autofill-btn:hover {
+  color: #2da44e;
+}
+
+.pms-solution-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.06);
+  border: none;
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  width: 100%;
+  animation: pmsSlideIn 0.3s ease-out;
+}
+
+/* ── Consequence Bar ───────────────────────────── */
+.pms-consequence {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.pms-consequence-success {
+  background: rgba(52, 199, 89, 0.06);
+  border: 1px solid rgba(52, 199, 89, 0.2);
+}
+
+.pms-consequence-warning {
+  background: rgba(255, 149, 0, 0.06);
+  border: 1px solid rgba(255, 149, 0, 0.2);
+}
+
+.pms-consequence-error {
+  background: rgba(255, 59, 48, 0.06);
+  border: 1px solid rgba(255, 59, 48, 0.2);
+}
+
+.pms-consequence-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pms-consequence-text {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  min-width: 200px;
+}
+
+.pms-advance-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #F59E0B;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pms-advance-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.pms-advance-btn:active {
+  transform: scale(0.97);
+}
+
+.pms-advance-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.pms-ship-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── Completion Screen ─────────────────────────── */
+.pms-complete {
+  text-align: center;
+  padding: 40px 0 20px;
+}
+
+.pms-office-svg,
+.pms-celebration-svg {
+  width: 280px;
+  max-width: 100%;
+  margin: 0 auto 24px;
+  display: block;
+}
+
+.pms-complete-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.pms-complete-subtitle {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto 28px;
+}
+
+/* ── Rank Card ─────────────────────────────────── */
+.pms-rank-card {
+  display: inline-block;
+  padding: 16px 32px;
+  background: rgba(245, 158, 11, 0.06);
+  border: 1.5px solid #F59E0B;
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.pms-rank-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.pms-rank-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #F59E0B;
+}
+
+/* ── Score Breakdown ───────────────────────────── */
+.pms-score-breakdown {
+  text-align: left;
+  max-width: 480px;
+  margin: 0 auto 28px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.pms-score-heading,
+.pms-shipped-heading,
+.pms-learned-heading {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.pms-score-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.pms-score-row:last-child {
+  border-bottom: none;
+}
+
+.pms-score-total {
+  font-weight: 700;
+  border-top: 1.5px solid var(--border);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.pms-score-name {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.pms-score-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Shipped With / Learned ────────────────────── */
+.pms-shipped-with,
+.pms-learned {
+  text-align: left;
+  max-width: 480px;
+  margin: 0 auto 24px;
+}
+
+.pms-shipped-item,
+.pms-learned-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* ── Complete Actions ──────────────────────────── */
+.pms-complete-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.pms-btn-primary {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #F59E0B;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pms-btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.pms-btn-primary:active {
+  transform: scale(0.97);
+}
+
+.pms-btn-outline {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--accent);
+  background: none;
+  border: 1.5px solid var(--accent);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.pms-btn-outline:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pms-btn-outline:active {
+  transform: scale(0.97);
+}
+
+/* ── Animations ────────────────────────────────── */
+@keyframes pmsSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pmsAlertFlash {
+  0%, 100% { border-color: rgba(255, 59, 48, 0.2); }
+  50% { border-color: rgba(255, 59, 48, 0.5); }
+}
+
+@keyframes pmsCheckComplete {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pmsScoreUpdate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); color: #34C759; }
+  100% { transform: scale(1); }
+}
+
+.pms-message-slide {
+  animation: pmsSlideIn 0.4s ease-out;
+}
+
+/* ══════════════════════════════════════════════════
+   DARK MODE
+   ══════════════════════════════════════════════════ */
+[data-theme="dark"] .pms-mission-bar {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pms-mission-badge {
+  background: rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="dark"] .pms-context-panel {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pms-message {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-brief-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pms-eng-report {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-work-panel {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pms-quality-meter {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-textarea {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-eval-tabs {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-eval-tab {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .pms-eval-tab:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .pms-eval-tab-active {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .pms-eval-card {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-eval-input {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pms-eval-example {
+  background: rgba(234, 179, 8, 0.08);
+}
+
+[data-theme="dark"] .pms-hint-box {
+  background: rgba(234, 179, 8, 0.08);
+}
+
+[data-theme="dark"] .pms-solution-notice {
+  background: rgba(52, 199, 89, 0.08);
+}
+
+[data-theme="dark"] .pms-instructions-preview {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-decision-card {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-choice-btn {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .pms-edge-btn {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-pill {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-score-breakdown {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .pms-rank-card {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+[data-theme="dark"] .pms-drift-row {
+  background: rgba(255, 59, 48, 0.06);
+}
+
+[data-theme="dark"] .pms-drift-badge {
+  background: rgba(255, 59, 48, 0.15);
+}
+
+[data-theme="dark"] .pms-eval-pass {
+  background: rgba(52, 199, 89, 0.12);
+}
+
+[data-theme="dark"] .pms-eval-fail {
+  background: rgba(255, 59, 48, 0.12);
+}
+
+[data-theme="dark"] .pms-consequence-success {
+  background: rgba(52, 199, 89, 0.08);
+}
+
+[data-theme="dark"] .pms-consequence-warning {
+  background: rgba(255, 149, 0, 0.08);
+}
+
+[data-theme="dark"] .pms-consequence-error {
+  background: rgba(255, 59, 48, 0.08);
+}
+
+/* ══════════════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .pms-game {
+    padding: 0 16px 48px;
+  }
+
+  .pms-mission-bar {
+    padding: 12px 14px;
+    gap: 10px;
+  }
+
+  .pms-mission-name {
+    font-size: 14px;
+    width: 100%;
+    order: -1;
+  }
+
+  .pms-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .pms-context-panel {
+    position: static;
+  }
+
+  .pms-context-collapsed .pms-context-toggle {
+    border-bottom: none;
+  }
+
+  .pms-work-panel {
+    padding: 16px;
+  }
+
+  .pms-work-title {
+    font-size: 18px;
+  }
+
+  .pms-textarea {
+    font-size: 16px;
+  }
+
+  .pms-eval-input {
+    font-size: 16px;
+  }
+
+  .pms-submit-btn,
+  .pms-next-step-btn,
+  .pms-ship-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .pms-advance-btn {
+    width: 100%;
+    margin-left: 0;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .pms-choice-btn {
+    min-height: 44px;
+  }
+
+  .pms-edge-btn {
+    min-height: 36px;
+  }
+
+  .pms-pill {
+    min-height: 36px;
+  }
+
+  .pms-hint-btn {
+    min-height: 44px;
+  }
+
+  .pms-complete-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .pms-btn-primary,
+  .pms-btn-outline {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .pms-consequence {
+    flex-direction: column;
+  }
+
+  .pms-check-sub {
+    padding-left: 20px;
+  }
+
+  .pms-edge-options {
+    flex-direction: column;
+  }
+
+  .pms-edge-btn {
+    width: 100%;
+    text-align: left;
+  }
+
+  .pms-complete-title {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pms-game {
+    padding: 0 12px 40px;
+  }
+
+  .pms-mission-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pms-mission-name {
+    display: none;
+  }
+
+  .pms-eval-tabs {
+    gap: 2px;
+  }
+
+  .pms-eval-tab {
+    padding: 8px 8px;
+    font-size: 12px;
+  }
+
+  .pms-pill-group {
+    gap: 4px;
+  }
+
+  .pms-pill {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .pms-complete-title {
+    font-size: 20px;
+  }
+
+  .pms-rank-card {
+    padding: 12px 20px;
+  }
+
+  .pms-score-breakdown {
+    padding: 14px;
+  }
+}

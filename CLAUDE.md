@@ -35,6 +35,7 @@ Interactive React app for learning how Large Language Models work.
 | `prompt-heist` | PromptHeist.jsx | PromptHeist.css | — (game) | Game | #F59E0B |
 | `token-budget` | TokenBudget.jsx | TokenBudget.css | — (game) | Game | #F59E0B |
 | `ai-ethics-tribunal` | AIEthicsTribunal.jsx | AIEthicsTribunal.css | — (game) | Game | #F59E0B |
+| `pm-simulator` | PMSimulator.jsx | PMSimulator.css | — (game) | Game | #F59E0B |
 | `ai-native-pm` | AINativePM.jsx | AINativePM.css | aiNativePMQuiz | Professional | #0EA5E9 |
 
 ## Color System — Two Color Layers
@@ -50,7 +51,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning |
-| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal |
+| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
 **Where tag colors are used:**
@@ -67,7 +68,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering |
 | Advanced | #FF9500 | RAG, Agentic AI |
-| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal |
+| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator |
 | Professional | #0EA5E9 | AI-Native PM |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
@@ -164,6 +165,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/PromptHeist.jsx` / `src/PromptHeist.css` — Prompt Heist game (5 heists, prompt engineering through gameplay)
 - `src/TokenBudget.jsx` / `src/TokenBudget.css` — Token Budget game (5 levels, prompt compression/optimization)
 - `src/AIEthicsTribunal.jsx` / `src/AIEthicsTribunal.css` — AI Ethics Tribunal game (6 cases, AI ethics dilemmas)
+- `src/PMSimulator.jsx` / `src/PMSimulator.css` — PM Simulator game (5 missions, ship an AI feature as PM)
 - `src/AINativePM.jsx` / `src/AINativePM.css` — AI-Native PM tutorial (8 stages: gap, deliverables, system instructions, structured logic, evals, hallucinations, drift, toolkit)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
@@ -535,6 +537,7 @@ create table quiz_results (
 | Prompt Heist | Game started | All 5 heists completed |
 | Token Budget | Game started | First level completed |
 | AI Ethics Tribunal | Game started | All 6 cases completed |
+| PM Simulator | Game started | All 5 missions completed |
 | AI-Native PM | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
@@ -691,9 +694,10 @@ When buttons appear side-by-side (e.g., `.how-final-actions`), force uniform siz
 | `1.5px` | All buttons (filled and outline), interactive chips, strong emphasis |
 | `2px` | Accent border-left on info tips, comparison panels, pipe steps |
 
-**Border-left accent pattern** (info cards, pipeline steps):
+**Border-left accent pattern** (info cards, pipeline steps, hint boxes, lesson cards):
 ```css
 border-left: 2px solid <accent-color>;
+border-radius: 10px;  /* always 10px — never 0 Xpx Xpx 0 */
 ```
 
 **Border-top comparison pattern** (good/bad panels):
@@ -710,6 +714,10 @@ All tip/lightbulb boxes across every module MUST use the same yellow color patte
 ```css
 background: rgba(234, 179, 8, 0.06);  /* light yellow tint */
 border-left: 2px solid #eab308;        /* yellow left border */
+border-radius: 10px;                   /* rounded — never flat left edge */
+font-size: 14px;
+color: var(--text-secondary);
+padding: 12px 16px;
 ```
 
 ```jsx
@@ -720,11 +728,12 @@ border-left: 2px solid #eab308;        /* yellow left border */
 ```
 
 **Rules:**
-- Background: always `rgba(234, 179, 8, 0.06)` (light/dark mode)
+- Background: always `rgba(234, 179, 8, 0.06)` (light mode), `rgba(234, 179, 8, 0.08)` (dark mode)
 - Border-left: always `2px solid #eab308`
+- Border-radius: always `10px` (never `0 8px 8px 0` or similar flat-left patterns)
+- Font-size: `14px`, color: `var(--text-secondary)`
 - Icon: always `<TipIcon>` with `color="#eab308"`
-- Dark mode: same background tint (no change needed)
-- CSS classes: `how-info-tip` (App.css), `ft-tip` (FineTuning.css)
+- CSS classes: `how-info-tip` (App.css), `ft-tip` (FineTuning.css), `ph-hint-box` (PromptHeist), `tb-hint-box` (TokenBudget), `ale-help-box` (AILabExplorer), `pms-hint-box` (PMSimulator)
 
 ---
 

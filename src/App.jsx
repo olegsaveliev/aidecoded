@@ -18,6 +18,7 @@ import AILabExplorer from './AILabExplorer.jsx'
 import PromptHeist from './PromptHeist.jsx'
 import TokenBudget from './TokenBudget.jsx'
 import AIEthicsTribunal from './AIEthicsTribunal.jsx'
+import PMSimulator from './PMSimulator.jsx'
 import AINativePM from './AINativePM.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -933,6 +934,9 @@ function App() {
         )}
         {!showHome && activeTab === 'ai-ethics-tribunal' && (
           <AIEthicsTribunal onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'pm-simulator' && (
+          <PMSimulator onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'ai-native-pm' && (
           <AINativePM onSwitchTab={setActiveTab} onGoHome={handleGoHome} />

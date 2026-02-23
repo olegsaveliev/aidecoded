@@ -18,6 +18,7 @@ const ALL_MODULES = [
   { id: 'prompt-heist', title: 'Prompt Heist', description: 'Craft the perfect prompt to outsmart AI security systems and pull off 5 legendary heists.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'token-budget', title: 'Token Budget', description: 'Rewrite prompts to fit strict token limits without losing quality. Real API cost thinking through play.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'ai-ethics-tribunal', title: 'AI Ethics Tribunal', description: 'Preside over real-world AI dilemmas. Weigh the arguments. Deliver your verdict. No easy answers.', tag: 'Game', tagColor: '#F59E0B' },
+  { id: 'pm-simulator', title: 'PM Simulator', description: 'You are the PM. Write system instructions, design evals, fix hallucinations. Ship the AI feature — or watch it fail.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'ai-native-pm', title: 'AI-Native PM', description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic.', tag: 'Professional', tagColor: '#0EA5E9' },
 ]
 
