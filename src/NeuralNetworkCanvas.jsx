@@ -31,6 +31,7 @@ const NODES = [
   { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.78, py: 0.38, desc: 'Give AI the right context every time' },
   { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', px: 0.78, py: 0.64, desc: 'Explore an AI research lab room by room' },
   { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.78, py: 0.86, desc: 'Solve AI mysteries, build your city' },
+  { id: 'token-budget', label: 'Token Budget', group: 'play', px: 0.42, py: 0.92, desc: 'Rewrite prompts to fit strict token budgets' },
 ]
 
 const CONNECTIONS = [
@@ -59,6 +60,8 @@ const CONNECTIONS = [
   ['rag', 'ai-lab-explorer'],
   ['prompt-heist', 'ai-city-builder'],
   ['prompt-heist', 'ai-lab-explorer'],
+  ['prompt-heist', 'token-budget'],
+  ['tokenizer', 'token-budget'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -82,6 +85,7 @@ const NODE_DELAYS = {
   'context-engineering': 2050,
   'ai-lab-explorer': 2200,
   'ai-city-builder': 2350,
+  'token-budget': 1800,
 }
 
 const NODE_APPEAR_DUR = 500

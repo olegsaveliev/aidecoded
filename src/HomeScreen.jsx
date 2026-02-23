@@ -144,11 +144,20 @@ const CARDS = [
     isGame: true,
     difficulty: 'Intermediate',
   },
+  {
+    id: 'token-budget',
+    title: 'Token Budget',
+    description: 'Rewrite prompts to fit strict token limits without losing quality. Real API cost thinking through play.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Intermediate',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
 
-const TOTAL_MODULES = 14 // all modules including tools and games
+const TOTAL_MODULES = 15 // all modules including tools and games
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

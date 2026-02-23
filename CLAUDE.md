@@ -31,6 +31,7 @@ Interactive React app for learning how Large Language Models work.
 | `ai-city-builder` | AICityBuilder.jsx | AICityBuilder.css | — (game) | Game | #F59E0B |
 | `ai-lab-explorer` | AILabExplorer.jsx | AILabExplorer.css | — (game) | Game | #F59E0B |
 | `prompt-heist` | PromptHeist.jsx | PromptHeist.css | — (game) | Game | #F59E0B |
+| `token-budget` | TokenBudget.jsx | TokenBudget.css | — (game) | Game | #F59E0B |
 
 ## Color System — Two Color Layers
 
@@ -45,7 +46,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
 | Technical | #5856D6 (indigo) | Machine Learning, Deep Learning, Fine-Tuning |
-| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist |
+| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget |
 
 **Where tag colors are used:**
 - HomeScreen card left borders + card icons: `FILTER_COLORS[card.tag]`
@@ -61,7 +62,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning |
 | Skills | #34C759 | Prompt Engineering, Context Engineering |
 | Advanced | #FF9500 | RAG |
-| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist |
+| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 
@@ -153,6 +154,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/AICityBuilder.jsx` / `src/AICityBuilder.css` — AI City Builder game (detective cases, SVG city)
 - `src/AILabExplorer.jsx` / `src/AILabExplorer.css` — AI Lab Explorer game (6-room lab, hands-on challenges)
 - `src/PromptHeist.jsx` / `src/PromptHeist.css` — Prompt Heist game (5 heists, prompt engineering through gameplay)
+- `src/TokenBudget.jsx` / `src/TokenBudget.css` — Token Budget game (5 levels, prompt compression/optimization)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -460,6 +462,7 @@ create table quiz_results (
 | AI City Builder | Game started | First case solved |
 | AI Lab Explorer | Game started | First room completed |
 | Prompt Heist | Game started | All 5 heists completed |
+| Token Budget | Game started | First level completed |
 
 ### Header Auth UI
 
