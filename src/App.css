@@ -1416,7 +1416,7 @@
   border-color: var(--accent);
 }
 
-.how-welcome-steps {
+.module-welcome-steps {
   margin: 8px 0 0 0;
   padding-left: 20px;
   display: flex;
@@ -1424,13 +1424,13 @@
   gap: 4px;
 }
 
-.how-welcome-steps li {
+.module-welcome-steps li {
   font-size: 13px;
   line-height: 1.5;
   color: var(--text-secondary);
 }
 
-.how-welcome-steps strong {
+.module-welcome-steps strong {
   color: var(--text-primary);
 }
 
@@ -2613,24 +2613,6 @@
   flex: 1;
 }
 
-.playground-welcome-steps {
-  margin: 8px 0 0 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.playground-welcome-steps li {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-.playground-welcome-steps strong {
-  color: var(--text-primary);
-}
-
 .playground-welcome-dismiss {
   background: none;
   border: 1px solid rgba(0, 113, 227, 0.2);
@@ -2902,23 +2884,6 @@
   flex: 1;
 }
 
-.tok-welcome-steps {
-  margin: 8px 0 0 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.tok-welcome-steps li {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-.tok-welcome-steps strong {
-  color: var(--text-primary);
-}
 
 .tok-welcome-dismiss {
   background: none;
@@ -3099,23 +3064,6 @@
   flex: 1;
 }
 
-.gen-welcome-steps {
-  margin: 8px 0 0 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.gen-welcome-steps li {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-.gen-welcome-steps strong {
-  color: var(--text-primary);
-}
 
 .gen-welcome-dismiss {
   background: none;
@@ -3205,41 +3153,6 @@
   max-width: 900px;
 }
 
-.mt-welcome-steps {
-  margin: 8px 0 0 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.mt-welcome-steps li {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-.mt-welcome-steps strong {
-  color: var(--text-primary);
-}
-
-.pe-welcome-steps {
-  margin: 8px 0 0 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.pe-welcome-steps li {
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-.pe-welcome-steps strong {
-  color: var(--text-primary);
-}
 
 /* Stepper adjustments for 6 stages */
 .mt-stepper {
@@ -5616,12 +5529,7 @@
     padding: 8px;
   }
 
-  .playground-welcome-steps,
-  .tok-welcome-steps,
-  .gen-welcome-steps,
-  .how-welcome-steps,
-  .mt-welcome-steps,
-  .pe-welcome-steps {
+  .module-welcome-steps {
     padding-left: 18px;
     gap: 2px;
   }

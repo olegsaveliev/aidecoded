@@ -826,8 +826,12 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 18. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
 19. Call `markModuleComplete('<module-id>')` when module is completed (final screen or first meaningful action)
 20. Update `TOTAL_MODULES` in `HomeScreen.jsx` if adding a completable module
-21. Use `usePersistedState('<module-id>', -1)` for stage state (or `usePersistedState('<module-id>-entry', true)` for entry-based); init `showWelcome` from stage: `useState(stage === -1)`
-22. Update this file
+21. Use `usePersistedState('<module-id>', -1)` for stage state (or `usePersistedState('<module-id>-entry', true)` for entry-based); init `showWelcome` from stage: `useState(stage === -1)`; init `showFinal` from stage: `useState(stage >= STAGES.length)` — prevents blank screen on page refresh
+22. Add welcome banner with `<ol className="module-welcome-steps">` (shared CSS class for all modules)
+23. Add progressive learn tips: `learnTip`/`dismissedTips`/`fadeTimerRef` state, `dismissLearnTip` function, milestone-based useEffect
+24. Add `handleStartOver` function that resets stage, tips, welcome, and all module state
+25. Add mobile touch targets (min-height: 44px) for module-specific buttons at 768px breakpoint
+26. Update this file
 
 ## Conventions
 
@@ -862,6 +866,11 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Started modules tracked in localStorage (keyed by user ID), completed in Supabase `progress` table
 - Logged-in users persist navigation + module stage to sessionStorage via `usePersistedState` hook; non-logged-in users always start fresh
 - New modules must use `usePersistedState(moduleId, -1)` for stage (or `usePersistedState(moduleId + '-entry', true)` for entry-based modules)
+- `showFinal` must initialize from persisted stage: `useState(stage >= STAGES.length)` — `useState(false)` causes blank screen on page refresh after completing all stages
+- Welcome banner `<ol>` uses shared `module-welcome-steps` class (one CSS definition in App.css, not per-module copies)
+- All stage-based modules implement `handleStartOver()` that resets stage, welcome, tips, and all module state; used by both "Start over" button and quiz `onStartOver`
+- Progressive learn tips: `learnTip` state + `dismissedTips` Set + `fadeTimerRef` ref; milestone-based useEffect triggers tips at key stages; `dismissLearnTip` fades out then clears
+- Module-specific CSS must include mobile touch targets: `min-height: 44px` on interactive buttons at `@media (max-width: 768px)`
 - Stage → final screen uses fade transition: `setFading(true)` → 250ms → `setShowFinal(true)` + scroll-to-top via DOM ancestor walking
 - Quiz results use fade transition: `setTransitioning(true)` → 300ms → `setShowResult(true)` + scroll-to-top via DOM ancestor walking
 - Scroll-to-top pattern: walk up DOM from root element, reset every `scrollTop > 0`, then `window.scrollTo(0, 0)`

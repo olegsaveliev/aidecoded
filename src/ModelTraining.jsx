@@ -800,7 +800,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Model Training</strong> — here's how to explore:
-            <ol className="mt-welcome-steps">
+            <ol className="module-welcome-steps">
               <li>Walk through <strong>6 stages</strong> of building an AI — each with real animations and numbers</li>
               <li>Read the info cards to understand <strong>what happens at each stage</strong> and why it matters</li>
               <li>Check the <strong>tools section</strong> at each stage to see what real AI engineers use</li>

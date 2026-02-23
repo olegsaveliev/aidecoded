@@ -640,9 +640,13 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
   const [stage, setStage] = usePersistedState('context-engineering', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(stage === -1)
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -694,6 +698,44 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
     setShowQuiz(false)
   }
 
+  function handleStartOver() {
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    reset()
+    setShowWelcome(true)
+    setLearnTip(null)
+    setLearnTipFading(false)
+    setDismissedTips(new Set())
+  }
+
+  // Progressive learning tips at stage milestones
+  useEffect(() => {
+    if (stage === 0 && !dismissedTips.has('what-is-context') && !learnTip) {
+      setLearnTip({ id: 'what-is-context', text: 'Look at the two prompts below — same question, completely different answers. The only difference is the context you provide. This is the core insight of context engineering!' })
+    } else if (stage === 2 && !dismissedTips.has('poisoning') && !learnTip) {
+      setLearnTip({ id: 'poisoning', text: 'Notice how every item on the left makes the AI worse. Bad context is worse than no context — this is why "just paste everything" is terrible advice.' })
+    } else if (stage === 3 && !dismissedTips.has('rag') && !learnTip) {
+      setLearnTip({ id: 'rag', text: 'This 6-step pipeline is how ChatGPT plugins and enterprise AI assistants actually work. You don\'t retrain the model — you just engineer what goes into the context window.' })
+    } else if (stage === 5 && !dismissedTips.has('usecases') && !learnTip) {
+      setLearnTip({ id: 'usecases', text: 'Click a use case and check the boxes to build a reusable context template. Different tasks need different context — this is where the art meets the science.' })
+    }
+  }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissLearnTip() {
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 400)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    }
+  }, [])
+
   const vizComponents = {
     0: <WhatIsContextViz active={stage === 0} />,
     1: <ContextWindowViz active={stage === 1} />,
@@ -705,28 +747,28 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
 
   const explanations = {
     0: {
-      title: 'Stage 1: What is Context?',
-      content: "Context is everything the AI can see when generating its response. This includes:\n\n- Your system prompt (instructions)\n- The conversation history\n- Any documents you've pasted in\n- Examples you've provided\n\nThe context window is the AI's entire working memory — it can only use what's inside it. Nothing more, nothing less.\n\nThis is why copying and pasting relevant information into your prompt dramatically improves results.",
+      title: 'What is Context?',
+      content: "Here's the most important thing to understand about AI: it can only work with what you give it. \"Context\" is everything the AI can see when it generates a response — your system prompt, conversation history, pasted documents, and examples.\n\nThink of it this way: if you ask a consultant for advice but give them zero background, you'll get a generic answer. Give them your company data, constraints, and goals? Now you get a real answer.\n\nThe AI works the same way. The demo below shows the exact same question with empty context vs. rich context. The difference is dramatic — and it's 100% within your control.",
     },
     1: {
-      title: 'Stage 2: The Context Window',
-      content: "Think of the context window as a whiteboard — the AI can only see what's written on it right now.\n\nDifferent models have different sized whiteboards:\n- GPT-3.5: 16,000 tokens (~12,000 words)\n- GPT-4o: 128,000 tokens (~96,000 words)\n- Claude 3: 200,000 tokens (~150,000 words)\n- Gemini 1.5: 1,000,000 tokens (~750,000 words)\n\nWhen the whiteboard fills up, old content falls off the edge. This is why very long conversations sometimes make AI 'forget' things you said earlier.",
+      title: 'The Context Window',
+      content: "The context window is the AI's working memory — like a whiteboard. It can only see what's on the whiteboard right now. Once it's full, old content falls off the edge.\n\nDifferent models have different sized whiteboards:\n- GPT-3.5: 16,000 tokens (~12,000 words)\n- GPT-4o: 128,000 tokens (~96,000 words)\n- Claude 3: 200,000 tokens (~150,000 words)\n- Gemini 1.5: 1,000,000 tokens (~750,000 words)\n\nThis is why very long conversations sometimes make AI \"forget\" things you said earlier — your early messages literally fell off the whiteboard. Watch the animation below to see how quickly different content types fill it up.",
     },
     2: {
-      title: 'Stage 3: Context Poisoning',
-      content: "Bad context is worse than no context. If you fill the context window with contradictory, irrelevant, or outdated information, the AI gets confused and produces worse results than if you'd asked simply.\n\nCommon context mistakes:\n- Pasting entire documents when only 1 section is relevant\n- Including old email threads with conflicting information\n- Mixing different topics in one conversation\n- Not updating context when facts change\n\nRule: Every piece of context should earn its place.",
+      title: 'Context Poisoning — When More Is Less',
+      content: "Here's a counterintuitive truth: bad context is worse than no context. If you stuff the context window with contradictory, irrelevant, or outdated information, the AI actually performs worse than if you'd asked with nothing at all.\n\nMost people make this mistake: they paste an entire 50-page document when only one paragraph is relevant. The AI gets overwhelmed, can't tell what matters, and gives you a muddled answer.\n\nThe rule is simple: every piece of context should earn its place. If it doesn't change the answer, leave it out. The demo below shows exactly what poisoned context looks like versus clean context.",
     },
     3: {
-      title: 'Stage 4: RAG — Teaching AI Your Documents',
-      content: "RAG solves the biggest enterprise AI problem: how do you make AI know about YOUR specific documents, policies, and data without retraining it?\n\nAnswer: Store your docs in a vector database, retrieve relevant chunks at query time, inject them into the context window.\n\nThis is how:\n- ChatGPT plugins work\n- Custom AI assistants know your company docs\n- AI can answer questions about your internal knowledge base\n\nYou don't need to train a new model — just engineer the context better.",
+      title: 'RAG — Teaching AI Your Documents',
+      content: "This is where context engineering becomes truly powerful. RAG (Retrieval Augmented Generation) solves the biggest enterprise AI problem: how do you make AI know about YOUR specific documents without retraining the model?\n\nThe answer is elegant: store your documents in a special database, and when someone asks a question, automatically find the relevant parts and inject them into the context window. The AI doesn't need to \"know\" your docs — it just needs to see them at the right moment.\n\nThis is exactly how ChatGPT plugins, Microsoft Copilot, and thousands of enterprise AI assistants work. No retraining needed — just smart context engineering.",
     },
     4: {
-      title: 'Stage 5: Pro Context Strategies',
-      content: "These are the techniques used by AI engineers building production systems. Apply them to immediately improve your AI results.\n\nThe Sandwich Method ensures instructions aren't forgotten in long contexts. Chunking prevents wasted tokens. Persona Anchoring keeps AI consistent. Context Refresh prevents drift.\n\nMaster these four strategies and you'll handle any context challenge.",
+      title: 'Pro Context Strategies',
+      content: "These four techniques are what separate AI hobbyists from AI engineers. Each one solves a real problem that comes up in production.\n\nThe Sandwich Method prevents the AI from forgetting your instructions when processing long content. Chunking stops you from wasting precious context space. Persona Anchoring keeps the AI consistent across long conversations. Context Refresh prevents the AI from drifting off-topic.\n\nYou don't need all four at once — learn to recognize which problem you're facing, and apply the right strategy. The cards below explain each one with practical formulas.",
     },
     5: {
-      title: 'Stage 6: Context by Use Case',
-      content: "Different tasks need different context. The art is knowing what to include and what to leave out.\n\nGolden rule: Include context that changes the answer. Exclude context that doesn't matter for this specific task.\n\nFor email writing — include tone and style. For data analysis — include schema and definitions. For business decisions — include constraints and past precedents. For technical help — include error messages and what you've tried.",
+      title: 'Context by Use Case',
+      content: "Different tasks need completely different context. Asking for email help? Include your writing style and the recipient's background. Debugging code? Include the error message and what you've already tried. Making a business decision? Include constraints and past precedents.\n\nThe golden rule: include context that changes the answer, exclude context that doesn't matter for this specific task.\n\nClick a use case below to see exactly what context to include — then check boxes to build a reusable template you can actually copy and use.",
     },
   }
 
@@ -735,7 +777,8 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
       <EntryScreen
         icon={<ModuleIcon module="context-engineering" size={48} style={{ color: '#34C759' }} />}
         title="Context Engineering"
-        description="Prompt Engineering is about HOW you ask. Context Engineering is about WHAT you include. Learn how to craft the perfect context window to get consistently great AI results."
+        subtitle="Master what you feed the AI"
+        description="Prompt Engineering teaches you HOW to ask. Context Engineering teaches you WHAT to include. You'll learn why the same AI gives genius-level answers to some people and useless answers to others — and how to always be in the first group. Covers context windows, context poisoning, RAG, and pro strategies used by AI engineers."
         buttonText="Start Learning"
         onStart={() => { setStage(0); markModuleStarted('context-engineering') }}
       />
@@ -749,7 +792,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
           questions={contextEngineeringQuiz}
           tabName="Context Engineering"
           onBack={() => setShowQuiz(false)}
-          onStartOver={() => reset()}
+          onStartOver={handleStartOver}
           onSwitchTab={onSwitchTab}
           currentModuleId="context-engineering"
         />
@@ -759,10 +802,18 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
 
   return (
     <div className={`how-llms ce-root${fading ? ' how-fading' : ''}`}>
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Welcome to Context Engineering</strong> — While prompt engineering teaches you how to ask, context engineering teaches you what to include. Master this and your AI results will transform overnight.
+            <strong>Welcome to Context Engineering</strong> — here's how to explore:
+            <ol className="module-welcome-steps">
+              <li>Walk through <strong>6 stages</strong> — each reveals a different aspect of how context shapes AI responses</li>
+              <li>Watch the <strong>animated demos</strong> to see context engineering principles in action</li>
+              <li>At the end, build a <strong>reusable context template</strong> for your own use cases</li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -827,6 +878,15 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
 
                 {vizComponents[stage]}
 
+                {learnTip && (
+                  <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+                    <span className="learn-tip-text">{learnTip.text}</span>
+                    <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    </button>
+                  </div>
+                )}
+
                 <div className="how-nav-row">
                   <div className="how-nav-buttons">
                     {stage > 0 && (
@@ -834,12 +894,12 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
                     )}
                     <button className="how-gotit-btn" onClick={nextStage}>
                       {[
-                        'Show me the window →',
-                        'What can go wrong? →',
-                        'How does RAG work? →',
-                        'Teach me strategies →',
-                        'Real use cases →',
-                        'Test my knowledge →',
+                        'Next: Context Window →',
+                        'Next: Context Poisoning →',
+                        'Next: RAG →',
+                        'Next: Pro Strategies →',
+                        'Next: Use Cases →',
+                        'See Your Toolkit →',
                       ][stage]}
                     </button>
                   </div>
@@ -889,7 +949,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            <button className="how-secondary-btn" onClick={reset}>
+            <button className="how-secondary-btn" onClick={handleStartOver}>
               Start over
             </button>
           </div>

@@ -1062,9 +1062,13 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
   const [stage, setStage] = usePersistedState('machine-learning', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(stage === -1)
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -1116,6 +1120,44 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
     setShowQuiz(false)
   }
 
+  function handleStartOver() {
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    reset()
+    setShowWelcome(true)
+    setLearnTip(null)
+    setLearnTipFading(false)
+    setDismissedTips(new Set())
+  }
+
+  // Progressive learning tips at stage milestones
+  useEffect(() => {
+    if (stage === 0 && !dismissedTips.has('what-is-ml') && !learnTip) {
+      setLearnTip({ id: 'what-is-ml', text: 'Try classifying the emails below — then compare your accuracy to the ML model. This is the core idea: instead of writing rules, you let the algorithm learn from examples.' })
+    } else if (stage === 2 && !dismissedTips.has('supervised') && !learnTip) {
+      setLearnTip({ id: 'supervised', text: 'Watch the error (loss) shrink with each iteration — that\'s the model getting smarter! This exact process happens billions of times during ChatGPT\'s training.' })
+    } else if (stage === 4 && !dismissedTips.has('overfitting') && !learnTip) {
+      setLearnTip({ id: 'overfitting', text: 'Look at the three charts carefully — the middle one captures the real pattern, the right one memorized every wiggle. When ChatGPT "hallucinates," it\'s partly an overfitting problem.' })
+    } else if (stage === 7 && !dismissedTips.has('lifecycle') && !learnTip) {
+      setLearnTip({ id: 'lifecycle', text: 'Notice the percentages — 80% of an ML project is data work, not model building! This is the "dirty secret" of machine learning that most courses don\'t teach you.' })
+    }
+  }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissLearnTip() {
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 400)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    }
+  }, [])
+
   const vizComponents = {
     0: <WhatIsMLViz active={stage === 0} />,
     1: <TypesViz active={stage === 1} />,
@@ -1129,36 +1171,36 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
 
   const explanations = {
     0: {
-      title: 'Stage 1: What is Machine Learning?',
-      content: "Machine Learning is the science of teaching computers to learn from examples instead of explicit rules.\n\nTraditional programming: humans write the rules\nMachine Learning: the algorithm finds the rules itself\n\nThe key insight: if you show a computer enough examples with correct answers, it can figure out the underlying pattern — often better than humans can.\n\nEvery time you use a spam filter, Netflix recommendation, or fraud detection system — that's ML working silently.",
+      title: 'What is Machine Learning?',
+      content: "Here's the core idea: instead of a programmer writing rules, you give the computer examples and let it figure out the rules on its own.\n\nTraditional programming: Human writes \"IF email contains 'winner' → spam\"\nMachine learning: Show 10,000 spam and 10,000 normal emails → algorithm discovers the patterns itself\n\nThe key insight is that ML often finds patterns humans would miss — and it works on emails it has never seen before. Every spam filter, Netflix recommendation, and fraud detection system you've ever used? That's ML working silently behind the scenes.\n\nTry the email classification demo below — then compare your accuracy to the ML model.",
     },
     1: {
-      title: 'Stage 2: Three Types of ML',
-      content: "All ML falls into three categories based on how the algorithm learns:\n\nSupervised: Teacher provides answers → most common in business\nUnsupervised: No answers provided → finds hidden structure\nReinforcement: Trial and error with rewards → used in games and robotics\n\nThe LLMs we've been studying use ALL THREE: Pre-training is self-supervised, RLHF is reinforcement learning!",
+      title: 'Three Families of Machine Learning',
+      content: "All of ML falls into three categories, and understanding these helps you recognize the right approach for any problem.\n\nSupervised Learning: You give the algorithm examples with correct answers (labeled data). It learns the pattern. This is the most common type in business — spam detection, price prediction, image classification.\n\nUnsupervised Learning: No correct answers provided. The algorithm finds hidden structure in the data on its own — like grouping customers into segments or detecting anomalies.\n\nReinforcement Learning: The algorithm learns by trial and error, receiving rewards for good actions. Think game-playing AI, robotics, and self-driving cars.\n\nHere's the connection: the LLMs you've been studying use ALL THREE. Pre-training is self-supervised, fine-tuning is supervised, and RLHF is reinforcement learning!",
     },
     2: {
-      title: 'Stage 3: How Supervised Learning Works',
-      content: "The training loop is simple but powerful:\n1. Make a prediction\n2. Compare to correct answer\n3. Calculate the error (loss)\n4. Adjust model parameters to reduce error\n5. Repeat millions of times\n\nThis is called gradient descent — the algorithm always moves in the direction that reduces error most.\n\nThe test set is crucial: it tells you if the model actually learned general patterns or just memorized the training data (called overfitting).",
+      title: 'How Supervised Learning Actually Works',
+      content: "The training process is a loop that repeats millions of times:\n1. Make a prediction on training data\n2. Compare the prediction to the correct answer\n3. Calculate how wrong it was (the \"loss\")\n4. Adjust the model's internal parameters to be less wrong\n5. Repeat from step 1\n\nThis loop is called gradient descent — the algorithm always moves in the direction that reduces error the fastest. Watch the loss bars below shrink with each iteration.\n\nThe test set is critical: we hold back 20% of data that the model never sees during training. If it predicts well on unseen data, it actually learned the pattern. If not, it just memorized — which we'll cover next.",
     },
     3: {
-      title: 'Stage 4: Neural Networks',
-      content: "Neural networks are inspired by the brain — interconnected nodes that process information in layers.\n\nEach connection has a weight (importance). Each node applies an activation function. Training adjusts millions of weights to minimize error.\n\nKey insight: deep networks (many layers) can learn incredibly complex patterns. This is why they call it 'deep learning' — it's neural networks with many hidden layers.\n\nThe Transformer models powering ChatGPT are neural networks with a special 'attention' mechanism you already learned about!",
+      title: 'Neural Networks — Layers of Learning',
+      content: "Neural networks are inspired by the brain: layers of interconnected nodes, where each connection has a weight (importance). Data flows through the layers, getting transformed at each step.\n\nThe key insight: each layer learns to detect different features. In image recognition, the first layer detects edges, the second combines edges into shapes, the third recognizes objects. The network builds understanding layer by layer.\n\nWhen people say \"deep learning,\" they mean neural networks with many hidden layers. More layers = ability to learn more complex patterns. The Transformer models powering ChatGPT are neural networks with a special \"attention\" mechanism you explored in the How LLMs Work module.\n\nTry adjusting the weights below — this is what training does automatically, millions of times, until the predictions are accurate.",
     },
     4: {
-      title: 'Stage 5: The Goldilocks Problem',
-      content: "The biggest challenge in ML is generalization — does the model learn real patterns or just memorize data?\n\nUnderfitting: Model too simple, misses the pattern\nOverfitting: Model too complex, memorizes noise\n\nSolutions for overfitting:\n- More training data (most effective)\n- Dropout (randomly disable neurons during training)\n- Regularization (penalize complexity)\n- Cross-validation (use multiple train/test splits)\n- Early stopping (stop training before overfitting starts)\n\nWhen ChatGPT sometimes 'hallucinates', it's partly because the model learned spurious patterns from training data.",
+      title: 'The Goldilocks Problem — Overfitting vs. Underfitting',
+      content: "This is the central challenge of all machine learning: finding the sweet spot between too simple and too complex.\n\nUnderfitting: The model is too simple to capture the real pattern. A straight line through curved data. Both training and test accuracy are bad.\n\nOverfitting: The model is so complex it memorizes the training data — including the noise and outliers. Training accuracy looks amazing, but test accuracy is terrible. The model fails on any new data.\n\nJust right: The model captures the real underlying pattern without memorizing noise. This generalizes to new, unseen data.\n\nSolutions: more data (most effective), dropout (randomly disabling neurons), regularization (penalizing complexity), cross-validation (testing on multiple splits), and early stopping (halting before overfitting begins).",
     },
     5: {
-      title: 'Stage 6: The ML Algorithm Toolkit',
-      content: "Different problems need different algorithms. Knowing when to use which is the art of ML engineering.\n\nGeneral rule:\n- Start with simple (Linear/Logistic Regression)\n- Try ensemble methods (Random Forest, XGBoost)\n- Use neural networks only when simpler methods fail\n- Complex ≠ better for most business problems\n\nXGBoost wins more Kaggle competitions than deep learning for structured tabular data!",
+      title: 'The Algorithm Toolkit',
+      content: "Different problems need different algorithms, and knowing when to use which is the art of ML engineering. Here's the practical guide:\n\nStart simple: Linear or Logistic Regression. These are surprisingly powerful and easy to explain to stakeholders.\n\nLevel up: Random Forest and XGBoost. These \"ensemble\" methods combine many simple models into one powerful one. XGBoost wins more data science competitions than deep learning for tabular (spreadsheet-like) data.\n\nGo deep: Neural networks are best for images, text, audio, and other unstructured data. But they need more data and compute.\n\nThe golden rule: complex models are NOT always better. For most business problems, XGBoost or Random Forest beats neural networks — and is much easier to deploy and explain.",
     },
     6: {
-      title: 'Stage 7: ML is Already Everywhere',
-      content: "You interact with ML dozens of times per day without realizing it.\n\nEvery recommendation, every search result, every fraud alert, every photo filter — these are all ML models making real-time predictions.\n\nFor IT managers: the question is no longer 'should we use ML?' but 'which problems in our business would benefit most from ML?'",
+      title: 'ML is Already Everywhere',
+      content: "You interact with ML dozens of times per day without realizing it. Every recommendation, every search result, every fraud alert, every photo filter — these are all ML models making real-time predictions.\n\nClick through each industry below to see specific applications. Notice how the same core techniques (classification, prediction, pattern detection) apply everywhere — only the data changes.\n\nFor anyone in business: the question is no longer \"should we use ML?\" but \"which problems would benefit most from ML?\" The industries below give you a starting point.",
     },
     7: {
-      title: 'Stage 8: The Real ML Workflow',
-      content: "The dirty secret of ML: 80% of time is spent on data, not models.\n\n'Data Scientists spend 80% of their time cleaning data and 20% complaining about it.'\n\nThe ML lifecycle is never truly finished — models degrade over time as the world changes (called data drift or concept drift).\n\nGood MLOps practices keep models fresh and reliable in production.",
+      title: 'The Real ML Workflow',
+      content: "Here's what ML courses don't tell you: building the model is maybe 10-20% of the work. The other 80% is data — collecting it, cleaning it, transforming it, and making sure it's representative.\n\n\"Data Scientists spend 80% of their time cleaning data and 20% complaining about it.\" This is only slightly a joke.\n\nThe ML lifecycle is also never truly \"done.\" Models degrade over time as the world changes — this is called data drift. A fraud detection model trained on 2023 patterns may miss 2024 fraud tactics. Good MLOps practices keep models fresh, monitored, and reliable in production.\n\nFollow each step below and notice the percentages — they reveal where the real work happens.",
     },
   }
 
@@ -1168,7 +1210,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
         icon={<ModuleIcon module="machine-learning" size={48} style={{ color: '#5856D6' }} />}
         title="Machine Learning"
         subtitle="How machines actually learn from data"
-        description="Before ChatGPT, before transformers, before all the AI buzz — there was Machine Learning. Understanding ML gives you the foundation to understand everything else in AI. No math degree required."
+        description="Before ChatGPT, before transformers, before all the AI hype — there was Machine Learning. This is the foundation of everything in AI. You'll learn how algorithms learn from examples, train a house price predictor, adjust neural network weights by hand, and explore the algorithms powering every industry. No math degree required."
         buttonText="Start Learning"
         onStart={() => { setStage(0); markModuleStarted('machine-learning') }}
       />
@@ -1182,7 +1224,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
           questions={machineLearningQuiz}
           tabName="Machine Learning"
           onBack={() => setShowQuiz(false)}
-          onStartOver={() => reset()}
+          onStartOver={handleStartOver}
           onSwitchTab={onSwitchTab}
           currentModuleId="machine-learning"
         />
@@ -1192,10 +1234,18 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
 
   return (
     <div className={`how-llms ml-root${fading ? ' how-fading' : ''}`}>
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Welcome to Machine Learning</strong> — This is the foundation of all modern AI. From spam filters to recommendation engines to self-driving cars — it all starts here. Let's build your mental model from scratch.
+            <strong>Welcome to Machine Learning</strong> — here's how to explore:
+            <ol className="module-welcome-steps">
+              <li>Walk through <strong>8 stages</strong> — from basic concepts to real-world ML workflows</li>
+              <li>Try the <strong>hands-on demos</strong> — classify emails, predict house prices, and adjust neural network weights</li>
+              <li>Click through the <strong>algorithm cards</strong> and industry examples to see how ML applies to your field</li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -1260,6 +1310,15 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
 
                 {vizComponents[stage]}
 
+                {learnTip && (
+                  <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+                    <span className="learn-tip-text">{learnTip.text}</span>
+                    <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    </button>
+                  </div>
+                )}
+
                 <div className="how-nav-row">
                   <div className="how-nav-buttons">
                     {stage > 0 && (
@@ -1267,14 +1326,14 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
                     )}
                     <button className="how-gotit-btn" onClick={nextStage}>
                       {[
-                        'I get it, show me more →',
-                        'Let\'s explore each type →',
-                        'Show me how training works →',
-                        'Take me deeper →',
-                        'Got it, next challenge →',
-                        'Show me real use cases →',
-                        'How do projects work? →',
-                        'Test my knowledge →',
+                        'Next: Types of ML →',
+                        'Next: Supervised Learning →',
+                        'Next: Neural Networks →',
+                        'Next: The Goldilocks Problem →',
+                        'Next: Algorithms →',
+                        'Next: Real Use Cases →',
+                        'Next: ML Lifecycle →',
+                        'See Your Toolkit →',
                       ][stage]}
                     </button>
                   </div>
@@ -1324,7 +1383,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            <button className="how-secondary-btn" onClick={reset}>
+            <button className="how-secondary-btn" onClick={handleStartOver}>
               Start over
             </button>
           </div>

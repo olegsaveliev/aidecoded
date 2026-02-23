@@ -749,6 +749,16 @@
   .ce-template-output {
     font-size: 11px;
   }
+
+  .ce-replay-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .ce-usecase-card {
+    padding: 12px;
+    min-height: 44px;
+  }
 }
 
 @media (max-width: 480px) {

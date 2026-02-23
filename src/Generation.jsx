@@ -461,7 +461,7 @@ function Generation({ model: defaultModel, maxTokens, onSwitchTab, onGoHome }) {
         <div className="gen-welcome">
           <div className="gen-welcome-text">
             <strong>Welcome to Generation</strong> — here's how to explore:
-            <ol className="gen-welcome-steps">
+            <ol className="module-welcome-steps">
               <li>Click <strong>Manual</strong> to see the AI's top 5 predictions — then click a bar to pick a word yourself</li>
               <li>Click <strong>Automatic</strong> to watch the AI complete the sentence at full speed</li>
               <li>Change <strong>Temperature</strong> and try again — watch how the probability bars change</li>

@@ -669,7 +669,7 @@ function FineTuning({ onSwitchTab, onGoHome }) {
   const [stage, setStage] = usePersistedState('fine-tuning', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(stage === -1)
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
   const activeStepRef = useRef(null)

@@ -661,9 +661,13 @@ function RAG({ onSwitchTab, onGoHome }) {
   const [stage, setStage] = usePersistedState('rag', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(stage === -1)
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -715,6 +719,44 @@ function RAG({ onSwitchTab, onGoHome }) {
     setShowQuiz(false)
   }
 
+  function handleStartOver() {
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    reset()
+    setShowWelcome(true)
+    setLearnTip(null)
+    setLearnTipFading(false)
+    setDismissedTips(new Set())
+  }
+
+  // Progressive learning tips at stage milestones
+  useEffect(() => {
+    if (stage === 0 && !dismissedTips.has('problem') && !learnTip) {
+      setLearnTip({ id: 'problem', text: 'Compare the two panels — without RAG, the AI literally can\'t help with company-specific questions. With RAG, it cites the exact section of your documents. This is the entire point of RAG.' })
+    } else if (stage === 1 && !dismissedTips.has('pipeline') && !learnTip) {
+      setLearnTip({ id: 'pipeline', text: 'Watch the two phases animate — indexing happens once (setup), but querying happens on every question. This is why RAG is so efficient for production use.' })
+    } else if (stage === 3 && !dismissedTips.has('chunking') && !learnTip) {
+      setLearnTip({ id: 'chunking', text: 'Chunking strategy is often the biggest factor in RAG quality — more important than the model you choose! Notice the trade-offs between simple and hierarchical approaches.' })
+    } else if (stage === 6 && !dismissedTips.has('build') && !learnTip) {
+      setLearnTip({ id: 'build', text: 'Follow along with the code snippets — a working RAG system is under 50 lines of Python! Check the boxes as you understand each step.' })
+    }
+  }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissLearnTip() {
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 400)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    }
+  }, [])
+
   const vizComponents = {
     0: <ProblemViz active={stage === 0} />,
     1: <PipelineViz active={stage === 1} />,
@@ -727,32 +769,32 @@ function RAG({ onSwitchTab, onGoHome }) {
 
   const explanations = {
     0: {
-      title: 'Stage 1: The Problem RAG Solves',
-      content: "LLMs are trained on general internet data. They know nothing about:\n\n- Your company policies and procedures\n- Your product documentation\n- Your internal knowledge base\n- Recent events after their training cutoff\n\nRAG (Retrieval Augmented Generation) solves this by retrieving relevant information from YOUR documents and injecting it into the context window before the AI answers.\n\nNo retraining. No fine-tuning. Just smart context engineering.",
+      title: 'The Problem RAG Solves',
+      content: "Ask ChatGPT about your company's refund policy and it'll say \"I don't have access to that.\" Ask about last week's board meeting? Same thing. LLMs are trained on general internet data — they know nothing about YOUR world.\n\nThis is the single biggest limitation of AI in business. Your company's policies, products, processes, and data are invisible to it.\n\nRAG (Retrieval Augmented Generation) fixes this. Instead of retraining the model (which costs millions), you retrieve relevant information from your own documents and inject it into the context window right when the AI needs it. Watch the comparison below — the difference is night and day.",
     },
     1: {
-      title: 'Stage 2: How RAG Works',
-      content: "RAG has two phases:\n\nINDEXING (setup, done once):\n1. Split your documents into chunks (~500 tokens each)\n2. Convert each chunk to an embedding vector\n3. Store vectors in a vector database\n\nQUERYING (every user question):\n1. Convert user question to embedding\n2. Find chunks with similar embeddings (semantic search)\n3. Add those chunks to the AI's context\n4. AI answers using retrieved context\n\nThe magic: similar meaning = similar vectors, so searching by meaning finds the right content even if exact words don't match.",
+      title: 'How the RAG Pipeline Works',
+      content: "RAG has two distinct phases, and understanding this split is key to everything that follows.\n\nINDEXING (one-time setup): Take your documents, split them into chunks, convert each chunk into a vector embedding, and store them in a vector database. This is done once.\n\nQUERYING (every question): When a user asks something, convert their question into a vector, search the database for similar vectors, pull the top matches, inject them into the AI's context, and let the AI answer using those documents.\n\nThe magic: similar meaning produces similar vectors. So even if a user asks \"Can I return this?\" it matches your \"Refund Policy\" document — no keyword matching needed.",
     },
     2: {
-      title: 'Stage 3: Why Vectors Enable Smart Search',
-      content: "Traditional search matches exact keywords. Vector search matches MEANING.\n\nExample:\nQuery: 'Can I get my money back?'\nMatches: 'refund policy', 'return procedure', 'money-back guarantee' — even without the word 'money back'\n\nThis is why RAG finds relevant content even when users phrase things differently than the documentation.\n\nTip:The same embeddings you saw in 'How LLMs Work' are used here to power intelligent document retrieval.",
+      title: 'Why Vectors Enable Smart Search',
+      content: "This is the \"aha moment\" for most people. Traditional search (like Ctrl+F) matches exact keywords. If your document says \"refund policy\" but the user types \"Can I get my money back?\" — traditional search finds nothing.\n\nVector search matches MEANING. Both phrases get converted to vectors that are mathematically close together, because they mean similar things. The search finds the match even though not a single word overlaps.\n\nThis is the same embedding technology you explored in the \"How LLMs Work\" module — here it powers intelligent document retrieval. Try the interactive demo below to see it in action.",
     },
     3: {
-      title: 'Stage 4: Chunking — The Art of Splitting Docs',
-      content: "How you split documents dramatically affects RAG quality. Too large: irrelevant content dilutes results. Too small: missing context makes chunks useless.\n\nBest practices:\n- 200-500 tokens per chunk for most use cases\n- Always include some overlap between chunks (50-100 tokens)\n- Split at natural boundaries (paragraphs, sections)\n- Include document title/metadata in each chunk\n\nTip:Chunking strategy is often the biggest factor in RAG system quality — more than the model choice.",
+      title: 'Chunking — The Art of Splitting Documents',
+      content: "How you split your documents is arguably the most important decision in building a RAG system — more important than which model or database you choose.\n\nToo large: chunks contain irrelevant text that dilutes the AI's answer. Too small: chunks lack context and become meaningless fragments.\n\nBest practices that work in production:\n- 200-500 tokens per chunk for most use cases\n- Always include 50-100 tokens of overlap between chunks (so ideas aren't cut in half)\n- Split at natural boundaries — paragraphs, sections, headings\n- Include the document title and section name in each chunk as metadata\n\nThe demo below compares three chunking strategies. Notice the trade-offs — there's no single \"best\" approach.",
     },
     4: {
-      title: 'Stage 5: Vector Databases',
-      content: "A vector database is optimized for one thing: finding similar vectors FAST — even with millions of documents.\n\nRegular databases ask: 'Find rows where id = 5'\nVector databases ask: 'Find the 5 most similar vectors to this query vector'\n\nThis is called Approximate Nearest Neighbor (ANN) search and it's what makes RAG fast enough for real-time use.",
+      title: 'Vector Databases — Search at Scale',
+      content: "A regular database answers: \"Find me the row where id = 5.\" A vector database answers a fundamentally different question: \"Find me the 5 most similar vectors to this one\" — and it does it across millions of documents in milliseconds.\n\nThis is called Approximate Nearest Neighbor (ANN) search. It's what makes RAG fast enough for real-time conversations. Without it, searching millions of vectors would take minutes instead of milliseconds.\n\nClick the search button below to see how fast it works — then check the comparison table to understand which database fits your use case.",
     },
     5: {
-      title: 'Stage 6: RAG Powers the Enterprise AI Revolution',
-      content: "RAG is why AI is finally useful in business settings. Instead of generic AI that knows nothing about your company, RAG gives you AI that IS an expert on your specific domain.\n\nThe business case is clear:\n- Faster employee onboarding (AI knows your processes)\n- Better customer support (AI knows your products)\n- Smarter search (find meaning, not just keywords)\n- Compliance-friendly (AI only uses approved sources)",
+      title: 'RAG in the Real World',
+      content: "RAG is the reason AI is finally useful in business. Instead of a generic AI that gives generic answers, RAG lets you build AI that's an expert on your specific domain — your products, your policies, your codebase.\n\nThe business case is compelling across every industry:\n- Faster employee onboarding (AI knows your processes)\n- Better customer support (AI knows your products and can cite sources)\n- Smarter search (find by meaning, not just keywords)\n- Compliance-friendly (AI only uses approved, auditable sources)\n\nEvery company listed below is using RAG in production right now.",
     },
     6: {
-      title: 'Stage 7: Build Your First RAG System',
-      content: "With modern frameworks like LangChain and LlamaIndex, a basic RAG system can be built in under 50 lines of Python.\n\nThe hard parts are actually:\n- Getting high quality, clean documents\n- Choosing the right chunking strategy\n- Evaluating retrieval quality\n- Handling edge cases (no relevant docs found)\n\nStart simple, then optimize based on where it fails.",
+      title: 'Build Your First RAG System',
+      content: "Here's the exciting part: with modern frameworks like LangChain and LlamaIndex, a working RAG system can be built in under 50 lines of Python. The barrier to entry has never been lower.\n\nThe hard parts aren't the code — they're the decisions:\n- Getting high-quality, clean documents\n- Choosing the right chunking strategy for your content\n- Evaluating whether retrieval is actually finding relevant chunks\n- Handling edge cases gracefully (what if no relevant docs are found?)\n\nFollow the checklist below step by step. Each snippet is copy-pasteable. Start simple, ship it, then optimize based on where it fails.",
     },
   }
 
@@ -761,7 +803,8 @@ function RAG({ onSwitchTab, onGoHome }) {
       <EntryScreen
         icon={<ModuleIcon module="rag" size={48} style={{ color: '#FF9500' }} />}
         title="RAG — Retrieval Augmented Generation"
-        description="Ever wonder how ChatGPT plugins work? Or how companies build AI that knows their internal docs? That's RAG — the most powerful enterprise AI technique available today. No model training required."
+        subtitle="Make AI an expert on YOUR documents"
+        description="Ever wonder how ChatGPT plugins and Microsoft Copilot know about your company's data? That's RAG — the most important enterprise AI technique available today. You'll learn how to make AI answer questions from your own documents, without retraining the model. Covers the full pipeline: embeddings, chunking, vector databases, and real-world use cases."
         buttonText="Start Learning"
         onStart={() => { setStage(0); markModuleStarted('rag') }}
       />
@@ -775,7 +818,7 @@ function RAG({ onSwitchTab, onGoHome }) {
           questions={ragQuiz}
           tabName="RAG"
           onBack={() => setShowQuiz(false)}
-          onStartOver={() => reset()}
+          onStartOver={handleStartOver}
           onSwitchTab={onSwitchTab}
           currentModuleId="rag"
         />
@@ -785,10 +828,18 @@ function RAG({ onSwitchTab, onGoHome }) {
 
   return (
     <div className={`how-llms rag-root${fading ? ' how-fading' : ''}`}>
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Welcome to RAG</strong> — This is how companies like Microsoft, Google and thousands of enterprises make AI work with their own data. By the end you'll understand exactly how it works and how to implement it.
+            <strong>Welcome to RAG</strong> — here's how to explore:
+            <ol className="module-welcome-steps">
+              <li>Walk through <strong>7 stages</strong> — from understanding the problem to building a working RAG system</li>
+              <li>Try the <strong>interactive demos</strong> — click queries, run vector searches, and check off build steps</li>
+              <li>At the end, follow the <strong>code walkthrough</strong> to build your first RAG pipeline in Python</li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -853,6 +904,15 @@ function RAG({ onSwitchTab, onGoHome }) {
 
                 {vizComponents[stage]}
 
+                {learnTip && (
+                  <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+                    <span className="learn-tip-text">{learnTip.text}</span>
+                    <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    </button>
+                  </div>
+                )}
+
                 <div className="how-nav-row">
                   <div className="how-nav-buttons">
                     {stage > 0 && (
@@ -860,13 +920,13 @@ function RAG({ onSwitchTab, onGoHome }) {
                     )}
                     <button className="how-gotit-btn" onClick={nextStage}>
                       {[
-                        'Show me the pipeline →',
-                        'Why vectors? →',
-                        'How to chunk? →',
-                        'Pick a database →',
-                        'Real world examples →',
-                        'Build my first RAG →',
-                        'Test my knowledge →',
+                        'Next: The Pipeline →',
+                        'Next: Vector Embeddings →',
+                        'Next: Chunking →',
+                        'Next: Vector Databases →',
+                        'Next: Real World →',
+                        'Next: Build It →',
+                        'See Your Toolkit →',
                       ][stage]}
                     </button>
                   </div>
@@ -916,7 +976,7 @@ function RAG({ onSwitchTab, onGoHome }) {
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            <button className="how-secondary-btn" onClick={reset}>
+            <button className="how-secondary-btn" onClick={handleStartOver}>
               Start over
             </button>
           </div>

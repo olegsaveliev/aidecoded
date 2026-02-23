@@ -1065,7 +1065,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   const [stage, setStage] = usePersistedState('prompt-engineering', -1)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(stage === -1)
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
   const [learnTip, setLearnTip] = useState(null)
@@ -1247,7 +1247,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Prompt Engineering</strong> — here's how to explore:
-            <ol className="pe-welcome-steps">
+            <ol className="module-welcome-steps">
               <li>Walk through <strong>8 techniques</strong> — each builds on the last, from basic to advanced</li>
               <li>Watch the live demos, then <strong>edit the prompts</strong> and hit Run to see how changes affect the AI's response</li>
               <li>Pay attention to the <strong>before/after comparisons</strong> — they show exactly why each technique works</li>

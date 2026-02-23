@@ -1421,6 +1421,33 @@
     padding: 0 16px 40px;
   }
 
+  .ml-next-step-btn,
+  .ml-lc-loop-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .ml-replay-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .ml-email-btn {
+    min-height: 36px;
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .ml-sup-predict-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .ml-nn-weight-btn {
+    width: 36px;
+    height: 36px;
+  }
+
   .ml-nn-weight-row {
     flex-wrap: wrap;
   }

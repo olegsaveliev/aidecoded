@@ -749,7 +749,7 @@ function App() {
               <div className="playground-welcome">
                 <div className="playground-welcome-text">
                   <strong>Welcome to the Playground</strong> — here's how to get started:
-                  <ol className="playground-welcome-steps">
+                  <ol className="module-welcome-steps">
                     <li>Pick a suggestion below or type your own message</li>
                     <li>Read the AI's response — then try changing <strong>Temperature</strong> in the sidebar and ask the same thing again</li>
                     <li>Try different <strong>System Prompts</strong> above to see how the AI's personality changes</li>

@@ -816,6 +816,25 @@
     padding: 0 16px 40px;
   }
 
+  .rag-replay-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .rag-vdb-search-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .rag-embed-query-btn {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .rag-build-step-header {
+    min-height: 44px;
+  }
+
   .rag-vdb-canvas {
     height: 160px;
   }

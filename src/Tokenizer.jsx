@@ -155,7 +155,7 @@ function Tokenizer({ onSwitchTab, onGoHome }) {
         <div className="tok-welcome">
           <div className="tok-welcome-text">
             <strong>Welcome to the Tokenizer</strong> — here's how to explore:
-            <ol className="tok-welcome-steps">
+            <ol className="module-welcome-steps">
               <li>Type text below or pick a suggestion — watch the colored tokens appear instantly</li>
               <li>Compare the <strong>character count</strong> vs <strong>token count</strong> — notice they're different!</li>
               <li>Try different inputs: common words, rare words, code — see how tokenization changes</li>

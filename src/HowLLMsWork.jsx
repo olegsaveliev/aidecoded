@@ -87,7 +87,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   const [genStreamedText, setGenStreamedText] = useState('')
   const [genCandidates, setGenCandidates] = useState([])
   const [genPhase, setGenPhase] = useState('idle') // idle | logprobs | streaming | done
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [startTime, setStartTime] = useState(0)
   const [elapsed, setElapsed] = useState(0)
   const [showWelcome, setShowWelcome] = useState(stage === -1)
@@ -522,7 +522,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to How LLMs Work</strong> — here's how to explore:
-            <ol className="how-welcome-steps">
+            <ol className="module-welcome-steps">
               <li>Type a short prompt below or pick a suggestion — this is what the AI will process</li>
               <li>Watch your text transform through <strong>5 stages</strong> — from words to tokens to numbers to AI response</li>
               <li>Read the info cards and tips at each stage to understand <strong>what's happening and why</strong></li>
