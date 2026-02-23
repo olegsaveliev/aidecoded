@@ -920,7 +920,7 @@ function FineTuning({ onSwitchTab, onGoHome }) {
                         'How do I evaluate it? \u2192',
                         'Real world examples \u2192',
                         'Give me the checklist \u2192',
-                        'Test my knowledge \u2192',
+                        'See Your Toolkit \u2192',
                       ][stage]}
                     </button>
                   </div>

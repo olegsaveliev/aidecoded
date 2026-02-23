@@ -92,7 +92,7 @@ const NEXT_LABELS = [
   'How AI reads text \u2192',
   'Training tricks \u2192',
   'The future \u2192',
-  'Test my knowledge \u2192',
+  'See Your Toolkit \u2192',
 ]
 
 const EXPLANATIONS = [

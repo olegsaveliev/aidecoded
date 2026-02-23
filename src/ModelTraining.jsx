@@ -905,7 +905,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
                         'Start pre-training →',
                         'Fine-tune the model →',
                         'Add human feedback →',
-                        'Test my knowledge →',
+                        'See Your Toolkit →',
                       ][stage]}
                     </button>
                   </div>

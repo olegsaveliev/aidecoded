@@ -1090,7 +1090,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <div className="how-nav-row">
                     <div className="how-nav-buttons">
                       <button className="how-back-btn" onClick={() => goToStage(3)}>&larr; Back</button>
-                      <button className="how-gotit-btn" onClick={finishJourney}>See the full picture &rarr;</button>
+                      <button className="how-gotit-btn" onClick={finishJourney}>See Your Toolkit &rarr;</button>
                     </div>
                   </div>
                 )}
