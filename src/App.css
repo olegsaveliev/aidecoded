@@ -3205,6 +3205,24 @@
   max-width: 900px;
 }
 
+.mt-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mt-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.mt-welcome-steps strong {
+  color: var(--text-primary);
+}
+
 /* Stepper adjustments for 6 stages */
 .mt-stepper {
   flex-wrap: wrap;
@@ -5583,7 +5601,8 @@
   .playground-welcome-steps,
   .tok-welcome-steps,
   .gen-welcome-steps,
-  .how-welcome-steps {
+  .how-welcome-steps,
+  .mt-welcome-steps {
     padding-left: 18px;
     gap: 2px;
   }

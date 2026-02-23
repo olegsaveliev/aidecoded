@@ -338,6 +338,37 @@ Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start
 
 ---
 
+## Model Training Module (`src/ModelTraining.jsx`)
+
+Interactive 6-stage journey showing how AI models are built from raw data to deployment. Stage-based with stepper navigation. Rich animations at each stage (particle flow, cleaning pipeline, tokenization, loss curve canvas, SFT comparison, RLHF loop).
+
+### Entry Screen
+- Title: "How AI Models Are Built", subtitle: "From raw data to ChatGPT in 6 stages"
+- Description explains what the learner will discover (data collection, cleaning, training, human feedback)
+
+### Welcome Banner
+Numbered 3-step guide: (1) walk through 6 stages with animations, (2) read info cards at each stage, (3) check tools section for real-world tools
+
+### Stages
+6 stages: Data Collection → Data Cleaning → Tokenization → Pre-Training → Fine-Tuning → RLHF. Each stage has info card, animated visualization, and ToolChips.
+
+### Progressive Learning Tips
+Milestone-based tips triggered at key stages. No auto-dismiss — user clicks X. Max one visible at a time. Tracked via `dismissedTips` Set with `fadeTimerRef` for cleanup.
+
+| Trigger | Tip |
+|---|---|
+| Stage 0 (Data Collection) | "Watch the colored dots — each color is a different data source. AI learns from trillions of words" |
+| Stage 1 (Data Cleaning) | "Only 40–60% of data survives cleaning — garbage in, garbage out" |
+| Stage 3 (Pre-Training) | "Watch the loss curve drop — lower loss means better predictions. Costs millions of dollars" |
+| Stage 5 (RLHF) | "This is what makes ChatGPT feel smart — human feedback teaches helpfulness" |
+
+All tips reset on "Start over". CSS: reuses `.learn-tip` classes from Playground.
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview

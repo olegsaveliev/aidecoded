@@ -218,24 +218,18 @@ function DataCollectionViz({ active }) {
 
 // Stage 2: Data Cleaning pipeline
 function DataCleaningViz({ active }) {
-  const [activeFilters, setActiveFilters] = useState([])
+  const [activeCount, setActiveCount] = useState(0)
   const [pctRemaining, setPctRemaining] = useState(100)
 
   useEffect(() => {
-    if (!active) { setActiveFilters([]); setPctRemaining(100); return }
-    let idx = 0
-    let remaining = 100
-    const interval = setInterval(() => {
-      if (idx < FILTER_STAGES.length) {
-        remaining -= FILTER_STAGES[idx].pct
-        setActiveFilters((prev) => [...prev, idx])
-        setPctRemaining(remaining)
-        idx++
-      } else {
-        clearInterval(interval)
-      }
-    }, 800)
-    return () => clearInterval(interval)
+    if (!active) { setActiveCount(0); setPctRemaining(100); return }
+    const timers = FILTER_STAGES.map((_, i) =>
+      setTimeout(() => {
+        setActiveCount(i + 1)
+        setPctRemaining(100 - FILTER_STAGES.slice(0, i + 1).reduce((sum, f) => sum + f.pct, 0))
+      }, (i + 1) * 800)
+    )
+    return () => timers.forEach(clearTimeout)
   }, [active])
 
   return (
@@ -250,7 +244,7 @@ function DataCleaningViz({ active }) {
           {FILTER_STAGES.map((filter, i) => (
             <div
               key={i}
-              className={`mt-filter-stage ${activeFilters.includes(i) ? 'mt-filter-active' : ''}`}
+              className={`mt-filter-stage ${i < activeCount ? 'mt-filter-active' : ''}`}
             >
               <span className="mt-filter-icon"><CrossIcon size={14} /></span>
               <span className="mt-filter-label">{filter.label}</span>
@@ -639,6 +633,10 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -690,6 +688,44 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
     setShowQuiz(false)
   }
 
+  function handleStartOver() {
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    reset()
+    setShowWelcome(true)
+    setLearnTip(null)
+    setLearnTipFading(false)
+    setDismissedTips(new Set())
+  }
+
+  // Progressive learning tips at stage milestones
+  useEffect(() => {
+    if (stage === 0 && !dismissedTips.has('collection') && !learnTip) {
+      setLearnTip({ id: 'collection', text: 'Watch the colored dots flowing in — each color is a different data source. Modern AI models learn from trillions of words from the entire internet!' })
+    } else if (stage === 1 && !dismissedTips.has('cleaning') && !learnTip) {
+      setLearnTip({ id: 'cleaning', text: 'Notice how much data gets thrown away! Only 40–60% survives cleaning. This is why "garbage in, garbage out" is the #1 rule of AI training.' })
+    } else if (stage === 3 && !dismissedTips.has('pretraining') && !learnTip) {
+      setLearnTip({ id: 'pretraining', text: 'Watch the loss curve drop — that\'s the model getting smarter! Lower loss means better predictions. This takes months and costs millions of dollars.' })
+    } else if (stage === 5 && !dismissedTips.has('rlhf') && !learnTip) {
+      setLearnTip({ id: 'rlhf', text: 'This is what makes ChatGPT feel "smart" — human feedback teaches the model to be helpful instead of just predicting text. The thumbs up/down in ChatGPT? That\'s RLHF data collection!' })
+    }
+  }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissLearnTip() {
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 400)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    }
+  }, [])
+
   const vizComponents = {
     0: <DataCollectionViz active={stage === 0} />,
     1: <DataCleaningViz active={stage === 1} />,
@@ -731,7 +767,8 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
       <EntryScreen
         icon={<ModuleIcon module="model-training" size={48} style={{ color: '#FF9500' }} />}
         title="How AI Models Are Built"
-        description="Follow the complete journey from raw internet data to a working AI assistant, in 6 interactive stages. No PhD required."
+        subtitle="From raw data to ChatGPT in 6 stages"
+        description="Follow the complete journey of building an AI model — from collecting trillions of words off the internet, to cleaning and tokenizing data, to months of training on thousands of GPUs, to the human feedback that makes it helpful. You'll see every stage with real numbers and tools."
         buttonText="Start the Journey"
         onStart={() => { setStage(0); markModuleStarted('model-training') }}
       />
@@ -745,7 +782,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
           questions={modelTrainingQuiz}
           tabName="Model Training"
           onBack={() => setShowQuiz(false)}
-          onStartOver={() => reset()}
+          onStartOver={handleStartOver}
           onSwitchTab={onSwitchTab}
           currentModuleId="model-training"
         />
@@ -755,11 +792,19 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
 
   return (
     <div className={`how-llms mt-root${fading ? ' how-fading' : ''}`}>
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {/* Welcome Banner — shows after entry screen, dismissable */}
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Ever wondered how ChatGPT was actually built?</strong> This is the full story — from raw internet data to a working AI assistant. No PhD required.
+            <strong>Welcome to Model Training</strong> — here's how to explore:
+            <ol className="mt-welcome-steps">
+              <li>Walk through <strong>6 stages</strong> of building an AI — each with real animations and numbers</li>
+              <li>Read the info cards to understand <strong>what happens at each stage</strong> and why it matters</li>
+              <li>Check the <strong>tools section</strong> at each stage to see what real AI engineers use</li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -861,6 +906,14 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
                 </div>
               </div>
             )}
+            {learnTip && (
+              <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+                <span className="learn-tip-text">{learnTip.text}</span>
+                <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
+              </div>
+            )}
           </div>
         </>
       )}
@@ -876,7 +929,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            <button className="how-secondary-btn" onClick={reset}>
+            <button className="how-secondary-btn" onClick={handleStartOver}>
               Start over
             </button>
           </div>
