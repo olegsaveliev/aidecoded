@@ -280,7 +280,7 @@
     position: sticky;
     bottom: 0;
     width: 100%;
-    padding: 16px 0 env(safe-area-inset-bottom, 8px);
+    padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
     background: linear-gradient(to bottom, transparent 0%, var(--bg-primary) 40%);
     z-index: 2;
     flex-shrink: 0;
@@ -294,6 +294,8 @@
     height: 44px;
     padding: 0 20px;
     font-size: 14px;
+    opacity: 1;
+    animation: none;
   }
 
   .landing-hint {

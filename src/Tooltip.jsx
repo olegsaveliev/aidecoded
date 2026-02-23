@@ -37,16 +37,21 @@ export default function Tooltip({ text }) {
     if (rect.left < pad) dl = pad - rect.left
     else if (rect.right > window.innerWidth - pad) dl = window.innerWidth - pad - rect.right
 
-    // Vertical: if clipped above viewport, flip below the icon
-    if (!flipped && rect.top < pad) flipped = true
-
-    // Vertical: if clipped below viewport (when flipped), nudge up
-    if (flipped && rect.bottom > window.innerHeight - pad) {
+    // Vertical clamping
+    if (!flipped && rect.top < pad) {
+      // Clips above — flip to below the icon
+      flipped = true
+      // Estimate where the flipped tooltip bottom will be
+      const flippedBottom = pos.bottom + rect.height
+      if (flippedBottom > window.innerHeight - pad) {
+        dt = window.innerHeight - pad - flippedBottom
+      }
+    } else if (flipped && rect.bottom > window.innerHeight - pad) {
+      // Already flipped but clips below — nudge up
       dt = window.innerHeight - pad - rect.bottom
-    }
-    // Vertical: if still clipped above after flip, nudge down
-    if (!flipped && (rect.top + dt) < pad) {
-      dt = pad - rect.top
+    } else if (!flipped && rect.bottom > window.innerHeight - pad) {
+      // Clips below (non-flipped, near bottom of viewport) — nudge up
+      dt = window.innerHeight - pad - rect.bottom
     }
 
     if (dl || dt || flipped !== pos.flipped) {
