@@ -369,6 +369,37 @@ Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start
 
 ---
 
+## Prompt Engineering Module (`src/PromptEngineering.jsx`)
+
+Interactive 8-stage tutorial teaching prompt engineering techniques from basic to advanced. Each stage has explanation cards, animated visualizations, and live "Try It" sections where users can edit prompts and run them against the OpenAI API.
+
+### Entry Screen
+- Title: "Prompt Engineering", subtitle: "The skill that makes AI actually useful"
+- Description explains what the learner will discover (8 techniques, live demos, expert-level answers)
+
+### Welcome Banner
+Numbered 3-step guide: (1) walk through 8 techniques that build on each other, (2) edit prompts and hit Run, (3) pay attention to before/after comparisons
+
+### Stages
+8 stages: Zero-Shot → Few-Shot → Chain of Thought → Tree of Thoughts → Role Prompting → System Prompts → Prompt Chaining → Patterns. Each stage has explanation card, interactive visualization with Try It section, and ToolChips.
+
+### Progressive Learning Tips
+Milestone-based tips triggered at key stages. No auto-dismiss — user clicks X. Max one visible at a time. Tracked via `dismissedTips` Set with `fadeTimerRef` for cleanup.
+
+| Trigger | Tip |
+|---|---|
+| Stage 0 (Zero-Shot) | "Watch the side-by-side — specific prompts get better results. Try editing the prompt below!" |
+| Stage 2 (Chain of Thought) | "'Think step by step' makes AI show reasoning — try it in the box below!" |
+| Stage 4 (Role Prompting) | "Same question, different answers per role. Try the Role Library below." |
+| Stage 6 (Prompt Chaining) | "Click 'Run this chain with real AI' to see step-by-step results." |
+
+All tips reset on "Start over". CSS: reuses `.learn-tip` classes from Playground.
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview

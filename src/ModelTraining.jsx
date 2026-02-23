@@ -738,27 +738,27 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
   const explanations = {
     0: {
       title: 'Stage 1: Data Collection',
-      content: "Before training can begin, we need massive amounts of text for the model to learn from. Modern LLMs train on 10–15 TRILLION tokens — roughly equivalent to reading every book ever written, 10,000 times.\n\nThe internet is the primary source, but quality matters more than quantity. Researchers carefully select and balance different types of content.",
+      content: "Where does an AI's knowledge come from? The internet. Before training begins, researchers collect a staggering amount of text — modern LLMs train on 10–15 TRILLION tokens, roughly equivalent to reading every book ever written 10,000 times.\n\nBut it's not just \"scrape everything.\" The data is carefully balanced: web pages, books, scientific papers, code repositories, Wikipedia, and more. Each source teaches the model different skills — code teaches logic, books teach narrative, Wikipedia teaches facts. Watch the colored dots below to see the data flowing in.",
     },
     1: {
       title: 'Stage 2: Data Cleaning',
-      content: "Raw internet data is messy — full of spam, duplicates, toxic content, and low quality text. Researchers spend enormous effort cleaning data because garbage in = garbage out.\n\nTypically only 40–60% of collected data survives cleaning. The quality of this stage is often the biggest factor in how good the final model is.",
+      content: "Here's a reality check: the internet is full of garbage. Spam, duplicate pages, toxic content, personal data, low-quality text — it all has to go. This stage is arguably the most important in the entire pipeline, because \"garbage in = garbage out\" is the #1 rule of AI training.\n\nWatch the filters below strip away the junk. Typically only 40–60% of collected data survives. Companies that build the best models often credit their data cleaning pipeline as their secret weapon — better data beats more data every time.",
     },
     2: {
       title: 'Stage 3: Tokenization',
-      content: "All the cleaned text gets converted to tokens — numbers the model can process mathematically. The entire training dataset becomes a massive sequence of token IDs.\n\nTip:You've already seen this in action in the Tokenizer tab!",
+      content: "The AI can't read words — it needs numbers. In this stage, the entire cleaned dataset (trillions of words) gets converted into token IDs. Every word, space, and punctuation mark becomes a number that the model can process mathematically.\n\nThis is the same tokenization you explored in the Tokenizer module — but now imagine it happening to the entire internet's worth of text. The result is one massive sequence of numbers, ready for the model to learn from.",
     },
     3: {
       title: 'Stage 4: Pre-Training',
-      content: "This is the main training phase — the model learns by trying to predict the next token in the training data, billions of times. Every wrong prediction updates the model's weights slightly.\n\nAfter months of training on thousands of GPUs, the model has learned grammar, facts, reasoning patterns, and much more — just from predicting the next word.\n\nTip:At this stage the model can complete text but doesn't yet know how to follow instructions or have a conversation.",
+      content: "This is where the real learning happens — and it's surprisingly simple. The model sees a sequence of tokens and tries to predict the next one. \"The cat sat on the ___\" → \"mat\". Every wrong prediction adjusts the model's internal numbers (weights) slightly. Repeat this billions of times across trillions of tokens.\n\nAfter months of training on thousands of GPUs (costing $10–100M+), something remarkable emerges: the model has learned grammar, facts, reasoning, coding, math, and much more — all from just predicting the next word.\n\nBut here's the catch: at this stage the model is like a brilliant student who can finish any sentence, but doesn't know how to have a conversation or follow instructions. That's what the next stages fix.",
     },
     4: {
       title: 'Stage 5: Supervised Fine-Tuning (SFT)',
-      content: "The pre-trained model is powerful but wild — it just completes text, it doesn't know how to be helpful. Fine-tuning teaches it to have conversations and follow instructions.\n\nHuman trainers write thousands of example conversations showing the ideal AI behavior. The model is then trained on these examples to match that style.\n\nTip:This is why ChatGPT answers questions instead of just completing your sentence.",
+      content: "The pre-trained model is powerful but wild — ask it a question and it might just continue rambling instead of answering. Fine-tuning transforms it from a text-completion machine into an actual assistant.\n\nHow? Human trainers write thousands of example conversations showing exactly how the AI should behave: clear answers, helpful formatting, appropriate refusals for dangerous requests. The model trains on these examples and learns to match that style.\n\nThis is why ChatGPT answers your questions in a helpful format instead of just completing your sentence like a glorified autocomplete. The left side below shows the raw model, the right shows the fine-tuned version — same AI, dramatically different behavior.",
     },
     5: {
       title: 'Stage 6: RLHF — The Secret Sauce',
-      content: "This is what separates ChatGPT from a raw language model. Human raters compare pairs of responses and pick the better one. A 'reward model' learns to predict human preferences.\n\nThen the main model is optimized using reinforcement learning to generate responses the reward model rates highly — essentially learning to be more helpful and less harmful by chasing human approval.\n\nTip:The thumbs up/down buttons in ChatGPT? That's RLHF data collection happening in real time.",
+      content: "This final stage is what makes ChatGPT feel genuinely helpful. The idea is simple but powerful: show human raters two AI responses to the same question, and ask \"which one is better?\" Do this thousands of times to build a \"reward model\" that predicts what humans prefer.\n\nThen use reinforcement learning to optimize the AI to score highly with this reward model. The AI essentially learns to chase human approval — becoming more helpful, less harmful, and better at following instructions with each iteration.\n\nHere's the fascinating part: those thumbs up/down buttons in ChatGPT aren't just for show — they're RLHF data collection happening in real time. Every time you rate a response, you're helping train the next version of the model.",
     },
   }
 

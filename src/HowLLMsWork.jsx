@@ -627,8 +627,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <div className="how-info-card-header">
                     <strong>Stage 1: Your Prompt</strong>
                   </div>
-                  <p>This is where it all begins. Your text is the input to the entire AI pipeline. The clearer and more specific your prompt, the better the AI understands what you want.</p>
-                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> Adding context like "You are an expert..." as a system prompt dramatically improves responses.</div>
+                  <p>Everything starts here. When you type into ChatGPT, your text enters a 5-stage pipeline that transforms your words into an AI response. The AI doesn't "read" your prompt the way you do &mdash; it needs to convert it into math first. Let's watch that happen.</p>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> The quality of your prompt determines the quality of the output. Adding a role ("You are an expert...") or format ("Give me 3 bullet points") dramatically improves responses.</div>
                   <ToolChips tools={HOW_TOOLS[0]} />
                 </div>
                 <div className="how-prompt-bubble">{prompt}</div>
@@ -648,8 +648,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <div className="how-info-card-header">
                     <strong>Stage 2: Tokenization</strong>
                   </div>
-                  <p>Your text gets split into tokens &mdash; the AI's alphabet. Notice how common words are 1 token but rare or long words split into multiple pieces. This is why AI has token limits, not word limits.</p>
-                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> The spaces before words are often part of the token itself &mdash; that's why you see '&middot;weather' not 'weather'.</div>
+                  <p>The AI can't work with words directly &mdash; it needs to break your text into smaller pieces called tokens. Think of tokens as the AI's alphabet: common words like "the" are 1 token, but rare words get split into multiple pieces. This is why AI services charge per token, not per word &mdash; and why there are token limits on conversations.</p>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> Look closely: spaces before words are often part of the token itself &mdash; that's why you see "&middot;weather" not "weather". The AI treats " weather" (with space) and "weather" (without) as completely different tokens.</div>
                   <ToolChips tools={HOW_TOOLS[1]} />
                 </div>
                 <div className="how-token-display">
@@ -690,8 +690,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <div className="how-info-card-header">
                     <strong>Stage 3: Embeddings</strong>
                   </div>
-                  <p>Each token becomes a list of numbers (a vector) that captures its meaning mathematically. Words used in similar contexts end up with similar numbers.</p>
-                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> This is how AI knows that 'king' and 'queen' are related, or that 'Paris' relates to 'France' the same way 'Tokyo' relates to 'Japan'.</div>
+                  <p>Now each token gets converted into a long list of numbers (called a "vector") that captures its meaning. This is the magic step: the AI learns that words used in similar contexts should have similar numbers. The map below uses real OpenAI embeddings &mdash; notice how related words cluster together.</p>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> This is how AI "understands" meaning without actually understanding anything. "King" and "queen" get similar numbers because they appear in similar contexts. "Paris" relates to "France" the same way "Tokyo" relates to "Japan" &mdash; the math captures the relationship.</div>
                   <ToolChips tools={HOW_TOOLS[2]} />
                 </div>
 
@@ -960,8 +960,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <div className="how-info-card-header">
                     <strong>Stage 4: Attention</strong>
                   </div>
-                  <p>The Transformer looks at every token in relation to every other token simultaneously. The lines show which words 'pay attention' to each other.</p>
-                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> This is the breakthrough that made modern AI possible &mdash; before Transformers, AI read text word by word like a human. Now it sees the whole picture at once.</div>
+                  <p>This is the breakthrough that made ChatGPT possible. The Transformer architecture looks at every token in relation to every other token &mdash; simultaneously. Before this invention (2017), AI read text one word at a time, like a human. Attention lets the AI see the whole picture at once, understanding how every word relates to every other word.</p>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> The thicker lines show stronger attention. In "The cat sat on the mat", the word "cat" strongly attends to "sat" (what it did) and "mat" (where). This context awareness is what makes modern AI so much better than older systems.</div>
                   <ToolChips tools={HOW_TOOLS[3]} />
                 </div>
 
@@ -1032,8 +1032,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                   <div className="how-info-card-header">
                     <strong>Stage 5: Generation</strong>
                   </div>
-                  <p>The model predicts the most likely next token based on everything it has learned from training on billions of documents. Then it repeats &mdash; adding one token at a time until the response is complete.</p>
-                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> There's no 'understanding' happening &mdash; just incredibly sophisticated pattern matching at a scale humans can't comprehend.</div>
+                  <p>Here's how the AI actually "writes": it predicts the single most likely next token, adds it to the sequence, then predicts again. One token at a time, hundreds of times per second. The probability bars below show the AI's top candidates for each position &mdash; it's always choosing from a ranked list, never "thinking" about the answer.</p>
+                  <div className="how-info-tip"><TipIcon size={16} color="#eab308" /> There's no "understanding" happening &mdash; just incredibly sophisticated pattern matching trained on billions of documents. When ChatGPT gives a great answer, it's because similar patterns appeared in its training data, not because it "knows" the answer.</div>
                   <ToolChips tools={HOW_TOOLS[4]} />
                 </div>
 

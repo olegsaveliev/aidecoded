@@ -1068,6 +1068,10 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -1119,6 +1123,44 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
     setShowQuiz(false)
   }
 
+  function handleStartOver() {
+    if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    reset()
+    setShowWelcome(true)
+    setLearnTip(null)
+    setLearnTipFading(false)
+    setDismissedTips(new Set())
+  }
+
+  // Progressive learning tips at stage milestones
+  useEffect(() => {
+    if (stage === 0 && !dismissedTips.has('zero-shot') && !learnTip) {
+      setLearnTip({ id: 'zero-shot', text: 'Watch the side-by-side comparison — a specific prompt gets dramatically better results than a vague one. Try editing the prompt in the box below!' })
+    } else if (stage === 2 && !dismissedTips.has('cot') && !learnTip) {
+      setLearnTip({ id: 'cot', text: 'Just adding "Think step by step" to any question makes the AI show its reasoning. This is one of the most powerful prompting tricks — try it in the box below!' })
+    } else if (stage === 4 && !dismissedTips.has('role') && !learnTip) {
+      setLearnTip({ id: 'role', text: 'Same question, completely different answers depending on the role. Try clicking different roles in the Role Library below to see it in action.' })
+    } else if (stage === 6 && !dismissedTips.has('chaining') && !learnTip) {
+      setLearnTip({ id: 'chaining', text: 'Click "Run this chain with real AI" to see how breaking a complex task into steps produces better results than asking everything at once.' })
+    }
+  }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissLearnTip() {
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 400)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
+    }
+  }, [])
+
   const apiProps = { model, temperature, topP, maxTokens }
 
   const vizComponents = {
@@ -1135,35 +1177,35 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   const explanations = {
     0: {
       title: 'Zero-Shot Prompting — Be Specific',
-      content: "Zero-shot means giving the AI a task with no examples — just your instructions. Most people write vague prompts and get vague results.\n\nThe formula for a good zero-shot prompt:\n[Role] + [Task] + [Format] + [Context]\n\nExample: 'You are a senior marketing expert. Write 3 bullet points about email marketing benefits for small business owners. Keep each under 20 words.'",
+      content: "This is where most people start — and where most people go wrong. \"Zero-shot\" means asking the AI to do something with no examples, just your instructions. The problem? Vague instructions get vague results.\n\nHere's the formula that fixes 90% of bad prompts:\n[Role] + [Task] + [Format] + [Constraints]\n\nInstead of \"tell me about marketing\", try: \"You are a senior marketing expert. Write 3 bullet points about email marketing benefits for small business owners. Keep each under 20 words.\"\n\nWatch the demo below — you'll see the exact same AI give a useless answer to a vague prompt, then a great answer to a specific one.",
     },
     1: {
-      title: 'Few-Shot Prompting — Show Don\'t Tell',
-      content: "Instead of explaining what you want, SHOW the AI with examples. This is called few-shot prompting — giving a 'few shots' (examples) before your actual question.\n\nThe more specific and relevant your examples, the better the AI understands the pattern you want it to follow.\n\nWorks amazingly well for:\n• Consistent tone/style matching\n• Data extraction and formatting\n• Classification tasks\n• Writing in someone's specific style",
+      title: 'Few-Shot Prompting — Show, Don\'t Tell',
+      content: "Here's a secret: instead of explaining what you want, just SHOW the AI with examples. Give it 2-3 examples of the input and output you want, then give it your actual question. The AI will follow the pattern.\n\nThis is called \"few-shot\" prompting — you're giving a \"few shots\" (examples) before your real question. It works because the AI is a pattern-matching machine — show it a pattern and it will continue it.\n\nThis technique is incredibly powerful for:\n• Classification (spam/not spam, urgent/normal)\n• Consistent formatting (always the same structure)\n• Style matching (writing like a specific person)\n• Data extraction (pulling info from messy text)",
     },
     2: {
       title: 'Chain of Thought — Make AI Show Its Work',
-      content: "Chain of Thought (CoT) prompting makes the AI reason through problems step by step instead of jumping to an answer. This dramatically improves accuracy on complex tasks.\n\nThe magic phrase: 'Think step by step' or 'Let's work through this carefully'\n\nWhen to use CoT:\n• Math and logic problems\n• Complex multi-step reasoning\n• Debugging and analysis\n• Any task where you want to verify the reasoning",
+      content: "This technique is almost magic. Just adding the words \"Think step by step\" to any question makes the AI dramatically more accurate — especially on math, logic, and reasoning tasks.\n\nWhy does this work? Without Chain of Thought, the AI tries to jump straight to the answer and often gets it wrong. With it, the AI \"thinks out loud\" — breaking the problem into steps. Each step is verifiable, so you can spot exactly where the reasoning went right or wrong.\n\nThe magic phrases: \"Think step by step\", \"Let's work through this carefully\", or \"Show your reasoning\"\n\nUse this whenever accuracy matters more than speed — math problems, debugging code, analyzing complex situations, or any task where you'd want to check someone's work.",
     },
     3: {
       title: 'Tree of Thoughts — Explore Multiple Paths',
-      content: "Tree of Thoughts extends Chain of Thought by exploring MULTIPLE reasoning paths simultaneously, like a tree branching out.\n\nThe AI considers different approaches, evaluates each one, prunes dead ends, and follows the most promising path.\n\nThis is how expert humans solve hard problems — they don't just follow one approach, they consider alternatives.\n\nBest for:\n• Creative problem solving\n• Strategic planning\n• Complex decisions with multiple valid approaches\n• Research and analysis tasks",
+      content: "Chain of Thought follows one path: A leads to B leads to C. But what if the first path is wrong? Tree of Thoughts fixes this by making the AI explore multiple approaches at once — like having 3 experts brainstorm together.\n\nThe AI considers different angles, evaluates which paths look promising, abandons dead ends, and converges on the best answer. This is how experienced problem-solvers actually think — they don't commit to the first idea.\n\nBest for hard problems where there's no obvious answer:\n• Strategic decisions (\"Should we invest in X or Y?\")\n• Creative problem solving\n• Debugging tricky issues\n• Any question where you want the AI to consider alternatives before deciding",
     },
     4: {
       title: 'Role Prompting — Unlock Expert Perspectives',
-      content: "Assigning a role to the AI dramatically changes the quality and perspective of responses. The AI draws on different knowledge and communication styles based on the role you give it.\n\nPowerful role formats:\n• 'You are a senior [job title] with 20 years experience in [field]'\n• 'Act as a [role] who specializes in [niche]'\n• 'You are an expert [role] reviewing this for [specific audience]'\n\nPro tip: Combine role + audience for maximum effect.",
+      content: "\"You are a senior data scientist with 20 years of experience.\" — that one sentence completely changes the AI's response. Role prompting taps into the AI's training data from different domains, giving you answers that feel like they come from a real expert.\n\nThe same question asked with different roles gives completely different — and equally valid — answers. A CEO focuses on strategy, a CFO on numbers, an engineer on implementation. This is incredibly useful when you need multiple perspectives.\n\nPowerful role formats:\n• \"You are a senior [job title] with [X] years experience in [field]\"\n• \"Act as a [role] who specializes in [niche]\"\n• \"You are an expert [role] reviewing this for [specific audience]\"\n\nPro tip: Be specific about the expertise level and audience. \"Senior doctor explaining to a patient\" gives very different results than just \"doctor.\"",
     },
     5: {
-      title: 'System Prompts — Configure AI Behavior',
-      content: "The system prompt is a special instruction that sets the AI's behavior for the ENTIRE conversation. Users don't see it — it's your hidden configuration layer.\n\nThis is how companies build custom AI assistants:\n• Customer service bots with specific personalities\n• Internal tools that only discuss company topics\n• AI assistants constrained to specific domains\n\nWhat to put in system prompts:\n• Role and expertise\n• Tone and communication style\n• Constraints and limitations\n• Output format preferences\n• Company/context specific knowledge",
+      title: 'System Prompts — The Hidden Control Layer',
+      content: "Everything we've learned so far — roles, constraints, formatting — can be set once in a \"system prompt\" that applies to an entire conversation. This is the hidden layer that users never see but that controls everything about how the AI behaves.\n\nThis is exactly how companies build custom AI products: ChatGPT's helpful personality, customer service bots, coding assistants — they all start with a carefully crafted system prompt.\n\nA good system prompt includes:\n• Who the AI is (role and expertise level)\n• How it should communicate (tone, formality)\n• What it should and shouldn't do (constraints)\n• How to format responses (bullets, tables, etc.)\n\nUse the builder below to create one — then try the same question with and without a system prompt to see the difference.",
     },
     6: {
       title: 'Prompt Chaining — Divide and Conquer',
-      content: "Complex tasks often fail with a single prompt because you're asking the AI to do too much at once. Prompt chaining breaks the task into steps where each output feeds the next.\n\nThis is how professional AI workflows are built:\n• Step 1: Research and gather information\n• Step 2: Analyze and extract key points\n• Step 3: Structure and format\n• Step 4: Polish and finalize\n\nReal world example — writing a business report:\nPrompt 1: 'Analyze these 5 data points about our Q3 sales'\nPrompt 2: 'Based on this analysis, identify the 3 main risks'\nPrompt 3: 'Write an executive summary combining both outputs'",
+      content: "When a task is too complex for one prompt, don't force it — break it into a chain. Each prompt does one focused thing, and the output of one step feeds into the next. This is how real AI workflows are built.\n\nWhy chaining beats a single long prompt:\n• Each step is focused and accurate\n• You can review and fix problems at each stage\n• The AI doesn't lose track of what it's doing\n• You can reuse and remix individual steps\n\nReal example — writing a research report:\nPrompt 1: \"List the top 3 challenges in [topic]\"\nPrompt 2: \"For each challenge, suggest a practical solution\"\nPrompt 3: \"Write a 2-sentence executive summary\"\n\nClick \"Run this chain with real AI\" below to watch each step feed into the next in real time.",
     },
     7: {
       title: 'Prompt Patterns — The Golden Rules',
-      content: "After learning all these techniques, here are the rules that apply to every single prompt you write.\n\nRemember: bad output doesn't mean the AI is bad — it means your prompt needs improvement. Treat prompting as a skill to practice, not a one-time task.",
+      content: "You now know 7 powerful techniques. But the most important lesson is this: bad output almost never means the AI is bad — it means your prompt needs work.\n\nEvery expert prompt engineer follows these patterns. The \"don't\" column shows what beginners do. The \"do\" column shows the fix. Notice the pattern: specificity wins every single time.\n\nTreat prompting as a skill you practice, not a one-time task. The more you experiment with these techniques — combining them, adapting them to your work — the better your results will get.",
     },
   }
 
@@ -1172,7 +1214,8 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
       <EntryScreen
         icon={<ModuleIcon module="prompt-engineering" size={48} style={{ color: '#34C759' }} />}
         title="Prompt Engineering"
-        description="Learn 8 powerful techniques to get dramatically better results from any AI — with live examples you can try yourself."
+        subtitle="The skill that makes AI actually useful"
+        description="The same AI gives completely different results depending on how you ask. You'll learn 8 techniques — from zero-shot prompting to prompt chaining — each with live demos you can edit and run yourself. By the end, you'll know how to get expert-level answers from any AI model."
         buttonText="Start Learning"
         onStart={() => { setStage(0); markModuleStarted('prompt-engineering') }}
       />
@@ -1186,7 +1229,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
           questions={promptEngineeringQuiz}
           tabName="Prompt Engineering"
           onBack={() => setShowQuiz(false)}
-          onStartOver={() => reset()}
+          onStartOver={handleStartOver}
           onSwitchTab={onSwitchTab}
           currentModuleId="prompt-engineering"
         />
@@ -1196,11 +1239,19 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
 
   return (
     <div className={`how-llms pe-root${fading ? ' how-fading' : ''}`}>
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {/* Welcome Banner — shows after entry screen, dismissable */}
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Prompt Engineering is the most valuable AI skill you can learn right now.</strong> The same AI gives completely different results based on how you ask. Let's learn how to ask better.
+            <strong>Welcome to Prompt Engineering</strong> — here's how to explore:
+            <ol className="pe-welcome-steps">
+              <li>Walk through <strong>8 techniques</strong> — each builds on the last, from basic to advanced</li>
+              <li>Watch the live demos, then <strong>edit the prompts</strong> and hit Run to see how changes affect the AI's response</li>
+              <li>Pay attention to the <strong>before/after comparisons</strong> — they show exactly why each technique works</li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -1269,6 +1320,15 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
                 {/* Visualization */}
                 {vizComponents[stage]}
 
+                {learnTip && (
+                  <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+                    <span className="learn-tip-text">{learnTip.text}</span>
+                    <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                    </button>
+                  </div>
+                )}
+
                 {/* Navigation */}
                 <div className="how-nav-row">
                   <div className="how-nav-buttons">
@@ -1277,14 +1337,14 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
                     )}
                     <button className="how-gotit-btn" onClick={nextStage}>
                       {[
-                        'Show me examples →',
-                        'Chain my thoughts →',
-                        'Explore the tree →',
-                        'Pick a role →',
-                        'Set the system →',
-                        'Chain it together →',
-                        'Learn the rules →',
-                        'Test my knowledge →',
+                        'Next: Few-Shot Examples →',
+                        'Next: Chain of Thought →',
+                        'Next: Tree of Thoughts →',
+                        'Next: Role Prompting →',
+                        'Next: System Prompts →',
+                        'Next: Prompt Chaining →',
+                        'Next: Golden Rules →',
+                        'See Your Toolkit →',
                       ][stage]}
                     </button>
                   </div>
@@ -1335,7 +1395,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            <button className="how-secondary-btn" onClick={reset}>
+            <button className="how-secondary-btn" onClick={handleStartOver}>
               Start over
             </button>
           </div>
