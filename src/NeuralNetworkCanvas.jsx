@@ -29,6 +29,7 @@ const NODES = [
   { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.48, py: 0.78, desc: 'Turn a general AI into a domain expert' },
   { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.72, py: 0.88, desc: 'Solve AI mysteries, build your city' },
   { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', px: 0.62, py: 0.90, desc: 'Explore an AI research lab room by room' },
+  { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', px: 0.55, py: 0.92, desc: 'Outsmart AI security with the perfect prompt' },
 ]
 
 const CONNECTIONS = [
@@ -55,6 +56,8 @@ const CONNECTIONS = [
   ['ai-city-builder', 'prompt-engineering'],
   ['ai-lab-explorer', 'ai-city-builder'],
   ['ai-lab-explorer', 'how-llms-work'],
+  ['prompt-heist', 'prompt-engineering'],
+  ['prompt-heist', 'ai-city-builder'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -73,6 +76,7 @@ const NODE_DELAYS = {
   'fine-tuning': 1600,
   'ai-city-builder': 2100,
   'ai-lab-explorer': 2300,
+  'prompt-heist': 2500,
 }
 
 const NODE_APPEAR_DUR = 500

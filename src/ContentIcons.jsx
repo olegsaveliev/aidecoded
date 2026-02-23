@@ -673,3 +673,38 @@ export function SlidersIcon({ size = 16, color = '#8E8E93', className }) {
     </IconBase>
   )
 }
+
+export function VaultIcon({ size = 16, color = '#8E8E93', className }) {
+  return (
+    <IconBase size={size} color={color} className={className}>
+      <circle cx="12" cy="12" r="10" />
+      <rect x="8" y="10" width="8" height="7" rx="1" />
+      <path d="M10 10V8a2 2 0 0 1 4 0v2" />
+    </IconBase>
+  )
+}
+
+export function TerminalIcon({ size = 16, color = '#8E8E93', className }) {
+  return (
+    <IconBase size={size} color={color} className={className}>
+      <polyline points="4 17 10 11 4 5" />
+      <line x1="12" y1="19" x2="20" y2="19" />
+    </IconBase>
+  )
+}
+
+export function ShieldIcon({ size = 16, color = '#8E8E93', className }) {
+  return (
+    <IconBase size={size} color={color} className={className}>
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </IconBase>
+  )
+}
+
+export function KeyIcon({ size = 16, color = '#8E8E93', className }) {
+  return (
+    <IconBase size={size} color={color} className={className}>
+      <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" />
+    </IconBase>
+  )
+}

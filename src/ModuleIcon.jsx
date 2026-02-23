@@ -89,6 +89,9 @@ const ICON_PATHS = {
   'deep-learning': (
     <path d="M12 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM20 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4 12h3M17 12h3M12 6v3M12 15v3M6.5 11l3.5-3M14 8l3.5 3M6.5 13l3.5 3M14 16l3.5-3" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'prompt-heist': (
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

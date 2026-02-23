@@ -52,6 +52,7 @@ const NAV_GROUPS = [
     items: [
       { id: 'ai-city-builder', name: 'AI City Builder', tag: 'Game' },
       { id: 'ai-lab-explorer', name: 'AI Lab Explorer', tag: 'Game' },
+      { id: 'prompt-heist', name: 'Prompt Heist', tag: 'Game' },
     ],
   },
 ]

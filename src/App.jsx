@@ -13,6 +13,7 @@ import DeepLearning from './DeepLearning.jsx'
 import FineTuning from './FineTuning.jsx'
 import AICityBuilder from './AICityBuilder.jsx'
 import AILabExplorer from './AILabExplorer.jsx'
+import PromptHeist from './PromptHeist.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -945,6 +946,9 @@ function App() {
         )}
         {!showHome && activeTab === 'ai-lab-explorer' && (
           <AILabExplorer onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'prompt-heist' && (
+          <PromptHeist onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         </div>
       </main>

@@ -134,11 +134,21 @@ const CARDS = [
     isGame: true,
     difficulty: 'Interactive',
   },
+  {
+    id: 'prompt-heist',
+    title: 'Prompt Heist',
+    description: 'Craft the perfect prompt to outsmart AI security systems and pull off 5 legendary heists.',
+    tag: 'Game',
+    accent: '#F59E0B',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Intermediate',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
 
-const TOTAL_MODULES = 13 // all modules including tools and games
+const TOTAL_MODULES = 14 // all modules including tools and games
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()
