@@ -1,0 +1,1108 @@
+/* ══════════════════════════════════════
+   AI ETHICS TRIBUNAL — CSS
+   Prefix: .aet-
+   ══════════════════════════════════════ */
+
+/* ── Entry Screen ── */
+
+.aet-entry-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aet-entry-meta {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ── Game Container ── */
+
+.aet-game {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* ── Case Header Bar ── */
+
+.aet-case-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+}
+
+.aet-case-badge {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.aet-case-scales {
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+.aet-case-progress {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* ── Case Header ── */
+
+.aet-case-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.aet-case-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #F59E0B;
+  margin-bottom: 8px;
+}
+
+.aet-case-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ── Tribunal Chamber ── */
+
+.aet-chamber {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Case Facts ── */
+
+.aet-facts {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.aet-facts-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #F59E0B;
+  margin-bottom: 12px;
+}
+
+.aet-facts-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ── Argument Panels ── */
+
+.aet-arguments {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.aet-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.aet-panel-favor {
+  border-top: 2px solid #0071E3;
+}
+
+.aet-panel-against {
+  border-top: 2px solid #FF9500;
+}
+
+.aet-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.aet-panel-icon {
+  flex-shrink: 0;
+}
+
+.aet-panel-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.aet-label-favor {
+  color: #0071E3;
+}
+
+.aet-label-against {
+  color: #FF9500;
+}
+
+.aet-panel-party {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+}
+
+.aet-panel-args {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.aet-arg {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  padding-left: 16px;
+  position: relative;
+}
+
+.aet-arg::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.aet-arg-favor::before {
+  background: #0071E3;
+}
+
+.aet-arg-against::before {
+  background: #FF9500;
+}
+
+/* ── Evidence Cards ── */
+
+.aet-evidence {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.aet-evidence-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.aet-evidence-card {
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-left: 2px solid var(--border);
+  border-radius: 0 8px 8px 0;
+}
+
+.aet-evidence-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Verdict Controls ── */
+
+.aet-verdict-controls {
+  text-align: center;
+  padding-top: 8px;
+}
+
+.aet-verdict-heading {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+}
+
+.aet-verdict-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.aet-verdict-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  color: #fff;
+}
+
+.aet-verdict-btn:active {
+  transform: scale(0.97);
+}
+
+.aet-verdict-favor {
+  background: #0071E3;
+}
+
+.aet-verdict-favor:hover {
+  opacity: 0.9;
+}
+
+.aet-verdict-against {
+  background: #FF9500;
+}
+
+.aet-verdict-against:hover {
+  opacity: 0.9;
+}
+
+.aet-verdict-btn.aet-verdict-selected {
+  box-shadow: 0 0 0 3px rgba(88, 86, 214, 0.3);
+  transform: scale(1.03);
+}
+
+.aet-verdict-deadlock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+  margin-bottom: 20px;
+}
+
+.aet-verdict-deadlock:hover {
+  border-color: #5856D6;
+  color: #5856D6;
+}
+
+.aet-verdict-deadlock.aet-verdict-selected {
+  border-color: #5856D6;
+  color: #5856D6;
+  box-shadow: 0 0 0 3px rgba(88, 86, 214, 0.2);
+}
+
+/* ── Reasoning Textarea ── */
+
+.aet-reasoning {
+  max-width: 500px;
+  margin: 0 auto 16px;
+  text-align: left;
+}
+
+.aet-reasoning-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.aet-reasoning-textarea {
+  width: 100%;
+  min-height: 88px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.aet-reasoning-textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+.aet-reasoning-textarea:focus {
+  outline: none;
+  border-color: #F59E0B;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+/* ── Submit Button ── */
+
+.aet-submit-btn {
+  height: 48px;
+  padding: 0 32px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #F59E0B;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  animation: verdictReveal 0.3s ease-out;
+}
+
+.aet-submit-btn:hover {
+  opacity: 0.9;
+}
+
+.aet-submit-btn:active {
+  transform: scale(0.97);
+}
+
+/* ── Verdict Reveal ── */
+
+.aet-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 8px;
+}
+
+.aet-gavel-wrap {
+  color: #F59E0B;
+}
+
+.aet-gavel-svg {
+  transform-origin: center bottom;
+}
+
+.aet-gavel-drop {
+  animation: gavelDrop 0.6s ease-out forwards;
+}
+
+.aet-reveal-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.aet-stagger-in {
+  animation: staggerFadeIn 0.5s ease-out both;
+}
+
+.aet-delivered-banner {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #5856D6;
+  padding: 12px;
+  background: rgba(88, 86, 214, 0.08);
+  border-radius: 8px;
+}
+
+/* ── Your Verdict ── */
+
+.aet-your-verdict {
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-light);
+}
+
+.aet-your-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.aet-your-ruling {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.aet-ruling-favor {
+  color: #0071E3;
+}
+
+.aet-ruling-against {
+  color: #FF9500;
+}
+
+.aet-ruling-deadlock {
+  color: #5856D6;
+}
+
+.aet-your-reasoning {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: 8px 0 0;
+  line-height: 1.5;
+}
+
+/* ── Real Outcome ── */
+
+.aet-real-outcome {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border-left: 2px solid #34C759;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.aet-real-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #34C759;
+  margin-bottom: 8px;
+}
+
+.aet-real-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ── Nuance Box ── */
+
+.aet-nuance {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border-left: 2px solid #5856D6;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.aet-nuance-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5856D6;
+  margin-bottom: 8px;
+}
+
+.aet-nuance-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ── What This Teaches ── */
+
+.aet-teaches {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border-left: 2px solid #F59E0B;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.aet-teaches-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #F59E0B;
+  margin-bottom: 8px;
+}
+
+.aet-teaches-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ── Next Case Button ── */
+
+.aet-next-btn {
+  align-self: center;
+  height: 48px;
+  padding: 0 32px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #F59E0B;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.aet-next-btn:hover {
+  opacity: 0.9;
+}
+
+.aet-next-btn:active {
+  transform: scale(0.97);
+}
+
+/* ══════════════════════════════════════
+   COMPLETION SCREEN
+   ══════════════════════════════════════ */
+
+.aet-complete {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+}
+
+.aet-complete-scales {
+  color: #F59E0B;
+  animation: scaleGlow 3s ease-in-out infinite;
+}
+
+.aet-complete-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.aet-complete-subtitle {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin: -12px 0 0;
+}
+
+/* ── Verdict Summary ── */
+
+.aet-verdict-summary {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.aet-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.aet-summary-case {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.aet-summary-verdict {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.aet-summary-favor {
+  color: #0071E3;
+  background: rgba(0, 113, 227, 0.1);
+}
+
+.aet-summary-against {
+  color: #FF9500;
+  background: rgba(255, 149, 0, 0.1);
+}
+
+.aet-summary-deadlock {
+  color: #5856D6;
+  background: rgba(88, 86, 214, 0.1);
+}
+
+/* ── Judicial Rank ── */
+
+.aet-rank {
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.aet-rank-decisive {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1.5px solid rgba(245, 158, 11, 0.3);
+}
+
+.aet-rank-careful {
+  background: rgba(88, 86, 214, 0.08);
+  border: 1.5px solid rgba(88, 86, 214, 0.3);
+}
+
+.aet-rank-agnostic {
+  background: rgba(52, 199, 89, 0.08);
+  border: 1.5px solid rgba(52, 199, 89, 0.3);
+}
+
+.aet-rank-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.aet-rank-title {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ── Reflection ── */
+
+.aet-reflection {
+  max-width: 560px;
+  padding: 20px;
+  border-left: 2px solid #5856D6;
+  background: var(--bg-card);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  text-align: left;
+}
+
+.aet-reflection p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── What You Grappled With ── */
+
+.aet-grappled {
+  width: 100%;
+  max-width: 500px;
+  text-align: left;
+}
+
+.aet-grappled-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.aet-grappled-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.aet-grappled-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* ── Completion Actions ── */
+
+.aet-complete-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.aet-btn-primary {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #F59E0B;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.aet-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.aet-btn-primary:active {
+  transform: scale(0.97);
+}
+
+.aet-btn-outline {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--accent);
+  background: none;
+  border: 1.5px solid var(--accent);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.aet-btn-outline:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.aet-btn-outline:active {
+  transform: scale(0.97);
+}
+
+/* ══════════════════════════════════════
+   SCALES SVG
+   ══════════════════════════════════════ */
+
+.aet-scales-svg {
+  transition: transform 0.5s ease;
+}
+
+.aet-scales-glow {
+  animation: scaleGlow 3s ease-in-out infinite;
+}
+
+/* ══════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════ */
+
+@keyframes scaleBalance {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+@keyframes gavelDrop {
+  0% { transform: rotate(-45deg) translateY(-20px); }
+  60% { transform: rotate(0deg) translateY(0); }
+  80% { transform: rotate(-10deg) translateY(-5px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+
+@keyframes verdictReveal {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes staggerFadeIn {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleGlow {
+  0%, 100% { filter: drop-shadow(0 0 4px #F59E0B); }
+  50% { filter: drop-shadow(0 0 12px #F59E0B); }
+}
+
+/* ══════════════════════════════════════
+   DARK MODE
+   ══════════════════════════════════════ */
+
+[data-theme="dark"] .aet-case-badge {
+  background: rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="dark"] .aet-panel {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aet-evidence-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .aet-reasoning-textarea {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aet-reasoning-textarea:focus {
+  border-color: #F59E0B;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="dark"] .aet-delivered-banner {
+  background: rgba(88, 86, 214, 0.15);
+}
+
+[data-theme="dark"] .aet-your-verdict {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aet-real-outcome,
+[data-theme="dark"] .aet-nuance,
+[data-theme="dark"] .aet-teaches {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .aet-reflection {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .aet-rank-decisive {
+  background: rgba(245, 158, 11, 0.15);
+}
+
+[data-theme="dark"] .aet-rank-careful {
+  background: rgba(88, 86, 214, 0.12);
+}
+
+[data-theme="dark"] .aet-rank-agnostic {
+  background: rgba(52, 199, 89, 0.12);
+}
+
+[data-theme="dark"] .aet-verdict-btn.aet-verdict-selected {
+  box-shadow: 0 0 0 3px rgba(88, 86, 214, 0.4);
+}
+
+[data-theme="dark"] .aet-verdict-deadlock.aet-verdict-selected {
+  box-shadow: 0 0 0 3px rgba(88, 86, 214, 0.3);
+}
+
+[data-theme="dark"] .aet-summary-row {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .aet-summary-favor {
+  background: rgba(0, 113, 227, 0.15);
+}
+
+[data-theme="dark"] .aet-summary-against {
+  background: rgba(255, 149, 0, 0.15);
+}
+
+[data-theme="dark"] .aet-summary-deadlock {
+  background: rgba(88, 86, 214, 0.15);
+}
+
+/* ══════════════════════════════════════
+   MOBILE RESPONSIVE
+   ══════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .aet-game {
+    padding: 16px 16px 48px;
+  }
+
+  .aet-case-bar {
+    padding: 10px 12px;
+  }
+
+  .aet-case-scales {
+    display: none;
+  }
+
+  .aet-case-header {
+    margin-bottom: 20px;
+  }
+
+  .aet-case-name {
+    font-size: 20px;
+  }
+
+  .aet-chamber {
+    gap: 20px;
+  }
+
+  .aet-arguments {
+    grid-template-columns: 1fr;
+  }
+
+  .aet-verdict-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .aet-verdict-btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .aet-verdict-deadlock {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .aet-submit-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .aet-next-btn {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .aet-reasoning {
+    max-width: 100%;
+  }
+
+  .aet-reasoning-textarea {
+    font-size: 16px; /* prevent iOS auto-zoom */
+  }
+
+  .aet-verdict-summary,
+  .aet-grappled,
+  .aet-reflection {
+    max-width: 100%;
+  }
+
+  .aet-rank {
+    padding: 12px 16px;
+  }
+
+  .aet-complete-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .aet-btn-primary,
+  .aet-btn-outline {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .aet-complete-title {
+    font-size: 24px;
+  }
+
+  .aet-complete-subtitle {
+    font-size: 15px;
+  }
+
+  .aet-complete {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .aet-game {
+    padding: 12px 12px 40px;
+  }
+
+  .aet-facts {
+    padding: 16px;
+  }
+
+  .aet-facts-text {
+    font-size: 14px;
+  }
+
+  .aet-panel {
+    padding: 16px;
+  }
+
+  .aet-arg {
+    font-size: 13px;
+    padding-left: 12px;
+  }
+
+  .aet-arguments {
+    gap: 12px;
+  }
+
+  .aet-evidence-card {
+    padding: 10px 12px;
+  }
+
+  .aet-your-verdict,
+  .aet-real-outcome,
+  .aet-nuance,
+  .aet-teaches {
+    padding: 12px 16px;
+  }
+
+  .aet-reveal-content {
+    gap: 16px;
+  }
+
+  .aet-gavel-wrap svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .aet-complete-title {
+    font-size: 22px;
+  }
+
+  .aet-reflection {
+    padding: 16px;
+  }
+
+  .aet-summary-row {
+    padding: 8px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 2px;
+  }
+
+  .aet-summary-case {
+    font-size: 13px;
+  }
+
+  .aet-rank {
+    padding: 10px 14px;
+  }
+
+  .aet-entry-meta {
+    font-size: 12px;
+  }
+}

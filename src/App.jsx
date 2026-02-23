@@ -16,6 +16,7 @@ import AICityBuilder from './AICityBuilder.jsx'
 import AILabExplorer from './AILabExplorer.jsx'
 import PromptHeist from './PromptHeist.jsx'
 import TokenBudget from './TokenBudget.jsx'
+import AIEthicsTribunal from './AIEthicsTribunal.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -924,6 +925,9 @@ function App() {
         )}
         {!showHome && activeTab === 'token-budget' && (
           <TokenBudget onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'ai-ethics-tribunal' && (
+          <AIEthicsTribunal onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
         </div>
       </main>

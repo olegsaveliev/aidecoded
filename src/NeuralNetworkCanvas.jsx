@@ -33,6 +33,7 @@ const NODES = [
   { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', px: 0.78, py: 0.64, desc: 'Explore an AI research lab room by room' },
   { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.78, py: 0.86, desc: 'Solve AI mysteries, build your city' },
   { id: 'token-budget', label: 'Token Budget', group: 'play', px: 0.42, py: 0.92, desc: 'Rewrite prompts to fit strict token budgets' },
+  { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', group: 'play', px: 0.28, py: 0.88, desc: 'Navigate ethical dilemmas in AI systems' },
 ]
 
 const CONNECTIONS = [
@@ -67,6 +68,8 @@ const CONNECTIONS = [
   ['prompt-heist', 'ai-lab-explorer'],
   ['prompt-heist', 'token-budget'],
   ['tokenizer', 'token-budget'],
+  ['ai-city-builder', 'ai-ethics-tribunal'],
+  ['machine-learning', 'ai-ethics-tribunal'],
 ]
 
 /* ── Animation timing (ms) ── */
@@ -92,6 +95,7 @@ const NODE_DELAYS = {
   'ai-lab-explorer': 2350,
   'ai-city-builder': 2500,
   'token-budget': 1950,
+  'ai-ethics-tribunal': 2100,
 }
 
 const NODE_APPEAR_DUR = 500

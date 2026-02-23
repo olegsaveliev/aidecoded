@@ -98,6 +98,9 @@ const ICON_PATHS = {
   'token-budget': (
     <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zM12 6v6l4 2M9 2.3a10 10 0 0 0 0 19.4" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'ai-ethics-tribunal': (
+    <path d="M12 3v18M3 9h18M5 9l2 9M17 9l2 9M19 9c0 3.87-3.13 7-7 7s-7-3.13-7-7" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

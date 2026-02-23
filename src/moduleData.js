@@ -16,6 +16,7 @@ const ALL_MODULES = [
   { id: 'ai-lab-explorer', title: 'AI Lab Explorer', description: 'Walk through an AI research lab. Unlock each room by completing hands-on challenges.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'prompt-heist', title: 'Prompt Heist', description: 'Craft the perfect prompt to outsmart AI security systems and pull off 5 legendary heists.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'token-budget', title: 'Token Budget', description: 'Rewrite prompts to fit strict token limits without losing quality. Real API cost thinking through play.', tag: 'Game', tagColor: '#F59E0B' },
+  { id: 'ai-ethics-tribunal', title: 'AI Ethics Tribunal', description: 'Preside over real-world AI dilemmas. Weigh the arguments. Deliver your verdict. No easy answers.', tag: 'Game', tagColor: '#F59E0B' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

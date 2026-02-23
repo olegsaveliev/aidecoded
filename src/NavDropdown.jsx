@@ -55,6 +55,7 @@ const NAV_GROUPS = [
       { id: 'ai-lab-explorer', name: 'AI Lab Explorer', tag: 'Game' },
       { id: 'prompt-heist', name: 'Prompt Heist', tag: 'Game' },
       { id: 'token-budget', name: 'Token Budget', tag: 'Game' },
+      { id: 'ai-ethics-tribunal', name: 'AI Ethics Tribunal', tag: 'Game' },
     ],
   },
 ]

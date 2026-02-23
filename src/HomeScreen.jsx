@@ -161,11 +161,20 @@ const CARDS = [
     isGame: true,
     difficulty: 'Intermediate',
   },
+  {
+    id: 'ai-ethics-tribunal',
+    title: 'AI Ethics Tribunal',
+    description: 'Preside over real-world AI dilemmas. Weigh the arguments. Deliver your verdict. No easy answers.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Thought-Provoking',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
 
-const TOTAL_MODULES = 16 // all modules including tools and games
+const TOTAL_MODULES = 17 // all modules including tools and games
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

@@ -24,6 +24,7 @@ const MOBILE_MODULES = [
   { id: 'ai-lab-explorer', label: 'Lab Explorer', color: '#F59E0B' },
   { id: 'prompt-heist', label: 'Prompt Heist', color: '#F59E0B' },
   { id: 'token-budget', label: 'Token Budget', color: '#F59E0B' },
+  { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', color: '#F59E0B' },
 ]
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
