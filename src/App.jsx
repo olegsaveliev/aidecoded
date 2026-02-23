@@ -151,11 +151,11 @@ function App() {
     try { return JSON.parse(sessionStorage.getItem('nav_state')) } catch { return null }
   }
 
-  const [showLanding, setShowLanding] = useState(() => readNav() ? false : !pendingAuthReturn)
+  const [showLanding, setShowLanding] = useState(() => readNav() ? false : pendingAuthReturn === 'landing' ? true : !pendingAuthReturn)
   const [fadingOut, setFadingOut] = useState(false)
   const [showBootScreen, setShowBootScreen] = useState(false)
   const [bootFadingOut, setBootFadingOut] = useState(false)
-  const [showHome, setShowHome] = useState(() => readNav()?.showHome ?? false)
+  const [showHome, setShowHome] = useState(() => readNav()?.showHome ?? (pendingAuthReturn === 'home' ? true : false))
   const [homeTransition, setHomeTransition] = useState(false)
 
   function handleGetStarted() {
@@ -248,6 +248,7 @@ function App() {
       sessionStorage.removeItem('auth_return_tab')
       setPendingAuthReturn(null)
       if (pendingAuthReturn === 'landing' || pendingAuthReturn === 'home') {
+        setShowLanding(false)
         setShowHome(true)
       } else {
         setShowHome(false)
