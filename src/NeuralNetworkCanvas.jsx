@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import ModuleIcon from './ModuleIcon.jsx'
+import { useAuth } from './AuthContext'
 import './NeuralNetworkCanvas.css'
 
 const GROUP_COLORS = {
@@ -12,71 +13,75 @@ const GROUP_COLORS = {
 }
 
 const NODES = [
-  // Tools cluster (top-left area)
-  { id: 'playground', label: 'Playground', group: 'tools', px: 0.12, py: 0.25, desc: 'Chat with AI and tune parameters in real time' },
-  { id: 'tokenizer', label: 'Tokenizer', group: 'tools', px: 0.08, py: 0.50, desc: 'See how AI reads your text as tokens' },
-  { id: 'generation', label: 'Generation', group: 'tools', px: 0.18, py: 0.72, desc: 'Watch AI predict the next word live' },
-  // Foundations cluster (center)
-  { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', px: 0.38, py: 0.20, desc: 'An interactive journey inside AI' },
-  { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', px: 0.32, py: 0.62, desc: 'How machines learn from data' },
-  { id: 'deep-learning', label: 'Deep Learning', group: 'foundations', px: 0.35, py: 0.45, desc: 'Neural networks powering every AI breakthrough' },
-  // Advanced cluster (center-right)
-  { id: 'model-training', label: 'Model Training', group: 'foundations', px: 0.58, py: 0.30, desc: 'How AI models are built from scratch' },
-  { id: 'rag', label: 'RAG', group: 'advanced', px: 0.62, py: 0.65, desc: 'How AI learns from YOUR documents' },
-  // Skills cluster (right side)
-  { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.82, py: 0.22, desc: 'Write better prompts for better results' },
-  { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.85, py: 0.60, desc: 'Give AI the right context every time' },
-  { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.48, py: 0.78, desc: 'Turn a general AI into a domain expert' },
-  { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.72, py: 0.88, desc: 'Solve AI mysteries, build your city' },
-  { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', px: 0.62, py: 0.90, desc: 'Explore an AI research lab room by room' },
-  { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', px: 0.55, py: 0.92, desc: 'Outsmart AI security with the perfect prompt' },
+  // Layer 1 — Input (Tools): 3 nodes
+  { id: 'playground', label: 'Playground', group: 'tools', px: 0.08, py: 0.18, desc: 'Chat with AI and tune parameters in real time' },
+  { id: 'tokenizer', label: 'Tokenizer', group: 'tools', px: 0.08, py: 0.48, desc: 'See how AI reads your text as tokens' },
+  { id: 'generation', label: 'Generation', group: 'tools', px: 0.08, py: 0.78, desc: 'Watch AI predict the next word live' },
+  // Layer 2 — Hidden (Foundations core): 3 nodes
+  { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', px: 0.30, py: 0.18, desc: 'An interactive journey inside AI' },
+  { id: 'deep-learning', label: 'Deep Learning', group: 'foundations', px: 0.30, py: 0.48, desc: 'Neural networks powering every AI breakthrough' },
+  { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', px: 0.30, py: 0.78, desc: 'How machines learn from data' },
+  // Layer 3 — Hidden (Applied): 4 nodes
+  { id: 'model-training', label: 'Model Training', group: 'foundations', px: 0.52, py: 0.12, desc: 'How AI models are built from scratch' },
+  { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.52, py: 0.38, desc: 'Turn a general AI into a domain expert' },
+  { id: 'rag', label: 'RAG', group: 'advanced', px: 0.52, py: 0.64, desc: 'How AI learns from YOUR documents' },
+  { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', px: 0.52, py: 0.86, desc: 'Outsmart AI security with the perfect prompt' },
+  // Layer 4 — Output (Skills + Play): 4 nodes
+  { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.78, py: 0.12, desc: 'Write better prompts for better results' },
+  { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.78, py: 0.38, desc: 'Give AI the right context every time' },
+  { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', px: 0.78, py: 0.64, desc: 'Explore an AI research lab room by room' },
+  { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.78, py: 0.86, desc: 'Solve AI mysteries, build your city' },
 ]
 
 const CONNECTIONS = [
+  // Layer 1 → Layer 2
   ['playground', 'how-llms-work'],
-  ['playground', 'prompt-engineering'],
+  ['playground', 'deep-learning'],
   ['tokenizer', 'how-llms-work'],
+  ['tokenizer', 'deep-learning'],
   ['tokenizer', 'machine-learning'],
-  ['generation', 'how-llms-work'],
-  ['machine-learning', 'model-training'],
-  ['machine-learning', 'rag'],
+  ['generation', 'deep-learning'],
+  ['generation', 'machine-learning'],
+  // Layer 2 → Layer 3
   ['how-llms-work', 'model-training'],
   ['how-llms-work', 'rag'],
-  ['how-llms-work', 'context-engineering'],
-  ['model-training', 'prompt-engineering'],
-  ['rag', 'context-engineering'],
-  ['prompt-engineering', 'context-engineering'],
-  ['fine-tuning', 'model-training'],
-  ['fine-tuning', 'rag'],
-  ['fine-tuning', 'machine-learning'],
-  ['deep-learning', 'machine-learning'],
   ['deep-learning', 'model-training'],
-  ['deep-learning', 'how-llms-work'],
-  ['ai-city-builder', 'how-llms-work'],
-  ['ai-city-builder', 'prompt-engineering'],
-  ['ai-lab-explorer', 'ai-city-builder'],
-  ['ai-lab-explorer', 'how-llms-work'],
-  ['prompt-heist', 'prompt-engineering'],
+  ['deep-learning', 'fine-tuning'],
+  ['machine-learning', 'fine-tuning'],
+  ['machine-learning', 'rag'],
+  ['machine-learning', 'prompt-heist'],
+  // Layer 3 → Layer 4
+  ['model-training', 'prompt-engineering'],
+  ['model-training', 'context-engineering'],
+  ['fine-tuning', 'context-engineering'],
+  ['fine-tuning', 'ai-lab-explorer'],
+  ['rag', 'context-engineering'],
+  ['rag', 'ai-lab-explorer'],
   ['prompt-heist', 'ai-city-builder'],
+  ['prompt-heist', 'ai-lab-explorer'],
 ]
 
 /* ── Animation timing (ms) ── */
 
 const NODE_DELAYS = {
+  // Layer 1
   'playground': 0,
-  'tokenizer': 200,
-  'generation': 400,
-  'how-llms-work': 700,
+  'tokenizer': 150,
+  'generation': 300,
+  // Layer 2
+  'how-llms-work': 600,
+  'deep-learning': 750,
   'machine-learning': 900,
-  'deep-learning': 1100,
+  // Layer 3
   'model-training': 1200,
-  'rag': 1400,
-  'prompt-engineering': 1700,
-  'context-engineering': 1900,
-  'fine-tuning': 1600,
-  'ai-city-builder': 2100,
-  'ai-lab-explorer': 2300,
-  'prompt-heist': 2500,
+  'fine-tuning': 1350,
+  'rag': 1500,
+  'prompt-heist': 1650,
+  // Layer 4
+  'prompt-engineering': 1900,
+  'context-engineering': 2050,
+  'ai-lab-explorer': 2200,
+  'ai-city-builder': 2350,
 }
 
 const NODE_APPEAR_DUR = 500
@@ -106,6 +111,7 @@ for (const node of NODES) {
 }
 
 function NeuralNetworkCanvas({ onSelectTab }) {
+  const { isModuleLocked } = useAuth()
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
   const svgRef = useRef(null)
@@ -487,6 +493,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
           const pos = nodePositions[node.id]
           if (!pos) return null
           const color = GROUP_COLORS[node.group]
+          const locked = isModuleLocked(node.id)
           const isDragging = draggingId === node.id
           const isHovered = hoveredNode === node.id && !isDragging
           const isConnected = connectedTo.has(node.id) && !isDragging
@@ -511,11 +518,18 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                   const scale = Math.min(svgRect.width / REF_W, svgRect.height / REF_H)
                   const offsetX = (svgRect.width - REF_W * scale) / 2
                   const offsetY = (svgRect.height - REF_H * scale) / 2
-                  setTooltip({
-                    text: node.desc,
-                    x: svgRect.left + offsetX + pos.x * scale,
-                    y: svgRect.top + offsetY + pos.y * scale + nodeRadius * scale + 8,
-                  })
+                  let tx = svgRect.left + offsetX + pos.x * scale
+                  let ty = svgRect.top + offsetY + pos.y * scale + nodeRadius * scale + 8
+                  // Clamp tooltip within viewport
+                  const tooltipW = 200 // max-width from CSS
+                  const tooltipH = 48  // approximate height
+                  const pad = 8
+                  tx = Math.max(tooltipW / 2 + pad, Math.min(window.innerWidth - tooltipW / 2 - pad, tx))
+                  // If tooltip would go below viewport, show it above the node
+                  if (ty + tooltipH > window.innerHeight - pad) {
+                    ty = svgRect.top + offsetY + pos.y * scale - nodeRadius * scale - tooltipH - 8
+                  }
+                  setTooltip({ text: node.desc, x: tx, y: ty })
                 }
               }}
               onMouseLeave={() => {
@@ -537,7 +551,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                 style={{ animationDelay: `${enterDelay}ms` }}
               >
                 {/* Interaction wrapper */}
-                <g className={`nn-node-inner ${isDragging ? 'nn-node-dragging' : (isHovered ? 'nn-node-hovered' : '')} ${isConnected ? 'nn-node-connected' : ''} ${isClicked ? 'nn-node-clicked' : ''}`}>
+                <g className={`nn-node-inner ${isDragging ? 'nn-node-dragging' : (isHovered ? 'nn-node-hovered' : '')} ${isConnected ? 'nn-node-connected' : ''} ${isClicked ? 'nn-node-clicked' : ''}`} >
                   {/* Click ripple effect */}
                   {isClicked && (
                     <circle
@@ -576,7 +590,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
 
                   {/* Node background */}
                   <circle
-                    r={nodeRadius}
+                    r={nodeRadius + 2}
                     className={`nn-node-bg ${isHovered ? 'nn-node-bg-hover' : ''} ${isDragging ? 'nn-node-bg-dragging' : ''}`}
                   />
 
@@ -595,6 +609,17 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                   >
                     {node.label}
                   </text>
+
+                  {/* Lock badge for unauthenticated users */}
+                  {locked && (
+                    <g transform={`translate(${nodeRadius - 4}, ${-nodeRadius + 4})`}>
+                      <circle r="8" fill="var(--bg-primary, #fff)" stroke="var(--border, #d2d2d7)" strokeWidth="1" />
+                      <svg x="-5" y="-5" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary, #86868b)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                      </svg>
+                    </g>
+                  )}
 
                 </g>
               </g>
@@ -622,19 +647,6 @@ function NeuralNetworkCanvas({ onSelectTab }) {
         </div>
       )}
 
-      {/* Mobile fallback grid */}
-      <div className="nn-mobile-grid">
-        {NODES.map((node) => (
-          <button
-            key={node.id}
-            className="nn-mobile-card"
-            onClick={() => onSelectTab(node.id)}
-          >
-            <ModuleIcon module={node.id} size={20} style={{ color: GROUP_COLORS[node.group] }} />
-            <span className="nn-mobile-card-label">{node.label}</span>
-          </button>
-        ))}
-      </div>
 
       {/* Portal tooltip */}
       {tooltip && createPortal(

@@ -1,19 +1,19 @@
 import { useEffect, useRef } from 'react'
 
 const DEFAULTS = {
-  particleCount: 18,
+  particleCount: 25,
   connectionDist: 180,
-  particleOpacity: 0.06,
-  connectionOpacity: 0.04,
+  particleOpacity: 0.18,
+  connectionOpacity: 0.1,
   speed: 0.3,
   radiusMin: 2,
-  radiusMax: 3,
+  radiusMax: 3.5,
 }
 
 const LANDING = {
   particleCount: 25,
-  particleOpacity: 0.08,
-  connectionOpacity: 0.06,
+  particleOpacity: 0.18,
+  connectionOpacity: 0.1,
 }
 
 function NeuronBackground({ landing = false }) {
@@ -63,8 +63,8 @@ function NeuronBackground({ landing = false }) {
 
       const particleColor = isDark ? '168, 162, 158' : '0, 113, 227'
       const connColor = isDark ? '168, 162, 158' : '0, 113, 227'
-      const pOpacity = isDark ? 0.08 : config.particleOpacity
-      const cBaseOpacity = isDark ? 0.05 : config.connectionOpacity
+      const pOpacity = isDark ? 0.15 : config.particleOpacity
+      const cBaseOpacity = isDark ? 0.1 : config.connectionOpacity
 
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {

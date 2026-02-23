@@ -320,13 +320,14 @@
   padding: 6px;
   border-radius: 6px;
   color: #86868B;
-  transition: color 0.2s;
+  transition: color 0.2s, background-color 0.3s ease;
   flex-shrink: 0;
 }
 
 .header-icon-btn:hover {
   color: #0071E3;
 }
+
 
 [data-theme="dark"] .header-icon-btn {
   color: #A8A29E;
@@ -1703,22 +1704,16 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #ffffff;
-  border: 2px solid #D2D2D7;
+  background: var(--bg-primary);
+  border: 2px solid var(--border, #D2D2D7);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 700;
-  color: #8E8E93;
+  color: var(--text-tertiary, #8E8E93);
   transition: all 0.3s ease;
   flex-shrink: 0;
-}
-
-[data-theme="dark"] .how-step-num {
-  background: #1C1917;
-  border-color: #44403C;
-  color: #78716C;
 }
 
 .how-step-label {
@@ -1734,13 +1729,9 @@
 
 /* Active stage: thin colored ring */
 .how-step-active .how-step-num {
-  background: #ffffff;
+  background: var(--bg-primary);
   border: 2px solid var(--accent);
   color: var(--accent);
-}
-
-[data-theme="dark"] .how-step-active .how-step-num {
-  background: #1C1917;
 }
 
 .how-step-active .how-step-label {
@@ -1758,13 +1749,9 @@
 
 /* Completed stage: thin green ring + green checkmark */
 .how-step-completed .how-step-num {
-  background: #ffffff;
+  background: var(--bg-primary);
   border: 2px solid #34c759;
   color: #34c759;
-}
-
-[data-theme="dark"] .how-step-completed .how-step-num {
-  background: #1C1917;
 }
 
 .how-step-completed .how-step-label {
@@ -1829,17 +1816,12 @@
 .how-info-card {
   display: flex;
   gap: 14px;
-  background: #ffffff;
-  border: 1px solid #E5E5EA;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-light, #E5E5EA);
   border-radius: 16px;
   padding: 24px;
   font-size: 14px;
   line-height: 1.6;
-}
-
-[data-theme="dark"] .how-info-card {
-  background: #1C1917;
-  border-color: #44403C;
 }
 
 .how-info-card-edu {
@@ -1861,14 +1843,10 @@
 .how-info-card strong {
   display: block;
   font-weight: 600;
-  color: #1D1D1F;
+  color: var(--text-primary);
   font-size: 18px;
   padding-left: 12px;
   border-left: 3px solid var(--accent);
-}
-
-[data-theme="dark"] .how-info-card strong {
-  color: #E8E3DD;
 }
 
 .how-info-card p {

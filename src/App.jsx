@@ -110,8 +110,16 @@ function App() {
   })
 
   useEffect(() => {
+    // Disable all transitions so theme switches instantly (no partial flash)
+    document.documentElement.classList.add('no-transitions')
     document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
     localStorage.setItem('theme', darkMode ? 'dark' : 'light')
+    // Re-enable after paint
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.documentElement.classList.remove('no-transitions')
+      })
+    })
   }, [darkMode])
 
   // Close avatar dropdown on outside click
@@ -327,7 +335,7 @@ function App() {
           const dist = Math.sqrt(dx * dx + dy * dy)
           if (dist < CONNECTION_DIST) {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-            const baseOpacity = isDark ? 0.1 : 0.05
+            const baseOpacity = isDark ? 0.15 : 0.12
             const opacity = (1 - dist / CONNECTION_DIST) * baseOpacity
             ctx.beginPath()
             ctx.moveTo(particles[i].x, particles[i].y)

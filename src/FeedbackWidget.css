@@ -22,7 +22,7 @@
   background: linear-gradient(135deg, #1E90FF, #0071E3);
   border-radius: 50% 50% 50% 6px;
   box-shadow: 0 4px 16px rgba(0, 113, 227, 0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
 }
 
 .feedback-bubble-wrap:hover .feedback-bubble-large {
@@ -44,7 +44,7 @@
   justify-content: center;
   gap: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .feedback-bubble-wrap:hover .feedback-bubble-small {

@@ -63,7 +63,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Advanced | #FF9500 | RAG |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist |
 
-Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings, mobile grid)
+Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 
 ### Icon Color Matching Rule
 
@@ -419,7 +419,7 @@ border-left: 2px solid #eab308;        /* yellow left border */
 | `720px` | Module-specific grid collapses (CE, RAG, ML) |
 | `700px` | Section-specific (MT data sources, PE layouts) |
 | `500px` | Fine-grained (home welcome sizing) |
-| `480px` | Small phones — grids collapse to 1 column, NN mobile grid to 2 columns |
+| `480px` | Small phones — grids collapse to 1 column, landing mobile grid to 2 columns |
 
 ### Key Mobile Rules (768px)
 
@@ -448,8 +448,9 @@ border-left: 2px solid #eab308;        /* yellow left border */
 - `.tok-suggestion` → `flex: none` (prevents squish)
 
 **Neural Network Canvas:**
-- SVG canvas hidden, replaced with `.nn-mobile-grid` (3-col grid, 2-col at 480px)
-- Each card shows `ModuleIcon` colored by group + label
+- SVG canvas, background canvas, buttons, and drag hint hidden at 768px
+- Mobile grid owned by `LandingPage.jsx` (`.landing-mobile-grid`): 3-col grid, 2-col at 480px
+- Each card shows `ModuleIcon` colored by tag color + label
 
 **Entry Screen:**
 - Full-width button, reduced padding
@@ -461,9 +462,7 @@ border-left: 2px solid #eab308;        /* yellow left border */
 
 Implemented via `[data-theme="dark"]` attribute on `<html>`.
 
-**Transition:** All elements smoothly transition `background-color, color, border-color, box-shadow` over `0.3s ease`.
-
-**Excluded from transitions:** `input[type='range']`, canvas, svg, `.typing-indicator span`, `.send-spinner`
+**Transition:** Instant switch — `.no-transitions` class disables all transitions during toggle (added/removed in `App.jsx` useEffect via double-rAF). No per-element transition needed for theme switching.
 
 **Pattern for component overrides:**
 ```css

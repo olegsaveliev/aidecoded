@@ -171,6 +171,42 @@
   display: none;
 }
 
+.landing-mobile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-light, #e8e8ed);
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease, transform 0.1s;
+}
+
+.landing-mobile-card:active {
+  transform: scale(0.97);
+}
+
+[data-theme="dark"] .landing-mobile-card {
+  background: #292524;
+  border-color: #44403C;
+}
+
+.landing-mobile-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-mobile-card-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary, #1d1d1f);
+  text-align: center;
+}
+
 /* ── Theme toggle on landing ── */
 
 .landing-theme-toggle {
@@ -182,11 +218,24 @@
 
 /* ── Responsive ── */
 
+@media (max-height: 700px) {
+  .landing-content {
+    padding-top: 12px;
+    gap: 6px;
+  }
+
+  .landing-title {
+    font-size: 30px;
+  }
+}
+
 @media (max-width: 768px) {
   .landing-content {
     padding: 24px 16px calc(24px + env(safe-area-inset-bottom, 16px));
     gap: 12px;
-    justify-content: center;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .landing-title {
@@ -204,9 +253,15 @@
   }
 
   .landing-network-wrapper {
-    flex: 0 1 auto;
+    display: none;
+  }
+
+  .landing-mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
     width: 100%;
-    aspect-ratio: 2 / 1;
+    padding: 4px 0;
   }
 
   .landing-cta {
@@ -226,5 +281,15 @@
     top: 14px;
     right: 16px;
   }
+}
 
+@media (max-width: 480px) {
+  .landing-mobile-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .landing-cta {
+    width: 100%;
+    margin: 0;
+  }
 }

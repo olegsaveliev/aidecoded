@@ -41,8 +41,8 @@ html {
   --code-bg: rgba(0, 0, 0, 0.05);
   --placeholder: #c7c7cc;
   --typing-dot: #a1a1a6;
-  --particle-fill: rgba(0, 113, 227, 0.08);
-  --particle-line: rgba(0, 113, 227, 0.05);
+  --particle-fill: rgba(0, 113, 227, 0.18);
+  --particle-line: rgba(0, 113, 227, 0.12);
   --token-pastels-1-bg: #e8f0fe;
   --token-pastels-1-border: #c4d7f5;
   --token-pastels-2-bg: #fce8e6;
@@ -91,8 +91,8 @@ html {
   --code-bg: rgba(255, 255, 255, 0.08);
   --placeholder: #78716C;
   --typing-dot: #78716C;
-  --particle-fill: rgba(168, 162, 158, 0.1);
-  --particle-line: rgba(168, 162, 158, 0.08);
+  --particle-fill: rgba(168, 162, 158, 0.18);
+  --particle-line: rgba(168, 162, 158, 0.12);
   --token-pastels-1-bg: rgba(0, 113, 227, 0.18);
   --token-pastels-1-border: rgba(0, 113, 227, 0.35);
   --token-pastels-2-bg: rgba(255, 59, 48, 0.14);
@@ -131,22 +131,10 @@ body {
   min-height: 100vh;
 }
 
-/* Global dark mode transition */
-*,
-*::before,
-*::after {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Exclude elements where transitions cause visual issues */
-input[type='range'],
-input[type='range']::-webkit-slider-thumb,
-.gen-bar-fill,
-.how-gen-bar-fill,
-canvas,
-svg,
-.typing-indicator span,
-.send-spinner {
+/* Instant theme switch — disable all transitions during toggle */
+.no-transitions *,
+.no-transitions *::before,
+.no-transitions *::after {
   transition: none !important;
 }
 
