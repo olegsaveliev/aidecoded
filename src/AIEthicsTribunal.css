@@ -1088,14 +1088,18 @@
 
   .aet-summary-row {
     padding: 8px 12px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 2px;
+    gap: 8px;
   }
 
   .aet-summary-case {
     font-size: 13px;
+    min-width: 0;
+  }
+
+  .aet-summary-verdict {
+    font-size: 12px;
+    padding: 3px 8px;
+    flex-shrink: 0;
   }
 
   .aet-rank {
