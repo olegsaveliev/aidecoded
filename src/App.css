@@ -3154,6 +3154,60 @@
 }
 
 
+.ce-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ce-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.ce-welcome-steps strong {
+  color: var(--text-primary);
+}
+
+.rag-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rag-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.rag-welcome-steps strong {
+  color: var(--text-primary);
+}
+
+.ml-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.ml-welcome-steps strong {
+  color: var(--text-primary);
+}
+
 /* Stepper adjustments for 6 stages */
 .mt-stepper {
   flex-wrap: wrap;
@@ -3618,17 +3672,21 @@
 .mt-pretrain-top {
   display: flex;
   gap: 20px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .mt-loss-curve {
   flex: 1.5;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .mt-loss-canvas {
+  display: block;
   width: 100%;
-  height: auto;
+  aspect-ratio: 2 / 1;
   border-radius: 8px;
   background: var(--bg-secondary);
   border: 1px solid var(--border-light);

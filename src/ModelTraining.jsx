@@ -358,7 +358,7 @@ function PreTrainingViz({ active }) {
     if (!active) { setCurveProgress(0); setGpuActive([]); return }
     let progress = 0
     const interval = setInterval(() => {
-      progress += 0.015
+      progress += 0.008
       if (progress > 1) progress = 1
       setCurveProgress(progress)
       if (progress >= 1) clearInterval(interval)
@@ -373,7 +373,7 @@ function PreTrainingViz({ active }) {
       } else {
         clearInterval(gpuInterval)
       }
-    }, 150)
+    }, 280)
 
     return () => { clearInterval(interval); clearInterval(gpuInterval) }
   }, [active])
@@ -383,8 +383,13 @@ function PreTrainingViz({ active }) {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
-    const w = canvas.width
-    const h = canvas.height
+    const dpr = window.devicePixelRatio || 1
+    const rect = canvas.getBoundingClientRect()
+    canvas.width = rect.width * dpr
+    canvas.height = rect.height * dpr
+    ctx.scale(dpr, dpr)
+    const w = rect.width
+    const h = rect.height
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
 
     ctx.clearRect(0, 0, w, h)
@@ -406,12 +411,12 @@ function PreTrainingViz({ active }) {
     ctx.fillStyle = isDark ? '#a8a29e' : '#6E6E73'
     ctx.font = '11px -apple-system, sans-serif'
     ctx.textAlign = 'right'
-    ctx.fillText('3.5', 35, 18)
+    ctx.fillText('3.5', 35, 28)
     ctx.fillText('1.0', 35, h - 28)
     ctx.textAlign = 'center'
     ctx.fillText('Training Steps →', w / 2, h - 5)
     ctx.textAlign = 'left'
-    ctx.fillText('Loss ↑', 5, 15)
+    ctx.fillText('Loss', 5, 12)
 
     // Loss curve
     if (curveProgress > 0) {
@@ -456,7 +461,8 @@ function PreTrainingViz({ active }) {
     <div className="mt-pretrain-viz">
       <div className="mt-pretrain-top">
         <div className="mt-loss-curve">
-          <canvas ref={canvasRef} width={400} height={200} className="mt-loss-canvas" />
+          <div className="mt-gpu-cluster-label">Loss Curve</div>
+          <canvas ref={canvasRef} className="mt-loss-canvas" />
         </div>
         <div className="mt-gpu-cluster">
           <div className="mt-gpu-cluster-label">GPU Cluster</div>
@@ -630,7 +636,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
   const [stage, setStage] = usePersistedState('model-training', -1) // -1 = welcome
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showWelcome, setShowWelcome] = useState(stage === -1)
-  const [showFinal, setShowFinal] = useState(false)
+  const [showFinal, setShowFinal] = useState(stage >= STAGES.length)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
   const [learnTip, setLearnTip] = useState(null)
