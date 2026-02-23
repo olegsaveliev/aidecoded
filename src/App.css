@@ -1416,6 +1416,24 @@
   border-color: var(--accent);
 }
 
+.how-welcome-steps {
+  margin: 8px 0 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.how-welcome-steps li {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.how-welcome-steps strong {
+  color: var(--text-primary);
+}
+
 /* ============ Entry / Intro Screen ============ */
 .entry-screen {
   display: flex;
@@ -1585,25 +1603,44 @@
 .how-suggestion-chip {
   background: var(--bg-secondary);
   border: 1px solid var(--border-light);
-  border-radius: 18px;
-  padding: 6px 14px;
-  font-size: 13px;
+  border-radius: 12px;
+  padding: 8px 14px;
   font-family: inherit;
-  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s;
-  white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.how-suggestion-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.how-suggestion-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-weight: 500;
 }
 
 .how-suggestion-chip:hover {
   background: var(--accent-light);
   border-color: var(--accent);
+}
+
+.how-suggestion-chip:hover .how-suggestion-text {
   color: var(--accent);
 }
 
 .how-suggestion-chip-active {
   background: var(--accent-light);
   border-color: var(--accent);
+}
+
+.how-suggestion-chip-active .how-suggestion-text {
   color: var(--accent);
   font-weight: 600;
 }
@@ -5545,7 +5582,8 @@
 
   .playground-welcome-steps,
   .tok-welcome-steps,
-  .gen-welcome-steps {
+  .gen-welcome-steps,
+  .how-welcome-steps {
     padding-left: 18px;
     gap: 2px;
   }
@@ -5714,6 +5752,16 @@
   }
 
   .tok-suggestion {
+    flex: none;
+    max-width: 100%;
+  }
+
+  .how-suggestion-chips {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .how-suggestion-chip {
     flex: none;
     max-width: 100%;
     width: 100%;

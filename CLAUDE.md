@@ -297,6 +297,47 @@ Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start
 
 ---
 
+## How LLMs Work Module (`src/HowLLMsWork.jsx`)
+
+Interactive 5-stage journey showing how an LLM processes a prompt end-to-end. Uses real OpenAI API calls for embeddings and generation. Stage-based with stepper navigation.
+
+### Entry Screen
+- Title: "How LLMs Work", subtitle: "Follow your words through the AI's brain"
+- Description explains what the learner will discover (5 stages, tokens, embeddings, attention, generation)
+
+### Welcome Banner
+Numbered 3-step guide: (1) type a prompt or pick a suggestion, (2) watch text transform through 5 stages, (3) read info cards and tips at each stage
+
+### Stages
+5 stages: Prompt → Tokenization → Embeddings → Attention → Generation. Stepper with clickable completed steps. Each stage has an info card with title, description, tip (yellow TipIcon), and ToolChips.
+
+### Suggestions (4, with labels)
+Each teaches a different concept:
+
+| Text | Label | What it shows |
+|---|---|---|
+| "The weather today is" | Common phrase | Standard tokenization |
+| "AI is changing the world" | Abstract concept | Conceptual embedding relationships |
+| "Once upon a time" | Storytelling | Creative generation |
+| "Hello world" | Programming classic | Code-like tokenization |
+
+### Progressive Learning Tips
+Milestone-based tips triggered at stage completion. No auto-dismiss — user clicks X. Max one visible at a time. Tracked via `dismissedTips` Set with `fadeTimerRef` for cleanup.
+
+| Trigger | Tip |
+|---|---|
+| Stage 1 complete (all tokens visible) | "Your text became X tokens! Common English averages ~4 chars per token" |
+| Stage 2 ready (embeddings loaded) | "Those numbers are how the AI 'understands' meaning — similar contexts get similar numbers" |
+| Stage 3 (attention visible) | "Thicker lines = stronger attention. The first word attends to many others" |
+| Stage 4 done (generation complete) | "Every ChatGPT response goes through these exact 5 stages" |
+
+All tips reset on "Start over". CSS: reuses `.learn-tip` classes from Playground.
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview

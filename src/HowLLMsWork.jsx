@@ -67,17 +67,17 @@ const VECTOR_SHADES = [
 ]
 
 const SUGGESTIONS = [
-  'The weather today is',
-  'AI is changing the world',
-  'Once upon a time',
-  'Hello world',
+  { text: 'The weather today is', label: 'Common phrase' },
+  { text: 'AI is changing the world', label: 'Abstract concept' },
+  { text: 'Once upon a time', label: 'Storytelling' },
+  { text: 'Hello world', label: 'Programming classic' },
 ]
 
 function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome, onSubPageChange }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = usePersistedState('how-llms-work', -1) // -1 = not started
   const [showEntry, setShowEntry] = useState(stage === -1)
-  const [prompt, setPrompt] = useState('The weather today is')
+  const [prompt, setPrompt] = useState(SUGGESTIONS[0].text)
   const [visibleTokens, setVisibleTokens] = useState([])
   const [embeddingProgress, setEmbeddingProgress] = useState([])
   const [attentionVisible, setAttentionVisible] = useState(false)
@@ -95,6 +95,10 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showQuiz, setShowQuiz] = useState(false)
   const [fading, setFading] = useState(false)
+  const [learnTip, setLearnTip] = useState(null)
+  const [learnTipFading, setLearnTipFading] = useState(false)
+  const [dismissedTips, setDismissedTips] = useState(new Set())
+  const fadeTimerRef = useRef(null)
   const genAbortRef = useRef(null)
   const genStartedRef = useRef(false)
   const activeStepRef = useRef(null)
@@ -135,6 +139,14 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     setShowFinal(false)
     setShowQuiz(false)
     setElapsed(0)
+  }
+
+  function handleStartOver() {
+    reset()
+    setShowEntry(true)
+    setShowWelcome(true)
+    setLearnTip(null)
+    setDismissedTips(new Set())
   }
 
   function startJourney() {
@@ -422,8 +434,32 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   useEffect(() => {
     return () => {
       if (genAbortRef.current) genAbortRef.current.abort()
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current)
     }
   }, [])
+
+  // Progressive learning tips at stage milestones
+  useEffect(() => {
+    if (stage === 1 && visibleTokens.length === allTokens.length && allTokens.length > 0 && !dismissedTips.has('tokens') && !learnTip) {
+      setLearnTip({ id: 'tokens', text: `Your text became ${allTokens.length} tokens! Common English averages about 4 characters per token. The AI doesn't see words — it sees these pieces.` })
+    } else if (stage === 2 && vectorsReady && !dismissedTips.has('embeddings') && !learnTip) {
+      setLearnTip({ id: 'embeddings', text: 'Those numbers are how the AI "understands" meaning. Words used in similar contexts get similar numbers — that\'s why "king" and "queen" would cluster together on the map.' })
+    } else if (stage === 3 && attentionVisible && !dismissedTips.has('attention') && !learnTip) {
+      setLearnTip({ id: 'attention', text: 'The thicker lines show stronger attention. Notice how the first word attends to many others — this "global view" is what makes Transformers so powerful compared to older AI.' })
+    } else if (stage === 4 && genPhase === 'done' && !dismissedTips.has('generation') && !learnTip) {
+      setLearnTip({ id: 'generation', text: 'You just saw the full pipeline! Every ChatGPT response goes through these exact 5 stages — hundreds of times per second.' })
+    }
+  }, [stage, visibleTokens.length, allTokens.length, vectorsReady, attentionVisible, genPhase, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function dismissLearnTip() {
+    if (!learnTip) return
+    setDismissedTips((prev) => new Set(prev).add(learnTip.id))
+    setLearnTipFading(true)
+    fadeTimerRef.current = setTimeout(() => {
+      setLearnTip(null)
+      setLearnTipFading(false)
+    }, 400)
+  }
 
   // Compute attention weights for visualization
   const attentionPairs = useMemo(() => {
@@ -453,7 +489,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
       <EntryScreen
         icon={<ModuleIcon module="how-llms-work" size={48} style={{ color: '#FF9500' }} />}
         title="How LLMs Work"
-        description="Take an interactive journey through every stage an AI goes through to answer your question. From your words to tokens to embeddings to the final response — see it all happen live."
+        subtitle="Follow your words through the AI's brain"
+        description="Take an interactive journey through the 5 stages every AI goes through to answer your question. You'll see your text get split into tokens, transformed into numbers, processed through attention, and finally generated into a response — all with real API calls."
         buttonText="Start the Journey →"
         onStart={() => { setShowEntry(false); markModuleStarted('how-llms-work') }}
       />
@@ -467,7 +504,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
           questions={howLLMsWorkQuiz}
           tabName="How LLMs Work"
           onBack={() => setShowQuiz(false)}
-          onStartOver={() => reset()}
+          onStartOver={handleStartOver}
           onSwitchTab={onSwitchTab}
           currentModuleId="how-llms-work"
         />
@@ -477,11 +514,19 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
 
   return (
     <div className={`how-llms${fading ? ' how-fading' : ''}`}>
+      <button className="entry-start-over" onClick={handleStartOver}>
+        &larr; Start over
+      </button>
       {/* Welcome Banner — only after entry screen, before journey starts */}
       {showWelcome && stage === -1 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
-            <strong>Welcome to How LLMs Work</strong> — Take an interactive journey through every stage an AI goes through to answer your question. From your words to tokens to embeddings to the final response — see it all happen live!
+            <strong>Welcome to How LLMs Work</strong> — here's how to explore:
+            <ol className="how-welcome-steps">
+              <li>Type a short prompt below or pick a suggestion — this is what the AI will process</li>
+              <li>Watch your text transform through <strong>5 stages</strong> — from words to tokens to numbers to AI response</li>
+              <li>Read the info cards and tips at each stage to understand <strong>what's happening and why</strong></li>
+            </ol>
           </div>
           <button className="how-welcome-dismiss" onClick={() => setShowWelcome(false)}>Got it</button>
         </div>
@@ -507,11 +552,12 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
               <div className="how-suggestion-chips">
                 {SUGGESTIONS.map((s) => (
                   <button
-                    key={s}
-                    className={`how-suggestion-chip ${prompt === s ? 'how-suggestion-chip-active' : ''}`}
-                    onClick={() => setPrompt(s)}
+                    key={s.text}
+                    className={`how-suggestion-chip ${prompt === s.text ? 'how-suggestion-chip-active' : ''}`}
+                    onClick={() => setPrompt(s.text)}
                   >
-                    {s}
+                    <span className="how-suggestion-text">{s.text}</span>
+                    <span className="how-suggestion-label">{s.label}</span>
                   </button>
                 ))}
               </div>
@@ -1050,6 +1096,14 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
                 )}
               </div>
             )}
+            {learnTip && (
+              <div className={`learn-tip ${learnTipFading ? 'learn-tip-fading' : ''}`} role="status" aria-live="polite">
+                <span className="learn-tip-text">{learnTip.text}</span>
+                <button className="learn-tip-dismiss" onClick={dismissLearnTip} aria-label="Dismiss tip">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+                </button>
+              </div>
+            )}
           </div>
         </>
       )}
@@ -1098,7 +1152,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>
               Test Your Knowledge &rarr;
             </button>
-            <button className="how-secondary-btn" onClick={reset}>
+            <button className="how-secondary-btn" onClick={handleStartOver}>
               Start over
             </button>
           </div>
