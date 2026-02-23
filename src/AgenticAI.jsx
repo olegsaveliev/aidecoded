@@ -202,9 +202,11 @@ function ChatbotVsAgentViz({ active }) {
             <div className="aai-loop-step"><WrenchIcon size={16} color="#5856D6" /> Tool</div>
             <div className="aai-loop-arrow">&rarr;</div>
             <div className="aai-loop-step"><EyeIcon size={16} color="#5856D6" /> Observe</div>
-            <div className="aai-loop-arrow aai-loop-return">&#8634;</div>
           </div>
-          <div className="aai-flow-label">Many turns. Until done.</div>
+          <div className="aai-flow-repeat">
+            <RepeatIcon size={14} color="#5856D6" />
+            <span>Repeat until done</span>
+          </div>
         </div>
       </div>
       <div className="aai-autonomy">
