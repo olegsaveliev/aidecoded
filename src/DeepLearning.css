@@ -1,0 +1,1233 @@
+/* ══════════════════════════════════
+   DEEP LEARNING
+   ══════════════════════════════════ */
+
+.dl-root {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+/* ── Stepper indigo accent ── */
+.dl-stepper .how-step-current .how-step-num {
+  background: #ffffff;
+  color: #5856D6;
+  border: 2px solid #5856D6;
+}
+
+[data-theme="dark"] .dl-stepper .how-step-current .how-step-num {
+  background: #1C1917;
+}
+
+.dl-stepper .how-step-completed .how-step-num {
+  background: #ffffff;
+  border: 2px solid #34c759;
+  color: #34c759;
+}
+
+[data-theme="dark"] .dl-stepper .how-step-completed .how-step-num {
+  background: #1C1917;
+}
+
+.dl-stepper .how-step-active .how-step-label {
+  color: var(--text-primary);
+}
+
+/* ── Shared viz wrapper ── */
+.dl-viz {
+  margin-bottom: 24px;
+}
+
+.dl-demo-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+
+/* ── Bullet lists inside info cards ── */
+.dl-bullet-list {
+  margin: 0 0 4px;
+  padding-left: 20px;
+  color: var(--text-secondary);
+}
+
+.dl-bullet-list li {
+  margin-bottom: 6px;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════
+   STAGE 1 — HIERARCHY TREE
+   ═══════════════════════════════════ */
+
+/* ── Tree ── */
+.dl-tree {
+  --dl-tree-indent: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding-left: 4px;
+}
+
+.dl-tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-height: 40px;
+  padding-left: calc(var(--depth) * var(--dl-tree-indent));
+}
+
+.dl-tree-branch {
+  flex-shrink: 0;
+  margin-right: -2px;
+  color: var(--text-tertiary);
+}
+
+.dl-tree-node {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border-light);
+  border-radius: 10px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.dl-tree-node-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.dl-tree-node-highlight {
+  border-color: #5856D6;
+  background: rgba(88, 86, 214, 0.06);
+  box-shadow: 0 0 0 3px rgba(88, 86, 214, 0.1);
+}
+
+.dl-tree-node-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.dl-tree-node-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.dl-tree-node-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+.dl-hierarchy-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(88, 86, 214, 0.1);
+  color: #5856D6;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Timeline ── */
+.dl-timeline {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  padding: 16px 0;
+  -webkit-overflow-scrolling: touch;
+  min-height: 220px;
+  align-items: flex-start;
+}
+
+.dl-timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dl-timeline-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border);
+  transition: all 0.2s ease;
+  z-index: 1;
+}
+
+.dl-timeline-dot-active {
+  background: #5856D6;
+  border-color: #5856D6;
+  transform: scale(1.3);
+}
+
+.dl-timeline-line {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--border-light);
+}
+
+.dl-timeline-item:last-child .dl-timeline-line {
+  display: none;
+}
+
+.dl-timeline-year {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 10px;
+}
+
+.dl-timeline-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 120px;
+  line-height: 1.4;
+  margin-top: 4px;
+}
+
+.dl-timeline-detail {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #5856D6;
+  font-weight: 500;
+  text-align: center;
+  max-width: 140px;
+  animation: dl-fade-in 0.2s ease-out;
+}
+
+/* ═══════════════════════════════════
+   STAGE 2 — NEURON BUILDER
+   ═══════════════════════════════════ */
+
+.dl-neuron-builder {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.dl-neuron-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.dl-neuron-guide {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.dl-neuron-layout {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dl-neuron-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.dl-neuron-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dl-neuron-input-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  min-width: 60px;
+}
+
+.dl-neuron-input-val {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  width: 32px;
+  text-align: center;
+}
+
+.dl-neuron-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  outline: none;
+}
+
+.dl-neuron-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #5856D6;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dl-neuron-weight-val {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5856D6;
+  width: 44px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-neuron-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #5856D6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #5856D6;
+  background: var(--bg-card);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.dl-neuron-circle-fired {
+  background: #5856D6;
+  color: #fff;
+  animation: neuronFire 0.6s ease-out;
+}
+
+.dl-neuron-output {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.dl-neuron-output-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.dl-neuron-output-val {
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-neuron-output-fired { color: #34c759; }
+.dl-neuron-output-quiet { color: var(--text-tertiary); }
+
+.dl-neuron-calc {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.dl-neuron-calc strong {
+  color: var(--text-primary);
+}
+
+/* ── Activation function tabs ── */
+.dl-activation-tabs {
+  display: flex;
+  gap: 6px;
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+
+.dl-activation-tab {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+}
+
+.dl-activation-tab-active {
+  border-color: #5856D6;
+  background: rgba(88, 86, 214, 0.08);
+  color: #5856D6;
+}
+
+.dl-activation-graph {
+  height: 80px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dl-activation-graph svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dl-activation-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 3 — NETWORK DIAGRAM
+   ═══════════════════════════════════ */
+
+.dl-network-wrapper {
+  margin-bottom: 20px;
+}
+
+.dl-network-svg {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  display: block;
+}
+
+.dl-network-node {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+  cursor: pointer;
+}
+
+.dl-network-connection {
+  stroke: var(--border-light);
+  stroke-width: 0.8;
+  transition: stroke 0.3s ease, opacity 0.3s ease;
+}
+
+.dl-network-connection-active {
+  stroke: #5856D6;
+  opacity: 0.6;
+}
+
+.dl-network-connection-pulse {
+  stroke: #5856D6;
+  stroke-width: 2;
+  opacity: 0;
+}
+
+.dl-network-label {
+  fill: var(--text-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+}
+
+.dl-network-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.dl-network-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: #5856D6;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dl-network-btn:hover {
+  background: #4a48c4;
+}
+
+.dl-network-btn-outline {
+  color: #5856D6;
+  background: transparent;
+  border: 1.5px solid #5856D6;
+}
+
+.dl-network-btn-outline:hover {
+  background: #5856D6;
+  color: #fff;
+}
+
+.dl-node-info {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #5856D6;
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  animation: dl-fade-in 0.2s ease-out;
+}
+
+.dl-node-info strong {
+  color: var(--text-primary);
+}
+
+.dl-layer-slider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  justify-content: center;
+}
+
+.dl-network-outcome {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(88, 86, 214, 0.06);
+  border-left: 2px solid #5856D6;
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  animation: dl-fade-in 0.3s ease-out;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.dl-outcome-dismiss {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 4px 12px;
+  border: 1.5px solid #5856D6;
+  border-radius: 8px;
+  background: none;
+  color: #5856D6;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dl-outcome-dismiss:hover {
+  background: rgba(88, 86, 214, 0.1);
+}
+
+.dl-layer-slider-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.dl-layer-slider-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #5856D6;
+  min-width: 20px;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════
+   STAGE 4 — LOSS LANDSCAPE
+   ═══════════════════════════════════ */
+
+.dl-loss-landscape {
+  position: relative;
+  height: 180px;
+  max-width: 500px;
+  margin: 0 auto 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.dl-loss-landscape svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dl-loss-surface {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.dl-loss-ball {
+  fill: #5856D6;
+  transition: cx 0.4s ease-out, cy 0.4s ease-out;
+}
+
+.dl-loss-ball-glow {
+  fill: rgba(88, 86, 214, 0.2);
+  transition: cx 0.4s ease-out, cy 0.4s ease-out;
+}
+
+.dl-loss-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.dl-loss-info {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.dl-loss-info-item {
+  text-align: center;
+}
+
+.dl-loss-info-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dl-loss-info-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: #5856D6;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Loss curve ── */
+.dl-loss-curve {
+  height: 140px;
+  max-width: 500px;
+  margin: 0 auto 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.dl-loss-curve svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dl-loss-curve-line {
+  fill: none;
+  stroke: #5856D6;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.dl-loss-curve-area {
+  fill: rgba(88, 86, 214, 0.08);
+}
+
+.dl-loss-axis {
+  stroke: var(--border-light);
+  stroke-width: 1;
+}
+
+.dl-loss-axis-label {
+  fill: var(--text-tertiary);
+  font-size: 9px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ═══════════════════════════════════
+   STAGE 5 — CNN CONVOLUTION
+   ═══════════════════════════════════ */
+
+.dl-conv-demo {
+  margin-bottom: 20px;
+}
+
+.dl-conv-grids {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dl-conv-grid-wrapper {
+  text-align: center;
+}
+
+.dl-conv-grid-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.dl-conv-grid {
+  display: grid;
+  gap: 1px;
+}
+
+.dl-conv-cell {
+  width: 28px;
+  height: 28px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.dl-conv-cell-highlight {
+  outline: 2px solid #5856D6;
+  outline-offset: -1px;
+  z-index: 1;
+}
+
+.dl-conv-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--text-tertiary);
+  padding-top: 24px;
+}
+
+.dl-conv-filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+
+.dl-conv-filter-tab {
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  transition: all 0.15s ease;
+}
+
+.dl-conv-filter-tab-active {
+  border-color: #5856D6;
+  background: rgba(88, 86, 214, 0.08);
+  color: #5856D6;
+}
+
+.dl-conv-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* ═══════════════════════════════════
+   STAGE 6 — RNN vs TRANSFORMER
+   ═══════════════════════════════════ */
+
+.dl-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.dl-comp-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.dl-comp-rnn { border-top: 2px solid #FF9500; }
+.dl-comp-transformer { border-top: 2px solid #34c759; }
+
+.dl-comp-header {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+
+.dl-comp-viz {
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.dl-comp-word {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.dl-comp-word-active {
+  background: rgba(88, 86, 214, 0.1);
+  border-color: #5856D6;
+  color: #5856D6;
+}
+
+.dl-comp-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Attention input ── */
+.dl-attention-input {
+  margin-bottom: 16px;
+}
+
+.dl-attention-input-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.dl-attention-input-field {
+  width: 100%;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.dl-attention-input-field:focus {
+  border-color: #5856D6;
+}
+
+/* ── Attention heatmap ── */
+.dl-attention-heatmap {
+  margin-top: 16px;
+}
+
+.dl-attention-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.dl-attention-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-primary);
+  width: 60px;
+  text-align: right;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dl-attention-cell {
+  flex: 1;
+  height: 24px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════
+   STAGE 7 — TRAINING TRICKS
+   ═══════════════════════════════════ */
+
+.dl-techniques-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dl-technique-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #5856D6;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.dl-technique-card-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dl-technique-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.dl-technique-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dl-technique-card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Training curves comparison ── */
+.dl-curves-comparison {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+
+.dl-curves-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.dl-curves-chart {
+  height: 160px;
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.dl-curves-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dl-curves-legend {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 8px;
+}
+
+.dl-curves-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.dl-curves-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* ═══════════════════════════════════
+   STAGE 8 — FUTURE TIMELINE
+   ═══════════════════════════════════ */
+
+.dl-future-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.dl-future-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #5856D6;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
+}
+
+.dl-future-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.dl-future-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+
+.dl-future-card-year {
+  font-size: 14px;
+  font-weight: 700;
+  color: #5856D6;
+  min-width: 44px;
+}
+
+.dl-future-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.dl-future-card-chevron {
+  color: var(--text-tertiary);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.dl-future-card-chevron-open {
+  transform: rotate(180deg);
+}
+
+.dl-future-card-detail {
+  padding: 0 16px 14px 72px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  animation: dl-fade-in 0.2s ease-out;
+}
+
+/* ── Project cards ── */
+.dl-project-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dl-project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #34C759;
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dl-project-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.dl-project-card-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.dl-project-card-tools {
+  font-size: 11px;
+  font-weight: 500;
+  color: #5856D6;
+  margin-top: auto;
+}
+
+/* ═══════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════ */
+
+@keyframes neuronFire {
+  0% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+  100% { opacity: 0.3; transform: scale(1); }
+}
+
+@keyframes dataPulse {
+  0% { stroke-dashoffset: 100; opacity: 0; }
+  50% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+.dl-fading {
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+}
+
+@keyframes dl-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes dl-slide-in {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ═══════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .dl-root {
+    padding: 0 16px 40px;
+  }
+
+  .dl-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .dl-techniques-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dl-project-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .dl-neuron-layout {
+    flex-direction: column;
+  }
+
+  .dl-conv-grids {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dl-conv-cell {
+    width: 24px;
+    height: 24px;
+    font-size: 9px;
+  }
+
+  .dl-tree {
+    --dl-tree-indent: 18px;
+  }
+
+  .dl-tree-node-label {
+    font-size: 13px;
+  }
+
+  .dl-network-controls {
+    flex-wrap: wrap;
+  }
+
+  .dl-loss-info {
+    gap: 16px;
+  }
+
+  .dl-attention-label {
+    width: 48px;
+    font-size: 10px;
+  }
+
+  .dl-future-card-detail {
+    padding-left: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dl-techniques-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dl-project-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .dl-tree {
+    --dl-tree-indent: 14px;
+  }
+
+  .dl-conv-grid {
+    gap: 1px;
+  }
+
+  .dl-conv-cell {
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+  }
+
+  .dl-timeline-item {
+    min-width: 110px;
+  }
+}

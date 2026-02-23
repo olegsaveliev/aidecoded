@@ -1793,6 +1793,11 @@
   animation: fadeIn 0.4s ease;
 }
 
+.how-fading {
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+}
+
 /* Prompt bubble (stage 0) */
 .how-prompt-bubble {
   background: #F2F2F7;

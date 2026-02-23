@@ -1063,6 +1063,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [fading, setFading] = useState(false)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -1085,9 +1086,21 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
     if (stage < STAGES.length - 1) {
       setStage(stage + 1)
     } else {
-      setShowFinal(true)
-      setStage(STAGES.length)
-      markModuleComplete('machine-learning')
+      setFading(true)
+      setTimeout(() => {
+        setShowFinal(true)
+        setStage(STAGES.length)
+        markModuleComplete('machine-learning')
+        setFading(false)
+        requestAnimationFrame(() => {
+          let el = document.querySelector('.ml-root')
+          while (el) {
+            if (el.scrollTop > 0) el.scrollTop = 0
+            el = el.parentElement
+          }
+          window.scrollTo(0, 0)
+        })
+      }, 250)
     }
   }
 
@@ -1177,7 +1190,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
   }
 
   return (
-    <div className="how-llms ml-root">
+    <div className={`how-llms ml-root${fading ? ' how-fading' : ''}`}>
       {showWelcome && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">

@@ -12,6 +12,11 @@
   animation: quizFadeIn 0.35s ease-out;
 }
 
+.quiz-fading-out {
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+
 @keyframes quizFadeIn {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }

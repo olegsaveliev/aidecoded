@@ -95,6 +95,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   const [hoveredDot, setHoveredDot] = useState(null)
   const [maxStageReached, setMaxStageReached] = useState(-1)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [fading, setFading] = useState(false)
   const genAbortRef = useRef(null)
   const genStartedRef = useRef(false)
   const activeStepRef = useRef(null)
@@ -411,9 +412,21 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
       genAbortRef.current = null
     }
     setElapsed(Date.now() - startTime)
-    setShowFinal(true)
-    setStage(5)
-    markModuleComplete('how-llms-work')
+    setFading(true)
+    setTimeout(() => {
+      setShowFinal(true)
+      setStage(5)
+      markModuleComplete('how-llms-work')
+      setFading(false)
+      requestAnimationFrame(() => {
+        let el = document.querySelector('.how-llms')
+        while (el) {
+          if (el.scrollTop > 0) el.scrollTop = 0
+          el = el.parentElement
+        }
+        window.scrollTo(0, 0)
+      })
+    }, 250)
   }
 
   useEffect(() => {
@@ -473,7 +486,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   }
 
   return (
-    <div className="how-llms">
+    <div className={`how-llms${fading ? ' how-fading' : ''}`}>
       {/* Welcome Banner — only after entry screen, before journey starts */}
       {showWelcome && stage === -1 && (
         <div className="how-welcome how-fade-in">

@@ -19,6 +19,7 @@ const NODES = [
   // Foundations cluster (center)
   { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', px: 0.38, py: 0.20, desc: 'An interactive journey inside AI' },
   { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', px: 0.32, py: 0.62, desc: 'How machines learn from data' },
+  { id: 'deep-learning', label: 'Deep Learning', group: 'foundations', px: 0.35, py: 0.45, desc: 'Neural networks powering every AI breakthrough' },
   // Advanced cluster (center-right)
   { id: 'model-training', label: 'Model Training', group: 'foundations', px: 0.58, py: 0.30, desc: 'How AI models are built from scratch' },
   { id: 'rag', label: 'RAG', group: 'advanced', px: 0.62, py: 0.65, desc: 'How AI learns from YOUR documents' },
@@ -47,6 +48,9 @@ const CONNECTIONS = [
   ['fine-tuning', 'model-training'],
   ['fine-tuning', 'rag'],
   ['fine-tuning', 'machine-learning'],
+  ['deep-learning', 'machine-learning'],
+  ['deep-learning', 'model-training'],
+  ['deep-learning', 'how-llms-work'],
   ['ai-city-builder', 'how-llms-work'],
   ['ai-city-builder', 'prompt-engineering'],
   ['ai-lab-explorer', 'ai-city-builder'],
@@ -61,6 +65,7 @@ const NODE_DELAYS = {
   'generation': 400,
   'how-llms-work': 700,
   'machine-learning': 900,
+  'deep-learning': 1100,
   'model-training': 1200,
   'rag': 1400,
   'prompt-engineering': 1700,

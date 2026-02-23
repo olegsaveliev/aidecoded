@@ -99,6 +99,14 @@ const CARDS = [
     group: 'Foundations',
   },
   {
+    id: 'deep-learning',
+    title: 'Deep Learning',
+    description: 'Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT',
+    tag: 'Technical',
+    accent: '#5856D6',
+    group: 'Foundations',
+  },
+  {
     id: 'fine-tuning',
     title: 'Fine-Tuning',
     description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style',
@@ -130,7 +138,7 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play']
 
-const TOTAL_MODULES = 12 // all modules including tools and games
+const TOTAL_MODULES = 13 // all modules including tools and games
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

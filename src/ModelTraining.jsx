@@ -637,6 +637,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [fading, setFading] = useState(false)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -659,9 +660,21 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
     if (stage < 5) {
       setStage(stage + 1)
     } else {
-      setShowFinal(true)
-      setStage(6)
-      markModuleComplete('model-training')
+      setFading(true)
+      setTimeout(() => {
+        setShowFinal(true)
+        setStage(6)
+        markModuleComplete('model-training')
+        setFading(false)
+        requestAnimationFrame(() => {
+          let el = document.querySelector('.mt-root')
+          while (el) {
+            if (el.scrollTop > 0) el.scrollTop = 0
+            el = el.parentElement
+          }
+          window.scrollTo(0, 0)
+        })
+      }, 250)
     }
   }
 
@@ -740,7 +753,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
   }
 
   return (
-    <div className="how-llms mt-root">
+    <div className={`how-llms mt-root${fading ? ' how-fading' : ''}`}>
       {/* Welcome Banner — shows after entry screen, dismissable */}
       {showWelcome && (
         <div className="how-welcome how-fade-in">

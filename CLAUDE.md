@@ -25,6 +25,7 @@ Interactive React app for learning how Large Language Models work.
 | `context-engineering` | ContextEngineering.jsx | ContextEngineering.css | contextEngineeringQuiz | Practical | #34C759 |
 | `rag` | RAG.jsx | RAG.css | ragQuiz | Journey | #FF9500 |
 | `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | Technical | #5856D6 |
+| `deep-learning` | DeepLearning.jsx | DeepLearning.css | deepLearningQuiz | Technical | #5856D6 |
 | `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
 | `ai-city-builder` | AICityBuilder.jsx | AICityBuilder.css | — (game) | Game | #F59E0B |
 | `ai-lab-explorer` | AILabExplorer.jsx | AILabExplorer.css | — (game) | Game | #F59E0B |
@@ -41,7 +42,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
-| Technical | #5856D6 (indigo) | Machine Learning |
+| Technical | #5856D6 (indigo) | Machine Learning, Deep Learning, Fine-Tuning |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer |
 
 **Where tag colors are used:**
@@ -55,7 +56,7 @@ These 5 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Group | Color | Tabs |
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
-| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning |
+| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning |
 | Skills | #34C759 | Prompt Engineering, Context Engineering |
 | Advanced | #FF9500 | RAG |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer |
@@ -144,6 +145,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/quizData.js` — All quiz question banks
 - `src/Tooltip.jsx` — Info tooltip component
 - `src/FeedbackWidget.jsx` / `src/FeedbackWidget.css` — Feedback bubble + modal
+- `src/DeepLearning.jsx` / `src/DeepLearning.css` — Deep Learning tutorial (neurons, networks, backprop, CNN, transformers)
 - `src/AICityBuilder.jsx` / `src/AICityBuilder.css` — AI City Builder game (detective cases, SVG city)
 - `src/AILabExplorer.jsx` / `src/AILabExplorer.css` — AI Lab Explorer game (6-room lab, hands-on challenges)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
@@ -478,6 +480,8 @@ Implemented via `[data-theme="dark"]` attribute on `<html>`.
 - Button press: `transform: scale(0.97)` on `:active`
 - Button hover lift: `transform: translateY(-1px)`
 - Progress fill: `cubic-bezier(0.4, 0, 0.2, 1)` (Material standard)
+- Stage → final screen transition: fade out (`.how-fading`, 0.25s) → scroll to top → fade in (`.how-fade-in`)
+- Quiz → results transition: fade out (`.quiz-fading-out`, 0.3s) → scroll to top → fade in (`.quiz-fade-in`)
 
 **Easing:** `ease-out` for entrances, `ease-in` for exits, `ease` for general transitions.
 
@@ -589,3 +593,6 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Progress badges (bottom-right of cards): blue clock (in progress), green checkbox (done), yellow star (quiz)
 - Supabase client is null-safe — all calls guarded with `if (!supabase) return`
 - Started modules tracked in localStorage (keyed by user ID), completed in Supabase `progress` table
+- Stage → final screen uses fade transition: `setFading(true)` → 250ms → `setShowFinal(true)` + scroll-to-top via DOM ancestor walking
+- Quiz results use fade transition: `setTransitioning(true)` → 300ms → `setShowResult(true)` + scroll-to-top via DOM ancestor walking
+- Scroll-to-top pattern: walk up DOM from root element, reset every `scrollTop > 0`, then `window.scrollTo(0, 0)`

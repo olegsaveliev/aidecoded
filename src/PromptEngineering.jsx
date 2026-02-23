@@ -1069,6 +1069,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   const [showWelcome, setShowWelcome] = useState(true)
   const [showFinal, setShowFinal] = useState(false)
   const [showQuiz, setShowQuiz] = useState(false)
+  const [fading, setFading] = useState(false)
   const activeStepRef = useRef(null)
 
   useEffect(() => {
@@ -1091,9 +1092,21 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
     if (stage < 7) {
       setStage(stage + 1)
     } else {
-      setShowFinal(true)
-      setStage(8)
-      markModuleComplete('prompt-engineering')
+      setFading(true)
+      setTimeout(() => {
+        setShowFinal(true)
+        setStage(8)
+        markModuleComplete('prompt-engineering')
+        setFading(false)
+        requestAnimationFrame(() => {
+          let el = document.querySelector('.pe-root')
+          while (el) {
+            if (el.scrollTop > 0) el.scrollTop = 0
+            el = el.parentElement
+          }
+          window.scrollTo(0, 0)
+        })
+      }, 250)
     }
   }
 
@@ -1184,7 +1197,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   }
 
   return (
-    <div className="how-llms pe-root">
+    <div className={`how-llms pe-root${fading ? ' how-fading' : ''}`}>
       {/* Welcome Banner — shows after entry screen, dismissable */}
       {showWelcome && (
         <div className="how-welcome how-fade-in">
