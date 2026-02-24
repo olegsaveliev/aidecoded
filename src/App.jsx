@@ -555,9 +555,8 @@ function App() {
   if (showLanding) {
     return (
       <>
-        <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} onOpenAuth={() => { setAuthUnlockMessage(''); setShowAuthModal(true) }} />
+        <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} />
         <FeedbackWidget showLanding activeTab={activeTab} showHome={showHome} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
-        <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} unlockMessage={authUnlockMessage} />
       </>
     )
   }
