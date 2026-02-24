@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { NAV_GROUPS, getGroupForTab } from './NavDropdown.jsx'
 import './Breadcrumb.css'
 
-function Breadcrumb({ activeTab, showHome, homeFilter, subPage, onGoHome, onGroupClick, onTabClick }) {
+function Breadcrumb({ activeTab, showHome, homeFilter, onGoHome, onGroupClick }) {
   // Home screen with group filter applied: Home > GroupName
   if (showHome && homeFilter) {
     return (
@@ -37,30 +37,18 @@ function Breadcrumb({ activeTab, showHome, homeFilter, subPage, onGoHome, onGrou
   const group = getGroupForTab(activeTab)
   const tabItem = group?.items.find((item) => item.id === activeTab)
 
-  // Extract short label for mobile (e.g. "Stage 3: Embeddings" → "Stage 3")
-  const shortLabel = subPage ? subPage.replace(/:\s.+$/, '') : null
-  const hasShortLabel = shortLabel && shortLabel !== subPage
-
-  // Build desktop items: Home > Group > Module [> SubPage]
+  // Build desktop items: Home > Group > Module
   const items = [
     { label: 'Home', onClick: onGoHome },
     group && { label: group.label, onClick: () => onGroupClick?.(group.label) },
-    tabItem && {
-      label: tabItem.name,
-      onClick: subPage ? () => onTabClick?.(activeTab) : null,
-    },
-    subPage && { label: subPage, shortLabel: hasShortLabel ? shortLabel : null },
+    tabItem && { label: tabItem.name },
   ].filter(Boolean)
 
   // Mobile back-link: go one level up
   let mobileBackLabel
   let mobileBackAction
-  if (subPage) {
-    // Stage → Entry Screen (module name)
-    mobileBackLabel = tabItem?.name || 'Back'
-    mobileBackAction = () => onTabClick?.(activeTab)
-  } else if (group) {
-    // Entry Screen → Home filtered to group
+  if (group) {
+    // Module → Home filtered to group
     mobileBackLabel = group.label
     mobileBackAction = () => onGroupClick?.(group.label)
   } else {
@@ -79,16 +67,7 @@ function Breadcrumb({ activeTab, showHome, homeFilter, subPage, onGoHome, onGrou
             <Fragment key={i}>
               {i > 0 && <span className="breadcrumb-sep">&gt;</span>}
               {isLast ? (
-                <span className="breadcrumb-current">
-                  {item.shortLabel ? (
-                    <>
-                      <span className="breadcrumb-label-full">{item.label}</span>
-                      <span className="breadcrumb-label-short">{item.shortLabel}</span>
-                    </>
-                  ) : (
-                    item.label
-                  )}
-                </span>
+                <span className="breadcrumb-current">{item.label}</span>
               ) : (
                 item.onClick ? (
                   <button className="breadcrumb-link" onClick={item.onClick}>

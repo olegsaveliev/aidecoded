@@ -73,7 +73,7 @@ const SUGGESTIONS = [
   { text: 'Hello world', label: 'Programming classic' },
 ]
 
-function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome, onSubPageChange }) {
+function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = usePersistedState('how-llms-work', -1) // -1 = not started
   const [showEntry, setShowEntry] = useState(stage === -1)
@@ -178,26 +178,6 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     }
   }, [embedData])
 
-  // Report current sub-page to parent for breadcrumb
-  useEffect(() => {
-    if (!onSubPageChange) return
-    if (showEntry) {
-      onSubPageChange(null)
-    } else if (showQuiz) {
-      onSubPageChange('Quiz')
-    } else if (showFinal) {
-      onSubPageChange('Summary')
-    } else if (stage >= 0 && stage < STAGES.length) {
-      onSubPageChange(`Stage ${stage + 1}: ${STAGES[stage]}`)
-    } else {
-      onSubPageChange(null)
-    }
-  }, [showEntry, showQuiz, showFinal, stage, onSubPageChange])
-
-  // Clear sub-page on unmount
-  useEffect(() => {
-    return () => onSubPageChange?.(null)
-  }, [onSubPageChange])
 
   // Stage 1: Animate tokens appearing one by one (skip animation on revisit)
   useEffect(() => {
