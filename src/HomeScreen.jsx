@@ -219,11 +219,18 @@ const CARDS = [
     tag: 'Practical',
     group: 'Skills',
   },
+  {
+    id: 'precision-recall',
+    title: 'Precision & Recall',
+    description: 'Why accuracy is a lie and what to measure instead. Master TP, TN, FP, FN, precision, recall and F1 through interactive real-world scenarios.',
+    tag: 'Technical',
+    group: 'Foundations',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
 
-const TOTAL_MODULES = 23 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
+const TOTAL_MODULES = 24 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

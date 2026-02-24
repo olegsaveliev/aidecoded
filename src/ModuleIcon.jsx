@@ -119,6 +119,9 @@ const ICON_PATHS = {
   'ai-startup-simulator': (
     <path d="M12 2C8 2 4 6 4 12s4 8 8 8 8-4 8-8S16 2 12 2zM12 8v4M12 16h.01M8 12l2-4 4 1 2 3-3 2-5-2z" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'precision-recall': (
+    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

@@ -852,3 +852,66 @@ export const aiFluencyQuiz = [
     accentColor: '#34C759',
   },
 ]
+
+export const precisionRecallQuiz = [
+  {
+    question: 'A model classifies 1000 emails. 10 are spam. It labels everything as "not spam." What is its accuracy?',
+    options: ['0%', '1%', '99%', '50%'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does a True Positive mean?',
+    options: ['The model correctly predicted the negative class', 'The model incorrectly flagged a legitimate item', 'The model correctly identified a positive case', 'The model missed a positive case'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'A spam filter flags 50 emails as spam. 40 of them were actually spam. 10 were legitimate. What is its precision?',
+    options: ['40%', '80%', '50%', '20%'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'There are 50 actual spam emails. The model catches 40 of them and misses 10. What is recall?',
+    options: ['40%', '50%', '80%', '20%'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does a False Negative represent?',
+    options: ['Correctly identifying a legitimate item', 'Incorrectly flagging a legitimate item as positive', 'A positive case the model missed', 'Correctly identifying a spam email'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'You raise the detection threshold from 50% to 90%. What happens?',
+    options: ['Both precision and recall increase', 'Precision increases, recall decreases', 'Recall increases, precision decreases', 'Neither precision nor recall changes'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why does F1 use harmonic mean instead of regular average?',
+    options: ['It is easier to calculate', 'It punishes extreme imbalance between precision and recall', 'It gives more weight to precision', 'It works better on large datasets'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'A cancer screening model has precision 95% and recall 30%. What should you optimise?',
+    options: ['Precision — it is already high', 'Recall — missing cancer is catastrophic', 'F1 — balance both equally', 'Accuracy — most patients are healthy'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does FP stand for and what does it mean?',
+    options: ['Final Positive — the last positive prediction', 'False Positive — model predicted positive but it was actually negative', 'False Positive — model missed a positive case', 'Forced Positive — threshold was forced high'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'When is optimising for F1 score most appropriate?',
+    options: ['When false positives are much more costly', 'When false negatives are much more costly', 'When the dataset is perfectly balanced', 'When both precision and recall matter roughly equally'],
+    correct: 3,
+    accentColor: '#5856D6',
+  },
+]

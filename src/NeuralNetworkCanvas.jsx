@@ -37,6 +37,7 @@ const NODES = [
   { id: 'ai-safety', label: 'AI Safety', group: 'skills', desc: 'Why AI hallucinates and how to stop it' },
   { id: 'ai-fluency', label: 'AI Fluency', group: 'skills', desc: 'The habits that separate AI power users from passive ones' },
   { id: 'ai-startup-simulator', label: 'Startup Sim', group: 'play', desc: 'Build an AI startup from zero to launch' },
+  { id: 'precision-recall', label: 'Precision/Recall', group: 'foundations', desc: 'Why accuracy lies and what to measure instead' },
 ]
 
 
@@ -95,6 +96,10 @@ const CONNECTIONS = [
   ['pm-simulator', 'ai-startup-simulator'],
   ['rag', 'ai-startup-simulator'],
   ['fine-tuning', 'ai-startup-simulator'],
+  ['machine-learning', 'precision-recall'],
+  ['deep-learning', 'precision-recall'],
+  ['model-training', 'precision-recall'],
+  ['precision-recall', 'ai-safety'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -143,6 +148,7 @@ const NEURON_LAYOUT = {
   'pm-simulator':        { px: 0.82, py: 0.76 },
   'ai-native-pm':        { px: 0.92, py: 0.68 },
   'ai-startup-simulator': { px: 0.90, py: 0.84 },
+  'precision-recall':      { px: 0.22, py: 0.38 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -150,7 +156,7 @@ const NEURON_ANIM_ORDER = [
   // Dendrites
   'playground', 'how-llms-work', 'tokenizer', 'deep-learning', 'generation',
   // Soma
-  'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai',
+  'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall',
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency',
   // Terminals

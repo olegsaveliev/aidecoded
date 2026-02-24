@@ -23,6 +23,7 @@ import AINativePM from './AINativePM.jsx'
 import AISafety from './AISafety.jsx'
 import AIFluency from './AIFluency.jsx'
 import AIStartupSimulator from './AIStartupSimulator.jsx'
+import PrecisionRecall from './PrecisionRecall.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -115,7 +116,7 @@ const VALID_TABS = [
   'agentic-ai', 'ai-native-pm', 'ai-city-builder',
   'ai-lab-explorer', 'prompt-heist', 'token-budget',
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
-  'ai-startup-simulator'
+  'ai-startup-simulator', 'precision-recall'
 ]
 
 function getTabFromUrl() {
@@ -1094,6 +1095,9 @@ function App() {
         )}
         {!showHome && activeTab === 'ai-startup-simulator' && (
           <AIStartupSimulator onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'precision-recall' && (
+          <PrecisionRecall onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         </div>
         </div>
