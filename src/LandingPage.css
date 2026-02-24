@@ -268,10 +268,13 @@
 
   .landing-mobile-hero-cta {
     margin-top: 32px;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .landing-mobile-hero-cta-in {
     animation: landingFadeUp 0.5s ease-out forwards;
+    pointer-events: auto;
   }
 
   /* ── Phase 2: Module grid (below fold) ── */

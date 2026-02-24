@@ -129,11 +129,9 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
             {titleDone && TAGLINE.slice(0, taglineCharCount)}
             {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
           </p>
-          {typingDone && (
-            <button className="entry-screen-btn landing-mobile-hero-cta landing-mobile-hero-cta-in" onClick={scrollToModules}>
-              Explore Modules &rarr;
-            </button>
-          )}
+          <button className={`entry-screen-btn landing-mobile-hero-cta${typingDone ? ' landing-mobile-hero-cta-in' : ''}`} onClick={scrollToModules}>
+            Explore Modules &rarr;
+          </button>
         </div>
 
         <div className="landing-network-wrapper">
