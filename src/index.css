@@ -10,6 +10,13 @@ html {
   font-size: calc(14px + 0.2vw);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  color-scheme: light;
+  background-color: #ffffff;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  background-color: #1C1917;
 }
 
 :root {

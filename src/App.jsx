@@ -128,7 +128,12 @@ function App() {
     document.documentElement.classList.add('no-transitions')
     const theme = darkMode ? 'dark' : 'light'
     document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.style.colorScheme = theme
+    document.documentElement.style.backgroundColor = darkMode ? '#1C1917' : '#ffffff'
     localStorage.setItem('theme', theme)
+    // Update iOS Safari status bar / browser chrome color
+    const meta = document.querySelector('meta[name="theme-color"]')
+    if (meta) meta.setAttribute('content', darkMode ? '#1C1917' : '#ffffff')
     // Re-enable after paint
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
