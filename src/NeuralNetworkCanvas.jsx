@@ -35,6 +35,7 @@ const NODES = [
   { id: 'pm-simulator', label: 'PM Simulator', group: 'play', desc: 'Ship an AI feature as the PM — or watch it fail' },
   { id: 'ai-native-pm', label: 'AI-Native PM', group: 'professional', desc: 'What AI engineers actually need from PMs' },
   { id: 'ai-safety', label: 'AI Safety', group: 'skills', desc: 'Why AI hallucinates and how to stop it' },
+  { id: 'ai-fluency', label: 'AI Fluency', group: 'skills', desc: 'The habits that separate AI power users from passive ones' },
 ]
 
 
@@ -86,6 +87,10 @@ const CONNECTIONS = [
   ['context-engineering', 'ai-safety'],
   ['rag', 'ai-safety'],
   ['agentic-ai', 'ai-safety'],
+  ['prompt-engineering', 'ai-fluency'],
+  ['context-engineering', 'ai-fluency'],
+  ['ai-safety', 'ai-fluency'],
+  ['agentic-ai', 'ai-fluency'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -125,6 +130,7 @@ const NEURON_LAYOUT = {
   'prompt-engineering':  { px: 0.56, py: 0.46 },
   'context-engineering': { px: 0.64, py: 0.44 },
   'ai-safety':           { px: 0.72, py: 0.46 },
+  'ai-fluency':          { px: 0.78, py: 0.54 },
   // Terminals — branching outputs (right side)
   'ai-lab-explorer':     { px: 0.82, py: 0.18 },
   'ai-city-builder':     { px: 0.86, py: 0.34 },
@@ -141,7 +147,7 @@ const NEURON_ANIM_ORDER = [
   // Soma
   'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai',
   // Axon
-  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety',
+  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency',
   // Terminals
   'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-native-pm',
 ]

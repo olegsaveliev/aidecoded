@@ -113,6 +113,9 @@ const ICON_PATHS = {
   'ai-safety': (
     <path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7L12 2zM12 8v4M12 16h.01" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'ai-fluency': (
+    <path d="M2 20h2v-4H2v4zM6 20h2v-8H6v8zM10 20h2v-12h-2v12zM14 20h2V8h-2v12zM18 20h2V4h-2v16z" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
