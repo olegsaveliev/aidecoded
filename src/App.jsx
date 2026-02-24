@@ -131,9 +131,14 @@ function App() {
     document.documentElement.style.colorScheme = theme
     document.documentElement.style.backgroundColor = darkMode ? '#1C1917' : '#ffffff'
     localStorage.setItem('theme', theme)
-    // Update iOS Safari status bar / browser chrome color
-    const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', darkMode ? '#1C1917' : '#ffffff')
+    // Update iOS Safari / Android Chrome status bar color
+    // Must remove + recreate — some browsers ignore setAttribute on existing tag
+    const oldMeta = document.querySelector('meta[name="theme-color"]')
+    if (oldMeta) oldMeta.remove()
+    const newMeta = document.createElement('meta')
+    newMeta.name = 'theme-color'
+    newMeta.content = darkMode ? '#1C1917' : '#ffffff'
+    document.head.appendChild(newMeta)
     // Re-enable after paint
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
