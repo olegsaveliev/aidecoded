@@ -738,7 +738,7 @@ function App() {
                 {showAvatarDropdown && (
                   <div className="avatar-dropdown">
                     <div className="avatar-dropdown-info">
-                      <div className="avatar-dropdown-name">{user.user_metadata?.full_name || 'User'}</div>
+                      <div className="avatar-dropdown-name">{user.user_metadata?.display_name || user.user_metadata?.full_name || 'User'}</div>
                       <div className="avatar-dropdown-email">{user.email}</div>
                     </div>
                     <div className="avatar-dropdown-divider" />

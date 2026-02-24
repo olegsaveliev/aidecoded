@@ -140,10 +140,10 @@ export const AuthProvider = ({ children }) => {
   const updateDisplayName = async (name) => {
     if (!supabase || !user) return { error: { message: 'Not authenticated' } }
     const { error } = await supabase.auth.updateUser({
-      data: { full_name: name }
+      data: { display_name: name }
     })
     if (!error) {
-      setUser(prev => prev ? { ...prev, user_metadata: { ...prev.user_metadata, full_name: name } } : prev)
+      setUser(prev => prev ? { ...prev, user_metadata: { ...prev.user_metadata, display_name: name } } : prev)
     }
     return { error }
   }
