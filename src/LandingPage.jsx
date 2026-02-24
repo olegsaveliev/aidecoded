@@ -73,7 +73,13 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
 
   const scrollToModules = useCallback(() => {
     if (mobileGridRef.current) {
-      mobileGridRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      const container = mobileGridRef.current.closest('.landing')
+      if (container) {
+        const gridTop = mobileGridRef.current.offsetTop
+        container.scrollTo({ top: gridTop, behavior: 'smooth' })
+      } else {
+        mobileGridRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
   }, [])
 
