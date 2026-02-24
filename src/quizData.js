@@ -789,3 +789,66 @@ export const aiSafetyQuiz = [
     accentColor: '#34C759',
   },
 ]
+
+export const aiFluencyQuiz = [
+  {
+    question: 'What does research show about iterative AI conversations compared to passive ones?',
+    options: ['They take much longer to complete', 'They show more than double the fluency behaviors', 'They produce worse results on average', 'They require more technical skill'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the most important habit shift for AI fluency?',
+    options: ['Learning more prompt templates', 'Using more powerful AI models', 'Treating responses as drafts to refine', 'Typing longer prompts'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does "setting the terms" mean in AI collaboration?',
+    options: ["Agreeing to the AI provider's terms of service", 'Telling AI how you want it to work with you', 'Setting a budget for AI usage', 'Defining the output length upfront'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What happens to critical evaluation when AI produces polished-looking outputs?',
+    options: ['It increases because output quality is higher', 'It stays the same regardless of output format', 'It decreases even though it matters more', 'It becomes automatic and effortless'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the context equation in AI fluency?',
+    options: ['More tokens always means better output', 'Vague context leads to vague output', 'Context only matters for long tasks', 'Less context keeps AI more creative'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the thinking partner approach?',
+    options: ['Having two people work with AI together', 'Sharing your reasoning and thinking out loud rather than just asking questions', 'Using AI to complete tasks independently', 'Setting up a multi-agent system'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'How should trust in AI outputs be calibrated?',
+    options: ['Never trust AI for anything important', 'Always trust AI for everything', 'By the consequence of being wrong on the specific task', 'By how confident the AI sounds'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What are high-trust AI tasks?',
+    options: ['Legal and medical advice', 'Specific statistics and citations', 'Brainstorming and internal first drafts', 'Production code and published content'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'How does AI fluency compound over time?',
+    options: ['It does not \u2014 habits stay separate', 'Each fluency habit reinforces and improves the others', 'Only the most recent habit matters', 'It requires constant effort to maintain'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the recommended approach for building AI fluency quickly?',
+    options: ['Practice all five habits simultaneously', 'Take a formal AI certification course', 'Pick one habit and make it automatic before adding the next', 'Use AI for every task without exception'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+]

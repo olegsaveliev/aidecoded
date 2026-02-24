@@ -203,11 +203,18 @@ const CARDS = [
     tag: 'Practical',
     group: 'Skills',
   },
+  {
+    id: 'ai-fluency',
+    title: 'AI Fluency',
+    description: 'Most people use 20% of what AI can do. Learn the collaboration skills that separate power users from passive ones — backed by real research.',
+    tag: 'Practical',
+    group: 'Skills',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
 
-const TOTAL_MODULES = 21 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
+const TOTAL_MODULES = 22 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

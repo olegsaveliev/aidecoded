@@ -1,0 +1,1503 @@
+/* ============================
+   AI Fluency — .af- prefix
+   ============================ */
+
+/* --- Stepper accent override --- */
+.af-stepper .how-step-current .how-step-num {
+  background: #34C759;
+  color: #fff;
+}
+.af-stepper .how-step-active .how-step-num {
+  border-color: #34C759;
+  color: #34C759;
+}
+.af-stepper .how-step-completed .how-step-num {
+  background: #34C759;
+  color: #fff;
+}
+.af-stepper .how-arrow-active svg {
+  color: #34C759;
+}
+
+/* --- Shared viz container --- */
+.af-viz {
+  margin: 24px 0;
+}
+
+/* --- Fade-in animation --- */
+.af-fade-in {
+  animation: fluencyRise 0.4s ease-out;
+}
+
+@keyframes fluencyRise {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Warning box (matches ais-warning-box) --- */
+.af-warning-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+}
+[data-theme="dark"] .af-warning-box {
+  background: rgba(255, 149, 0, 0.08);
+}
+
+/* ============================
+   STAGE 1 — Passive vs Fluent
+   ============================ */
+.af-paths-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.af-path-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.af-path-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding-top: 8px;
+}
+
+.af-path-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.af-path-step-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.af-path-step-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.af-path-fluent .af-path-step-num {
+  background: #34C759;
+  color: #fff;
+}
+
+.af-path-result {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  width: fit-content;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.af-path-result-bad {
+  background: rgba(255, 59, 48, 0.08);
+  color: #FF3B30;
+}
+.af-path-result-good {
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+/* Stat card */
+.af-stat-card {
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  background: var(--bg-card);
+  padding: 16px 20px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.af-stat-card.af-path-step-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.af-stat-card strong {
+  color: var(--text-primary);
+}
+.af-stat-card p {
+  margin: 6px 0 0;
+}
+
+/* Spectrum bar */
+.af-spectrum {
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.af-spectrum.af-path-step-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.af-spectrum-bar {
+  height: 8px;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  position: relative;
+  overflow: visible;
+}
+.af-spectrum-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 30%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #FF9500, #34C759);
+  transition: width 1s ease-out;
+}
+.af-spectrum-marker {
+  position: absolute;
+  left: 30%;
+  top: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #34C759;
+  border: 2px solid var(--bg-card);
+  box-shadow: var(--shadow-sm);
+  transition: left 1s ease-out;
+}
+.af-spectrum-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 8px;
+}
+
+/* ============================
+   STAGE 2 — Iteration Builder
+   ============================ */
+.af-iteration-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.af-iteration-exchange {
+  animation: fluencyRise 0.3s ease-out;
+}
+
+.af-iteration-prompt {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  padding: 10px 16px;
+  border-radius: 10px;
+  border-left: 2px solid var(--border);
+  font-size: 14px;
+  font-style: italic;
+  width: fit-content;
+  max-width: 80%;
+}
+
+.af-iteration-action {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  margin-bottom: 4px;
+}
+
+.af-iteration-response {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 14px 18px;
+  max-width: 90%;
+}
+.af-iteration-response-text {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+.af-iteration-meta {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+}
+
+.af-iteration-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.af-iter-btn {
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: inherit;
+}
+.af-iter-btn:hover {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.04);
+}
+
+.af-quality-bar {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.af-quality-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.af-quality-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.af-quality-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF9500, #34C759);
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.af-quality-steps {
+  display: flex;
+  gap: 6px;
+}
+.af-quality-step {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.af-quality-step-active {
+  background: #34C759;
+  color: #fff;
+}
+
+.af-iteration-insight {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(52, 199, 89, 0.06);
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.af-iter-reset {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  margin-left: auto;
+}
+.af-iter-reset:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================
+   STAGE 3 — Terms Builder
+   ============================ */
+.af-terms-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.af-terms-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+}
+.af-terms-panel-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.af-terms-prompt {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.af-terms-response {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+.af-terms-verdict {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.af-terms-builder {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+}
+.af-terms-builder-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+.af-terms-category {
+  margin-bottom: 14px;
+}
+.af-terms-category-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+.af-terms-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.af-terms-option {
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: inherit;
+}
+.af-terms-option:hover {
+  border-color: #34C759;
+}
+.af-terms-option-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.af-terms-result {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border-left: 2px solid #34C759;
+}
+.af-terms-result-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+.af-terms-result-text {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+.af-terms-copy {
+  margin-top: 8px;
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+}
+.af-terms-copy:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================
+   STAGE 4 — Polished Outputs
+   ============================ */
+.af-polished-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.af-polished-tab {
+  padding: 8px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: inherit;
+}
+.af-polished-tab:hover {
+  border-color: #34C759;
+}
+.af-polished-tab-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.af-polished-scenario {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.af-polished-output {
+  background: var(--bg-secondary);
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: 'SF Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--text-primary);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0 0 12px;
+}
+.af-polished-looks {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.af-polished-examine {
+  padding: 10px 24px;
+  border: 1.5px solid #34C759;
+  border-radius: 10px;
+  background: none;
+  color: #34C759;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.af-polished-examine:hover {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+.af-polished-issue {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 18px;
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+  border-radius: 10px;
+}
+.af-polished-issue p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.af-polished-verdict {
+  font-size: 14px;
+  font-weight: 600;
+  color: #FF9500;
+}
+
+.af-polished-checklist {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+}
+.af-polished-checklist-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.af-polished-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateX(12px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+.af-polished-checklist-item-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ============================
+   STAGE 5 — Context Slider
+   ============================ */
+.af-context-task {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 12px 18px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.af-context-slider {
+  margin-bottom: 16px;
+}
+.af-context-slider-labels {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.af-context-level-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: inherit;
+}
+.af-context-level-btn:hover {
+  border-color: #34C759;
+}
+.af-context-level-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.af-context-slider-track {
+  height: 6px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.af-context-slider-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FF9500, #34C759);
+  border-radius: 3px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.af-context-quality {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+  text-align: right;
+}
+
+.af-context-added {
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+.af-context-added-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+.af-context-added-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.af-context-response {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+.af-context-response-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+.af-context-response-text {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.af-context-checklist {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+}
+.af-context-checklist-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.af-context-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-secondary);
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+.af-context-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+.af-context-checklist-checked .af-context-checkbox {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+}
+
+/* ============================
+   STAGE 6 — Reasoning
+   ============================ */
+.af-reasoning-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+.af-reasoning-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+}
+.af-reasoning-panel-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.af-reasoning-exchange {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.af-reasoning-msg {
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 90%;
+}
+.af-reasoning-user {
+  background: var(--accent);
+  color: #fff;
+  align-self: flex-end;
+}
+.af-reasoning-ai {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  align-self: flex-start;
+}
+.af-reasoning-verdict {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+.af-reasoning-verdict-good {
+  color: #34C759;
+}
+
+.af-reasoning-exercise {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+}
+.af-reasoning-exercise-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.af-reasoning-scenario {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+.af-reasoning-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.af-reasoning-option {
+  padding: 12px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+  font-family: inherit;
+}
+.af-reasoning-option:hover {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.04);
+}
+
+.af-reasoning-convo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.af-reasoning-convo-msg {
+  opacity: 0;
+  transform: translateY(10px);
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 14px;
+  margin: 0;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out, max-height 0.4s ease-out, padding 0.4s ease-out;
+}
+.af-reasoning-convo-msg.af-msg-visible {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 300px;
+  padding: 8px 14px;
+}
+.af-reasoning-convo-result {
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+.af-reasoning-convo-result.af-msg-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.af-reasoning-result-bad {
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+  color: var(--text-secondary);
+}
+.af-reasoning-result-good {
+  background: rgba(52, 199, 89, 0.06);
+  border-left: 2px solid #34C759;
+  color: var(--text-secondary);
+}
+
+/* ============================
+   STAGE 7 — Trust Calibration
+   ============================ */
+.af-trust-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+.af-trust-zones {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.af-trust-zone {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 120px;
+}
+.af-trust-zone-label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.af-trust-zone-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.af-trust-item {
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: grab;
+  transition: border-color 0.15s;
+}
+.af-trust-item:hover {
+  border-color: var(--accent);
+}
+.af-trust-item-placed {
+  cursor: default;
+}
+.af-trust-item-buttons {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+}
+.af-trust-place-btn {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: none;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  font-family: inherit;
+}
+.af-trust-place-btn:hover {
+  background: var(--bg-surface);
+}
+
+.af-trust-unplaced {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.af-trust-correct {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.06);
+}
+.af-trust-wrong {
+  border-color: #FF3B30;
+  background: rgba(255, 59, 48, 0.06);
+}
+.af-trust-hint {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #FF9500;
+}
+
+.af-trust-check {
+  padding: 10px 24px;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #34C759;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.af-trust-check:hover {
+  background: #2fb84e;
+}
+.af-trust-check:active {
+  transform: scale(0.97);
+}
+
+.af-trust-score {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.af-trust-verification {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+}
+.af-trust-verification-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.af-trust-verification-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.af-trust-verification-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.af-trust-verification-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ============================
+   STAGE 8 — Fluency Assessment
+   ============================ */
+.af-assessment-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.af-assessment-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.af-assessment-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.af-assessment-body {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 24px;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.af-assessment-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.af-assessment-slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.af-assessment-slider-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  width: 220px;
+  flex-shrink: 0;
+}
+.af-slider-input {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  outline: none;
+}
+.af-slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #34C759;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.af-slider-input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #34C759;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+.af-assessment-slider-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  width: 30px;
+  text-align: right;
+}
+
+.af-assessment-radar {
+  display: flex;
+  justify-content: center;
+}
+.af-assessment-radar svg {
+  animation: radarDraw 0.5s ease-out;
+}
+
+@keyframes radarDraw {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.af-assessment-score {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.af-assessment-score-num {
+  font-size: 36px;
+  font-weight: 700;
+  color: #34C759;
+}
+.af-assessment-score-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.af-assessment-focus {
+  padding: 16px 20px;
+  background: rgba(52, 199, 89, 0.06);
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  margin-bottom: 24px;
+}
+.af-assessment-focus-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.af-assessment-focus-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.af-assessment-examples {
+  margin-top: 16px;
+}
+.af-assessment-examples-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+.af-assessment-example {
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  background: var(--bg-card);
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+.af-assessment-example-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+.af-assessment-example-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.af-assessment-comparison-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+.af-assessment-comparison-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.af-assessment-passive {
+  opacity: 0.7;
+}
+
+/* ============================
+   Final Recap
+   ============================ */
+.af-final-recap {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.af-final-recap-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.af-final-recap-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.af-final-recap-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ============================
+   Dark Mode
+   ============================ */
+[data-theme="dark"] .af-path-col {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-stat-card {
+  background: var(--bg-secondary);
+}
+[data-theme="dark"] .af-iteration-response {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-terms-panel,
+[data-theme="dark"] .af-terms-builder {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-terms-prompt {
+  background: var(--bg-surface);
+}
+[data-theme="dark"] .af-polished-scenario {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-polished-output {
+  background: var(--bg-surface);
+}
+[data-theme="dark"] .af-polished-checklist {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-polished-issue {
+  background: rgba(255, 149, 0, 0.08);
+}
+[data-theme="dark"] .af-context-task {
+  background: var(--bg-surface);
+}
+[data-theme="dark"] .af-context-added {
+  background: var(--bg-surface);
+}
+[data-theme="dark"] .af-context-response {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-context-checklist {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-reasoning-panel,
+[data-theme="dark"] .af-reasoning-exercise {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-reasoning-ai {
+  background: var(--bg-surface);
+}
+[data-theme="dark"] .af-trust-zone {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-trust-item {
+  background: var(--bg-surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-trust-verification {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-assessment-example {
+  background: var(--bg-secondary);
+}
+[data-theme="dark"] .af-assessment-focus {
+  background: rgba(52, 199, 89, 0.08);
+}
+[data-theme="dark"] .af-iteration-insight {
+  background: rgba(52, 199, 89, 0.08);
+}
+[data-theme="dark"] .af-slider-input {
+  background: var(--border);
+}
+[data-theme="dark"] .af-slider-input::-webkit-slider-thumb {
+  border-color: var(--bg-primary);
+}
+[data-theme="dark"] .af-terms-result {
+  background: var(--bg-surface);
+}
+[data-theme="dark"] .af-final-recap {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+[data-theme="dark"] .af-path-result-bad {
+  background: rgba(255, 59, 48, 0.12);
+}
+[data-theme="dark"] .af-path-result-good {
+  background: rgba(52, 199, 89, 0.12);
+}
+[data-theme="dark"] .af-reasoning-result-bad {
+  background: rgba(255, 149, 0, 0.1);
+}
+[data-theme="dark"] .af-reasoning-result-good {
+  background: rgba(52, 199, 89, 0.1);
+}
+[data-theme="dark"] .af-trust-correct {
+  background: rgba(52, 199, 89, 0.1);
+}
+[data-theme="dark"] .af-trust-wrong {
+  background: rgba(255, 59, 48, 0.1);
+}
+[data-theme="dark"] .af-spectrum-marker {
+  border-color: var(--bg-primary);
+}
+[data-theme="dark"] .af-iteration-action {
+  background: rgba(52, 199, 89, 0.12);
+}
+[data-theme="dark"] .af-slider-input::-moz-range-thumb {
+  border-color: var(--bg-primary);
+}
+[data-theme="dark"] .af-polished-issue {
+  background: rgba(255, 149, 0, 0.1);
+}
+
+/* ============================
+   Mobile Responsive
+   ============================ */
+@media (max-width: 768px) {
+  .af-paths-grid {
+    grid-template-columns: 1fr;
+  }
+  .af-terms-comparison {
+    grid-template-columns: 1fr;
+  }
+  .af-reasoning-comparison {
+    grid-template-columns: 1fr;
+  }
+  .af-trust-zones {
+    grid-template-columns: 1fr;
+  }
+  .af-assessment-body {
+    grid-template-columns: 1fr;
+  }
+  .af-assessment-radar {
+    justify-content: center;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .af-assessment-slider-label {
+    width: 140px;
+    font-size: 12px;
+  }
+  .af-assessment-example-comparison {
+    grid-template-columns: 1fr;
+  }
+  .af-final-recap-items {
+    grid-template-columns: 1fr;
+  }
+  /* Reduced padding on cards/panels */
+  .af-path-col,
+  .af-polished-scenario,
+  .af-reasoning-panel,
+  .af-reasoning-exercise,
+  .af-terms-panel,
+  .af-terms-builder,
+  .af-polished-checklist,
+  .af-context-response,
+  .af-context-checklist,
+  .af-trust-zone,
+  .af-trust-verification,
+  .af-assessment-example {
+    padding: 12px;
+  }
+
+  .af-iteration-prompt {
+    max-width: 100%;
+  }
+
+  .af-reasoning-msg {
+    max-width: 100%;
+  }
+
+  /* Touch targets */
+  .af-polished-tab,
+  .af-iter-btn,
+  .af-terms-option,
+  .af-context-level-btn,
+  .af-reasoning-option,
+  .af-polished-examine,
+  .af-trust-check,
+  .af-iter-reset,
+  .af-terms-copy {
+    min-height: 44px;
+  }
+  .af-trust-place-btn {
+    min-width: 44px;
+    min-height: 44px;
+    font-size: 14px;
+  }
+  .af-reasoning-option {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+  .af-context-checklist-item {
+    min-height: 44px;
+  }
+
+  .af-iteration-buttons {
+    flex-direction: column;
+  }
+  .af-iter-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .af-polished-tabs {
+    flex-direction: column;
+  }
+  .af-terms-options {
+    flex-direction: column;
+  }
+  .af-iteration-prompt {
+    max-width: 100%;
+  }
+  .af-iteration-response {
+    max-width: 100%;
+  }
+
+  /* Further reduced padding */
+  .af-path-col,
+  .af-reasoning-panel,
+  .af-reasoning-exercise,
+  .af-terms-panel,
+  .af-terms-builder,
+  .af-polished-scenario,
+  .af-polished-checklist,
+  .af-trust-zone,
+  .af-trust-verification {
+    padding: 10px;
+  }
+
+  .af-assessment-slider-label {
+    width: 100px;
+    font-size: 11px;
+  }
+
+  .af-context-slider-labels {
+    flex-wrap: wrap;
+  }
+  .af-context-level-btn {
+    font-size: 12px;
+  }
+}
