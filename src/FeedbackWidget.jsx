@@ -22,7 +22,7 @@ const PLACEHOLDERS = {
   other: 'Tell us anything...',
 }
 
-function getPageContext({ showHome, showLanding, activeTab, subPage }) {
+function getPageContext({ showHome, showLanding, activeTab }) {
   if (showLanding) return 'Landing Page'
   if (showHome) return 'Home Screen'
 
@@ -31,7 +31,6 @@ function getPageContext({ showHome, showLanding, activeTab, subPage }) {
   const parts = []
   if (group) parts.push(group.label)
   if (tabItem) parts.push(tabItem.name)
-  if (subPage) parts.push(subPage)
   return parts.join(' → ') || activeTab
 }
 
@@ -50,7 +49,7 @@ function getInitialPos() {
   return { x: window.innerWidth - 90, y: window.innerHeight - 90 }
 }
 
-function FeedbackWidget({ showHome, showLanding, activeTab, subPage, minimized, onMinimize, onRestore }) {
+function FeedbackWidget({ showHome, showLanding, activeTab, minimized, onMinimize, onRestore }) {
   const [isOpen, setIsOpen] = useState(false)
   const [type, setType] = useState('bug')
   const [message, setMessage] = useState('')
@@ -69,7 +68,7 @@ function FeedbackWidget({ showHome, showLanding, activeTab, subPage, minimized, 
   const buttonRef = useRef(null)
   const tooltipRef = useRef(null)
 
-  const pageContext = getPageContext({ showHome, showLanding, activeTab, subPage })
+  const pageContext = getPageContext({ showHome, showLanding, activeTab })
 
   // --- Drag: mouse handlers ---
   const onMouseDown = (e) => {

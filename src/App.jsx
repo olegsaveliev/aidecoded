@@ -310,7 +310,7 @@ function App() {
           setShowHome(true)
           setShowBootScreen(false)
           setHomeFilter(null)
-          setSubPage(null)
+
         }
       } else if (VALID_TABS.includes(tab)) {
         if (isModuleLockedRef.current(tab)) {
@@ -322,7 +322,7 @@ function App() {
           setShowHome(false)
           setActiveTab(tab)
         }
-        setSubPage(null)
+    
       }
       scrollAllToTop()
       setTimeout(() => { skipPush.current = false }, 0)
@@ -333,7 +333,7 @@ function App() {
 
   function handleGoHome() {
     setHomeTransition(true)
-    setSubPage(null)
+
     setHomeFilter(null)
     setTimeout(() => {
       setShowHome(true)
@@ -345,7 +345,7 @@ function App() {
 
   function handleBreadcrumbGroupClick(groupLabel) {
     setHomeTransition(true)
-    setSubPage(null)
+
     setHomeFilter(groupLabel)
     setTimeout(() => {
       setShowHome(true)
@@ -363,7 +363,7 @@ function App() {
       return
     }
     setHomeTransition(true)
-    setSubPage(null)
+
     setTimeout(() => {
       setShowHome(false)
       setActiveTab(tab)
@@ -376,14 +376,9 @@ function App() {
   function handleSwitchTab(tab) {
     setShowHome(false)
     setActiveTab(tab)
-    setSubPage(null)
+
     scrollAllToTop()
     navigateTo(tab)
-  }
-
-  function handleTabReset(tabId) {
-    setSubPage(null)
-    setTabKey((k) => k + 1)
   }
 
   const [activeTab, setActiveTab] = useState(() => {
@@ -431,9 +426,7 @@ function App() {
     }
   }, [user, activeTab, showHome, showLanding, showBootScreen])
 
-  const [subPage, setSubPage] = useState(null)
   const [homeFilter, setHomeFilter] = useState(null)
-  const [tabKey, setTabKey] = useState(0)
   const [model, setModel] = useState('gpt-4o-mini')
 
   const [systemPrompt, setSystemPrompt] = useState('')
@@ -664,7 +657,7 @@ function App() {
     return (
       <>
         <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} />
-        <FeedbackWidget showLanding activeTab={activeTab} showHome={showHome} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
+        <FeedbackWidget showLanding activeTab={activeTab} showHome={showHome} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
       </>
     )
   }
@@ -876,10 +869,8 @@ function App() {
           <Breadcrumb
             activeTab={activeTab}
             showHome={false}
-            subPage={subPage}
             onGoHome={handleGoHome}
             onGroupClick={handleBreadcrumbGroupClick}
-            onTabClick={handleTabReset}
           />
         )}
 
@@ -1041,7 +1032,7 @@ function App() {
           <Generation model={model} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'how-llms-work' && (
-          <HowLLMsWork key={tabKey} model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} onSubPageChange={setSubPage} />
+          <HowLLMsWork model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'model-training' && (
           <ModelTraining onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
@@ -1094,7 +1085,7 @@ function App() {
         </div>
         </div>
       </main>
-      <FeedbackWidget showHome={showHome} activeTab={activeTab} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
+      <FeedbackWidget showHome={showHome} activeTab={activeTab} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
       <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} unlockMessage={authUnlockMessage} />
     </div>
   )

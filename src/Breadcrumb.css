@@ -57,10 +57,6 @@
   cursor: default;
 }
 
-.breadcrumb-label-short {
-  display: none;
-}
-
 /* ── Mobile back-link ── */
 
 .breadcrumb-back {
