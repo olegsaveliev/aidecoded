@@ -8,13 +8,6 @@ import './LandingPage.css'
 const TAGLINE = 'Your interactive journey into AI'
 const TAGLINE_CHAR_DELAY = 40
 
-const INTRO_LINES = [
-  'Learn how AI really works',
-  'Explore tokens, prompts & agents',
-  'Build skills with hands-on modules',
-]
-const INTRO_CHAR_DELAY = 35
-
 function useIsMobile() {
   const [mobile, setMobile] = useState(() => window.innerWidth <= 768)
   useEffect(() => {
@@ -29,10 +22,6 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
   const [titleDone, setTitleDone] = useState(false)
   const [taglineCharCount, setTaglineCharCount] = useState(0)
   const [typingDone, setTypingDone] = useState(false)
-  const [mobilePhase, setMobilePhase] = useState(1) // 1 = hero, 2 = intro lines
-  const [introLineIndex, setIntroLineIndex] = useState(0)
-  const [introCharCount, setIntroCharCount] = useState(0)
-  const [introAllDone, setIntroAllDone] = useState(false)
   const isMobile = useIsMobile()
 
   // Mark body so CSS can hide theme toggle on mobile landing only
@@ -41,7 +30,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
     return () => document.body.classList.remove('on-landing')
   }, [])
 
-  // Tagline typewriter (hero phase)
+  // Tagline typewriter
   useEffect(() => {
     if (!titleDone) return
     if (taglineCharCount >= TAGLINE.length) {
@@ -51,33 +40,6 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
     const timer = setTimeout(() => setTaglineCharCount((c) => c + 1), TAGLINE_CHAR_DELAY)
     return () => clearTimeout(timer)
   }, [titleDone, taglineCharCount])
-
-  // Intro lines typewriter (phase 2)
-  useEffect(() => {
-    if (mobilePhase !== 2 || introAllDone) return
-    const currentLine = INTRO_LINES[introLineIndex]
-    if (introCharCount >= currentLine.length) {
-      // Line done — pause, then move to next or finish
-      const timer = setTimeout(() => {
-        if (introLineIndex < INTRO_LINES.length - 1) {
-          setIntroLineIndex((i) => i + 1)
-          setIntroCharCount(0)
-        } else {
-          setIntroAllDone(true)
-        }
-      }, 400)
-      return () => clearTimeout(timer)
-    }
-    const timer = setTimeout(() => setIntroCharCount((c) => c + 1), INTRO_CHAR_DELAY)
-    return () => clearTimeout(timer)
-  }, [mobilePhase, introLineIndex, introCharCount, introAllDone])
-
-  // Auto-transition to home after intro lines finish
-  useEffect(() => {
-    if (!introAllDone) return
-    const timer = setTimeout(() => onGetStarted(), 800)
-    return () => clearTimeout(timer)
-  }, [introAllDone, onGetStarted])
 
   function handleNodeSelect(tabId) {
     if (onSelectTab) {
@@ -125,46 +87,25 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
           {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
         </p>
 
-        {/* Mobile phase 1: Hero with typewriter */}
-        {mobilePhase === 1 && (
-          <div className="landing-mobile-hero">
-            <ModuleIcon module="playground" size={48} style={{ color: 'var(--accent)' }} />
-            <TypewriterTitle
-              delay={300}
-              onComplete={() => setTitleDone(true)}
-              className="landing-mobile-hero-title"
-            />
-            <p className="landing-mobile-hero-tagline">
-              {titleDone && TAGLINE.slice(0, taglineCharCount)}
-              {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
-            </p>
-            <button
-              className={`entry-screen-btn landing-mobile-hero-cta${typingDone ? ' landing-mobile-hero-cta-in' : ''}`}
-              onClick={() => setMobilePhase(2)}
-            >
-              Explore Modules &rarr;
-            </button>
-          </div>
-        )}
-
-        {/* Mobile phase 2: Intro taglines typing out */}
-        {mobilePhase === 2 && (
-          <div className="landing-mobile-intro">
-            {INTRO_LINES.map((line, i) => (
-              <p key={i} className={`landing-mobile-intro-line${i <= introLineIndex ? ' landing-mobile-intro-line-visible' : ''}`}>
-                {i < introLineIndex
-                  ? line
-                  : i === introLineIndex
-                    ? <>
-                        {line.slice(0, introCharCount)}
-                        {introCharCount < line.length && <span className="typewriter-cursor">|</span>}
-                      </>
-                    : ''
-                }
-              </p>
-            ))}
-          </div>
-        )}
+        {/* Mobile hero — typewriter then straight to app */}
+        <div className="landing-mobile-hero">
+          <ModuleIcon module="playground" size={48} style={{ color: 'var(--accent)' }} />
+          <TypewriterTitle
+            delay={300}
+            onComplete={() => setTitleDone(true)}
+            className="landing-mobile-hero-title"
+          />
+          <p className="landing-mobile-hero-tagline">
+            {titleDone && TAGLINE.slice(0, taglineCharCount)}
+            {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
+          </p>
+          <button
+            className={`entry-screen-btn landing-mobile-hero-cta${typingDone ? ' landing-mobile-hero-cta-in' : ''}`}
+            onClick={onGetStarted}
+          >
+            Explore Modules &rarr;
+          </button>
+        </div>
 
         <div className="landing-network-wrapper">
           {typingDone && <NeuralNetworkCanvas onSelectTab={handleNodeSelect} />}
