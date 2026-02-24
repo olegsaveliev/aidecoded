@@ -5474,12 +5474,22 @@
 
   /* ── Header ── */
   .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 0 16px;
   }
 
   .header-grouped {
     height: 52px;
     padding: 0 16px;
+  }
+
+  /* 53px = 52px header-grouped height + 1px border-bottom */
+  .main {
+    overflow: visible;
+    padding-top: 53px;
   }
 
   .header-center {
@@ -5560,11 +5570,14 @@
   /* ── App layout stacks on mobile ── */
   .app {
     flex-direction: column;
+    height: auto;
+    min-height: 100vh;
   }
 
   /* ── Tab content ── */
   .tab-content-wrapper {
     padding-bottom: env(safe-area-inset-bottom, 0);
+    overflow-y: visible;
   }
 
   /* ── Chat container ── */

@@ -187,6 +187,7 @@ input[type='range'],
   html, body {
     overflow-x: hidden;
     overflow-y: auto;
+    scroll-padding-top: 53px; /* 52px header + 1px border */
   }
 
   #root {

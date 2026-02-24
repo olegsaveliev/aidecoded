@@ -770,7 +770,11 @@ padding: 12px 16px;
 ### Key Mobile Rules (768px)
 
 **Layout:**
-- `.app` → `flex-direction: column`
+- `.app` → `flex-direction: column; height: auto; min-height: 100vh` (body scroll replaces inner scroll)
+- Header → `position: fixed` (always visible at top, z-index 1000)
+- `.main-body` → `padding-top: 52px` (offsets fixed header)
+- `.tab-content-wrapper` → `overflow-y: visible` (no inner scroll container on mobile)
+- `.main` → `overflow: visible`
 - Sidebar lives inside `<main>` wrapped in `.main-body` div (below header, above content). Desktop uses `.main-body-with-sidebar` (flex row); mobile overrides to `flex-direction: column`
 - Sidebar collapses with toggle button (SVG chevron, not Unicode triangle)
 - Padding reduces: `40px → 24px`, `20px → 16px`
@@ -995,3 +999,6 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Stage → final screen uses fade transition: `setFading(true)` → 250ms → `setShowFinal(true)` + scroll-to-top via DOM ancestor walking
 - Quiz results use fade transition: `setTransitioning(true)` → 300ms → `setShowResult(true)` + scroll-to-top via DOM ancestor walking
 - Scroll-to-top pattern: walk up DOM from root element, reset every `scrollTop > 0`, then `window.scrollTo(0, 0)`
+- Stage-change scroll: every module's `useEffect([stage])` calls `window.scrollTo(0, 0)` after stepper `scrollIntoView` — ensures page starts at top on mobile (body scroll) while stepper still scrolls horizontally
+- Navigation scroll: `scrollAllToTop()` in App.jsx uses same DOM-walking pattern; called by `handleGoHome`, `handleBreadcrumbGroupClick`, `handleSelectTab`
+- HomeScreen does NOT auto-scroll to cards on group filter — mobile fixed header makes `scrollIntoView` push content behind header; navigation handlers already scroll to top

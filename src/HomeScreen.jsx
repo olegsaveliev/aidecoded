@@ -214,9 +214,6 @@ function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
     if (homeFilter && GROUP_NAMES.includes(homeFilter)) {
       setActiveGroup(homeFilter)
       setFilter('All')
-      setTimeout(() => {
-        cardsRef.current?.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
     } else {
       setActiveGroup(null)
     }

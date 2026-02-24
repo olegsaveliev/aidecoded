@@ -657,6 +657,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
     if (activeStepRef.current) {
       activeStepRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
     }
+    window.scrollTo(0, 0)
   }, [stage])
 
   function goToStage(target) {

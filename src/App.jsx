@@ -239,6 +239,16 @@ function App() {
     }, 500)
   }
 
+  function scrollAllToTop() {
+    // Reset all scroll containers (tab-content-wrapper → ancestors) then window
+    let el = document.querySelector('.tab-content-wrapper') || document.querySelector('.app')
+    while (el) {
+      if (el.scrollTop > 0) el.scrollTop = 0
+      el = el.parentElement
+    }
+    window.scrollTo(0, 0)
+  }
+
   function handleGoHome() {
     setHomeTransition(true)
     setSubPage(null)
@@ -246,6 +256,7 @@ function App() {
     setTimeout(() => {
       setShowHome(true)
       setHomeTransition(false)
+      scrollAllToTop()
     }, 200)
   }
 
@@ -256,6 +267,7 @@ function App() {
     setTimeout(() => {
       setShowHome(true)
       setHomeTransition(false)
+      scrollAllToTop()
     }, 200)
   }
 
@@ -272,6 +284,7 @@ function App() {
       setShowHome(false)
       setActiveTab(tab)
       setHomeTransition(false)
+      scrollAllToTop()
     }, 200)
   }
 

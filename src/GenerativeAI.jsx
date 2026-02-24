@@ -872,6 +872,7 @@ function GenerativeAI({ onSwitchTab, onGoHome }) {
     if (activeStepRef.current) {
       activeStepRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
     }
+    window.scrollTo(0, 0)
   }, [stage])
 
   // Clear learn tip on stage change, then set new one if applicable

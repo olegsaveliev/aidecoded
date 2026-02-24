@@ -107,6 +107,7 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
     if (activeStepRef.current) {
       activeStepRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
     }
+    window.scrollTo(0, 0)
   }, [stage])
 
   const allTokens = useMemo(() => {
