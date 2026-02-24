@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import ModuleIcon from './ModuleIcon.jsx'
 import { CrossIcon, CheckIcon, StarIcon, LockIcon } from './ContentIcons.jsx'
 import { useAuth } from './AuthContext'
+import { NAV_GROUPS } from './NavDropdown.jsx'
 import './HomeScreen.css'
 
 const FILTER_COLORS = {
@@ -238,7 +239,7 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
 
-const TOTAL_MODULES = 25 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
+const TOTAL_MODULES = NAV_GROUPS.reduce((sum, g) => sum + g.items.length, 0)
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()
