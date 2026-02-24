@@ -110,16 +110,25 @@ function App() {
   const [authUnlockMessage, setAuthUnlockMessage] = useState('')
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false)
 
-  const [darkMode, setDarkMode] = useState(() => {
-    const saved = localStorage.getItem('theme')
-    return saved === 'dark'
-  })
+  const [darkMode, setDarkMode] = useState(() =>
+    document.documentElement.getAttribute('data-theme') === 'dark'
+  )
+
+  // Suppress transitions on initial mount to prevent theme animation flash
+  useEffect(() => {
+    document.documentElement.classList.add('no-transitions')
+    const timer = setTimeout(() => {
+      document.documentElement.classList.remove('no-transitions')
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     // Disable all transitions so theme switches instantly (no partial flash)
     document.documentElement.classList.add('no-transitions')
-    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light')
-    localStorage.setItem('theme', darkMode ? 'dark' : 'light')
+    const theme = darkMode ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
     // Re-enable after paint
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
@@ -514,7 +523,7 @@ function App() {
   if (showLanding) {
     return (
       <>
-        <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} />
+        <LandingPage fadingOut={fadingOut} onGetStarted={handleGetStarted} onSelectTab={handleLandingTabSelect} darkMode={darkMode} setDarkMode={setDarkMode} onOpenAuth={() => { setAuthUnlockMessage(''); setShowAuthModal(true) }} />
         <FeedbackWidget showLanding activeTab={activeTab} showHome={showHome} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />
       </>
     )

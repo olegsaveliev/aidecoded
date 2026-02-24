@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import NeuralNetworkCanvas from './NeuralNetworkCanvas.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
-import { LockIcon } from './ContentIcons.jsx'
-import { useAuth, FREE_MODULES } from './AuthContext'
+import { useAuth } from './AuthContext'
 import './LandingPage.css'
 
 const TAGLINE = 'Your interactive journey into AI'
@@ -30,11 +29,12 @@ const MOBILE_MODULES = [
   { id: 'ai-native-pm', label: 'AI-Native PM', color: '#0EA5E9' },
 ]
 
-function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
+function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode, onOpenAuth }) {
   const { user } = useAuth()
   const [titleDone, setTitleDone] = useState(false)
   const [taglineCharCount, setTaglineCharCount] = useState(0)
   const [typingDone, setTypingDone] = useState(false)
+  const mobileGridRef = useRef(null)
 
   // Tagline typewriter
   useEffect(() => {
@@ -53,6 +53,12 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
       onSelectTab(tabId)
     }
   }
+
+  const scrollToModules = useCallback(() => {
+    if (mobileGridRef.current) {
+      mobileGridRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [])
 
   return (
     <div className={`landing ${fadingOut ? 'landing-fade-out' : ''}`}>
@@ -81,38 +87,53 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
         )}
       </button>
       <div className={`landing-content ${typingDone ? 'landing-typed' : ''}`}>
+        {/* Desktop: TypewriterTitle as before */}
         <TypewriterTitle
           delay={300}
           onComplete={() => setTitleDone(true)}
-          className="landing-title"
+          className="landing-title landing-title-desktop"
         />
-        <p className="landing-tagline">
+        <p className="landing-tagline landing-tagline-desktop">
           {titleDone && TAGLINE.slice(0, taglineCharCount)}
           {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
         </p>
+
+        {/* Mobile hero section */}
+        <div className="landing-mobile-hero">
+          <ModuleIcon module="playground" size={48} style={{ color: 'var(--accent)' }} />
+          <h1 className="landing-mobile-hero-title">AI Decoded</h1>
+          <p className="landing-mobile-hero-tagline">Learn how AI actually works</p>
+          <button className="entry-screen-btn landing-mobile-hero-cta" onClick={scrollToModules}>
+            Explore Modules &rarr;
+          </button>
+        </div>
 
         <div className="landing-network-wrapper">
           {typingDone && <NeuralNetworkCanvas onSelectTab={handleNodeSelect} />}
         </div>
 
-        {typingDone && (
-          <div className="landing-mobile-grid">
-            {MOBILE_MODULES.map((m) => {
-              const locked = !user && !FREE_MODULES.includes(m.id)
-              return (
-                <button key={m.id} className={`landing-mobile-card${locked ? ' landing-mobile-card-locked' : ''}`} onClick={() => handleNodeSelect(m.id)}>
-                  {locked && (
-                    <span className="landing-mobile-card-lock">
-                      <LockIcon size={12} color="var(--text-tertiary, #86868b)" />
-                    </span>
-                  )}
-                  <div className="landing-mobile-card-icon"><ModuleIcon module={m.id} size={28} style={{ color: m.color }} /></div>
-                  <div className="landing-mobile-card-label">{m.label}</div>
-                </button>
-              )
-            })}
+        {/* Mobile module grid (phase 2) */}
+        <div className="landing-mobile-grid" ref={mobileGridRef}>
+          <div className="landing-mobile-grid-label">What you will learn</div>
+          <div className="landing-mobile-grid-pills">
+            {MOBILE_MODULES.map((m) => (
+              <button
+                key={m.id}
+                className="landing-mobile-pill"
+                style={{ '--pill-color': m.color }}
+                onClick={() => handleNodeSelect(m.id)}
+              >
+                <span className="landing-mobile-pill-dot" style={{ background: m.color }} />
+                <span className="landing-mobile-pill-label">{m.label}</span>
+              </button>
+            ))}
           </div>
-        )}
+          {!user && (
+            <button className="landing-mobile-signin" onClick={onOpenAuth}>
+              Sign in to track your progress
+            </button>
+          )}
+        </div>
 
         <button className="landing-cta" onClick={onGetStarted}>
           Explore All Modules &rarr;

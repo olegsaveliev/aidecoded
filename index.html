@@ -8,10 +8,13 @@
     <title>AI Decoded</title>
     <script>
       (function() {
-        var theme = localStorage.getItem('theme');
-        if (theme === 'dark') {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
+        try {
+          var theme = localStorage.getItem('theme');
+          if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.style.backgroundColor = '#1C1917';
+          }
+        } catch(e) {}
       })();
     </script>
   </head>

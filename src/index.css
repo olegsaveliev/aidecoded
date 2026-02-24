@@ -138,6 +138,17 @@ body {
   transition: none !important;
 }
 
+/* Exclude elements that should never have theme transitions */
+canvas,
+svg,
+.typing-indicator span,
+.send-spinner,
+input[type='range'],
+[class*='animation'],
+[class*='animate'] {
+  transition: none !important;
+}
+
 ::selection {
   background: rgba(0, 113, 227, 0.2);
 }

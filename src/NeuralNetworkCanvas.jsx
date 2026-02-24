@@ -242,6 +242,21 @@ function NeuralNetworkCanvas({ onSelectTab }) {
     return () => observer.disconnect()
   }, [])
 
+  // Redraw key — bumped when theme changes to force canvas re-init
+  const [canvasRedrawKey, setCanvasRedrawKey] = useState(0)
+
+  // Listen for theme attribute changes and trigger canvas redraw
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setCanvasRedrawKey(k => k + 1)
+    })
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
+    return () => observer.disconnect()
+  }, [])
+
   // Background particles on canvas
   useEffect(() => {
     const canvas = canvasRef.current
@@ -263,6 +278,9 @@ function NeuralNetworkCanvas({ onSelectTab }) {
     // Scale context so all drawing uses CSS pixels
     ctx.scale(dpr, dpr)
 
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const fillColor = isDark ? 'rgba(168, 162, 158, 0.10)' : 'rgba(0, 113, 227, 0.08)'
+
     const particles = []
     for (let i = 0; i < PARTICLE_BG_COUNT; i++) {
       particles.push({
@@ -279,8 +297,6 @@ function NeuralNetworkCanvas({ onSelectTab }) {
       // Reset transform before clearing to ensure full canvas is cleared
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       ctx.clearRect(0, 0, width, height)
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
-      const fillColor = isDark ? 'rgba(168, 162, 158, 0.10)' : 'rgba(0, 113, 227, 0.08)'
 
       for (const p of particles) {
         p.x += p.vx
@@ -301,7 +317,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
 
     animId = requestAnimationFrame(loop)
     return () => cancelAnimationFrame(animId)
-  }, [dimensions])
+  }, [dimensions, canvasRedrawKey])
 
   // Enable dragging after entrance animation completes
   useEffect(() => {
