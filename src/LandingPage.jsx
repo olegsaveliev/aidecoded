@@ -30,14 +30,11 @@ const MOBILE_MODULES = [
 ]
 
 function useIsPortrait() {
-  const [portrait, setPortrait] = useState(() =>
-    window.matchMedia('(orientation: portrait)').matches
-  )
+  const [portrait, setPortrait] = useState(() => window.innerHeight > window.innerWidth)
   useEffect(() => {
-    const mq = window.matchMedia('(orientation: portrait)')
-    const handler = (e) => setPortrait(e.matches)
-    mq.addEventListener('change', handler)
-    return () => mq.removeEventListener('change', handler)
+    const handler = () => setPortrait(window.innerHeight > window.innerWidth)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
   }, [])
   return portrait
 }
