@@ -117,14 +117,23 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
           {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
         </p>
 
-        {/* Mobile hero section */}
+        {/* Mobile hero section — typewriter sequence like desktop */}
         <div className="landing-mobile-hero">
           <ModuleIcon module="playground" size={48} style={{ color: 'var(--accent)' }} />
-          <h1 className="landing-mobile-hero-title">AI Decoded</h1>
-          <p className="landing-mobile-hero-tagline">Learn how AI actually works</p>
-          <button className="entry-screen-btn landing-mobile-hero-cta" onClick={scrollToModules}>
-            Explore Modules &rarr;
-          </button>
+          <TypewriterTitle
+            delay={300}
+            onComplete={() => setTitleDone(true)}
+            className="landing-mobile-hero-title"
+          />
+          <p className="landing-mobile-hero-tagline">
+            {titleDone && TAGLINE.slice(0, taglineCharCount)}
+            {titleDone && taglineCharCount < TAGLINE.length && <span className="typewriter-cursor">|</span>}
+          </p>
+          {typingDone && (
+            <button className="entry-screen-btn landing-mobile-hero-cta landing-mobile-hero-cta-in" onClick={scrollToModules}>
+              Explore Modules &rarr;
+            </button>
+          )}
         </div>
 
         <div className="landing-network-wrapper">

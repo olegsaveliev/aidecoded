@@ -247,7 +247,6 @@
     min-height: 100dvh;
     padding: calc(24px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
     gap: 12px;
-    animation: landingFadeUp 0.5s ease-out;
   }
 
   .landing-mobile-hero-title {
@@ -256,6 +255,7 @@
     color: var(--text-primary);
     margin: 0;
     letter-spacing: -0.03em;
+    min-height: 36px;
   }
 
   .landing-mobile-hero-tagline {
@@ -263,10 +263,15 @@
     color: var(--text-secondary);
     font-weight: 400;
     margin: 0;
+    min-height: 24px;
   }
 
   .landing-mobile-hero-cta {
     margin-top: 32px;
+  }
+
+  .landing-mobile-hero-cta-in {
+    animation: landingFadeUp 0.5s ease-out forwards;
   }
 
   /* ── Phase 2: Module grid (below fold) ── */
