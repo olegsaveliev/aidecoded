@@ -47,6 +47,12 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
   const mobileGridRef = useRef(null)
   const isMobile = useIsMobile()
 
+  // Mark body so CSS can hide theme toggle on mobile landing only
+  useEffect(() => {
+    document.body.classList.add('on-landing')
+    return () => document.body.classList.remove('on-landing')
+  }, [])
+
   // Tagline typewriter
   useEffect(() => {
     if (!titleDone) return

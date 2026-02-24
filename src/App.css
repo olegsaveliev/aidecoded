@@ -5440,10 +5440,16 @@
    MOBILE RESPONSIVE — 768px
    ══════════════════════════════════ */
 
-/* Hide theme toggle on mobile landscape (short screens) */
+/* Hide theme toggle on mobile ONLY when landing page is active */
+@media (max-width: 768px) {
+  body.on-landing .header-theme-toggle,
+  body.on-landing .landing-theme-toggle {
+    display: none !important;
+  }
+}
 @media (max-height: 500px) and (orientation: landscape) {
-  .header-theme-toggle,
-  .landing-theme-toggle {
+  body.on-landing .header-theme-toggle,
+  body.on-landing .landing-theme-toggle {
     display: none !important;
   }
 }
@@ -5462,12 +5468,6 @@
 
   .header-center {
     display: none;
-  }
-
-  /* Hide dark/light toggle on all mobile screens */
-  .header-theme-toggle,
-  .landing-theme-toggle {
-    display: none !important;
   }
 
   .header-grouped h1 {
