@@ -137,6 +137,17 @@ export const AuthProvider = ({ children }) => {
     })
   }
 
+  const updateDisplayName = async (name) => {
+    if (!supabase || !user) return { error: { message: 'Not authenticated' } }
+    const { error } = await supabase.auth.updateUser({
+      data: { full_name: name }
+    })
+    if (!error) {
+      setUser(prev => prev ? { ...prev, user_metadata: { ...prev.user_metadata, full_name: name } } : prev)
+    }
+    return { error }
+  }
+
   const signOut = async () => {
     if (!supabase) return
     await supabase.auth.signOut()
@@ -146,10 +157,10 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      user, loading, progress, quizResults,
+      user, loading, progress, quizResults, startedModules,
       markModuleStarted, markModuleComplete, saveQuizResult,
       isModuleStarted, isModuleComplete, isModuleLocked, getQuizResult,
-      completedCount,
+      completedCount, updateDisplayName,
       signInWithGoogle, signInWithEmail,
       signUpWithEmail, signOut
     }}>

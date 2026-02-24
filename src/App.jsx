@@ -25,6 +25,7 @@ import AIFluency from './AIFluency.jsx'
 import AIStartupSimulator from './AIStartupSimulator.jsx'
 import PrecisionRecall from './PrecisionRecall.jsx'
 import RAGUnderTheHood from './RAGUnderTheHood.jsx'
+import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -37,6 +38,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import AuthModal from './AuthModal.jsx'
 import { useAuth, FREE_MODULES } from './AuthContext'
+import { UserIcon, SignOutIcon } from './ContentIcons.jsx'
 import logoImg from './assets/logo_dark.png'
 import './App.css'
 
@@ -117,7 +119,8 @@ const VALID_TABS = [
   'agentic-ai', 'ai-native-pm', 'ai-city-builder',
   'ai-lab-explorer', 'prompt-heist', 'token-budget',
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
-  'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood'
+  'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood',
+  'profile'
 ]
 
 function getTabFromUrl() {
@@ -739,8 +742,11 @@ function App() {
                       <div className="avatar-dropdown-email">{user.email}</div>
                     </div>
                     <div className="avatar-dropdown-divider" />
+                    <button className="avatar-dropdown-item" onClick={() => { setShowAvatarDropdown(false); handleSwitchTab('profile') }}>
+                      <UserIcon size={16} color="var(--text-secondary)" /> Profile
+                    </button>
                     <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false); setShowLanding(true); setShowHome(false); window.history.replaceState(null, '', window.location.pathname) }}>
-                      Sign Out
+                      <SignOutIcon size={16} color="#FF3B30" /> Sign Out
                     </button>
                   </div>
                 )}
@@ -1102,6 +1108,9 @@ function App() {
         )}
         {!showHome && activeTab === 'precision-recall' && (
           <PrecisionRecall onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'profile' && (
+          <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         </div>
         </div>

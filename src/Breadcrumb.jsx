@@ -37,11 +37,11 @@ function Breadcrumb({ activeTab, showHome, homeFilter, onGoHome, onGroupClick })
   const group = getGroupForTab(activeTab)
   const tabItem = group?.items.find((item) => item.id === activeTab)
 
-  // Build desktop items: Home > Group > Module
+  // Build desktop items: Home > Group > Module (or Home > Profile for standalone pages)
   const items = [
     { label: 'Home', onClick: onGoHome },
     group && { label: group.label, onClick: () => onGroupClick?.(group.label) },
-    tabItem && { label: tabItem.name },
+    tabItem ? { label: tabItem.name } : !group && activeTab === 'profile' ? { label: 'Profile' } : null,
   ].filter(Boolean)
 
   // Mobile back-link: go one level up
