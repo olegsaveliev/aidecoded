@@ -116,6 +116,9 @@ const ICON_PATHS = {
   'ai-fluency': (
     <path d="M2 20h2v-4H2v4zM6 20h2v-8H6v8zM10 20h2v-12h-2v12zM14 20h2V8h-2v12zM18 20h2V4h-2v16z" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'ai-startup-simulator': (
+    <path d="M12 2C8 2 4 6 4 12s4 8 8 8 8-4 8-8S16 2 12 2zM12 8v4M12 16h.01M8 12l2-4 4 1 2 3-3 2-5-2z" strokeLinecap="round" strokeLinejoin="round" />
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

@@ -36,6 +36,7 @@ const NODES = [
   { id: 'ai-native-pm', label: 'AI-Native PM', group: 'professional', desc: 'What AI engineers actually need from PMs' },
   { id: 'ai-safety', label: 'AI Safety', group: 'skills', desc: 'Why AI hallucinates and how to stop it' },
   { id: 'ai-fluency', label: 'AI Fluency', group: 'skills', desc: 'The habits that separate AI power users from passive ones' },
+  { id: 'ai-startup-simulator', label: 'Startup Sim', group: 'play', desc: 'Build an AI startup from zero to launch' },
 ]
 
 
@@ -91,6 +92,9 @@ const CONNECTIONS = [
   ['context-engineering', 'ai-fluency'],
   ['ai-safety', 'ai-fluency'],
   ['agentic-ai', 'ai-fluency'],
+  ['pm-simulator', 'ai-startup-simulator'],
+  ['rag', 'ai-startup-simulator'],
+  ['fine-tuning', 'ai-startup-simulator'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -138,6 +142,7 @@ const NEURON_LAYOUT = {
   'ai-ethics-tribunal':  { px: 0.86, py: 0.60 },
   'pm-simulator':        { px: 0.82, py: 0.76 },
   'ai-native-pm':        { px: 0.92, py: 0.68 },
+  'ai-startup-simulator': { px: 0.90, py: 0.84 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -149,7 +154,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-native-pm',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'ai-native-pm',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */

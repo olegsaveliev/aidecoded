@@ -39,6 +39,7 @@ Interactive React app for learning how Large Language Models work.
 | `ai-native-pm` | AINativePM.jsx | AINativePM.css | aiNativePMQuiz | Professional | #0EA5E9 |
 | `ai-safety` | AISafety.jsx | AISafety.css | aiSafetyQuiz | Practical | #34C759 |
 | `ai-fluency` | AIFluency.jsx | AIFluency.css | aiFluencyQuiz | Practical | #34C759 |
+| `ai-startup-simulator` | AIStartupSimulator.jsx | AIStartupSimulator.css | — (game) | Game | #F59E0B |
 
 ## Color System — Two Color Layers
 
@@ -53,7 +54,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning |
-| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator |
+| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
 **Where tag colors are used:**
@@ -69,7 +70,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency |
 | Advanced | #FF9500 | RAG, Agentic AI |
-| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator |
+| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator |
 | Professional | #0EA5E9 | AI-Native PM |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
@@ -201,6 +202,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/AINativePM.jsx` / `src/AINativePM.css` — AI-Native PM tutorial (8 stages: gap, deliverables, system instructions, structured logic, evals, hallucinations, drift, toolkit)
 - `src/AISafety.jsx` / `src/AISafety.css` — AI Safety & Hallucinations tutorial (8 stages: what is hallucination, five types, detection, prompt fixes, RAG & grounding, evals, safety beyond, toolkit)
 - `src/AIFluency.jsx` / `src/AIFluency.css` — AI Fluency tutorial (8 stages: why plateau, iteration, setting terms, questioning outputs, context, collaborative reasoning, trust limits, fluency system)
+- `src/AIStartupSimulator.jsx` / `src/AIStartupSimulator.css` — AI Startup Simulator game (6 months, AI architecture decisions, build vs buy, RAG vs fine-tune, scaling, reliability)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -574,6 +576,7 @@ create table quiz_results (
 | Token Budget | Game started | First level completed |
 | AI Ethics Tribunal | Game started | All 6 cases completed |
 | PM Simulator | Game started | All 5 missions completed |
+| AI Startup Simulator | Game started | All 6 decisions completed |
 | AI-Native PM | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI

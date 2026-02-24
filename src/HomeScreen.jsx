@@ -190,6 +190,15 @@ const CARDS = [
     difficulty: 'Professional',
   },
   {
+    id: 'ai-startup-simulator',
+    title: 'AI Startup Simulator',
+    description: 'You just got funded. Every decision shapes your product — build vs buy, RAG vs fine-tune, which data to collect. Make the right calls or watch your startup fail.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Strategic',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',
@@ -214,7 +223,7 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
 
-const TOTAL_MODULES = 22 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
+const TOTAL_MODULES = 23 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

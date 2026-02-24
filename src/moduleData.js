@@ -22,6 +22,7 @@ const ALL_MODULES = [
   { id: 'ai-native-pm', title: 'AI-Native PM', description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic.', tag: 'Professional', tagColor: '#0EA5E9' },
   { id: 'ai-safety', title: 'AI Safety & Hallucinations', description: 'Why AI confidently makes things up — and the practical techniques that stop it.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'ai-fluency', title: 'AI Fluency', description: 'The collaboration habits that separate AI power users from passive ones — backed by real research.', tag: 'Practical', tagColor: '#34C759' },
+  { id: 'ai-startup-simulator', title: 'AI Startup Simulator', description: 'You just got funded. Build vs buy, RAG vs fine-tune, which data to collect. Make the right calls or watch your startup fail.', tag: 'Game', tagColor: '#F59E0B' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

@@ -708,3 +708,21 @@ export function KeyIcon({ size = 16, color = '#8E8E93', className }) {
     </IconBase>
   )
 }
+
+export function DollarIcon({ size = 16, color = '#8E8E93', className }) {
+  return (
+    <IconBase size={size} color={color} className={className}>
+      <line x1="12" y1="1" x2="12" y2="23" />
+      <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+    </IconBase>
+  )
+}
+
+export function TrendingDownIcon({ size = 16, color = '#8E8E93', className }) {
+  return (
+    <IconBase size={size} color={color} className={className}>
+      <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+      <polyline points="17 18 23 18 23 12" />
+    </IconBase>
+  )
+}

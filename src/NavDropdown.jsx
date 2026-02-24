@@ -60,6 +60,7 @@ const NAV_GROUPS = [
       { id: 'token-budget', name: 'Token Budget', tag: 'Game' },
       { id: 'ai-ethics-tribunal', name: 'AI Ethics Tribunal', tag: 'Game' },
       { id: 'pm-simulator', name: 'PM Simulator', tag: 'Game' },
+      { id: 'ai-startup-simulator', name: 'AI Startup Simulator', tag: 'Game' },
     ],
   },
   {
