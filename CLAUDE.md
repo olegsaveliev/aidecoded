@@ -57,7 +57,6 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 **Where tag colors are used:**
 - HomeScreen card left borders + card icons: `FILTER_COLORS[card.tag]`
 - EntryScreen ModuleIcon: `style={{ color: '<tag-color>' }}`
-- LandingPage MOBILE_MODULES: `color: '<tag-color>'`
 - NeuralNetworkCanvas uses GROUP_COLORS (separate 4-color system for nav groups)
 
 ### Navigation Group Colors
@@ -150,7 +149,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/ModuleIcon.css` — ModuleIcon color states (default, hover, active)
 - `src/NavDropdown.jsx` — Grouped dropdown navigation component
 - `src/HomeScreen.jsx` — Module card grid with filter tags and group labels
-- `src/LandingPage.jsx` — Landing page with neural network canvas (desktop) and two-phase mobile layout (hero + pill grid)
+- `src/LandingPage.jsx` — Landing page with neural network canvas (desktop) and hero screen (mobile)
 - `src/NeuralNetworkCanvas.jsx` — Interactive node graph on landing page (force-directed layout, viewBox 960×600)
 - `src/EntryScreen.jsx` — Reusable entry/intro screen for each module
 - `src/Quiz.jsx` / `src/Quiz.css` — Reusable quiz component
@@ -632,7 +631,7 @@ Each module has a unique icon (chat bubble, bolt, CPU, etc.). Uses `stroke="curr
 // FF9500 = Journey tag color, NOT the old #ec4899 accent
 ```
 
-This applies to: EntryScreen icons, HomeScreen cards, LandingPage mobile grid, NeuralNetworkCanvas nodes.
+This applies to: EntryScreen icons, HomeScreen cards, NeuralNetworkCanvas nodes.
 
 ---
 
@@ -764,7 +763,7 @@ padding: 12px 16px;
 | `720px` | Module-specific grid collapses (CE, RAG, ML) |
 | `700px` | Section-specific (MT data sources, PE layouts) |
 | `500px` | Fine-grained (home welcome sizing) |
-| `480px` | Small phones — grids collapse to 1 column, landing mobile grid to 2 columns |
+| `480px` | Small phones — grids collapse to 1 column |
 
 ### Key Mobile Rules (768px)
 
@@ -794,13 +793,13 @@ padding: 12px 16px;
 - `.tok-suggestions` → `flex-direction: column`
 - `.tok-suggestion` → `flex: none` (prevents squish)
 
-**Landing Page Mobile (two-phase layout):**
+**Landing Page Mobile:**
 - Desktop: neural network canvas with interactive nodes (hidden at 768px)
-- Mobile (≤ 768px): two-phase scroll layout replacing the canvas
-  - **Phase 1 — Hero** (100dvh): centered ModuleIcon + "AI Decoded" title + tagline + "Explore Modules" CTA that scrolls to Phase 2
-  - **Phase 2 — Pill grid** (below fold): 2-column grid of module pills (dot + label), each pill navigates to that module
+- Mobile (≤ 768px): single hero screen replacing the canvas
+  - **Hero** (full viewport): centered ModuleIcon + typewriter "AI Decoded" title + tagline + "Explore Modules" CTA
+  - CTA button calls `onGetStarted` → transitions to BootScreen (terminal-style typing) → home screen
   - Desktop elements hidden on mobile: `.landing-title-desktop`, `.landing-tagline-desktop`, `.landing-network-wrapper`, `.landing-cta`, `.landing-hint`
-  - Mobile elements hidden on desktop: `.landing-mobile-hero`, `.landing-mobile-grid`
+  - Mobile hero hidden on desktop: `.landing-mobile-hero`
 - **Theme toggle on mobile landing**: hidden via `body.on-landing` CSS class (added/removed on LandingPage mount/unmount). Users can only change theme inside the app, not on the landing page on mobile. Desktop landing keeps the toggle visible.
 - NeuralNetworkCanvas watches `data-theme` changes via MutationObserver for canvas redraws
 
@@ -928,26 +927,25 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 4. Update `src/NavDropdown.jsx`: add item to the appropriate NAV_GROUPS entry
 5. Update `src/App.jsx`: import component, add render condition (pass `onSwitchTab={setActiveTab}`)
 6. Update `src/HomeScreen.jsx`: add card to CARDS array — set `tag` field and use `FILTER_COLORS[tag]` for icon color
-7. Update `src/LandingPage.jsx`: add to MOBILE_MODULES with tag color
-8. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color and approximate `px`/`py` (force layout auto-resolves overlaps)
-9. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
-10. Add module to `src/moduleData.js` ALL_MODULES array
-11. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`
-12. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
-13. All content icons inside colored containers must match the container's border/accent color
-14. Use `border: 1.5px solid transparent` on all filled buttons
-15. Final screen: exactly 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
-16. Quiz: pass `onStartOver`, `onSwitchTab`, `currentModuleId` props
-17. Add `useAuth` import and destructure `markModuleStarted`, `markModuleComplete`
-18. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
-19. Call `markModuleComplete('<module-id>')` when module is completed (final screen or first meaningful action)
-20. Update `TOTAL_MODULES` in `HomeScreen.jsx` if adding a completable module
-21. Use `usePersistedState('<module-id>', -1)` for stage state (or `usePersistedState('<module-id>-entry', true)` for entry-based); init `showWelcome` from stage: `useState(stage === -1)`; init `showFinal` from stage: `useState(stage >= STAGES.length)` — prevents blank screen on page refresh
-22. Add welcome banner with `<ol className="module-welcome-steps">` (shared CSS class for all modules)
-23. Add progressive learn tips: `learnTip`/`dismissedTips`/`fadeTimerRef` state, `dismissLearnTip` function, milestone-based useEffect
-24. Add `handleStartOver` function that resets stage, tips, welcome, and all module state
-25. Add mobile touch targets (min-height: 44px) for module-specific buttons at 768px breakpoint
-26. Update this file
+7. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color and approximate `px`/`py` (force layout auto-resolves overlaps)
+8. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
+9. Add module to `src/moduleData.js` ALL_MODULES array
+10. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`
+11. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
+12. All content icons inside colored containers must match the container's border/accent color
+13. Use `border: 1.5px solid transparent` on all filled buttons
+14. Final screen: exactly 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
+15. Quiz: pass `onStartOver`, `onSwitchTab`, `currentModuleId` props
+16. Add `useAuth` import and destructure `markModuleStarted`, `markModuleComplete`
+17. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
+18. Call `markModuleComplete('<module-id>')` when module is completed (final screen or first meaningful action)
+19. Update `TOTAL_MODULES` in `HomeScreen.jsx` if adding a completable module
+20. Use `usePersistedState('<module-id>', -1)` for stage state (or `usePersistedState('<module-id>-entry', true)` for entry-based); init `showWelcome` from stage: `useState(stage === -1)`; init `showFinal` from stage: `useState(stage >= STAGES.length)` — prevents blank screen on page refresh
+21. Add welcome banner with `<ol className="module-welcome-steps">` (shared CSS class for all modules)
+22. Add progressive learn tips: `learnTip`/`dismissedTips`/`fadeTimerRef` state, `dismissLearnTip` function, milestone-based useEffect
+23. Add `handleStartOver` function that resets stage, tips, welcome, and all module state
+24. Add mobile touch targets (min-height: 44px) for module-specific buttons at 768px breakpoint
+25. Update this file
 
 ## Conventions
 
@@ -978,7 +976,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Every module must call `markModuleStarted` on entry screen dismiss and `markModuleComplete` on completion
 - Auth header button (sign-in icon / avatar) is always last in header-right, after dark mode toggle (`.header-theme-toggle`)
 - Dark mode toggle hidden on mobile landing page via `body.on-landing` class — users change theme only inside the app
-- Landing page mobile uses two-phase layout: hero (100dvh) + pill grid below fold; desktop uses neural network canvas
+- Landing page mobile: single hero screen with typewriter + CTA → boot screen → home; desktop uses neural network canvas
 - OAuth redirect preserves current tab via sessionStorage `auth_return_tab`; `activeTab` initializes to pending tab to prevent flash
 - Sign-out redirects to landing page and resets all module stages to defaults
 - Progress badges (bottom-right of cards): blue clock (in progress), green checkbox (done), yellow star (quiz)
