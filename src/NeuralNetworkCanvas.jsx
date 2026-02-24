@@ -39,6 +39,7 @@ const NODES = [
   { id: 'ai-startup-simulator', label: 'Startup Sim', group: 'play', desc: 'Build an AI startup from zero to launch' },
   { id: 'precision-recall', label: 'Precision/Recall', group: 'foundations', desc: 'Why accuracy lies and what to measure instead' },
   { id: 'rag-under-the-hood', label: 'Why RAG Fails', group: 'advanced', desc: 'Fix every layer of your RAG pipeline' },
+  { id: 'ai-in-production', label: 'AI in Prod', group: 'advanced', desc: 'Monitor quality, latency, cost and drift in production AI' },
 ]
 
 
@@ -105,6 +106,10 @@ const CONNECTIONS = [
   ['agentic-ai', 'rag-under-the-hood'],
   ['context-engineering', 'rag-under-the-hood'],
   ['fine-tuning', 'rag-under-the-hood'],
+  ['rag-under-the-hood', 'ai-in-production'],
+  ['agentic-ai', 'ai-in-production'],
+  ['ai-safety', 'ai-in-production'],
+  ['precision-recall', 'ai-in-production'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -155,6 +160,7 @@ const NEURON_LAYOUT = {
   'ai-startup-simulator': { px: 0.90, py: 0.84 },
   'precision-recall':      { px: 0.22, py: 0.38 },
   'rag-under-the-hood':    { px: 0.75, py: 0.33 },
+  'ai-in-production':      { px: 0.85, py: 0.46 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -162,7 +168,7 @@ const NEURON_ANIM_ORDER = [
   // Dendrites
   'playground', 'how-llms-work', 'tokenizer', 'deep-learning', 'generation',
   // Soma
-  'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood',
+  'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency',
   // Terminals
