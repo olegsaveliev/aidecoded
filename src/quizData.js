@@ -726,3 +726,66 @@ export const aiNativePMQuiz = [
     accentColor: '#0EA5E9',
   },
 ]
+
+export const aiSafetyQuiz = [
+  {
+    question: 'Why do language models hallucinate?',
+    options: ['They have bugs in their code', 'They predict likely tokens rather than retrieving verified facts', 'They run out of memory', 'Their training data is always wrong'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What makes a hallucination especially dangerous?',
+    options: ['When it happens frequently', 'When the model expresses uncertainty', 'When it is stated with high confidence', 'When it involves technical topics'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is sycophancy in AI systems?',
+    options: ['The model talking about itself too much', 'Agreeing with false premises to please users', 'Repeating the same answer multiple times', 'Refusing to answer difficult questions'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does RAG stand for?',
+    options: ['Rapid Answer Generation', 'Retrieval Augmented Generation', 'Robust AI Grounding', 'Random Answer Guidance'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'How does grounding reduce hallucinations?',
+    options: ['It makes the model slower and more careful', 'It gives the model facts to answer from rather than relying on memory', 'It prevents the model from generating text', 'It checks answers against the internet'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is a prompt injection attack?',
+    options: ['Adding too many instructions to a prompt', 'Malicious instructions that hijack AI behavior', 'A technique to improve prompt quality', 'Injecting code into AI responses'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the purpose of grounding evals?',
+    options: ['Test if the AI is fast enough', 'Check if AI stays within provided context rather than inventing answers', 'Verify the AI uses correct grammar', 'Measure response length'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is overreliance in AI safety?',
+    options: ['Using AI too frequently', 'Trusting AI output without critical evaluation for consequential decisions', 'Relying on one AI provider only', 'Using AI for tasks it was not designed for'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'When should you run hallucination evals?',
+    options: ['Only when launching a new product', 'Once a year during annual reviews', 'Regularly and after any model or prompt changes', 'Only when users report problems'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the single best habit for protecting against hallucinations?',
+    options: ['Always use the newest AI model', 'Never use AI for important tasks', 'Independently verify AI output for anything consequential', 'Ask the AI to check its own work'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+]

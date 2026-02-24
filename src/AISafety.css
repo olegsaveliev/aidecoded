@@ -1,0 +1,1274 @@
+/* ========================================
+   AI Safety & Hallucinations Module
+   Prefix: .ais-
+   ======================================== */
+
+/* Stepper accent color override */
+.ais-stepper .how-step-current .how-step-num {
+  background: #34C759;
+  border-color: #34C759;
+}
+.ais-stepper .how-step-active .how-step-num {
+  border-color: #34C759;
+  color: #34C759;
+}
+.ais-stepper .how-step-completed .how-step-num {
+  background: #34C759;
+  border-color: #34C759;
+  color: #fff;
+}
+.ais-stepper .how-arrow-active {
+  color: #34C759;
+}
+
+/* Shared viz container */
+.ais-viz {
+  margin-top: 20px;
+}
+
+.ais-demo-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ========================================
+   STAGE 1 — Prediction Demo
+   ======================================== */
+.ais-prediction-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.ais-pred-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.ais-pred-panel.ais-pred-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ais-pred-prompt {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-family: monospace;
+  background: var(--bg-card);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+}
+
+.ais-pred-tokens {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ais-pred-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.ais-pred-row.ais-pred-selected {
+  background: rgba(52, 199, 89, 0.08);
+}
+
+.ais-pred-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 70px;
+}
+
+.ais-pred-bar-bg {
+  flex: 1;
+  height: 8px;
+  background: var(--bg-surface);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ais-pred-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease-out;
+}
+
+.ais-pred-pct {
+  font-size: 12px;
+  color: var(--text-secondary);
+  min-width: 40px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.ais-pred-verdict {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.ais-verdict-safe {
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+}
+
+.ais-verdict-danger {
+  color: #FF9500;
+  background: rgba(255, 149, 0, 0.08);
+}
+
+/* ========================================
+   STAGE 2 — Hallucination Types
+   ======================================== */
+.ais-type-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ais-type-card {
+  border-left: 2px solid var(--reveal-color, #34C759);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  padding: 14px 16px;
+  transition: border-color 0.3s ease;
+}
+
+.ais-type-card.ais-type-revealed {
+  animation: riskReveal 0.3s ease-out;
+}
+
+.ais-type-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ais-type-icon {
+  display: flex;
+  align-items: center;
+}
+
+.ais-type-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.ais-severity-pill {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ais-type-body {
+  margin-top: 10px;
+}
+
+.ais-type-what {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+}
+
+.ais-type-example {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.ais-example-user {
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.ais-example-ai {
+  color: var(--text-secondary);
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ais-type-why {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Summary table */
+.ais-summary-table {
+  margin-top: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.ais-summary-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.ais-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.7fr 0.8fr 1fr;
+  gap: 6px 12px;
+}
+
+.ais-summary-header {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.ais-summary-cell {
+  font-size: 13px;
+  color: var(--text-primary);
+  padding: 4px 0;
+}
+
+.ais-summary-type {
+  font-weight: 600;
+}
+
+/* ========================================
+   STAGE 3 — Detection Game
+   ======================================== */
+.ais-detection-game {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.ais-detection-round {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.ais-detection-response {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.ais-detection-response-text {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+.ais-detection-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ais-detection-reveal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.ais-detection-suspicious {
+  font-size: 14px;
+  color: #FF3B30;
+  margin-bottom: 8px;
+}
+
+.ais-detection-explanation {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.ais-detection-results {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.ais-detection-score {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.ais-redflags {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.ais-redflags-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.ais-redflag-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 4px 0;
+}
+
+/* ========================================
+   STAGE 4 — Prompt Techniques
+   ======================================== */
+.ais-technique-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ais-technique-card {
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  padding: 14px 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.ais-technique-card.ais-technique-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ais-technique-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.ais-technique-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ais-technique-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ais-technique-before,
+.ais-technique-after {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.ais-technique-before {
+  border-top: 2px solid #FF9500;
+}
+
+.ais-technique-after {
+  border-top: 2px solid #34C759;
+}
+
+.ais-technique-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.ais-technique-before .ais-technique-tag {
+  color: #FF9500;
+}
+
+.ais-technique-after .ais-technique-tag {
+  color: #34C759;
+}
+
+.ais-technique-prompt {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.ais-technique-result {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: rgba(234, 179, 8, 0.06);
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.ais-technique-summary {
+  margin-top: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+
+/* ========================================
+   STAGE 5 — RAG & Grounding
+   ======================================== */
+.ais-rag-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ais-rag-panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.ais-rag-panel.ais-rag-active {
+  opacity: 1;
+}
+
+.ais-rag-panel-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+}
+
+.ais-rag-bad {
+  border-top: 2px solid #FF3B30;
+  color: #FF3B30;
+}
+
+.ais-rag-good {
+  border-top: 2px solid #34C759;
+  color: #34C759;
+}
+
+.ais-rag-pipeline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.ais-rag-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  width: 100%;
+  text-align: center;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.ais-rag-step.ais-rag-step-lit {
+  background: rgba(52, 199, 89, 0.06);
+  border-color: #34C759;
+  color: var(--text-primary);
+}
+
+.ais-rag-panel:first-child .ais-rag-step.ais-rag-step-lit {
+  background: rgba(255, 59, 48, 0.06);
+  border-color: #FF3B30;
+}
+
+.ais-rag-arrow {
+  font-size: 14px;
+  color: var(--text-tertiary);
+  line-height: 1;
+}
+
+.ais-rag-verdict {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* RAG toggle example */
+.ais-rag-example {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.ais-rag-example-q {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.ais-rag-toggle {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.ais-rag-toggle-btn {
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.ais-rag-toggle-btn.ais-rag-toggle-active {
+  background: #34C759;
+  border-color: #34C759;
+  color: #fff;
+}
+
+.ais-rag-example-response {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.ais-rag-resp-bad,
+.ais-rag-resp-good {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.ais-rag-resp-note {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* ========================================
+   STAGE 6 — Evals
+   ======================================== */
+.ais-eval-cases {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ais-eval-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.ais-eval-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.ais-eval-type {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ais-eval-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ais-eval-pass {
+  background: rgba(52, 199, 89, 0.12);
+  color: #34C759;
+}
+
+.ais-eval-fail {
+  background: rgba(255, 59, 48, 0.12);
+  color: #FF3B30;
+}
+
+.ais-eval-row {
+  display: flex;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.ais-eval-label {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 65px;
+}
+
+.ais-eval-value {
+  flex: 1;
+}
+
+.ais-eval-result {
+  margin-top: 8px;
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.ais-eval-result-pass {
+  background: rgba(52, 199, 89, 0.06);
+  color: var(--text-primary);
+  border-left: 2px solid #34C759;
+}
+
+.ais-eval-result-fail {
+  background: rgba(255, 59, 48, 0.06);
+  color: var(--text-primary);
+  border-left: 2px solid #FF3B30;
+}
+
+.ais-eval-summary {
+  margin-top: 16px;
+  text-align: center;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+}
+
+.ais-eval-summary-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ais-eval-fail-note {
+  color: #FF3B30;
+}
+
+/* ========================================
+   STAGE 7 — Safety Beyond
+   ======================================== */
+.ais-safety-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ais-safety-card {
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  padding: 14px 16px;
+  opacity: 0;
+  transform: translateX(-12px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.ais-safety-card.ais-safety-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.ais-safety-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ais-safety-card-icon {
+  display: flex;
+  align-items: center;
+}
+
+.ais-safety-card-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ais-safety-card-what {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.ais-safety-card-detail {
+  font-size: 12px;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ais-safety-conclusion {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 14px 16px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border: 1px solid var(--border-light);
+  line-height: 1.5;
+}
+
+/* ========================================
+   STAGE 8 — Toolkit / Checklist
+   ======================================== */
+.ais-progress-bar-wrap {
+  height: 6px;
+  background: var(--bg-surface);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.ais-progress-bar {
+  height: 100%;
+  background: #34C759;
+  border-radius: 3px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ais-progress-label {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  text-align: right;
+  margin-bottom: 16px;
+}
+
+.ais-checklist-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.ais-checklist-col {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid var(--col-color);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.ais-checklist-col-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.ais-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.ais-checklist-item input[type="checkbox"] {
+  margin-top: 2px;
+  accent-color: #34C759;
+}
+
+.ais-checked {
+  text-decoration: line-through;
+  color: var(--text-tertiary);
+}
+
+.ais-checklist-complete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #34C759;
+  padding: 14px;
+  background: rgba(52, 199, 89, 0.06);
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.ais-reference-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.ais-reference-card {
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  padding: 14px 16px;
+}
+
+.ais-reference-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.ais-reference-card-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ========================================
+   Warning box (orange)
+   ======================================== */
+.ais-warning-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+}
+
+/* ========================================
+   Final screen recap
+   ======================================== */
+.ais-final-recap {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.ais-final-recap-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.ais-final-recap-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ais-final-recap-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+@keyframes riskReveal {
+  0% { opacity: 0; transform: translateX(-12px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+
+/* ========================================
+   Dark mode
+   ======================================== */
+[data-theme="dark"] .ais-pred-panel {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-pred-prompt {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-pred-row.ais-pred-selected {
+  background: rgba(52, 199, 89, 0.12);
+}
+
+[data-theme="dark"] .ais-verdict-safe {
+  background: rgba(52, 199, 89, 0.12);
+}
+
+[data-theme="dark"] .ais-verdict-danger {
+  background: rgba(255, 149, 0, 0.12);
+}
+
+[data-theme="dark"] .ais-type-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .ais-type-example {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-summary-table {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-summary-header {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-detection-game {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-detection-response {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-detection-reveal {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-detection-suspicious {
+  color: #ff453a;
+}
+
+[data-theme="dark"] .ais-detection-results {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-redflags {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-technique-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .ais-technique-before,
+[data-theme="dark"] .ais-technique-after {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-technique-result {
+  background: rgba(234, 179, 8, 0.08);
+}
+
+[data-theme="dark"] .ais-technique-summary {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-rag-panel {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-rag-step {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-rag-step.ais-rag-step-lit {
+  background: rgba(52, 199, 89, 0.1);
+}
+
+[data-theme="dark"] .ais-rag-panel:first-child .ais-rag-step.ais-rag-step-lit {
+  background: rgba(255, 59, 48, 0.1);
+}
+
+[data-theme="dark"] .ais-rag-example {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-rag-example-response {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-rag-toggle-btn {
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .ais-rag-toggle-btn.ais-rag-toggle-active {
+  background: #34C759;
+  border-color: #34C759;
+  color: #fff;
+}
+
+[data-theme="dark"] .ais-eval-card {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-eval-pass {
+  background: rgba(52, 199, 89, 0.15);
+}
+
+[data-theme="dark"] .ais-eval-fail {
+  background: rgba(255, 59, 48, 0.15);
+  color: #ff453a;
+}
+
+[data-theme="dark"] .ais-eval-result-pass {
+  background: rgba(52, 199, 89, 0.1);
+}
+
+[data-theme="dark"] .ais-eval-result-fail {
+  background: rgba(255, 59, 48, 0.1);
+}
+
+[data-theme="dark"] .ais-eval-summary {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-eval-fail-note {
+  color: #ff453a;
+}
+
+[data-theme="dark"] .ais-safety-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .ais-safety-conclusion {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-checklist-col {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .ais-checklist-complete {
+  background: rgba(52, 199, 89, 0.08);
+}
+
+[data-theme="dark"] .ais-reference-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .ais-warning-box {
+  background: rgba(255, 149, 0, 0.08);
+}
+
+[data-theme="dark"] .ais-final-recap {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+/* ========================================
+   Mobile Responsive — 768px
+   ======================================== */
+@media (max-width: 768px) {
+  /* Grid collapses */
+  .ais-prediction-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .ais-technique-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ais-rag-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .ais-safety-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ais-checklist-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ais-reference-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ais-final-recap-items {
+    grid-template-columns: 1fr;
+  }
+
+  /* Summary table: collapse to 2 columns, hide frequency + danger */
+  .ais-summary-grid {
+    grid-template-columns: 1fr 0.7fr;
+  }
+
+  .ais-summary-header:nth-child(3),
+  .ais-summary-header:nth-child(4),
+  .ais-summary-cell:nth-child(4n+3),
+  .ais-summary-cell:nth-child(4n) {
+    display: none;
+  }
+
+  /* Reduced padding */
+  .ais-pred-panel,
+  .ais-type-card,
+  .ais-safety-card,
+  .ais-technique-card,
+  .ais-reference-card,
+  .ais-eval-card,
+  .ais-checklist-col {
+    padding: 12px;
+  }
+
+  .ais-detection-game {
+    padding: 12px;
+  }
+
+  .ais-rag-panel {
+    padding: 12px;
+  }
+
+  .ais-rag-example {
+    padding: 12px;
+  }
+
+  /* Touch targets — 44px minimum */
+  .ais-rag-toggle-btn {
+    min-height: 44px;
+    flex: 1;
+  }
+
+  .ais-viz .pe-replay-btn {
+    min-height: 44px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .ais-detection-actions {
+    flex-direction: column;
+  }
+
+  .ais-detection-actions .pe-replay-btn {
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .ais-checklist-item {
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+/* ========================================
+   Mobile Responsive — 480px (small phones)
+   ======================================== */
+@media (max-width: 480px) {
+  .ais-pred-panel {
+    padding: 10px;
+  }
+
+  .ais-type-card,
+  .ais-safety-card,
+  .ais-reference-card {
+    padding: 10px;
+  }
+
+  .ais-pred-label {
+    min-width: 55px;
+    font-size: 12px;
+  }
+
+  .ais-pred-pct {
+    min-width: 32px;
+    font-size: 11px;
+  }
+
+  .ais-summary-table {
+    padding: 10px;
+  }
+}

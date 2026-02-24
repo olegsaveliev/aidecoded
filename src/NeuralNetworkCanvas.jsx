@@ -38,6 +38,7 @@ const NODES = [
   { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', group: 'play', px: 0.28, py: 0.88, desc: 'Navigate ethical dilemmas in AI systems' },
   { id: 'pm-simulator', label: 'PM Simulator', group: 'play', px: 0.15, py: 0.82, desc: 'Ship an AI feature as the PM — or watch it fail' },
   { id: 'ai-native-pm', label: 'AI-Native PM', group: 'professional', px: 0.20, py: 0.65, desc: 'What AI engineers actually need from PMs' },
+  { id: 'ai-safety', label: 'AI Safety', group: 'skills', px: 0.50, py: 0.38, desc: 'Why AI hallucinates and how to stop it' },
 ]
 
 const CONNECTIONS = [
@@ -84,6 +85,10 @@ const CONNECTIONS = [
   ['context-engineering', 'ai-native-pm'],
   ['agentic-ai', 'ai-native-pm'],
   ['fine-tuning', 'ai-native-pm'],
+  ['prompt-engineering', 'ai-safety'],
+  ['context-engineering', 'ai-safety'],
+  ['rag', 'ai-safety'],
+  ['agentic-ai', 'ai-safety'],
 ]
 
 /* ── Animation timing (ms) ── */

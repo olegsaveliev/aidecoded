@@ -36,6 +36,7 @@ const NAV_GROUPS = [
     items: [
       { id: 'prompt-engineering', name: 'Prompt Engineering', tag: 'Practical' },
       { id: 'context-engineering', name: 'Context Engineering', tag: 'Practical' },
+      { id: 'ai-safety', name: 'AI Safety', tag: 'Practical' },
     ],
   },
   {

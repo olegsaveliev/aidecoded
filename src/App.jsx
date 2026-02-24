@@ -20,6 +20,7 @@ import TokenBudget from './TokenBudget.jsx'
 import AIEthicsTribunal from './AIEthicsTribunal.jsx'
 import PMSimulator from './PMSimulator.jsx'
 import AINativePM from './AINativePM.jsx'
+import AISafety from './AISafety.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -111,7 +112,7 @@ const VALID_TABS = [
   'context-engineering', 'rag', 'generative-ai',
   'agentic-ai', 'ai-native-pm', 'ai-city-builder',
   'ai-lab-explorer', 'prompt-heist', 'token-budget',
-  'ai-ethics-tribunal', 'pm-simulator'
+  'ai-ethics-tribunal', 'pm-simulator', 'ai-safety'
 ]
 
 function getTabFromUrl() {
@@ -1081,6 +1082,9 @@ function App() {
         )}
         {!showHome && activeTab === 'ai-native-pm' && (
           <AINativePM onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'ai-safety' && (
+          <AISafety onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         </div>
         </div>

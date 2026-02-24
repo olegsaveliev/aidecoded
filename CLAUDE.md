@@ -37,6 +37,7 @@ Interactive React app for learning how Large Language Models work.
 | `ai-ethics-tribunal` | AIEthicsTribunal.jsx | AIEthicsTribunal.css | — (game) | Game | #F59E0B |
 | `pm-simulator` | PMSimulator.jsx | PMSimulator.css | — (game) | Game | #F59E0B |
 | `ai-native-pm` | AINativePM.jsx | AINativePM.css | aiNativePMQuiz | Professional | #0EA5E9 |
+| `ai-safety` | AISafety.jsx | AISafety.css | aiSafetyQuiz | Practical | #34C759 |
 
 ## Color System — Two Color Layers
 
@@ -49,7 +50,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
-| Practical | #34C759 (green) | Prompt Engineering, Context Engineering |
+| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
@@ -65,7 +66,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Deep Learning, Fine-Tuning, Generative AI |
-| Skills | #34C759 | Prompt Engineering, Context Engineering |
+| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations |
 | Advanced | #FF9500 | RAG, Agentic AI |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator |
 | Professional | #0EA5E9 | AI-Native PM |
@@ -197,6 +198,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/AIEthicsTribunal.jsx` / `src/AIEthicsTribunal.css` — AI Ethics Tribunal game (6 cases, AI ethics dilemmas)
 - `src/PMSimulator.jsx` / `src/PMSimulator.css` — PM Simulator game (5 missions, ship an AI feature as PM)
 - `src/AINativePM.jsx` / `src/AINativePM.css` — AI-Native PM tutorial (8 stages: gap, deliverables, system instructions, structured logic, evals, hallucinations, drift, toolkit)
+- `src/AISafety.jsx` / `src/AISafety.css` — AI Safety & Hallucinations tutorial (8 stages: what is hallucination, five types, detection, prompt fixes, RAG & grounding, evals, safety beyond, toolkit)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users

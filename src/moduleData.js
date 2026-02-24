@@ -20,6 +20,7 @@ const ALL_MODULES = [
   { id: 'ai-ethics-tribunal', title: 'AI Ethics Tribunal', description: 'Preside over real-world AI dilemmas. Weigh the arguments. Deliver your verdict. No easy answers.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'pm-simulator', title: 'PM Simulator', description: 'You are the PM. Write system instructions, design evals, fix hallucinations. Ship the AI feature — or watch it fail.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'ai-native-pm', title: 'AI-Native PM', description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic.', tag: 'Professional', tagColor: '#0EA5E9' },
+  { id: 'ai-safety', title: 'AI Safety & Hallucinations', description: 'Why AI confidently makes things up — and the practical techniques that stop it.', tag: 'Practical', tagColor: '#34C759' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {
