@@ -29,14 +29,14 @@ const MOBILE_MODULES = [
   { id: 'ai-native-pm', label: 'AI-Native PM', color: '#0EA5E9' },
 ]
 
-function useIsPortrait() {
-  const [portrait, setPortrait] = useState(() => window.innerHeight > window.innerWidth)
+function useIsMobile() {
+  const [mobile, setMobile] = useState(() => window.innerWidth <= 768)
   useEffect(() => {
-    const handler = () => setPortrait(window.innerHeight > window.innerWidth)
+    const handler = () => setMobile(window.innerWidth <= 768)
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
   }, [])
-  return portrait
+  return mobile
 }
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode, onOpenAuth }) {
@@ -45,7 +45,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
   const [taglineCharCount, setTaglineCharCount] = useState(0)
   const [typingDone, setTypingDone] = useState(false)
   const mobileGridRef = useRef(null)
-  const isPortrait = useIsPortrait()
+  const isMobile = useIsMobile()
 
   // Tagline typewriter
   useEffect(() => {
@@ -74,7 +74,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
   return (
     <div className={`landing ${fadingOut ? 'landing-fade-out' : ''}`}>
       <NeuronBackground landing />
-      {!isPortrait && (
+      {!isMobile && (
         <button
           className="header-icon-btn landing-theme-toggle"
           onClick={() => setDarkMode((d) => !d)}
