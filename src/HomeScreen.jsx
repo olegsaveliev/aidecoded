@@ -110,6 +110,14 @@ const CARDS = [
     group: 'Advanced',
   },
   {
+    id: 'ai-in-production',
+    title: 'AI in Production',
+    description: 'Shipping an AI feature is the beginning, not the end. Learn how to monitor quality, measure latency, track cost, detect drift and know when your AI is silently failing.',
+    tag: 'Technical',
+
+    group: 'Advanced',
+  },
+  {
     id: 'machine-learning',
     title: 'Machine Learning',
     description: 'How machines actually learn from data — the foundation of all modern AI',

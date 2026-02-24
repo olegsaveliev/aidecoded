@@ -25,6 +25,7 @@ const ALL_MODULES = [
   { id: 'ai-startup-simulator', title: 'AI Startup Simulator', description: 'You just got funded. Build vs buy, RAG vs fine-tune, which data to collect. Make the right calls or watch your startup fail.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'precision-recall', title: 'Precision & Recall', description: 'Why accuracy is a lie and what to measure instead. Master TP, TN, FP, FN, precision, recall and F1 through interactive real-world scenarios.', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'rag-under-the-hood', title: 'Why RAG Fails', description: 'Your RAG works in the demo and breaks in production. Learn exactly why — chunking, metadata, retrieval, filtering — and how to fix each layer.', tag: 'Technical', tagColor: '#5856D6' },
+  { id: 'ai-in-production', title: 'AI in Production', description: 'Shipping an AI feature is the beginning, not the end. Learn how to monitor quality, measure latency, track cost, detect drift and know when your AI is silently failing.', tag: 'Technical', tagColor: '#5856D6' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

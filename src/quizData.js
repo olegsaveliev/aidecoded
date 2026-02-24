@@ -978,3 +978,66 @@ export const ragUnderTheHoodQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const aiInProductionQuiz = [
+  {
+    question: 'Why do AI features fail silently in production?',
+    options: ['AI models have more bugs than traditional software', 'Wrong answers do not generate errors or exceptions like traditional failures', 'AI features are never tested before shipping', 'Production traffic is too high for AI to handle'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does LLM-as-judge mean in AI monitoring?',
+    options: ['Using a human lawyer to review AI outputs', 'Using a separate LLM to evaluate the quality of another LLM\'s responses', 'A benchmark test run before deployment', 'A legal compliance review of AI outputs'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why should you track P99 latency rather than just average latency?',
+    options: ['P99 is easier to calculate than average', 'Average latency is always misleading', 'P99 shows the worst real user experiences that averages hide', 'P99 latency determines your AI model cost'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is data drift in AI production?',
+    options: ['The model weights changing over time', 'Your knowledge base becoming stale while the AI keeps answering from old information', 'User data being lost from the database', 'Training data being deleted after deployment'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the shadow testing pattern?',
+    options: ['Deploying to production after midnight', 'Running new version in parallel with production without serving its answers to users', 'Testing only with internal employees', 'Copying production data to a test environment'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the canary deployment pattern for AI?',
+    options: ['Deploying to users named in your canary group', 'Rolling out to a small percentage of traffic and monitoring before expanding', 'Testing the AI with bird-related questions', 'Deploying to the cheapest infrastructure first'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why is alert fatigue dangerous in production?',
+    options: ['Too many alerts slow down the monitoring system', 'Engineers start ignoring all alerts including the important ones', 'Alerts are expensive to send at high volume', 'Alert fatigue only affects junior engineers'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What triggers a regression alert in AI monitoring?',
+    options: ['The AI giving a wrong answer to one query', 'User satisfaction dropping below 4 stars', 'Eval suite scores dropping significantly compared to the previous run', 'Response latency exceeding 1 second'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is model drift?',
+    options: ['The model becoming smarter over time', 'Changes in underlying LLM behavior due to provider updates, affecting your prompts', 'The model forgetting previous conversations', 'Model weights drifting during fine-tuning'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the recommended order for building an AI production observability stack?',
+    options: ['Build everything before launch or do not launch', 'Start with complex anomaly detection first', 'User signals and cost tracking first, then evals, then drift detection, then A/B', 'A/B testing infrastructure must come first'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+]
