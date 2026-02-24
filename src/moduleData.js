@@ -23,6 +23,7 @@ const ALL_MODULES = [
   { id: 'ai-safety', title: 'AI Safety & Hallucinations', description: 'Why AI confidently makes things up — and the practical techniques that stop it.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'ai-fluency', title: 'AI Fluency', description: 'The collaboration habits that separate AI power users from passive ones — backed by real research.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'ai-startup-simulator', title: 'AI Startup Simulator', description: 'You just got funded. Build vs buy, RAG vs fine-tune, which data to collect. Make the right calls or watch your startup fail.', tag: 'Game', tagColor: '#F59E0B' },
+  { id: 'precision-recall', title: 'Precision & Recall', description: 'Why accuracy is a lie and what to measure instead. Master TP, TN, FP, FN, precision, recall and F1 through interactive real-world scenarios.', tag: 'Technical', tagColor: '#5856D6' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

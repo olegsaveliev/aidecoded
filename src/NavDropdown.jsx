@@ -24,6 +24,7 @@ const NAV_GROUPS = [
       { id: 'how-llms-work', name: 'How LLMs Work', tag: 'Journey' },
       { id: 'model-training', name: 'Model Training', tag: 'Journey' },
       { id: 'machine-learning', name: 'Machine Learning', tag: 'Technical' },
+      { id: 'precision-recall', name: 'Precision & Recall', tag: 'Technical' },
       { id: 'deep-learning', name: 'Deep Learning', tag: 'Technical' },
       { id: 'fine-tuning', name: 'Fine-Tuning', tag: 'Technical' },
       { id: 'generative-ai', name: 'Generative AI', tag: 'Journey' },
