@@ -202,8 +202,12 @@
 
 @media (max-width: 768px) {
   .landing {
-    height: 100svh;
-    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
@@ -234,8 +238,8 @@
     justify-content: center;
     text-align: center;
     width: 100%;
-    min-height: 100svh;
-    padding: 24px 16px;
+    min-height: 100dvh;
+    padding: calc(24px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
     gap: 12px;
     animation: landingFadeUp 0.5s ease-out;
   }
@@ -344,7 +348,7 @@
 
   .landing-theme-toggle {
     position: fixed;
-    top: 14px;
-    right: 16px;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    right: calc(16px + env(safe-area-inset-right, 0px));
   }
 }
