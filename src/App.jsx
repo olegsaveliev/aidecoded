@@ -691,7 +691,7 @@ function App() {
               </button>
             )}
             <button
-              className="header-icon-btn"
+              className="header-icon-btn header-theme-toggle"
               onClick={() => setDarkMode((d) => !d)}
               aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             >

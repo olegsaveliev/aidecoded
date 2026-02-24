@@ -5440,6 +5440,14 @@
    MOBILE RESPONSIVE — 768px
    ══════════════════════════════════ */
 
+/* Hide theme toggle on mobile landscape (short screens) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .header-theme-toggle,
+  .landing-theme-toggle {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
 
   /* ── Header ── */
@@ -5454,6 +5462,12 @@
 
   .header-center {
     display: none;
+  }
+
+  /* Hide dark/light toggle on all mobile screens */
+  .header-theme-toggle,
+  .landing-theme-toggle {
+    display: none !important;
   }
 
   .header-grouped h1 {
