@@ -14,32 +14,29 @@ const GROUP_COLORS = {
 }
 
 const NODES = [
-  // Layer 1 — Input (Tools): 3 nodes
-  { id: 'playground', label: 'Playground', group: 'tools', px: 0.08, py: 0.18, desc: 'Chat with AI and tune parameters in real time' },
-  { id: 'tokenizer', label: 'Tokenizer', group: 'tools', px: 0.08, py: 0.48, desc: 'See how AI reads your text as tokens' },
-  { id: 'generation', label: 'Generation', group: 'tools', px: 0.08, py: 0.78, desc: 'Watch AI predict the next word live' },
-  // Layer 2 — Hidden (Foundations core): 3 nodes
-  { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', px: 0.30, py: 0.18, desc: 'An interactive journey inside AI' },
-  { id: 'deep-learning', label: 'Deep Learning', group: 'foundations', px: 0.30, py: 0.48, desc: 'Neural networks powering every AI breakthrough' },
-  { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', px: 0.30, py: 0.78, desc: 'How machines learn from data' },
-  // Layer 3 — Hidden (Applied): 5 nodes
-  { id: 'model-training', label: 'Model Training', group: 'foundations', px: 0.52, py: 0.12, desc: 'How AI models are built from scratch' },
-  { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', px: 0.52, py: 0.34, desc: 'Turn a general AI into a domain expert' },
-  { id: 'rag', label: 'RAG', group: 'advanced', px: 0.52, py: 0.54, desc: 'How AI learns from YOUR documents' },
-  { id: 'agentic-ai', label: 'Agentic AI', group: 'advanced', px: 0.52, py: 0.72, desc: 'AI that plans, acts and learns autonomously' },
-  { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', px: 0.52, py: 0.88, desc: 'Outsmart AI security with the perfect prompt' },
-  { id: 'generative-ai', label: 'Generative AI', group: 'foundations', px: 0.58, py: 0.32, desc: 'How AI creates images, music, video and code' },
-  // Layer 4 — Output (Skills + Play): 4 nodes
-  { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', px: 0.78, py: 0.12, desc: 'Write better prompts for better results' },
-  { id: 'context-engineering', label: 'Context Eng.', group: 'skills', px: 0.78, py: 0.38, desc: 'Give AI the right context every time' },
-  { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', px: 0.78, py: 0.64, desc: 'Explore an AI research lab room by room' },
-  { id: 'ai-city-builder', label: 'City Builder', group: 'play', px: 0.78, py: 0.86, desc: 'Solve AI mysteries, build your city' },
-  { id: 'token-budget', label: 'Token Budget', group: 'play', px: 0.42, py: 0.92, desc: 'Rewrite prompts to fit strict token budgets' },
-  { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', group: 'play', px: 0.28, py: 0.88, desc: 'Navigate ethical dilemmas in AI systems' },
-  { id: 'pm-simulator', label: 'PM Simulator', group: 'play', px: 0.15, py: 0.82, desc: 'Ship an AI feature as the PM — or watch it fail' },
-  { id: 'ai-native-pm', label: 'AI-Native PM', group: 'professional', px: 0.20, py: 0.65, desc: 'What AI engineers actually need from PMs' },
-  { id: 'ai-safety', label: 'AI Safety', group: 'skills', px: 0.50, py: 0.38, desc: 'Why AI hallucinates and how to stop it' },
+  { id: 'playground', label: 'Playground', group: 'tools', desc: 'Chat with AI and tune parameters in real time' },
+  { id: 'tokenizer', label: 'Tokenizer', group: 'tools', desc: 'See how AI reads your text as tokens' },
+  { id: 'generation', label: 'Generation', group: 'tools', desc: 'Watch AI predict the next word live' },
+  { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', desc: 'An interactive journey inside AI' },
+  { id: 'deep-learning', label: 'Deep Learning', group: 'foundations', desc: 'Neural networks powering every AI breakthrough' },
+  { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', desc: 'How machines learn from data' },
+  { id: 'model-training', label: 'Model Training', group: 'foundations', desc: 'How AI models are built from scratch' },
+  { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', desc: 'Turn a general AI into a domain expert' },
+  { id: 'rag', label: 'RAG', group: 'advanced', desc: 'How AI learns from YOUR documents' },
+  { id: 'agentic-ai', label: 'Agentic AI', group: 'advanced', desc: 'AI that plans, acts and learns autonomously' },
+  { id: 'prompt-heist', label: 'Prompt Heist', group: 'play', desc: 'Outsmart AI security with the perfect prompt' },
+  { id: 'generative-ai', label: 'Generative AI', group: 'foundations', desc: 'How AI creates images, music, video and code' },
+  { id: 'prompt-engineering', label: 'Prompt Eng.', group: 'skills', desc: 'Write better prompts for better results' },
+  { id: 'context-engineering', label: 'Context Eng.', group: 'skills', desc: 'Give AI the right context every time' },
+  { id: 'ai-lab-explorer', label: 'Lab Explorer', group: 'play', desc: 'Explore an AI research lab room by room' },
+  { id: 'ai-city-builder', label: 'City Builder', group: 'play', desc: 'Solve AI mysteries, build your city' },
+  { id: 'token-budget', label: 'Token Budget', group: 'play', desc: 'Rewrite prompts to fit strict token budgets' },
+  { id: 'ai-ethics-tribunal', label: 'Ethics Tribunal', group: 'play', desc: 'Navigate ethical dilemmas in AI systems' },
+  { id: 'pm-simulator', label: 'PM Simulator', group: 'play', desc: 'Ship an AI feature as the PM — or watch it fail' },
+  { id: 'ai-native-pm', label: 'AI-Native PM', group: 'professional', desc: 'What AI engineers actually need from PMs' },
+  { id: 'ai-safety', label: 'AI Safety', group: 'skills', desc: 'Why AI hallucinates and how to stop it' },
 ]
+
 
 const CONNECTIONS = [
   // Layer 1 → Layer 2
@@ -91,64 +88,71 @@ const CONNECTIONS = [
   ['agentic-ai', 'ai-safety'],
 ]
 
-/* ── Animation timing (ms) ── */
-
-const NODE_DELAYS = {
-  // Layer 1
-  'playground': 0,
-  'tokenizer': 150,
-  'generation': 300,
-  // Layer 2
-  'how-llms-work': 600,
-  'deep-learning': 750,
-  'machine-learning': 900,
-  // Layer 3
-  'model-training': 1200,
-  'fine-tuning': 1350,
-  'rag': 1500,
-  'agentic-ai': 1650,
-  'prompt-heist': 1800,
-  'generative-ai': 1400,
-  // Layer 4
-  'prompt-engineering': 2050,
-  'context-engineering': 2200,
-  'ai-lab-explorer': 2350,
-  'ai-city-builder': 2500,
-  'token-budget': 1950,
-  'ai-ethics-tribunal': 2100,
-  'pm-simulator': 2250,
-  'ai-native-pm': 2650,
-}
-
 const NODE_APPEAR_DUR = 500
 const CONN_DRAW_DUR = 500
-
-const CONN_DELAYS = CONNECTIONS.map(([src, tgt]) =>
-  Math.max(NODE_DELAYS[src], NODE_DELAYS[tgt]) + NODE_APPEAR_DUR
-)
-
-const DOT_DELAYS = CONN_DELAYS.map((d) => d + CONN_DRAW_DUR)
 
 /* ── Layout helpers ── */
 
 const REF_W = 960
 const REF_H = 600
+const NODE_RADIUS = 24
 
 const PARTICLE_BG_COUNT = 35
 
 /* ── Drag constants ── */
 
-const TOTAL_ANIM_TIME = Math.max(...DOT_DELAYS) + 500
-const NODE_PADDING = 30
+const NODE_PADDING = 24
+
+/* ── Neuron-shaped initial layout ── */
+/* Dendrites (left) → Soma (center-left cluster) → Axon (middle line) → Terminals (right) */
+
+const NEURON_LAYOUT = {
+  // Dendrites — branching inputs (left side)
+  'playground':        { px: 0.08, py: 0.10 },
+  'how-llms-work':     { px: 0.16, py: 0.05 },
+  'tokenizer':         { px: 0.05, py: 0.35 },
+  'generation':        { px: 0.08, py: 0.58 },
+  'deep-learning':     { px: 0.16, py: 0.22 },
+  // Soma — cell body (dense cluster)
+  'machine-learning':  { px: 0.28, py: 0.30 },
+  'model-training':    { px: 0.34, py: 0.24 },
+  'fine-tuning':       { px: 0.26, py: 0.48 },
+  'rag':               { px: 0.36, py: 0.40 },
+  'agentic-ai':        { px: 0.30, py: 0.58 },
+  'generative-ai':     { px: 0.38, py: 0.52 },
+  // Axon — signal path (horizontal line)
+  'prompt-heist':        { px: 0.48, py: 0.44 },
+  'prompt-engineering':  { px: 0.56, py: 0.46 },
+  'context-engineering': { px: 0.64, py: 0.44 },
+  'ai-safety':           { px: 0.72, py: 0.46 },
+  // Terminals — branching outputs (right side)
+  'ai-lab-explorer':     { px: 0.82, py: 0.18 },
+  'ai-city-builder':     { px: 0.86, py: 0.34 },
+  'token-budget':        { px: 0.92, py: 0.46 },
+  'ai-ethics-tribunal':  { px: 0.86, py: 0.60 },
+  'pm-simulator':        { px: 0.82, py: 0.76 },
+  'ai-native-pm':        { px: 0.92, py: 0.68 },
+}
+
+/* Animation order follows signal flow: dendrites → soma → axon → terminals */
+const NEURON_ANIM_ORDER = [
+  // Dendrites
+  'playground', 'how-llms-work', 'tokenizer', 'deep-learning', 'generation',
+  // Soma
+  'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai',
+  // Axon
+  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety',
+  // Terminals
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-native-pm',
+]
 
 /* ── Force-directed layout to prevent node overlap ── */
 
-function computeLayout(nodes, refW, refH, nodeR) {
-  // circle (r+3 ring) + label below = ~95px vertical footprint per node
-  const repulsionDist = nodeR * 2 + 52 // target separation including label clearance
-  const padX = nodeR + 30
+function computeLayout(nodes, refW, refH, nodeR, attraction) {
+  const repulsionDist = nodeR * 2 + 44
+  const padX = nodeR + 24
   const padTop = Math.round(refH * 0.07)
-  const padBottom = Math.round(refH * 0.08) // extra room for bottom labels
+  const padBottom = Math.round(refH * 0.08)
 
   const pos = nodes.map(n => ({
     id: n.id,
@@ -161,7 +165,6 @@ function computeLayout(nodes, refW, refH, nodeR) {
   for (let iter = 0; iter < 400; iter++) {
     let totalDelta = 0
 
-    // Repulsion: push overlapping nodes apart
     for (let i = 0; i < pos.length; i++) {
       for (let j = i + 1; j < pos.length; j++) {
         const dx = pos[j].x - pos[i].x
@@ -180,20 +183,16 @@ function computeLayout(nodes, refW, refH, nodeR) {
       }
     }
 
-    // X attraction strong (0.08) to preserve left-to-right layer columns
-    // Y attraction weak (0.005) so nodes can freely redistribute vertically
     for (let i = 0; i < pos.length; i++) {
-      pos[i].x += (pos[i].origX - pos[i].x) * 0.08
-      pos[i].y += (pos[i].origY - pos[i].y) * 0.005
+      pos[i].x += (pos[i].origX - pos[i].x) * attraction
+      pos[i].y += (pos[i].origY - pos[i].y) * attraction
     }
 
-    // Boundary constraints
     for (const p of pos) {
       p.x = Math.max(padX, Math.min(refW - padX, p.x))
       p.y = Math.max(padTop, Math.min(refH - padBottom, p.y))
     }
 
-    // Early exit when layout has settled
     if (totalDelta < 0.5) break
   }
 
@@ -204,7 +203,50 @@ function computeLayout(nodes, refW, refH, nodeR) {
   return result
 }
 
-const ORIGINAL_POSITIONS = computeLayout(NODES, REF_W, REF_H, 32)
+/* ── Generate timing from an ordered node list ── */
+
+function generateTiming(nodeDelays) {
+  const connDelays = CONNECTIONS.map(([src, tgt]) =>
+    Math.max(nodeDelays[src], nodeDelays[tgt]) + NODE_APPEAR_DUR
+  )
+  const dotDelays = connDelays.map(d => d + CONN_DRAW_DUR)
+  const totalAnimTime = Math.max(...dotDelays) + 500
+  return { connDelays, dotDelays, totalAnimTime }
+}
+
+/* ── Initial neuron layout ── */
+
+function generateNeuronLayout() {
+  for (const node of NODES) {
+    const nPos = NEURON_LAYOUT[node.id]
+    node.px = nPos.px
+    node.py = nPos.py
+  }
+  const positions = computeLayout(NODES, REF_W, REF_H, NODE_RADIUS, 0.06)
+
+  const nodeDelays = {}
+  NEURON_ANIM_ORDER.forEach((id, i) => { nodeDelays[id] = i * 100 })
+
+  return { positions, nodeDelays, ...generateTiming(nodeDelays) }
+}
+
+/* ── Random layout for replay ── */
+
+function generateRandom() {
+  for (const node of NODES) {
+    node.px = 0.08 + Math.random() * 0.84
+    node.py = 0.08 + Math.random() * 0.84
+  }
+  const positions = computeLayout(NODES, REF_W, REF_H, NODE_RADIUS, 0.02)
+
+  const ids = NODES.map(n => n.id).sort(() => Math.random() - 0.5)
+  const nodeDelays = {}
+  ids.forEach((id, i) => { nodeDelays[id] = i * 120 })
+
+  return { positions, nodeDelays, ...generateTiming(nodeDelays) }
+}
+
+const initialLayout = generateNeuronLayout()
 
 function NeuralNetworkCanvas({ onSelectTab }) {
   const { isModuleLocked } = useAuth()
@@ -217,10 +259,14 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   const [animKey, setAnimKey] = useState(0)
   const [tooltip, setTooltip] = useState(null)
 
+  // Layout + timing state
+  const [layoutState, setLayoutState] = useState(initialLayout)
+  const { positions: originalPositions, nodeDelays, connDelays, dotDelays, totalAnimTime } = layoutState
+
   // Drag state
   const [draggable, setDraggable] = useState(false)
   const [draggingId, setDraggingId] = useState(null)
-  const [nodePositions, setNodePositions] = useState(ORIGINAL_POSITIONS)
+  const [nodePositions, setNodePositions] = useState(initialLayout.positions)
   const [positionsModified, setPositionsModified] = useState(false)
   const [motionKey, setMotionKey] = useState(0)
   const [showHint, setShowHint] = useState(false)
@@ -327,19 +373,19 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   // Enable dragging after entrance animation completes
   useEffect(() => {
     setDraggable(false)
-    const timer = setTimeout(() => setDraggable(true), TOTAL_ANIM_TIME)
+    const timer = setTimeout(() => setDraggable(true), totalAnimTime)
     return () => clearTimeout(timer)
-  }, [animKey])
+  }, [animKey, totalAnimTime])
 
   // Hint: show after animation, fade out after 3s
   useEffect(() => {
     setShowHint(false)
     setHintFading(false)
-    const show = setTimeout(() => setShowHint(true), TOTAL_ANIM_TIME)
-    const fade = setTimeout(() => setHintFading(true), TOTAL_ANIM_TIME + 3000)
-    const hide = setTimeout(() => setShowHint(false), TOTAL_ANIM_TIME + 3500)
+    const show = setTimeout(() => setShowHint(true), totalAnimTime)
+    const fade = setTimeout(() => setHintFading(true), totalAnimTime + 3000)
+    const hide = setTimeout(() => setShowHint(false), totalAnimTime + 3500)
     return () => { clearTimeout(show); clearTimeout(fade); clearTimeout(hide) }
-  }, [animKey])
+  }, [animKey, totalAnimTime])
 
   // Convert screen coordinates to SVG viewBox coordinates
   const screenToSVG = useCallback((clientX, clientY) => {
@@ -474,9 +520,11 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   }, [draggable, screenToSVG])
 
   const handleReplay = useCallback(() => {
+    const next = generateRandom()
+    setLayoutState(next)
+    setNodePositions(next.positions)
     setAnimKey((k) => k + 1)
     setDraggable(false)
-    setNodePositions(ORIGINAL_POSITIONS)
     setPositionsModified(false)
     setMotionKey((k) => k + 1)
   }, [])
@@ -488,16 +536,16 @@ function NeuralNetworkCanvas({ onSelectTab }) {
     }
     setDraggable(false)
     const startTime = performance.now()
+    const target = originalPositions
 
     function animate() {
       const t = Math.min((performance.now() - startTime) / 500, 1)
-      // easeInOutQuad
       const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
       const newPos = {}
       for (const node of NODES) {
         newPos[node.id] = {
-          x: start[node.id].x + (ORIGINAL_POSITIONS[node.id].x - start[node.id].x) * ease,
-          y: start[node.id].y + (ORIGINAL_POSITIONS[node.id].y - start[node.id].y) * ease,
+          x: start[node.id].x + (target[node.id].x - start[node.id].x) * ease,
+          y: start[node.id].y + (target[node.id].y - start[node.id].y) * ease,
         }
       }
       setNodePositions(newPos)
@@ -510,10 +558,10 @@ function NeuralNetworkCanvas({ onSelectTab }) {
       }
     }
     requestAnimationFrame(animate)
-  }, [nodePositions])
+  }, [nodePositions, originalPositions])
 
   const { width, height } = dimensions // for background canvas
-  const nodeRadius = 32
+  const nodeRadius = NODE_RADIUS
 
   return (
     <div className="nn-canvas-container" ref={containerRef}>
@@ -557,8 +605,8 @@ function NeuralNetworkCanvas({ onSelectTab }) {
           const midX = source.x + dx * 0.5
           const path = `M ${source.x} ${source.y} C ${midX} ${source.y}, ${midX} ${target.y}, ${target.x} ${target.y}`
 
-          const connDelay = CONN_DELAYS[i]
-          const dotDelay = DOT_DELAYS[i]
+          const connDelay = connDelays[i]
+          const dotDelay = dotDelays[i]
 
           return (
             <g key={`conn-${i}`}>
@@ -610,7 +658,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
           const isHovered = hoveredNode === node.id && !isDragging
           const isConnected = connectedTo.has(node.id) && !isDragging
           const isClicked = clickedNode === node.id
-          const enterDelay = NODE_DELAYS[node.id]
+          const enterDelay = nodeDelays[node.id]
 
           const nodeCursor = draggable
             ? (isDragging ? 'grabbing' : 'grab')
@@ -673,7 +721,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                       strokeWidth="2"
                       className="nn-node-ripple"
                     >
-                      <animate attributeName="r" from={String(nodeRadius)} to="60" dur="0.6s" fill="freeze" />
+                      <animate attributeName="r" from={String(nodeRadius)} to="48" dur="0.6s" fill="freeze" />
                       <animate attributeName="opacity" from="0.6" to="0" dur="0.6s" fill="freeze" />
                     </circle>
                   )}
@@ -707,15 +755,15 @@ function NeuralNetworkCanvas({ onSelectTab }) {
                   />
 
                   {/* Module icon */}
-                  <foreignObject x="-12" y="-12" width="24" height="24">
-                    <ModuleIcon module={node.id} size={24} className={isHovered ? 'module-icon-active' : ''} style={{ color }} />
+                  <foreignObject x="-10" y="-10" width="20" height="20">
+                    <ModuleIcon module={node.id} size={20} className={isHovered ? 'module-icon-active' : ''} style={{ color }} />
                   </foreignObject>
 
                   {/* Label below node */}
                   <text
-                    y={nodeRadius + 16}
+                    y={nodeRadius + 14}
                     textAnchor="middle"
-                    fontSize="11"
+                    fontSize="10"
                     fontWeight="700"
                     className="nn-node-label"
                   >
@@ -724,9 +772,9 @@ function NeuralNetworkCanvas({ onSelectTab }) {
 
                   {/* Lock badge for unauthenticated users */}
                   {locked && (
-                    <g transform={`translate(${nodeRadius - 4}, ${-nodeRadius + 4})`}>
-                      <circle r="8" fill="var(--bg-primary, #fff)" stroke="var(--border, #d2d2d7)" strokeWidth="1" />
-                      <svg x="-5" y="-5" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary, #86868b)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <g transform={`translate(${nodeRadius - 2}, ${-nodeRadius + 2})`}>
+                      <circle r="7" fill="var(--bg-primary, #fff)" stroke="var(--border, #d2d2d7)" strokeWidth="1" />
+                      <svg x="-4.5" y="-4.5" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary, #86868b)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                       </svg>

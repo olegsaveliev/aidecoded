@@ -936,14 +936,19 @@ The `Quiz.jsx` component renders a standardized end screen:
 
 ### NeuralNetworkCanvas Layout
 
-Node positions are computed by `computeLayout()` — a force-directed simulation that runs once at module load (~0.5ms):
-- **Repulsion**: pushes any pair of nodes closer than `nodeR * 2 + 52` apart
-- **X attraction** (0.08): strong pull toward original `px` layer column
-- **Y attraction** (0.005): weak pull allows vertical redistribution
+**Two layout modes:**
+- **Initial (neuron shape)**: `NEURON_LAYOUT` positions nodes in a biological neuron shape — dendrites (left), soma cluster (center-left), axon (middle horizontal), terminals (right). Animation follows signal flow. Uses `computeLayout` with attraction `0.06` to preserve shape.
+- **Replay (random)**: `generateRandom()` assigns random `px`/`py` to all nodes and shuffles animation order. Uses attraction `0.02` for loose organic spread.
+
+**Node radius**: `NODE_RADIUS = 24` (icon 20×20, label font 10px)
+
+Node positions are computed by `computeLayout(nodes, refW, refH, nodeR, attraction)` — a force-directed simulation:
+- **Repulsion**: pushes any pair of nodes closer than `nodeR * 2 + 44` apart
+- **Attraction**: configurable per layout mode (0.06 neuron, 0.02 random) — equal in both X and Y axes
 - **Boundary constraints**: proportional padding (`refH * 0.07` top, `refH * 0.08` bottom)
 - **Early exit**: stops when total displacement < 0.5px per iteration
 
-New nodes only need approximate `px`/`py` hints — the simulation auto-resolves overlaps. ViewBox is `960×600` (`REF_W × REF_H`).
+**Adding new nodes**: Add to `NODES` array (no `px`/`py` needed), add position to `NEURON_LAYOUT`, add to `NEURON_ANIM_ORDER` in the appropriate section. ViewBox is `960×600` (`REF_W × REF_H`).
 
 ### NeuralNetworkCanvas Tooltips
 
@@ -967,7 +972,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 4. Update `src/NavDropdown.jsx`: add item to the appropriate NAV_GROUPS entry
 5. Update `src/App.jsx`: import component, add render condition (pass `onSwitchTab={setActiveTab}`)
 6. Update `src/HomeScreen.jsx`: add card to CARDS array — set `tag` field and use `FILTER_COLORS[tag]` for icon color
-7. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color and approximate `px`/`py` (force layout auto-resolves overlaps)
+7. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color, add position to `NEURON_LAYOUT`, add to `NEURON_ANIM_ORDER` (force layout auto-resolves overlaps)
 8. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
 9. Add module to `src/moduleData.js` ALL_MODULES array
 10. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`
@@ -1009,7 +1014,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Final screens: exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules component
 - Quiz end screens: exactly 2 buttons (Start Over + Take Quiz Again) + explore next cards
 - Tip boxes: always yellow — `rgba(234, 179, 8, 0.06)` bg, `#eab308` border-left, `TipIcon color="#eab308"`
-- NeuralNetworkCanvas uses force-directed layout (`computeLayout`) — new nodes only need approximate `px`/`py` hints; overlaps are auto-resolved
+- NeuralNetworkCanvas has two layout modes: neuron-shaped initial layout (dendrites→soma→axon→terminals) and random replay layout; new nodes need entries in `NODES`, `NEURON_LAYOUT`, and `NEURON_ANIM_ORDER`
 - NeuralNetworkCanvas tooltips must account for SVG letterboxing (xMidYMid meet)
 - Free modules (playground, tokenizer, generation) don't require login
 - All other modules show lock icon + dimmed card until authenticated
