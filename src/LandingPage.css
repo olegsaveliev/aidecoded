@@ -202,8 +202,7 @@
 
 @media (max-width: 768px) {
   .landing {
-    height: auto;
-    min-height: 100svh;
+    height: 100svh;
     position: fixed;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
