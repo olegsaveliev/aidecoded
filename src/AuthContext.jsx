@@ -5,6 +5,18 @@ const AuthContext = createContext({})
 
 const FREE_MODULES = ['playground', 'tokenizer', 'generation']
 
+// Inject localStorage display_name into user object (survives OAuth overwrites)
+function enrichUser(user) {
+  if (!user) return null
+  try {
+    const saved = localStorage.getItem(`display_name_${user.id}`)
+    if (saved) {
+      return { ...user, user_metadata: { ...user.user_metadata, display_name: saved } }
+    }
+  } catch { /* ignore */ }
+  return user
+}
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -19,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
+      setUser(enrichUser(session?.user) ?? null)
       if (session?.user) {
         fetchProgress(session.user.id)
         loadStartedModules(session.user.id)
@@ -29,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
     const { data: { subscription } } =
       supabase.auth.onAuthStateChange((_event, session) => {
-        setUser(session?.user ?? null)
+        setUser(enrichUser(session?.user) ?? null)
         if (session?.user) {
           fetchProgress(session.user.id)
           loadStartedModules(session.user.id)
@@ -138,14 +150,12 @@ export const AuthProvider = ({ children }) => {
   }
 
   const updateDisplayName = async (name) => {
-    if (!supabase || !user) return { error: { message: 'Not authenticated' } }
-    const { error } = await supabase.auth.updateUser({
-      data: { display_name: name }
-    })
-    if (!error) {
-      setUser(prev => prev ? { ...prev, user_metadata: { ...prev.user_metadata, display_name: name } } : prev)
-    }
-    return { error }
+    if (!user) return { error: { message: 'Not authenticated' } }
+    try {
+      localStorage.setItem(`display_name_${user.id}`, name)
+    } catch { /* quota exceeded — still update React state */ }
+    setUser(prev => prev ? { ...prev, user_metadata: { ...prev.user_metadata, display_name: name } } : prev)
+    return { error: null }
   }
 
   const signOut = async () => {
