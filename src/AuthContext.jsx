@@ -5,7 +5,7 @@ const AuthContext = createContext({})
 
 const FREE_MODULES = ['playground', 'tokenizer', 'generation']
 
-// Inject localStorage display_name into user object (survives OAuth overwrites)
+// Inject localStorage display_name into user object (synchronous fallback while DB loads)
 function enrichUser(user) {
   if (!user) return null
   try {
@@ -15,6 +15,31 @@ function enrichUser(user) {
     }
   } catch { /* ignore */ }
   return user
+}
+
+// Fetch display name from profiles table (OAuth-proof, works across devices)
+async function fetchProfileName(userId) {
+  if (!supabase) return null
+  try {
+    const { data } = await supabase
+      .from('profiles')
+      .select('full_name')
+      .eq('id', userId)
+      .single()
+    return data?.full_name || null
+  } catch { return null }
+}
+
+// Fetch DB display name and merge into user state (guards against stale updates)
+async function syncProfileName(userId, setUser) {
+  const dbName = await fetchProfileName(userId)
+  if (dbName) {
+    try { localStorage.setItem(`display_name_${userId}`, dbName) } catch {}
+    setUser(prev => {
+      if (!prev || prev.id !== userId) return prev
+      return { ...prev, user_metadata: { ...prev.user_metadata, display_name: dbName } }
+    })
+  }
 }
 
 export const AuthProvider = ({ children }) => {
@@ -31,20 +56,24 @@ export const AuthProvider = ({ children }) => {
     }
 
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(enrichUser(session?.user) ?? null)
+      const enriched = enrichUser(session?.user) ?? null
+      setUser(enriched)
       if (session?.user) {
         fetchProgress(session.user.id)
         loadStartedModules(session.user.id)
+        syncProfileName(session.user.id, setUser)
       }
       setLoading(false)
     })
 
     const { data: { subscription } } =
       supabase.auth.onAuthStateChange((_event, session) => {
-        setUser(enrichUser(session?.user) ?? null)
+        const enriched = enrichUser(session?.user) ?? null
+        setUser(enriched)
         if (session?.user) {
           fetchProgress(session.user.id)
           loadStartedModules(session.user.id)
+          syncProfileName(session.user.id, setUser)
         } else {
           setProgress([])
           setQuizResults([])
@@ -151,18 +180,28 @@ export const AuthProvider = ({ children }) => {
 
   const updateDisplayName = async (name) => {
     if (!user) return { error: { message: 'Not authenticated' } }
-    try {
-      localStorage.setItem(`display_name_${user.id}`, name)
-    } catch { /* quota exceeded — still update React state */ }
+    // 1. Persist to profiles table (server-side, OAuth-proof)
+    if (supabase) {
+      const { error } = await supabase
+        .from('profiles')
+        .upsert({ id: user.id, full_name: name })
+      if (error) return { error }
+    }
+    // 2. Cache in localStorage (instant on next page load)
+    try { localStorage.setItem(`display_name_${user.id}`, name) } catch {}
+    // 3. Update React state (immediate UI)
     setUser(prev => prev ? { ...prev, user_metadata: { ...prev.user_metadata, display_name: name } } : prev)
     return { error: null }
   }
 
   const signOut = async () => {
     if (!supabase) return
-    await supabase.auth.signOut()
+    // Clear state first, before async signOut that might fail
+    setUser(null)
     setProgress([])
     setQuizResults([])
+    setStartedModules([])
+    try { await supabase.auth.signOut() } catch { /* ignore */ }
   }
 
   return (
