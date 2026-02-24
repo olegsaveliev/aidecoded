@@ -104,8 +104,28 @@ function BootScreen({ fadingOut, onComplete }) {
   )
 }
 
+const VALID_TABS = [
+  'home', 'playground', 'tokenizer', 'generation',
+  'how-llms-work', 'model-training', 'machine-learning',
+  'deep-learning', 'fine-tuning', 'prompt-engineering',
+  'context-engineering', 'rag', 'generative-ai',
+  'agentic-ai', 'ai-native-pm', 'ai-city-builder',
+  'ai-lab-explorer', 'prompt-heist', 'token-budget',
+  'ai-ethics-tribunal', 'pm-simulator'
+]
+
+function getTabFromUrl() {
+  const params = new URLSearchParams(window.location.search)
+  const tab = params.get('tab')
+  if (tab && VALID_TABS.includes(tab)) return tab
+  return null
+}
+
 function App() {
   const { user, loading: authLoading, signOut, isModuleLocked, markModuleStarted, markModuleComplete } = useAuth()
+  const skipPush = useRef(false)
+  const showLandingRef = useRef(false)
+  const isModuleLockedRef = useRef(isModuleLocked)
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [authUnlockMessage, setAuthUnlockMessage] = useState('')
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false)
@@ -191,10 +211,13 @@ function App() {
     return tab
   })
 
-  // Restore navigation state for logged-in users on refresh
-  // (nav_state is only set when logged in, cleared on sign-out)
+  // Restore navigation state: URL param > sessionStorage > default
+  const urlTab = pendingAuthReturn ? null : getTabFromUrl()
+
   function readNav() {
     if (pendingAuthReturn) return null
+    if (urlTab === 'home') return { activeTab: 'playground', showHome: true }
+    if (urlTab) return { activeTab: urlTab, showHome: false }
     try { return JSON.parse(sessionStorage.getItem('nav_state')) } catch { return null }
   }
 
@@ -204,6 +227,10 @@ function App() {
   const [bootFadingOut, setBootFadingOut] = useState(false)
   const [showHome, setShowHome] = useState(() => readNav()?.showHome ?? (pendingAuthReturn === 'home' ? true : false))
   const [homeTransition, setHomeTransition] = useState(false)
+
+  // Keep refs in sync for popstate handler (avoids stale closures)
+  showLandingRef.current = showLanding
+  isModuleLockedRef.current = isModuleLocked
 
   function handleGetStarted() {
     setFadingOut(true)
@@ -227,6 +254,7 @@ function App() {
       setFadingOut(false)
       setShowHome(false)
       setActiveTab(tabId)
+      navigateTo(tabId)
     }, 500)
   }
 
@@ -236,6 +264,7 @@ function App() {
       setShowBootScreen(false)
       setBootFadingOut(false)
       setShowHome(true)
+      navigateTo('home')
     }, 500)
   }
 
@@ -249,6 +278,59 @@ function App() {
     window.scrollTo(0, 0)
   }
 
+  // Push tab to browser history (query param ?tab=)
+  function navigateTo(tab) {
+    if (skipPush.current) return
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('tab') === tab) return
+    const url = (!tab || tab === 'home')
+      ? window.location.pathname
+      : window.location.pathname + '?tab=' + tab
+    window.history.pushState({ tab: tab || 'home' }, '', url)
+  }
+
+  // Sync initial history entry so first back works correctly
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const currentTab = params.get('tab') || (showLanding ? null : showHome ? 'home' : activeTab)
+    if (currentTab) {
+      window.history.replaceState({ tab: currentTab }, '', window.location.href)
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Browser back/forward navigation via popstate
+  useEffect(() => {
+    function onPopState(event) {
+      const tab = event.state?.tab
+      skipPush.current = true
+      if (!tab || tab === 'home') {
+        if (showLandingRef.current) {
+          // Already on landing, nothing to do
+        } else {
+          setShowHome(true)
+          setShowBootScreen(false)
+          setHomeFilter(null)
+          setSubPage(null)
+        }
+      } else if (VALID_TABS.includes(tab)) {
+        if (isModuleLockedRef.current(tab)) {
+          setShowHome(true)
+          setHomeFilter(null)
+        } else {
+          setShowLanding(false)
+          setShowBootScreen(false)
+          setShowHome(false)
+          setActiveTab(tab)
+        }
+        setSubPage(null)
+      }
+      scrollAllToTop()
+      setTimeout(() => { skipPush.current = false }, 0)
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
   function handleGoHome() {
     setHomeTransition(true)
     setSubPage(null)
@@ -257,6 +339,7 @@ function App() {
       setShowHome(true)
       setHomeTransition(false)
       scrollAllToTop()
+      navigateTo('home')
     }, 200)
   }
 
@@ -268,6 +351,7 @@ function App() {
       setShowHome(true)
       setHomeTransition(false)
       scrollAllToTop()
+      navigateTo('home')
     }, 200)
   }
 
@@ -285,7 +369,16 @@ function App() {
       setActiveTab(tab)
       setHomeTransition(false)
       scrollAllToTop()
+      navigateTo(tab)
     }, 200)
+  }
+
+  function handleSwitchTab(tab) {
+    setShowHome(false)
+    setActiveTab(tab)
+    setSubPage(null)
+    scrollAllToTop()
+    navigateTo(tab)
   }
 
   function handleTabReset(tabId) {
@@ -310,9 +403,11 @@ function App() {
       if (pendingAuthReturn === 'landing' || pendingAuthReturn === 'home') {
         setShowLanding(false)
         setShowHome(true)
+        navigateTo('home')
       } else {
         setShowHome(false)
         setActiveTab(pendingAuthReturn)
+        navigateTo(pendingAuthReturn)
       }
       return
     }
@@ -645,7 +740,7 @@ function App() {
                       <div className="avatar-dropdown-email">{user.email}</div>
                     </div>
                     <div className="avatar-dropdown-divider" />
-                    <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false); setShowLanding(true); setShowHome(false) }}>
+                    <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false); setShowLanding(true); setShowHome(false); window.history.replaceState(null, '', window.location.pathname) }}>
                       Sign Out
                     </button>
                   </div>
@@ -941,60 +1036,60 @@ function App() {
           </div>
         )}
 
-        {!showHome && activeTab === 'tokenizer' && <Tokenizer onSwitchTab={setActiveTab} onGoHome={handleGoHome} />}
+        {!showHome && activeTab === 'tokenizer' && <Tokenizer onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />}
         {!showHome && activeTab === 'generation' && (
-          <Generation model={model} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <Generation model={model} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'how-llms-work' && (
-          <HowLLMsWork key={tabKey} model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} onSubPageChange={setSubPage} />
+          <HowLLMsWork key={tabKey} model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} onSubPageChange={setSubPage} />
         )}
         {!showHome && activeTab === 'model-training' && (
-          <ModelTraining onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <ModelTraining onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'prompt-engineering' && (
-          <PromptEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <PromptEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'context-engineering' && (
-          <ContextEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <ContextEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'rag' && (
-          <RAG model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <RAG model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'agentic-ai' && (
-          <AgenticAI onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <AgenticAI onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'machine-learning' && (
-          <MachineLearning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <MachineLearning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'deep-learning' && (
-          <DeepLearning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <DeepLearning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'fine-tuning' && (
-          <FineTuning onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <FineTuning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'generative-ai' && (
-          <GenerativeAI onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <GenerativeAI onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'ai-city-builder' && (
-          <AICityBuilder onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <AICityBuilder onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'ai-lab-explorer' && (
-          <AILabExplorer onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <AILabExplorer onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'prompt-heist' && (
-          <PromptHeist onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <PromptHeist onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'token-budget' && (
-          <TokenBudget onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <TokenBudget onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'ai-ethics-tribunal' && (
-          <AIEthicsTribunal onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <AIEthicsTribunal onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'pm-simulator' && (
-          <PMSimulator onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <PMSimulator onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'ai-native-pm' && (
-          <AINativePM onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
+          <AINativePM onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         </div>
         </div>

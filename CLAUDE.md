@@ -137,6 +137,37 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - Active tab's parent group label turns Apple blue (#0071E3)
 - Breadcrumb shows `Group > Tab Name` on wider screens (>= 900px)
 
+### Browser History (Back/Forward)
+
+Browser back/forward buttons work via the History API (`pushState`/`popstate`) using `?tab=` query params. No React Router.
+
+**URL format:**
+| Screen | URL |
+|---|---|
+| Landing / Home | `/` (no query param) |
+| Module | `/?tab=playground`, `/?tab=tokenizer`, etc. |
+
+**Key functions in App.jsx:**
+- `VALID_TABS` — whitelist array of all valid tab IDs (defined outside component)
+- `getTabFromUrl()` — reads `?tab=` from URL, validates against `VALID_TABS`
+- `navigateTo(tab)` — pushes `?tab=X` to history (or bare path for `home`). Guarded by `skipPush` ref to prevent double-pushes during popstate
+- `handleSwitchTab(tab)` — wraps `setActiveTab` + `setShowHome(false)` + `navigateTo()`. Passed as `onSwitchTab` prop to all child modules
+- `onPopState` handler — restores `showHome`/`activeTab` on back/forward. Uses `showLandingRef` and `isModuleLockedRef` refs to avoid stale closures
+
+**How it works:**
+1. Every navigation action (`handleSelectTab`, `handleGoHome`, `handleBootComplete`, `handleLandingTabSelect`, `handleBreadcrumbGroupClick`, `handleSwitchTab`) calls `navigateTo()` after updating state
+2. On mount, `replaceState` syncs the initial history entry so the first Back works
+3. `popstate` handler sets `skipPush=true` before updating state, preventing `navigateTo` from pushing duplicate entries
+4. Initial page load checks `?tab=` via `getTabFromUrl()` before sessionStorage `nav_state` (URL param takes priority)
+5. Sign-out clears the URL via `replaceState` to bare pathname
+6. Locked modules in popstate redirect to home screen instead of the locked module
+
+**Rules for new navigation handlers:**
+- Always call `navigateTo(tab)` after setting `activeTab` state
+- For home navigation, call `navigateTo('home')`
+- Never call `navigateTo` inside the popstate handler (handled by `skipPush` guard)
+- All `onSwitchTab` props must use `handleSwitchTab`, not raw `setActiveTab`
+
 ## Key Files
 
 - `api/chat.js` — Vercel Edge Runtime proxy for OpenAI Chat Completions (streaming + non-streaming)
@@ -1002,3 +1033,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Stage-change scroll: every module's `useEffect([stage])` calls `window.scrollTo(0, 0)` after stepper `scrollIntoView` — ensures page starts at top on mobile (body scroll) while stepper still scrolls horizontally
 - Navigation scroll: `scrollAllToTop()` in App.jsx uses same DOM-walking pattern; called by `handleGoHome`, `handleBreadcrumbGroupClick`, `handleSelectTab`
 - HomeScreen does NOT auto-scroll to cards on group filter — mobile fixed header makes `scrollIntoView` push content behind header; navigation handlers already scroll to top
+- Browser back/forward uses History API (`pushState`/`popstate`) with `?tab=` query params — no React Router
+- All navigation handlers must call `navigateTo(tab)` after state changes; `onSwitchTab` props use `handleSwitchTab` (not raw `setActiveTab`)
+- Popstate handler uses `showLandingRef` and `isModuleLockedRef` refs to avoid stale closures from empty dependency array
+- Deep links supported: `/?tab=tokenizer` skips landing page and goes directly to module
