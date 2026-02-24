@@ -915,3 +915,66 @@ export const precisionRecallQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const ragUnderTheHoodQuiz = [
+  {
+    question: 'What is the most common reason RAG fails in production when it worked in demos?',
+    options: ['The LLM model is not powerful enough', 'Pipeline failures in chunking and metadata', 'The vector database is too slow', 'The embedding dimensions are too small'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What problem does fixed-size chunking cause?',
+    options: ['Chunks are too large to embed efficiently', 'Content is split mid-sentence destroying context', 'Too many chunks are created slowing retrieval', 'Metadata cannot be attached to fixed chunks'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the purpose of chunk overlap?',
+    options: ['Reduce the total number of chunks stored', 'Make embeddings more accurate', 'Ensure content at boundaries appears in both adjacent chunks', 'Speed up retrieval at query time'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why does metadata prevent outdated documents from being retrieved?',
+    options: ['Metadata makes embeddings more accurate', 'It allows filtering by date and status before semantic search runs', 'It reduces the size of the vector database', 'It improves the embedding model quality'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the sweet spot chunk size for most document types?',
+    options: ['50\u2013100 tokens', '300\u2013500 tokens', '1000\u20132000 tokens', 'Chunk size does not affect retrieval quality'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why does hybrid search outperform semantic-only retrieval?',
+    options: ['It is faster than vector search alone', 'It combines meaning-based and exact-term matching to handle both synonyms and abbreviations', 'It requires less metadata to work correctly', 'It uses smaller embedding dimensions'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does a reranker do in the retrieval pipeline?',
+    options: ['Splits documents into better chunks', 'Generates metadata for retrieved documents', 'Re-scores retrieved candidates for more precise final selection', 'Filters documents before vector search'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the main benefit of metadata pre-filtering before semantic search?',
+    options: ['It improves embedding quality', 'It reduces search space and noise, improving speed and relevance', 'It eliminates the need for a reranker', 'It allows larger chunk sizes to be used'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Which metadata fields are considered the minimum for production RAG?',
+    options: ['Only the source filename', 'Source, date, section, department, and status', 'Embedding dimension and model name', 'Chunk size and overlap percentage'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the recommended order for fixing RAG pipeline layers?',
+    options: ['Filtering first, then embeddings, then chunking', 'Embeddings first since they affect all other layers', 'Chunking and metadata first, then retrieval, then filtering', 'The order does not matter \u2014 fix whichever is easiest'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+]

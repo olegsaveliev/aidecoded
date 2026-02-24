@@ -101,6 +101,14 @@ const CARDS = [
     group: 'Advanced',
   },
   {
+    id: 'rag-under-the-hood',
+    title: 'Why RAG Fails',
+    description: 'Your RAG works in the demo and breaks in production. Learn exactly why — chunking, metadata, retrieval, filtering — and how to fix each layer.',
+    tag: 'Technical',
+
+    group: 'Advanced',
+  },
+  {
     id: 'machine-learning',
     title: 'Machine Learning',
     description: 'How machines actually learn from data — the foundation of all modern AI',
@@ -230,7 +238,7 @@ const CARDS = [
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
 
-const TOTAL_MODULES = 24 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
+const TOTAL_MODULES = 25 // all completable modules (tutorials + games + professional) — increment when adding a module with progress tracking
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()

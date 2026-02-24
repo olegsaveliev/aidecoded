@@ -1,0 +1,1531 @@
+/* ─── RAG Under The Hood (.ruh-) ─── */
+
+.ruh-root {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ─── Stepper accent ─── */
+.ruh-stepper .how-step-current {
+  border-color: #5856D6;
+  color: #5856D6;
+}
+.ruh-stepper .how-step-active .how-step-num {
+  background: #5856D6;
+  color: #fff;
+}
+.ruh-stepper .how-step-completed .how-step-num {
+  background: #5856D6;
+  color: #fff;
+}
+
+/* ─── Pipeline Progress Bar ─── */
+.ruh-pipeline-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 16px 0 20px;
+  margin-bottom: 16px;
+}
+
+.ruh-pipeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.ruh-pipeline-line {
+  position: absolute;
+  top: 16px;
+  right: 100%;
+  width: 32px;
+  height: 2px;
+  background: #FF3B30;
+  transition: background 0.4s ease;
+}
+
+.ruh-pipeline-line-fixed {
+  background: #34C759;
+}
+
+.ruh-pipeline-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.ruh-pipeline-dot-broken {
+  color: #FF3B30;
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.ruh-pipeline-dot-fixed {
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.1);
+  animation: dotFlip 0.4s ease;
+}
+
+.ruh-pipeline-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  transition: color 0.3s ease;
+}
+
+.ruh-pipeline-label-fixed {
+  color: #34C759;
+}
+
+.ruh-pipeline-item + .ruh-pipeline-item {
+  margin-left: 32px;
+}
+
+/* ─── Info card ─── */
+
+.ruh-info-content p {
+  margin: 0 0 12px;
+  line-height: 1.65;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.ruh-info-content p:last-child {
+  margin-bottom: 0;
+}
+
+.ruh-section-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 20px 0 10px;
+}
+
+/* ─── Layers list (Stage 1) ─── */
+.ruh-layers-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.ruh-layer-item {
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border-left: 2px solid #FF3B30;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+/* ─── Decisions list (Stage 7) ─── */
+.ruh-decisions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.ruh-decision-item {
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border-left: 2px solid #5856D6;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+/* ─── Strategy cards (Stage 2) ─── */
+.ruh-strategy-card {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.ruh-strategy-card p {
+  margin: 6px 0 0;
+}
+
+.ruh-strategy-bad {
+  background: rgba(255, 59, 48, 0.06);
+  border-left: 2px solid #FF3B30;
+}
+
+.ruh-strategy-better {
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+}
+
+.ruh-strategy-best {
+  background: rgba(52, 199, 89, 0.06);
+  border-left: 2px solid #34C759;
+}
+
+/* ─── Warning box ─── */
+.ruh-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.ruh-warning svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ─── Stat card ─── */
+.ruh-stat-card {
+  padding: 12px 16px;
+  margin-top: 12px;
+  border-left: 2px solid #5856D6;
+  border-radius: 10px;
+  background: rgba(88, 86, 214, 0.06);
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ─── JSON display ─── */
+.ruh-json {
+  background: rgba(88, 86, 214, 0.06);
+  border-left: 2px solid #5856D6;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: pre;
+  overflow-x: auto;
+  line-height: 1.5;
+  margin: 8px 0;
+}
+
+.ruh-json-minimal {
+  background: rgba(255, 59, 48, 0.04);
+  border-left-color: #FF3B30;
+}
+
+.ruh-json-rich {
+  background: rgba(52, 199, 89, 0.04);
+  border-left-color: #34C759;
+}
+
+/* ─── Tab bar (shared) ─── */
+.ruh-tab-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.ruh-tab-btn {
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ruh-tab-btn:hover {
+  border-color: #5856D6;
+  color: #5856D6;
+}
+
+.ruh-tab-btn-active {
+  background: #5856D6;
+  border-color: #5856D6;
+  color: #fff;
+}
+
+/* ─── Result indicators ─── */
+.ruh-result-good,
+.ruh-result-bad,
+.ruh-result-warn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-top: 10px;
+}
+
+.ruh-result-good svg,
+.ruh-result-bad svg,
+.ruh-result-warn svg {
+  flex-shrink: 0;
+}
+
+.ruh-result-good {
+  background: rgba(52, 199, 89, 0.08);
+  border-left: 2px solid #34C759;
+  color: var(--text-primary);
+}
+
+.ruh-result-bad {
+  background: rgba(255, 59, 48, 0.08);
+  border-left: 2px solid #FF3B30;
+  color: var(--text-primary);
+}
+
+.ruh-result-warn {
+  background: rgba(255, 149, 0, 0.08);
+  border-left: 2px solid #FF9500;
+  color: var(--text-primary);
+}
+
+/* ─── Pipeline Viz (Stage 1) ─── */
+.ruh-pipeline-viz {
+  padding: 20px 0;
+}
+
+.ruh-pipeline-stages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.ruh-pipeline-stage-item {
+  display: flex;
+  align-items: center;
+}
+
+.ruh-pipeline-arrow {
+  padding: 0 6px;
+  font-size: 16px;
+  color: var(--text-tertiary);
+}
+
+.ruh-pipeline-stage-box {
+  padding: 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.ruh-pipeline-stage-broken {
+  border-color: #FF3B30;
+  background: rgba(255, 59, 48, 0.08);
+  color: #FF3B30;
+  animation: pipelineFlow 0.3s ease-out;
+}
+
+.ruh-pipeline-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  animation: chunkReveal 0.3s ease-out;
+}
+
+.ruh-pipeline-result-bad {
+  background: rgba(255, 59, 48, 0.08);
+  border-left: 2px solid #FF3B30;
+  color: var(--text-primary);
+}
+
+.ruh-pipeline-result svg {
+  flex-shrink: 0;
+}
+
+.ruh-pipeline-hint {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-tertiary);
+  text-align: center;
+}
+
+/* ─── Chunking Viz (Stage 2) ─── */
+.ruh-chunking-viz {
+  padding: 0;
+}
+
+.ruh-chunks-display {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ruh-chunk {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all 0.3s ease-out;
+  position: relative;
+}
+
+.ruh-chunk-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ruh-chunk-split {
+  border-color: #FF3B30;
+}
+
+.ruh-chunk-good {
+  border-color: #34C759;
+}
+
+.ruh-chunk-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.ruh-chunk-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.ruh-chunk-split-line {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #FF3B30;
+  border-radius: 10px;
+}
+
+.ruh-chunk-overlap-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  background: rgba(255, 149, 0, 0.1);
+  border: 1px solid rgba(255, 149, 0, 0.3);
+  color: #FF9500;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ruh-chunking-result {
+  margin-bottom: 20px;
+}
+
+/* ─── Slider / Meters ─── */
+.ruh-chunk-slider,
+.ruh-dimension-slider {
+  padding: 16px 0;
+}
+
+.ruh-slider-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.ruh-slider {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+}
+
+.ruh-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #5856D6;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.ruh-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #5856D6;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.ruh-slider-meters {
+  display: flex;
+  gap: 20px;
+  margin-top: 12px;
+}
+
+.ruh-meter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ruh-meter-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.ruh-meter-bar {
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.ruh-meter-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.ruh-meter-value {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.ruh-sweet-spot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #34C759;
+}
+
+/* ─── Metadata Viz (Stage 3) ─── */
+.ruh-metadata-viz {
+  padding: 0;
+}
+
+.ruh-metadata-panels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ruh-metadata-panel {
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.ruh-metadata-panel-bad {
+  border-top: 2px solid #FF3B30;
+}
+
+.ruh-metadata-panel-good {
+  border-top: 2px solid #34C759;
+}
+
+.ruh-panel-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+}
+
+.ruh-query-text {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+}
+
+.ruh-retrieval-results {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.ruh-result-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--text-primary);
+}
+
+.ruh-result-item-wrong {
+  background: rgba(255, 59, 48, 0.06);
+}
+
+.ruh-result-item-right {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+.ruh-result-rank {
+  font-weight: 700;
+  color: var(--text-tertiary);
+  min-width: 20px;
+}
+
+.ruh-result-score {
+  margin-left: auto;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 11px;
+}
+
+/* ─── Metadata builder ─── */
+.ruh-metadata-builder {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border);
+}
+
+.ruh-builder-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+
+.ruh-field-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.ruh-field-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ruh-field-pill:hover {
+  border-color: #5856D6;
+  color: #5856D6;
+}
+
+.ruh-field-pill-active {
+  background: rgba(88, 86, 214, 0.08);
+  border-color: #5856D6;
+  color: #5856D6;
+}
+
+.ruh-metadata-preview {
+  margin-bottom: 16px;
+}
+
+/* ─── Quality meter ─── */
+.ruh-quality-meter {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ruh-quality-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.ruh-quality-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.ruh-quality-minimal {
+  background: #FF3B30;
+}
+
+.ruh-quality-adequate {
+  background: #FF9500;
+}
+
+.ruh-quality-strong {
+  background: #34C759;
+}
+
+.ruh-quality-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ruh-quality-label-minimal {
+  color: #FF3B30;
+}
+
+.ruh-quality-label-adequate {
+  color: #FF9500;
+}
+
+.ruh-quality-label-strong {
+  color: #34C759;
+}
+
+/* ─── Embeddings Viz (Stage 4) ─── */
+.ruh-embeddings-viz {
+  padding: 0;
+}
+
+.ruh-embedding-space {
+  margin-bottom: 12px;
+}
+
+.ruh-embedding-svg {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.ruh-dot {
+  transition: cx 0.5s ease, cy 0.5s ease;
+}
+
+.ruh-dot-label {
+  font-size: 10px;
+  font-family: inherit;
+}
+
+.ruh-query-dot {
+  animation: queryPulse 1.5s ease-in-out infinite;
+}
+
+.ruh-query-label {
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.ruh-embedding-result {
+  margin-bottom: 16px;
+}
+
+/* ─── Retrieval Viz (Stage 5) ─── */
+.ruh-retrieval-viz {
+  padding: 0;
+}
+
+.ruh-retrieval-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+  transition: opacity 0.3s ease;
+}
+
+.ruh-reranking {
+  opacity: 0.5;
+}
+
+.ruh-retrieval-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  animation: chunkReveal 0.3s ease-out;
+}
+
+.ruh-retrieval-item-relevant {
+  border-left: 2px solid #34C759;
+}
+
+.ruh-retrieval-item-noise {
+  border-left: 2px solid #FF3B30;
+  opacity: 0.7;
+}
+
+.ruh-retrieval-rank {
+  font-weight: 700;
+  color: var(--text-tertiary);
+  min-width: 20px;
+  font-size: 12px;
+}
+
+.ruh-retrieval-text {
+  flex: 1;
+  color: var(--text-primary);
+}
+
+.ruh-retrieval-score {
+  font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.ruh-retrieval-summary {
+  margin-bottom: 8px;
+}
+
+/* ─── Filtering Viz (Stage 6) ─── */
+.ruh-filtering-viz {
+  padding: 0;
+}
+
+.ruh-filter-query {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(88, 86, 214, 0.06);
+  border-left: 2px solid #5856D6;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.ruh-filter-query .ruh-query-text {
+  margin: 0;
+}
+
+.ruh-filter-query svg {
+  flex-shrink: 0;
+}
+
+.ruh-filter-layout {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.ruh-filter-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 4px;
+}
+
+.ruh-filter-doc {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.ruh-filter-doc-dimmed {
+  opacity: 0.15;
+  transform: scale(0.95);
+}
+
+.ruh-filter-doc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--doc-color);
+}
+
+.ruh-filter-controls {
+  min-width: 200px;
+}
+
+.ruh-filter-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+}
+
+.ruh-filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.ruh-filter-toggle input[type="checkbox"] {
+  accent-color: #5856D6;
+  width: 16px;
+  height: 16px;
+}
+
+.ruh-filter-stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 12px;
+}
+
+.ruh-filter-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ruh-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ruh-stat-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ruh-filter-result {
+  margin-bottom: 8px;
+}
+
+/* ─── Checklist Viz (Stage 7) ─── */
+.ruh-checklist-viz {
+  padding: 0;
+}
+
+.ruh-comparison {
+  margin-bottom: 24px;
+}
+
+.ruh-comparison-panel {
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+}
+
+.ruh-comparison-before {
+  border-top: 2px solid #FF3B30;
+}
+
+.ruh-comparison-after {
+  border-top: 2px solid #34C759;
+  animation: chunkReveal 0.3s ease-out;
+}
+
+.ruh-comparison-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ruh-comparison-pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.ruh-comparison-stage {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 59, 48, 0.08);
+  color: #FF3B30;
+  transition: all 0.3s ease;
+}
+
+.ruh-comparison-stage-good {
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.ruh-comparison-stage-flipping {
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+  animation: layerFix 0.4s ease;
+}
+
+.ruh-comparison-answer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-primary);
+  background: rgba(255, 59, 48, 0.06);
+  transition: opacity 0.3s ease;
+}
+
+.ruh-comparison-answer-hidden {
+  opacity: 0.3;
+}
+
+.ruh-comparison-answer-good {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+.ruh-compare-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #5856D6;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.ruh-compare-btn:hover {
+  background: #4B49C4;
+}
+
+.ruh-compare-btn:active {
+  transform: scale(0.97);
+}
+
+/* ─── Checklist sections ─── */
+.ruh-checklist-sections {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid var(--border);
+}
+
+.ruh-checklist-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+}
+
+.ruh-checklist-section {
+  margin-bottom: 16px;
+}
+
+.ruh-checklist-section:last-of-type {
+  margin-bottom: 16px;
+}
+
+.ruh-checklist-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5856D6;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ruh-checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.ruh-checklist-item input[type="checkbox"] {
+  accent-color: #5856D6;
+  width: 16px;
+  height: 16px;
+}
+
+.ruh-checklist-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ruh-checklist-bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-surface);
+  overflow: hidden;
+}
+
+.ruh-checklist-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: #5856D6;
+  transition: width 0.3s ease;
+}
+
+.ruh-checklist-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  min-width: 80px;
+}
+
+.ruh-checklist-complete {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: rgba(52, 199, 89, 0.08);
+  border-radius: 8px;
+  border-left: 2px solid #34C759;
+  font-size: 14px;
+  color: var(--text-primary);
+  animation: chunkReveal 0.3s ease-out;
+}
+
+/* ─── Final screen ─── */
+.ruh-final-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.ruh-final-card {
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  text-align: center;
+}
+.ruh-final-card-layer {
+  font-size: 13px;
+  font-weight: 600;
+  color: #5856D6;
+  margin-bottom: 4px;
+}
+.ruh-final-card-fix {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.ruh-reference-wrapper {
+  margin-bottom: 24px;
+}
+.ruh-reference-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+.ruh-reference {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.ruh-reference th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.ruh-reference td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+.ruh-ref-layer {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ─── Keyframes ─── */
+@keyframes pipelineFlow {
+  0% { transform: translateX(-8px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes layerFix {
+  0% { background: rgba(255, 59, 48, 0.1); border-color: #FF3B30; }
+  100% { background: rgba(52, 199, 89, 0.1); border-color: #34C759; }
+}
+
+@keyframes dotFlip {
+  0% { background: rgba(255, 59, 48, 0.1); transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { background: rgba(52, 199, 89, 0.1); transform: scale(1); }
+}
+
+@keyframes chunkReveal {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes queryPulse {
+  0%, 100% { r: 8; opacity: 0.9; }
+  50% { r: 10; opacity: 0.6; }
+}
+
+/* ─── Dark Mode ─── */
+[data-theme="dark"] .ruh-stat-card {
+  background: rgba(88, 86, 214, 0.12);
+  border-left-color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-json {
+  background: rgba(88, 86, 214, 0.12);
+  border-left-color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-json-minimal {
+  background: rgba(255, 59, 48, 0.08);
+  border-left-color: #FF453A;
+}
+
+[data-theme="dark"] .ruh-json-rich {
+  background: rgba(52, 199, 89, 0.08);
+  border-left-color: #30D158;
+}
+
+[data-theme="dark"] .ruh-tab-btn-active {
+  background: #7c7aef;
+  border-color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-field-pill-active {
+  background: rgba(124, 122, 239, 0.15);
+  border-color: #7c7aef;
+  color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-pipeline-dot-broken {
+  background: rgba(255, 59, 48, 0.15);
+}
+
+[data-theme="dark"] .ruh-pipeline-dot-fixed {
+  background: rgba(52, 199, 89, 0.15);
+}
+
+[data-theme="dark"] .ruh-layer-item {
+  border-left-color: #FF453A;
+}
+
+[data-theme="dark"] .ruh-decision-item {
+  border-left-color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-strategy-bad {
+  background: rgba(255, 59, 48, 0.08);
+  border-left-color: #FF453A;
+}
+
+[data-theme="dark"] .ruh-strategy-better {
+  background: rgba(255, 149, 0, 0.08);
+}
+
+[data-theme="dark"] .ruh-strategy-best {
+  background: rgba(52, 199, 89, 0.08);
+}
+
+[data-theme="dark"] .ruh-warning {
+  background: rgba(255, 149, 0, 0.08);
+}
+
+[data-theme="dark"] .ruh-checklist-section-title {
+  color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-compare-btn {
+  background: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-compare-btn:hover {
+  background: #6A68D6;
+}
+
+[data-theme="dark"] .ruh-filter-query {
+  background: rgba(88, 86, 214, 0.12);
+  border-left-color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-checklist-fill {
+  background: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-final-card {
+  background: #292524;
+  border-color: #44403C;
+}
+
+[data-theme="dark"] .ruh-reference th {
+  background: #292524;
+  border-bottom-color: #44403C;
+}
+
+[data-theme="dark"] .ruh-reference td {
+  border-bottom-color: #44403C;
+}
+
+[data-theme="dark"] .ruh-stepper .how-step-current .how-step-num {
+  background: #1C1917;
+}
+
+[data-theme="dark"] .ruh-stepper .how-step-completed .how-step-num {
+  background: #1C1917;
+}
+
+[data-theme="dark"] .ruh-final-card-layer {
+  color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-slider::-webkit-slider-thumb {
+  border-color: #292524;
+}
+
+[data-theme="dark"] .ruh-slider::-moz-range-thumb {
+  border-color: #292524;
+}
+
+[data-theme="dark"] .ruh-filter-toggle input[type="checkbox"] {
+  accent-color: #7c7aef;
+}
+
+[data-theme="dark"] .ruh-checklist-item input[type="checkbox"] {
+  accent-color: #7c7aef;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+  .ruh-root {
+    padding: 0 16px;
+  }
+
+  .ruh-pipeline-bar {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 12px 0 16px;
+    gap: 0;
+  }
+
+  .ruh-pipeline-item + .ruh-pipeline-item {
+    margin-left: 20px;
+  }
+
+  .ruh-pipeline-line {
+    width: 20px;
+  }
+
+  .ruh-pipeline-stages {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+  }
+
+  .ruh-pipeline-stage-box {
+    padding: 6px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .ruh-metadata-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .ruh-filter-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ruh-filter-docs-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .ruh-filter-controls {
+    min-width: unset;
+  }
+
+  .ruh-tab-bar {
+    flex-wrap: wrap;
+  }
+
+  .ruh-tab-btn {
+    flex: 1;
+    text-align: center;
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  .ruh-slider-meters {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ruh-compare-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .ruh-checklist-sections {
+    padding: 16px;
+  }
+
+  .ruh-final-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ruh-reference-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ruh-reference {
+    min-width: 400px;
+  }
+
+  .ruh-reference th,
+  .ruh-reference td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .ruh-embedding-svg {
+    max-width: 100%;
+  }
+
+  .ruh-comparison-pipeline {
+    gap: 4px;
+  }
+
+  .ruh-comparison-stage {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .ruh-field-pills {
+    gap: 4px;
+  }
+
+  .ruh-field-pill {
+    padding: 4px 10px;
+    font-size: 11px;
+    min-height: 44px;
+  }
+
+  .ruh-checklist-item {
+    min-height: 44px;
+  }
+
+  .ruh-filter-toggle {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ruh-pipeline-dot {
+    width: 24px;
+    height: 24px;
+  }
+
+  .ruh-pipeline-label {
+    font-size: 10px;
+  }
+
+  .ruh-pipeline-item + .ruh-pipeline-item {
+    margin-left: 14px;
+  }
+
+  .ruh-pipeline-line {
+    width: 14px;
+  }
+
+  .ruh-json {
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+
+  .ruh-filter-docs-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .ruh-checklist-sections {
+    padding: 12px;
+  }
+
+  .ruh-checklist-section {
+    margin-bottom: 12px;
+  }
+
+  .ruh-final-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ruh-reference-title {
+    font-size: 14px;
+  }
+
+  .ruh-reference th,
+  .ruh-reference td {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}

@@ -24,6 +24,7 @@ import AISafety from './AISafety.jsx'
 import AIFluency from './AIFluency.jsx'
 import AIStartupSimulator from './AIStartupSimulator.jsx'
 import PrecisionRecall from './PrecisionRecall.jsx'
+import RAGUnderTheHood from './RAGUnderTheHood.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import HomeScreen from './HomeScreen.jsx'
@@ -116,7 +117,7 @@ const VALID_TABS = [
   'agentic-ai', 'ai-native-pm', 'ai-city-builder',
   'ai-lab-explorer', 'prompt-heist', 'token-budget',
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
-  'ai-startup-simulator', 'precision-recall'
+  'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood'
 ]
 
 function getTabFromUrl() {
@@ -1053,6 +1054,9 @@ function App() {
         )}
         {!showHome && activeTab === 'agentic-ai' && (
           <AgenticAI onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'rag-under-the-hood' && (
+          <RAGUnderTheHood onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'machine-learning' && (
           <MachineLearning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

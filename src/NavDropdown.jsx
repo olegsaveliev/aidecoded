@@ -48,6 +48,7 @@ const NAV_GROUPS = [
     items: [
       { id: 'rag', name: 'RAG', tag: 'Journey' },
       { id: 'agentic-ai', name: 'Agentic AI', tag: 'Technical' },
+      { id: 'rag-under-the-hood', name: 'Why RAG Fails', tag: 'Technical' },
     ],
   },
   {
