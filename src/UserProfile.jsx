@@ -328,7 +328,7 @@ function UserProfile({ onSwitchTab, onGoHome }) {
   const [sortMode, setSortMode] = useState('date')
   const [streak, setStreak] = useState(0)
 
-  const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'
+  const displayName = user?.user_metadata?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'
   const memberSince = user?.created_at
     ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
     : null
@@ -503,7 +503,7 @@ function UserProfile({ onSwitchTab, onGoHome }) {
   }, [completedModulesBase])
 
   function handleStartEdit() {
-    setEditName(user?.user_metadata?.full_name || '')
+    setEditName(user?.user_metadata?.display_name || user?.user_metadata?.full_name || '')
     setEditing(true)
   }
 
