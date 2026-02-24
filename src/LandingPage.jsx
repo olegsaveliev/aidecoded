@@ -73,23 +73,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
 
   const scrollToModules = useCallback(() => {
     if (!mobileGridRef.current) return
-    const container = mobileGridRef.current.closest('.landing')
-    if (container && container.scrollHeight > container.clientHeight) {
-      // .landing is the scroll container — use getBoundingClientRect for accuracy
-      const gridRect = mobileGridRef.current.getBoundingClientRect()
-      const containerRect = container.getBoundingClientRect()
-      container.scrollTo({
-        top: container.scrollTop + gridRect.top - containerRect.top,
-        behavior: 'smooth',
-      })
-    } else {
-      // Fallback: window-level scroll
-      const gridRect = mobileGridRef.current.getBoundingClientRect()
-      window.scrollTo({
-        top: window.scrollY + gridRect.top,
-        behavior: 'smooth',
-      })
-    }
+    mobileGridRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
   return (
