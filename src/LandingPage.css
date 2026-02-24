@@ -347,8 +347,6 @@
   }
 
   .landing-theme-toggle {
-    position: fixed;
-    top: calc(14px + env(safe-area-inset-top, 0px));
-    right: calc(16px + env(safe-area-inset-right, 0px));
+    display: none;
   }
 }

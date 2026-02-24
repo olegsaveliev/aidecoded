@@ -110,9 +110,14 @@ function App() {
   const [authUnlockMessage, setAuthUnlockMessage] = useState('')
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false)
 
-  const [darkMode, setDarkMode] = useState(() =>
-    document.documentElement.getAttribute('data-theme') === 'dark'
-  )
+  const isMobilePortrait = () => window.innerWidth <= 768 && window.matchMedia('(orientation: portrait)').matches
+
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = document.documentElement.getAttribute('data-theme') === 'dark'
+    // Force light mode on mobile portrait landing page
+    if (saved && isMobilePortrait()) return false
+    return saved
+  })
 
   // Suppress transitions on initial mount to prevent theme animation flash
   useEffect(() => {
@@ -132,7 +137,10 @@ function App() {
     const bg = darkMode ? '#1C1917' : '#ffffff'
     document.documentElement.style.backgroundColor = bg
     document.body.style.backgroundColor = bg
-    localStorage.setItem('theme', theme)
+    // Don't overwrite saved 'dark' preference when we force light on mobile landing
+    if (darkMode || localStorage.getItem('theme') !== 'dark') {
+      localStorage.setItem('theme', theme)
+    }
     // Update browser chrome color (status bar, toolbar)
     // Strategy: setAttribute first (works on Android Chrome immediately),
     // then remove+recreate after a real delay (iOS Safari ignores setAttribute).
@@ -196,7 +204,14 @@ function App() {
   const [showHome, setShowHome] = useState(() => readNav()?.showHome ?? (pendingAuthReturn === 'home' ? true : false))
   const [homeTransition, setHomeTransition] = useState(false)
 
+  // Restore saved dark mode preference when leaving landing page on mobile
+  function restoreSavedTheme() {
+    const saved = localStorage.getItem('theme') === 'dark'
+    if (saved && !darkMode) setDarkMode(true)
+  }
+
   function handleGetStarted() {
+    restoreSavedTheme()
     setFadingOut(true)
     setTimeout(() => {
       setShowLanding(false)
@@ -212,6 +227,7 @@ function App() {
       setShowAuthModal(true)
       return
     }
+    restoreSavedTheme()
     setFadingOut(true)
     setTimeout(() => {
       setShowLanding(false)
