@@ -242,6 +242,22 @@
   background: var(--bg-primary);
 }
 
+.main-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.main-body-with-sidebar {
+  flex-direction: row;
+}
+
+.main-body-with-sidebar .tab-content-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
 /* ══════════════════════════════════
    HEADER
    ══════════════════════════════════ */
@@ -5491,6 +5507,10 @@
   }
 
   /* ── Sidebar (playground) ── */
+  .main-body-with-sidebar {
+    flex-direction: column;
+  }
+
   .sidebar {
     width: 100%;
     border-right: none;

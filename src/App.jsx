@@ -550,7 +550,7 @@ function App() {
     }
   }
 
-  const showSidebar = !showHome && activeTab === 'playground'
+  const showSidebar = !showHome && activeTab === 'playground' && !showPlaygroundEntry
 
   if (showLanding) {
     return (
@@ -568,119 +568,6 @@ function App() {
   return (
     <div className={`app ${!showSidebar ? 'app-no-sidebar' : ''} app-fade-in`}>
       <NeuronBackground />
-      {showSidebar && (
-        <aside className={`sidebar ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-          <button
-            className="sidebar-toggle-mobile"
-            onClick={() => setSidebarCollapsed((c) => !c)}
-          >
-            <span>Settings</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: sidebarCollapsed ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.2s' }}><polyline points="6 9 12 15 18 9" /></svg>
-          </button>
-          <div className="sidebar-section">
-            <h2>
-              Model
-              <Tooltip text="GPT-4o is smarter but slower. GPT-4o-mini is faster and cheaper. GPT-3.5-turbo is the classic model — fast and affordable. Great for learning!" />
-            </h2>
-            <select
-              className="model-select"
-              value={model}
-              onChange={(e) => setModel(e.target.value)}
-            >
-              {MODELS.map((m) => (
-                <option key={m} value={m}>
-                  {m}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="sidebar-section">
-            <h2>Parameters</h2>
-
-            <label className="slider-label">
-              <span className="slider-name">
-                Temperature
-                <Tooltip text="Controls creativity. Low (0.1) = predictable and factual. High (1.5) = creative and surprising. Start at 0.7." />
-              </span>
-              <span className="slider-value">{temperature.toFixed(2)}</span>
-            </label>
-            {/* Capped at 1.5 — values above ~1.3 produce increasingly garbled output that has no educational value */}
-            <input
-              type="range"
-              min="0"
-              max="1.5"
-              step="0.01"
-              value={temperature}
-              onChange={(e) => { setTemperature(parseFloat(e.target.value)); setTempChanged(true) }}
-            />
-            <span className="slider-mood">
-              {temperature <= 0.3 ? 'Focused — predictable, factual answers'
-                : temperature <= 0.8 ? 'Balanced — good mix of accuracy and variety'
-                : temperature <= 1.3 ? 'Creative — more surprising and varied'
-                : 'Very creative — highly varied, less predictable'}
-            </span>
-
-            <label className="slider-label">
-              <span className="slider-name">
-                Max Tokens
-                <Tooltip text="Maximum length of the AI response. 1 token ≈ 4 characters. 500 tokens ≈ 375 words." />
-              </span>
-              <span className="slider-value">{maxTokens}</span>
-            </label>
-            <input
-              type="range"
-              min="100"
-              max="2000"
-              step="10"
-              value={maxTokens}
-              onChange={(e) => setMaxTokens(parseInt(e.target.value))}
-            />
-            <span className="slider-mood">
-              {maxTokens <= 300 ? 'Short — a few sentences'
-                : maxTokens <= 700 ? 'Medium — a paragraph or two'
-                : maxTokens <= 1500 ? 'Long — detailed explanations'
-                : 'Maximum — full essays'}
-            </span>
-
-            <label className="slider-label">
-              <span className="slider-name">
-                Top-p
-                <Tooltip text="Works with temperature to control variety. Leave at 1.0 unless experimenting." />
-              </span>
-              <span className="slider-value">{topP.toFixed(2)}</span>
-            </label>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={topP}
-              onChange={(e) => setTopP(parseFloat(e.target.value))}
-            />
-            <span className="slider-mood">
-              {topP <= 0.5 ? 'Narrow — only the most likely words'
-                : topP <= 0.9 ? 'Focused — common words preferred'
-                : 'Full range — all words considered'}
-            </span>
-          </div>
-
-          <div className="sidebar-actions">
-            <button
-              className="sidebar-btn"
-              onClick={handleExport}
-              disabled={messages.length === 0}
-            >
-              Export Chat
-            </button>
-            <button className="sidebar-btn sidebar-btn-danger" onClick={handleClear}>
-              Clear Chat
-            </button>
-          </div>
-
-        </aside>
-      )}
-
       <main className="main">
         <header className="header header-grouped">
           <div className="header-left">
@@ -754,6 +641,120 @@ function App() {
             )}
           </div>
         </header>
+
+        <div className={`main-body ${showSidebar ? 'main-body-with-sidebar' : ''}`}>
+        {showSidebar && (
+          <aside className={`sidebar ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+            <button
+              className="sidebar-toggle-mobile"
+              onClick={() => setSidebarCollapsed((c) => !c)}
+            >
+              <span>Settings</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: sidebarCollapsed ? 'rotate(0deg)' : 'rotate(180deg)', transition: 'transform 0.2s' }}><polyline points="6 9 12 15 18 9" /></svg>
+            </button>
+            <div className="sidebar-section">
+              <h2>
+                Model
+                <Tooltip text="GPT-4o is smarter but slower. GPT-4o-mini is faster and cheaper. GPT-3.5-turbo is the classic model — fast and affordable. Great for learning!" />
+              </h2>
+              <select
+                className="model-select"
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+              >
+                {MODELS.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="sidebar-section">
+              <h2>Parameters</h2>
+
+              <label className="slider-label">
+                <span className="slider-name">
+                  Temperature
+                  <Tooltip text="Controls creativity. Low (0.1) = predictable and factual. High (1.5) = creative and surprising. Start at 0.7." />
+                </span>
+                <span className="slider-value">{temperature.toFixed(2)}</span>
+              </label>
+              {/* Capped at 1.5 — values above ~1.3 produce increasingly garbled output that has no educational value */}
+              <input
+                type="range"
+                min="0"
+                max="1.5"
+                step="0.01"
+                value={temperature}
+                onChange={(e) => { setTemperature(parseFloat(e.target.value)); setTempChanged(true) }}
+              />
+              <span className="slider-mood">
+                {temperature <= 0.3 ? 'Focused — predictable, factual answers'
+                  : temperature <= 0.8 ? 'Balanced — good mix of accuracy and variety'
+                  : temperature <= 1.3 ? 'Creative — more surprising and varied'
+                  : 'Very creative — highly varied, less predictable'}
+              </span>
+
+              <label className="slider-label">
+                <span className="slider-name">
+                  Max Tokens
+                  <Tooltip text="Maximum length of the AI response. 1 token ≈ 4 characters. 500 tokens ≈ 375 words." />
+                </span>
+                <span className="slider-value">{maxTokens}</span>
+              </label>
+              <input
+                type="range"
+                min="100"
+                max="2000"
+                step="10"
+                value={maxTokens}
+                onChange={(e) => setMaxTokens(parseInt(e.target.value))}
+              />
+              <span className="slider-mood">
+                {maxTokens <= 300 ? 'Short — a few sentences'
+                  : maxTokens <= 700 ? 'Medium — a paragraph or two'
+                  : maxTokens <= 1500 ? 'Long — detailed explanations'
+                  : 'Maximum — full essays'}
+              </span>
+
+              <label className="slider-label">
+                <span className="slider-name">
+                  Top-p
+                  <Tooltip text="Works with temperature to control variety. Leave at 1.0 unless experimenting." />
+                </span>
+                <span className="slider-value">{topP.toFixed(2)}</span>
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={topP}
+                onChange={(e) => setTopP(parseFloat(e.target.value))}
+              />
+              <span className="slider-mood">
+                {topP <= 0.5 ? 'Narrow — only the most likely words'
+                  : topP <= 0.9 ? 'Focused — common words preferred'
+                  : 'Full range — all words considered'}
+              </span>
+            </div>
+
+            <div className="sidebar-actions">
+              <button
+                className="sidebar-btn"
+                onClick={handleExport}
+                disabled={messages.length === 0}
+              >
+                Export Chat
+              </button>
+              <button className="sidebar-btn sidebar-btn-danger" onClick={handleClear}>
+                Clear Chat
+              </button>
+            </div>
+
+          </aside>
+        )}
 
         <div className={`tab-content-wrapper ${homeTransition ? 'tab-content-fading' : ''}`}>
         {showHome && (
@@ -982,6 +983,7 @@ function App() {
         {!showHome && activeTab === 'ai-native-pm' && (
           <AINativePM onSwitchTab={setActiveTab} onGoHome={handleGoHome} />
         )}
+        </div>
         </div>
       </main>
       <FeedbackWidget showHome={showHome} activeTab={activeTab} subPage={subPage} minimized={feedbackMinimized} onMinimize={handleFeedbackMinimize} onRestore={handleFeedbackRestore} />

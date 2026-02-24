@@ -188,6 +188,8 @@ The Playground is an interactive AI chat with educational scaffolding to teach b
 Numbered 3-step guide: (1) pick a suggestion, (2) change Temperature and resend, (3) try different System Prompts
 
 ### Sidebar Parameters
+The sidebar is hidden while the entry screen is visible (`showSidebar = !showHome && activeTab === 'playground' && !showPlaygroundEntry`). It appears only after the user dismisses the entry screen. On desktop, the sidebar sits left of the chat via `.main-body-with-sidebar` (flex row). On mobile (< 768px), `.main-body-with-sidebar` switches to `flex-direction: column`, placing the sidebar below the header and above the chat content.
+
 Each slider has a **mood label** (`<span className="slider-mood">`) below it that updates in real time:
 
 | Parameter | Range | Default | Mood Labels |
@@ -769,6 +771,7 @@ padding: 12px 16px;
 
 **Layout:**
 - `.app` → `flex-direction: column`
+- Sidebar lives inside `<main>` wrapped in `.main-body` div (below header, above content). Desktop uses `.main-body-with-sidebar` (flex row); mobile overrides to `flex-direction: column`
 - Sidebar collapses with toggle button (SVG chevron, not Unicode triangle)
 - Padding reduces: `40px → 24px`, `20px → 16px`
 
