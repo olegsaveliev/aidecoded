@@ -346,7 +346,7 @@
     color: var(--accent);
   }
 
-  .landing-theme-toggle {
-    display: none;
+  .landing .landing-theme-toggle {
+    display: none !important;
   }
 }
