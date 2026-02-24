@@ -15,7 +15,8 @@
             document.documentElement.setAttribute('data-theme', 'dark');
             document.documentElement.style.backgroundColor = '#1C1917';
             document.documentElement.style.colorScheme = 'dark';
-            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1C1917');
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', '#1C1917');
           }
         } catch(e) {}
       })();

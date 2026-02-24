@@ -133,22 +133,31 @@ function App() {
     document.documentElement.style.backgroundColor = bg
     document.body.style.backgroundColor = bg
     localStorage.setItem('theme', theme)
-    // Update iOS Safari / Android Chrome status bar color
-    // Remove old meta, wait one frame, then insert new — browsers batch
-    // same-frame DOM ops and ignore the change without this gap
+    // Update browser chrome color (status bar, toolbar)
+    // Strategy: setAttribute first (works on Android Chrome immediately),
+    // then remove+recreate after a real delay (iOS Safari ignores setAttribute).
     const themeColor = darkMode ? '#1C1917' : '#ffffff'
-    const oldMeta = document.querySelector('meta[name="theme-color"]')
-    if (oldMeta) oldMeta.remove()
-    requestAnimationFrame(() => {
+    const existingMeta = document.querySelector('meta[name="theme-color"]')
+    if (existingMeta) {
+      existingMeta.setAttribute('content', themeColor)
+    }
+    // iOS Safari needs remove+recreate with a real timeout (not just rAF)
+    const metaTimer = setTimeout(() => {
+      const oldMeta = document.querySelector('meta[name="theme-color"]')
+      if (oldMeta) oldMeta.remove()
       const newMeta = document.createElement('meta')
       newMeta.name = 'theme-color'
       newMeta.content = themeColor
       document.head.appendChild(newMeta)
-      // Re-enable transitions after the new meta is in place
-      requestAnimationFrame(() => {
-        document.documentElement.classList.remove('no-transitions')
-      })
-    })
+    }, 50)
+    // Re-enable transitions after theme is fully applied
+    const transTimer = setTimeout(() => {
+      document.documentElement.classList.remove('no-transitions')
+    }, 100)
+    return () => {
+      clearTimeout(metaTimer)
+      clearTimeout(transTimer)
+    }
   }, [darkMode])
 
   // Close avatar dropdown on outside click
