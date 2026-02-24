@@ -14,7 +14,8 @@ html {
   background-color: #ffffff;
 }
 
-[data-theme="dark"] {
+[data-theme="dark"],
+[data-theme="dark"] body {
   color-scheme: dark;
   background-color: #1C1917;
 }
@@ -124,7 +125,7 @@ html {
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
-  background-color: var(--bg-primary);
+  background-color: #ffffff;
   color: var(--text-primary);
   line-height: 1.5;
   font-weight: 400;

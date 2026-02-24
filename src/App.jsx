@@ -129,18 +129,22 @@ function App() {
     const theme = darkMode ? 'dark' : 'light'
     document.documentElement.setAttribute('data-theme', theme)
     document.documentElement.style.colorScheme = theme
-    document.documentElement.style.backgroundColor = darkMode ? '#1C1917' : '#ffffff'
+    const bg = darkMode ? '#1C1917' : '#ffffff'
+    document.documentElement.style.backgroundColor = bg
+    document.body.style.backgroundColor = bg
     localStorage.setItem('theme', theme)
     // Update iOS Safari / Android Chrome status bar color
-    // Must remove + recreate — some browsers ignore setAttribute on existing tag
+    // Remove old meta, wait one frame, then insert new — browsers batch
+    // same-frame DOM ops and ignore the change without this gap
+    const themeColor = darkMode ? '#1C1917' : '#ffffff'
     const oldMeta = document.querySelector('meta[name="theme-color"]')
     if (oldMeta) oldMeta.remove()
-    const newMeta = document.createElement('meta')
-    newMeta.name = 'theme-color'
-    newMeta.content = darkMode ? '#1C1917' : '#ffffff'
-    document.head.appendChild(newMeta)
-    // Re-enable after paint
     requestAnimationFrame(() => {
+      const newMeta = document.createElement('meta')
+      newMeta.name = 'theme-color'
+      newMeta.content = themeColor
+      document.head.appendChild(newMeta)
+      // Re-enable transitions after the new meta is in place
       requestAnimationFrame(() => {
         document.documentElement.classList.remove('no-transitions')
       })
