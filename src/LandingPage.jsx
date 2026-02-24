@@ -3,7 +3,7 @@ import TypewriterTitle from './TypewriterTitle.jsx'
 import NeuralNetworkCanvas from './NeuralNetworkCanvas.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
-import { useAuth } from './AuthContext'
+import { useAuth, FREE_MODULES } from './AuthContext'
 import './LandingPage.css'
 
 const TAGLINE = 'Your interactive journey into AI'
@@ -142,21 +142,35 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
         <div className="landing-mobile-grid" ref={mobileGridRef}>
           <div className="landing-mobile-grid-label">What you will learn</div>
           <div className="landing-mobile-grid-pills">
-            {MOBILE_MODULES.map((m) => (
-              <button
-                key={m.id}
-                className="landing-mobile-pill"
-                style={{ '--pill-color': m.color }}
-                onClick={() => handleNodeSelect(m.id)}
-              >
-                <span className="landing-mobile-pill-dot" style={{ background: m.color }} />
-                <span className="landing-mobile-pill-label">{m.label}</span>
-              </button>
-            ))}
+            {MOBILE_MODULES.map((m) => {
+              const locked = !user && !FREE_MODULES.includes(m.id)
+              return (
+                <button
+                  key={m.id}
+                  className={`landing-mobile-pill${locked ? ' landing-mobile-pill-locked' : ''}`}
+                  style={{ '--pill-color': m.color }}
+                  onClick={() => locked ? onOpenAuth() : handleNodeSelect(m.id)}
+                >
+                  <span className="landing-mobile-pill-dot" style={{ background: locked ? 'var(--text-tertiary)' : m.color }} />
+                  <span className="landing-mobile-pill-label">{m.label}</span>
+                  {locked && (
+                    <svg className="landing-mobile-pill-lock" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                  )}
+                </button>
+              )
+            })}
           </div>
           {!user && (
             <button className="landing-mobile-signin" onClick={onOpenAuth}>
-              Sign in to track your progress
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                <polyline points="10 17 15 12 10 7" />
+                <line x1="15" y1="12" x2="3" y2="12" />
+              </svg>
+              Sign in to track progress
             </button>
           )}
         </div>

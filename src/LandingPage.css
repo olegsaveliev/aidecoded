@@ -341,6 +341,22 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    flex: 1;
+  }
+
+  /* Locked pills */
+  .landing-mobile-pill-locked {
+    opacity: 0.45;
+  }
+
+  .landing-mobile-pill-locked:hover {
+    border-color: var(--border);
+  }
+
+  .landing-mobile-pill-lock {
+    flex-shrink: 0;
+    margin-left: auto;
+    color: var(--text-tertiary);
   }
 
   .landing-mobile-signin {
@@ -351,7 +367,10 @@
     font-family: inherit;
     color: var(--text-secondary);
     cursor: pointer;
-    padding: 8px;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     text-decoration: underline;
     text-underline-offset: 2px;
   }
