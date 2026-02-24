@@ -187,6 +187,12 @@
   z-index: 1010;
 }
 
+@media (orientation: portrait) {
+  .landing .landing-theme-toggle {
+    display: none !important;
+  }
+}
+
 /* ── Responsive ── */
 
 @media (max-height: 700px) {
