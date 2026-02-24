@@ -1176,7 +1176,7 @@
 }
 
 [data-theme="dark"] .pr-threshold-slider {
-  background: var(--bg-surface);
+  background: var(--border);
 }
 
 [data-theme="dark"] .pr-threshold-slider::-webkit-slider-thumb {
