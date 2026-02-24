@@ -150,7 +150,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/ModuleIcon.css` — ModuleIcon color states (default, hover, active)
 - `src/NavDropdown.jsx` — Grouped dropdown navigation component
 - `src/HomeScreen.jsx` — Module card grid with filter tags and group labels
-- `src/LandingPage.jsx` — Landing page with neural network canvas
+- `src/LandingPage.jsx` — Landing page with neural network canvas (desktop) and two-phase mobile layout (hero + pill grid)
 - `src/NeuralNetworkCanvas.jsx` — Interactive node graph on landing page (force-directed layout, viewBox 960×600)
 - `src/EntryScreen.jsx` — Reusable entry/intro screen for each module
 - `src/Quiz.jsx` / `src/Quiz.css` — Reusable quiz component
@@ -794,10 +794,15 @@ padding: 12px 16px;
 - `.tok-suggestions` → `flex-direction: column`
 - `.tok-suggestion` → `flex: none` (prevents squish)
 
-**Neural Network Canvas:**
-- SVG canvas, background canvas, buttons, and drag hint hidden at 768px
-- Mobile grid owned by `LandingPage.jsx` (`.landing-mobile-grid`): 3-col grid, 2-col at 480px
-- Each card shows `ModuleIcon` colored by tag color + label
+**Landing Page Mobile (two-phase layout):**
+- Desktop: neural network canvas with interactive nodes (hidden at 768px)
+- Mobile (≤ 768px): two-phase scroll layout replacing the canvas
+  - **Phase 1 — Hero** (100dvh): centered ModuleIcon + "AI Decoded" title + tagline + "Explore Modules" CTA that scrolls to Phase 2
+  - **Phase 2 — Pill grid** (below fold): 2-column grid of module pills (dot + label), each pill navigates to that module
+  - Desktop elements hidden on mobile: `.landing-title-desktop`, `.landing-tagline-desktop`, `.landing-network-wrapper`, `.landing-cta`, `.landing-hint`
+  - Mobile elements hidden on desktop: `.landing-mobile-hero`, `.landing-mobile-grid`
+- **Theme toggle on mobile landing**: hidden via `body.on-landing` CSS class (added/removed on LandingPage mount/unmount). Users can only change theme inside the app, not on the landing page on mobile. Desktop landing keeps the toggle visible.
+- NeuralNetworkCanvas watches `data-theme` changes via MutationObserver for canvas redraws
 
 **Entry Screen:**
 - Full-width button, reduced padding
@@ -809,7 +814,20 @@ padding: 12px 16px;
 
 Implemented via `[data-theme="dark"]` attribute on `<html>`.
 
-**Transition:** Instant switch — `.no-transitions` class disables all transitions during toggle (added/removed in `App.jsx` useEffect via double-rAF). No per-element transition needed for theme switching.
+**Transition:** Instant switch — `.no-transitions` class disables all transitions during toggle (added/removed in `App.jsx` useEffect via `setTimeout`). No per-element transition needed for theme switching.
+
+**Theme persistence:**
+- `localStorage.setItem('theme', 'dark'|'light')` — saved on every toggle
+- `index.html` inline `<script>` reads localStorage and sets `data-theme`, `backgroundColor`, `colorScheme`, and `theme-color` meta tag **before** CSS/React loads (prevents flash)
+- `App.jsx` darkMode effect sets: `data-theme` attr, `colorScheme` style, `backgroundColor` on both `<html>` and `<body>`, localStorage, and updates `<meta name="theme-color">` for mobile browser chrome
+- `theme-color` meta update: `setAttribute` first (works on Android Chrome), then `setTimeout(50ms)` remove+recreate (iOS Safari fallback)
+
+**Mobile landing page:**
+- Dark mode toggle hidden on mobile (≤ 768px) when landing page is active
+- `LandingPage.jsx` adds `body.on-landing` class on mount, removes on unmount
+- CSS: `body.on-landing .header-theme-toggle, body.on-landing .landing-theme-toggle { display: none !important }` at 768px and landscape phones
+- Landing page respects saved theme — if user set dark mode in the app, landing shows dark
+- Header toggle (`.header-theme-toggle` class) visible on all app screens on mobile, just hidden on landing
 
 **Pattern for component overrides:**
 ```css
@@ -958,7 +976,9 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Free modules (playground, tokenizer, generation) don't require login
 - All other modules show lock icon + dimmed card until authenticated
 - Every module must call `markModuleStarted` on entry screen dismiss and `markModuleComplete` on completion
-- Auth header button (sign-in icon / avatar) is always last in header-right, after dark mode toggle
+- Auth header button (sign-in icon / avatar) is always last in header-right, after dark mode toggle (`.header-theme-toggle`)
+- Dark mode toggle hidden on mobile landing page via `body.on-landing` class — users change theme only inside the app
+- Landing page mobile uses two-phase layout: hero (100dvh) + pill grid below fold; desktop uses neural network canvas
 - OAuth redirect preserves current tab via sessionStorage `auth_return_tab`; `activeTab` initializes to pending tab to prevent flash
 - Sign-out redirects to landing page and resets all module stages to defaults
 - Progress badges (bottom-right of cards): blue clock (in progress), green checkbox (done), yellow star (quiz)
