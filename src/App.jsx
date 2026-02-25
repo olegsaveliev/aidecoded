@@ -504,6 +504,7 @@ function App() {
           name: 'AI Decoded',
           url: `${SITE}/`,
           logo: `${SITE}/favicon.png`,
+          sameAs: ['https://www.linkedin.com/company/aidecoded/'],
         },
         {
           '@type': 'ItemList',
