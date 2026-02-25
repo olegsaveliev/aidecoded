@@ -40,7 +40,7 @@ const CARDS = [
   {
     id: 'tokenizer',
     title: 'Tokenizer',
-    description: 'See exactly how AI reads your text \u2014 broken into tokens in real time',
+    description: 'See exactly how AI reads your text — broken into tokens in real time',
     tag: 'Visual',
 
     group: 'Tools',
@@ -48,7 +48,7 @@ const CARDS = [
   {
     id: 'generation',
     title: 'Token Generation',
-    description: 'Watch AI predict the next word live \u2014 Manual or Simulate',
+    description: 'Watch AI predict the next word live — Manual or Simulate',
     tag: 'Interactive',
 
     group: 'Tools',
@@ -64,7 +64,7 @@ const CARDS = [
   {
     id: 'model-training',
     title: 'Model Training',
-    description: 'Discover how AI models like ChatGPT are built from scratch \u2014 data to deployment',
+    description: 'Discover how AI models like ChatGPT are built from scratch — data to deployment',
     tag: 'Journey',
 
     group: 'Foundations',
@@ -121,6 +121,14 @@ const CARDS = [
     id: 'machine-learning',
     title: 'Machine Learning',
     description: 'How machines actually learn from data — the foundation of all modern AI',
+    tag: 'Technical',
+
+    group: 'Foundations',
+  },
+  {
+    id: 'neural-networks',
+    title: 'Neural Networks',
+    description: 'Watch a neural network learn in real time. Animated weights, live loss curves, and hands-on backpropagation — from a single neuron to a trained network, step by step.',
     tag: 'Technical',
 
     group: 'Foundations',

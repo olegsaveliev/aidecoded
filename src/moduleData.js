@@ -11,6 +11,7 @@ const ALL_MODULES = [
   { id: 'rag', title: 'RAG', description: 'How AI learns from YOUR documents — Retrieval Augmented Generation explained', tag: 'Journey', tagColor: '#FF9500' },
   { id: 'agentic-ai', title: 'Agentic AI', description: 'AI that plans, acts and learns on its own — understand the systems changing what AI can do', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'machine-learning', title: 'Machine Learning', description: 'How machines actually learn from data — the foundation of all modern AI', tag: 'Technical', tagColor: '#5856D6' },
+  { id: 'neural-networks', title: 'Neural Networks', description: 'Watch a neural network learn in real time — animated weights, live loss curves, and hands-on backpropagation', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'deep-learning', title: 'Deep Learning', description: 'Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'fine-tuning', title: 'Fine-Tuning', description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'generative-ai', title: 'Generative AI', description: 'From noise to masterpiece — discover how AI creates images, music, video, code and text that never existed before', tag: 'Journey', tagColor: '#FF9500' },
