@@ -845,14 +845,14 @@
   margin-bottom: 10px;
 }
 
-.ol-param-ref-mobile {
-  display: none;
-}
-
 .ol-param-ref-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
+}
+
+.ol-param-ref-list.ol-param-ref-mobile {
+  display: none;
 }
 
 .ol-param-card {
@@ -1524,11 +1524,11 @@
     flex-direction: column;
   }
 
-  .ol-param-ref-desktop {
+  .ol-param-ref-list.ol-param-ref-desktop {
     display: none;
   }
 
-  .ol-param-ref-mobile {
+  .ol-param-ref-list.ol-param-ref-mobile {
     display: grid;
     grid-template-columns: 1fr;
   }
