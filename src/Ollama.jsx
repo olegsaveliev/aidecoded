@@ -606,24 +606,32 @@ function ModelfileViz({ active }) {
         <div className="ol-modelfile-panel ol-panel-after">
           <div className="ol-panel-header">With custom Modelfile</div>
           <p className="ol-panel-note">Same model, but a 4-line Modelfile tells it to be a terse math tutor with low temperature.</p>
-          <div className="ol-modelfile-preview ol-modelfile-annotated">
-            <div className="ol-line-annotated">
-              <span><span className="ol-kw-from">FROM</span> llama3.2</span>
-              <span className="ol-annotation">Which base model to use</span>
+          <div className="ol-terminal">
+            <div className="ol-terminal-chrome">
+              <span className="ol-dot ol-dot-red" />
+              <span className="ol-dot ol-dot-amber" />
+              <span className="ol-dot ol-dot-green" />
+              <span className="ol-terminal-title">Modelfile</span>
             </div>
-            <div className="ol-line-annotated">
-              <span><span className="ol-kw-system">SYSTEM</span> <span className="ol-str">&quot;&quot;&quot;You are a terse math tutor.</span></span>
-              <span className="ol-annotation">Personality and rules</span>
-            </div>
-            <div>
-              <span className="ol-str">Answer in one sentence maximum.</span>
-            </div>
-            <div>
-              <span className="ol-str">Use LaTeX notation for equations.&quot;&quot;&quot;</span>
-            </div>
-            <div className="ol-line-annotated">
-              <span><span className="ol-kw-param">PARAMETER</span> temperature 0.1</span>
-              <span className="ol-annotation">Keep answers precise</span>
+            <div className="ol-modelfile-preview ol-modelfile-annotated">
+              <div className="ol-line-annotated">
+                <span><span className="ol-kw-from">FROM</span> llama3.2</span>
+                <span className="ol-annotation">Which base model to use</span>
+              </div>
+              <div className="ol-line-annotated">
+                <span><span className="ol-kw-system">SYSTEM</span> <span className="ol-str">&quot;&quot;&quot;You are a terse math tutor.</span></span>
+                <span className="ol-annotation">Personality and rules</span>
+              </div>
+              <div>
+                <span className="ol-str">Answer in one sentence maximum.</span>
+              </div>
+              <div>
+                <span className="ol-str">Use LaTeX notation for equations.&quot;&quot;&quot;</span>
+              </div>
+              <div className="ol-line-annotated">
+                <span><span className="ol-kw-param">PARAMETER</span> temperature 0.1</span>
+                <span className="ol-annotation">Keep answers precise</span>
+              </div>
             </div>
           </div>
           <p className="ol-panel-note">The result: one clean sentence instead of a wall of text.</p>
