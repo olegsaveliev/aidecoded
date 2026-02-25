@@ -225,6 +225,37 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 
 ---
 
+## SEO
+
+**Domain:** `https://www.aidecoded.academy/`
+
+### Static Tags (`index.html`)
+- `<meta name="description">` — primary Google snippet text
+- `<meta name="keywords">` — search terms (learn AI, LLM tutorial, prompt engineering, etc.)
+- `<meta name="robots" content="index, follow">`
+- `<link rel="canonical">` — canonical URL
+- Open Graph tags (`og:type`, `og:site_name`, `og:title`, `og:description`, `og:url`, `og:image`, `og:locale`)
+- Twitter Card tags (`twitter:card`, `twitter:title`, `twitter:description`, `twitter:image`)
+- JSON-LD structured data: `WebSite` + `Organization` + `ItemList` (all 28 modules as `ListItem` entries)
+
+### Dynamic Meta Updates (`src/App.jsx`)
+`useEffect` on `[activeTab, showHome, showLanding]` updates:
+- `document.title` — per module (e.g. "Prompt Engineering — AI Decoded"), home ("AI Decoded — Learn How AI Works"), landing ("AI Decoded — Interactive AI Learning Platform")
+- `<meta name="description">` — module description from `ALL_MODULES` or default site description
+- `og:title`, `og:description`, `og:url` — updated to match current module for correct social sharing
+
+### Static Files
+- `public/robots.txt` — allows all crawlers, points to sitemap
+- `public/sitemap.xml` — homepage (priority 1.0) + all 28 module URLs (priority 0.7–0.9)
+
+### Maintenance Rules
+- When adding a new module: add `<url>` entry to `public/sitemap.xml` and `ListItem` to JSON-LD in `index.html`
+- Update `numberOfItems` in JSON-LD to match actual module count
+- Dynamic title/meta updates use `ALL_MODULES` from `moduleData.js` — no separate mapping needed
+- OG image (`og:image`) currently uses `favicon.png` as placeholder — replace with 1200×630px image when available
+
+---
+
 ## Playground Module (inline in App.jsx)
 
 The Playground is an interactive AI chat with educational scaffolding to teach beginners how LLM parameters work.
@@ -1014,7 +1045,8 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 22. Add progressive learn tips: `learnTip`/`dismissedTips`/`fadeTimerRef` state, `dismissLearnTip` function, milestone-based useEffect
 23. Add `handleStartOver` function that resets stage, tips, welcome, and all module state
 24. Add mobile touch targets (min-height: 44px) for module-specific buttons at 768px breakpoint
-25. Update this file
+25. Add `<url>` entry to `public/sitemap.xml` and `ListItem` to JSON-LD structured data in `index.html`; update `numberOfItems` count
+26. Update this file
 
 ## Conventions
 

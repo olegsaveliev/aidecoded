@@ -42,6 +42,7 @@ import ModuleIcon from './ModuleIcon.jsx'
 import AuthModal from './AuthModal.jsx'
 import { useAuth, FREE_MODULES } from './AuthContext'
 import { UserIcon, SignOutIcon } from './ContentIcons.jsx'
+import ALL_MODULES from './moduleData.js'
 import logoImg from './assets/logo_dark.png'
 import './App.css'
 
@@ -444,6 +445,47 @@ function App() {
       }
     }
   }, [user, activeTab, showHome, showLanding, showBootScreen])
+
+  // Dynamic SEO: update document title and meta tags per module
+  useEffect(() => {
+    const base = 'AI Decoded'
+    const defaultDesc = 'Learn how AI and Large Language Models work through 28 interactive tutorials and games. Explore tokenization, prompt engineering, RAG, agentic AI, deep learning and more — hands-on, visual, free.'
+    let title = base
+    let desc = defaultDesc
+
+    if (showLanding) {
+      title = `${base} — Interactive AI Learning Platform`
+    } else if (showHome) {
+      title = `${base} — Learn How AI Works`
+    } else if (activeTab === 'profile') {
+      title = `Profile — ${base}`
+    } else {
+      const mod = ALL_MODULES.find(m => m.id === activeTab)
+      if (mod) {
+        title = `${mod.title} — ${base}`
+        desc = mod.description
+      }
+    }
+
+    document.title = title
+
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) metaDesc.setAttribute('content', desc)
+
+    const ogTitle = document.querySelector('meta[property="og:title"]')
+    if (ogTitle) ogTitle.setAttribute('content', title)
+
+    const ogDesc = document.querySelector('meta[property="og:description"]')
+    if (ogDesc) ogDesc.setAttribute('content', desc)
+
+    const ogUrl = document.querySelector('meta[property="og:url"]')
+    if (ogUrl) {
+      const url = activeTab && !showHome && !showLanding
+        ? `https://www.aidecoded.academy/?tab=${activeTab}`
+        : 'https://www.aidecoded.academy/'
+      ogUrl.setAttribute('content', url)
+    }
+  }, [activeTab, showHome, showLanding])
 
   const [homeFilter, setHomeFilter] = useState(null)
   const [model, setModel] = useState('gpt-4o-mini')
