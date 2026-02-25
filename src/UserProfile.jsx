@@ -11,6 +11,7 @@ import {
 import './UserProfile.css'
 
 const TOTAL_MODULES = NAV_GROUPS.reduce((sum, g) => sum + g.items.length, 0)
+const VALID_MODULE_IDS = new Set(NAV_GROUPS.flatMap(g => g.items.map(i => i.id)))
 
 const BADGES = [
   // Tier 1 — Easy
@@ -356,7 +357,7 @@ function UserProfile({ onSwitchTab, onGoHome }) {
 
   // Compute stats
   const stats = useMemo(() => {
-    const completedSet = new Set(progress.map(p => p.module_id))
+    const completedSet = new Set(progress.map(p => p.module_id).filter(id => VALID_MODULE_IDS.has(id)))
     const quizCount = new Set(quizResults.map(q => q.module_id)).size
     const quizScores = quizResults.map(q => (q.score / q.max_score) * 100)
     const avgQuizScore = quizScores.length > 0

@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from './supabase'
+import ALL_MODULES from './moduleData'
 
 const AuthContext = createContext({})
 
 const FREE_MODULES = ['playground', 'tokenizer', 'generation']
+const VALID_MODULE_IDS = new Set(ALL_MODULES.map(m => m.id))
 
 // Inject localStorage display_name into user object (synchronous fallback while DB loads)
 function enrichUser(user) {
@@ -154,7 +156,7 @@ export const AuthProvider = ({ children }) => {
       .filter(q => q.module_id === moduleId)
       .sort((a, b) => b.score - a.score)[0]
 
-  const completedCount = progress.length
+  const completedCount = progress.filter(p => VALID_MODULE_IDS.has(p.module_id)).length
 
   const signInWithGoogle = () => {
     if (!supabase) return

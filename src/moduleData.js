@@ -14,6 +14,7 @@ const ALL_MODULES = [
   { id: 'deep-learning', title: 'Deep Learning', description: 'Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'fine-tuning', title: 'Fine-Tuning', description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'generative-ai', title: 'Generative AI', description: 'From noise to masterpiece — discover how AI creates images, music, video, code and text that never existed before', tag: 'Journey', tagColor: '#FF9500' },
+  { id: 'ai-city-builder', title: 'AI City Builder', description: 'Investigate AI-powered mysteries in a growing city. Solve detective cases using real AI concepts.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'ai-lab-explorer', title: 'AI Lab Explorer', description: 'Walk through an AI research lab. Unlock each room by completing hands-on challenges.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'prompt-heist', title: 'Prompt Heist', description: 'Craft the perfect prompt to outsmart AI security systems and pull off 5 legendary heists.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'token-budget', title: 'Token Budget', description: 'Rewrite prompts to fit strict token limits without losing quality. Real API cost thinking through play.', tag: 'Game', tagColor: '#F59E0B' },
