@@ -153,6 +153,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 |---|---|
 | Landing / Home | `/` (no query param) |
 | Module | `/?tab=playground`, `/?tab=tokenizer`, etc. |
+| Profile | `/?tab=profile` (auth-gated) |
 
 **Key functions in App.jsx:**
 - `VALID_TABS` — whitelist array of all valid tab IDs (defined outside component)
@@ -216,6 +217,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
 - `src/supabase.js` — Supabase client (null-safe, handles missing env vars)
 - `src/AuthContext.jsx` — Auth provider: user state, progress, quiz results, module started/complete tracking
+- `src/UserProfile.jsx` / `src/UserProfile.css` — User profile page (stats grid, progress by category, achievements/badges, completed modules list)
 - `src/AuthModal.jsx` — Sign In/Sign Up modal (Google OAuth + email/password)
 - `src/AuthModal.css` — Auth modal, avatar dropdown, progress badges, locked card styles
 
@@ -594,8 +596,9 @@ create table quiz_results (
 ### Header Auth UI
 
 - **Logged out**: SVG door/login icon (uses `header-icon-btn` class)
-- **Logged in**: SVG person icon (`.header-avatar-svg`) with dropdown
+- **Logged in**: SVG person icon (`.header-avatar-svg`) with dropdown containing Profile + Sign Out
 - Auth button is **last** in header-right (after dark mode toggle)
+- Profile button navigates to `/?tab=profile` via `handleSwitchTab('profile')`
 - OAuth redirect preserves current tab via `sessionStorage('auth_return_tab')`
 
 ### HomeScreen Badges
@@ -634,6 +637,7 @@ Logged-in users stay on their current screen after page refresh. Non-logged-in u
 - During OAuth redirect, `activeTab` initializes to `pendingAuthReturn` to avoid flash of Playground
 - Effect persists `{ activeTab, showHome }` whenever navigation changes (only when logged in and past landing/boot)
 - On sign-out: clears `nav_state` + `module_stages` from sessionStorage, redirects to landing page
+- On session expiry (user becomes null): same cleanup, plus redirects to landing page if on profile page
 
 ---
 
@@ -1041,6 +1045,8 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Landing page mobile: single hero screen with typewriter + CTA → boot screen → home; desktop uses neural network canvas
 - OAuth redirect preserves current tab via sessionStorage `auth_return_tab`; `activeTab` initializes to pending tab to prevent flash
 - Sign-out redirects to landing page and resets all module stages to defaults
+- Session expiry redirects to landing page if user is on the profile page (guard in nav persistence effect)
+- Profile page (`activeTab === 'profile'`) rendered at `!showHome && activeTab === 'profile'` — requires auth, no lock icon since only accessible via avatar dropdown
 - Progress badges (bottom-right of cards): blue clock (in progress), green checkbox (done), yellow star (quiz)
 - Supabase client is null-safe — all calls guarded with `if (!supabase) return`
 - Started modules tracked in localStorage (keyed by user ID), completed in Supabase `progress` table

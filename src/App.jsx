@@ -435,6 +435,12 @@ function App() {
     if (!user) {
       sessionStorage.removeItem('nav_state')
       sessionStorage.removeItem('module_stages')
+      // Session expired while on profile — redirect to landing page
+      if (activeTab === 'profile') {
+        setShowLanding(true)
+        setShowHome(false)
+        window.history.replaceState(null, '', window.location.pathname)
+      }
     }
   }, [user, activeTab, showHome, showLanding, showBootScreen])
 
