@@ -641,27 +641,25 @@ function ModelfileViz({ active }) {
       <p className="ol-section-note">Click a card below to see the full Modelfile for each use case:</p>
       <div className="ol-example-cards">
         {EXAMPLE_MODELFILES.map((ex, i) => (
-          <React.Fragment key={i}>
-            <button className={`ol-example-card ${expandedCard === i ? 'ol-example-active' : ''}`} onClick={() => setExpandedCard(expandedCard === i ? null : i)}>
-              <span className="ol-example-name">{ex.name}</span>
-              <svg className={`ol-example-chevron${expandedCard === i ? ' ol-example-chevron-open' : ''}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
-            </button>
-            {expandedCard === i && (
-              <div className="ol-example-detail">
-                <div className="ol-modelfile-preview ol-modelfile-small">
-                  {ex.modelfile.split('\n').map((line, j) => {
-                    const kw = line.match(/^(FROM|SYSTEM|PARAMETER)/)
-                    if (kw) {
-                      const kwClass = kw[1] === 'FROM' ? 'ol-kw-from' : kw[1] === 'SYSTEM' ? 'ol-kw-system' : 'ol-kw-param'
-                      return <div key={j}><span className={kwClass}>{kw[1]}</span>{line.slice(kw[1].length)}</div>
-                    }
-                    return <div key={j}>{line}</div>
-                  })}
-                </div>
-              </div>
-            )}
-          </React.Fragment>
+          <button key={i} className={`ol-example-card ${expandedCard === i ? 'ol-example-active' : ''}`} onClick={() => setExpandedCard(expandedCard === i ? null : i)}>
+            <span className="ol-example-name">{ex.name}</span>
+            <svg className={`ol-example-chevron${expandedCard === i ? ' ol-example-chevron-open' : ''}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+          </button>
         ))}
+        {expandedCard !== null && (
+          <div className="ol-example-detail">
+            <div className="ol-modelfile-preview ol-modelfile-small">
+              {EXAMPLE_MODELFILES[expandedCard].modelfile.split('\n').map((line, j) => {
+                const kw = line.match(/^(FROM|SYSTEM|PARAMETER)/)
+                if (kw) {
+                  const kwClass = kw[1] === 'FROM' ? 'ol-kw-from' : kw[1] === 'SYSTEM' ? 'ol-kw-system' : 'ol-kw-param'
+                  return <div key={j}><span className={kwClass}>{kw[1]}</span>{line.slice(kw[1].length)}</div>
+                }
+                return <div key={j}>{line}</div>
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -719,7 +717,44 @@ function ParametersViz({ active }) {
     <div className="ol-params-viz-wrapper">
       <div className="ol-param-ref">
         <div className="ol-param-ref-title">Parameter Reference</div>
-        <div className="ol-param-ref-list">
+        {/* Desktop: pair-grouped grid (detail spans below row) */}
+        <div className="ol-param-ref-list ol-param-ref-desktop">
+          {Array.from({ length: Math.ceil(PARAM_REFERENCE.length / 2) }, (_, rowIdx) => {
+            const pair = PARAM_REFERENCE.slice(rowIdx * 2, rowIdx * 2 + 2)
+            const expanded = pair.find(p => p.name === expandedParam)
+            return (
+              <React.Fragment key={rowIdx}>
+                {pair.map(p => (
+                  <button
+                    key={p.name}
+                    className={`ol-param-card${expandedParam === p.name ? ' ol-param-card-open' : ''}`}
+                    onClick={() => setExpandedParam(expandedParam === p.name ? null : p.name)}
+                  >
+                    <div className="ol-param-card-header">
+                      <code className="ol-param-name">{p.name}</code>
+                      <span className="ol-param-label">{p.label}</span>
+                      <svg className={`ol-param-chevron${expandedParam === p.name ? ' ol-param-chevron-open' : ''}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+                    </div>
+                  </button>
+                ))}
+                {expanded && (
+                  <div className="ol-param-card-body">
+                    <p className="ol-param-desc">{expanded.desc}</p>
+                    <p className="ol-param-detail">{expanded.detail}</p>
+                    <div className="ol-param-example">
+                      <code>{expanded.example}</code>
+                    </div>
+                    <div className="ol-param-use">
+                      <TipIcon size={12} color="#eab308" /> {expanded.use}
+                    </div>
+                  </div>
+                )}
+              </React.Fragment>
+            )
+          })}
+        </div>
+        {/* Mobile: flat list (detail directly below its card) */}
+        <div className="ol-param-ref-list ol-param-ref-mobile">
           {PARAM_REFERENCE.map(p => (
             <React.Fragment key={p.name}>
               <button
