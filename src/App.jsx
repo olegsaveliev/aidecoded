@@ -136,6 +136,8 @@ function getTabFromUrl() {
   return null
 }
 
+const AUTH_UNLOCK_MESSAGE = 'Create a free account to unlock all modules'
+
 function App() {
   const { user, loading: authLoading, signOut, isModuleLocked, markModuleStarted, markModuleComplete } = useAuth()
   const skipPush = useRef(false)
@@ -259,7 +261,7 @@ function App() {
   function handleLandingTabSelect(tabId) {
     if (isModuleLocked(tabId)) {
       sessionStorage.setItem('auth_return_tab', tabId)
-      setAuthUnlockMessage('Create a free account to unlock all modules')
+      setAuthUnlockMessage(AUTH_UNLOCK_MESSAGE)
       setShowAuthModal(true)
       return
     }
@@ -373,7 +375,7 @@ function App() {
   function handleSelectTab(tab) {
     if (isModuleLocked(tab)) {
       sessionStorage.setItem('auth_return_tab', tab)
-      setAuthUnlockMessage('Create a free account to unlock all modules')
+      setAuthUnlockMessage(AUTH_UNLOCK_MESSAGE)
       setShowAuthModal(true)
       return
     }
@@ -389,6 +391,12 @@ function App() {
   }
 
   function handleSwitchTab(tab) {
+    if (isModuleLocked(tab)) {
+      sessionStorage.setItem('auth_return_tab', tab)
+      setAuthUnlockMessage(AUTH_UNLOCK_MESSAGE)
+      setShowAuthModal(true)
+      return
+    }
     setShowHome(false)
     setActiveTab(tab)
 
@@ -429,6 +437,16 @@ function App() {
     }, 3000)
     return () => clearTimeout(timeout)
   }, [user, pendingAuthReturn])
+
+  // Guard: redirect locked modules to home for unauthenticated users (handles deep links + session expiry)
+  // No modal — modal only appears on explicit user clicks (locked cards, nav items)
+  useEffect(() => {
+    if (authLoading) return
+    if (!showHome && !showLanding && !FREE_MODULES.includes(activeTab) && !user) {
+      setShowHome(true)
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+  }, [authLoading, activeTab, showHome, showLanding, user])
 
   // Persist navigation state for logged-in users
   useEffect(() => {
@@ -758,6 +776,8 @@ function App() {
   }
 
   const showSidebar = !showHome && activeTab === 'playground' && !showPlaygroundEntry
+  // Render guard: prevent locked module content from rendering (defense in depth for deep links)
+  const canRenderModule = FREE_MODULES.includes(activeTab) || !!user
 
   if (showLanding) {
     return (
@@ -1140,82 +1160,82 @@ function App() {
         {!showHome && activeTab === 'generation' && (
           <Generation model={model} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'how-llms-work' && (
+        {!showHome && canRenderModule && activeTab === 'how-llms-work' && (
           <HowLLMsWork model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'model-training' && (
+        {!showHome && canRenderModule && activeTab === 'model-training' && (
           <ModelTraining onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'prompt-engineering' && (
+        {!showHome && canRenderModule && activeTab === 'prompt-engineering' && (
           <PromptEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'context-engineering' && (
+        {!showHome && canRenderModule && activeTab === 'context-engineering' && (
           <ContextEngineering model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'rag' && (
+        {!showHome && canRenderModule && activeTab === 'rag' && (
           <RAG model={model} temperature={temperature} topP={topP} maxTokens={maxTokens} onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'agentic-ai' && (
+        {!showHome && canRenderModule && activeTab === 'agentic-ai' && (
           <AgenticAI onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'rag-under-the-hood' && (
+        {!showHome && canRenderModule && activeTab === 'rag-under-the-hood' && (
           <RAGUnderTheHood onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-in-production' && (
+        {!showHome && canRenderModule && activeTab === 'ai-in-production' && (
           <AIInProduction onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'machine-learning' && (
+        {!showHome && canRenderModule && activeTab === 'machine-learning' && (
           <MachineLearning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'neural-networks' && (
+        {!showHome && canRenderModule && activeTab === 'neural-networks' && (
           <NeuralNetworks onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'deep-learning' && (
+        {!showHome && canRenderModule && activeTab === 'deep-learning' && (
           <DeepLearning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'fine-tuning' && (
+        {!showHome && canRenderModule && activeTab === 'fine-tuning' && (
           <FineTuning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'generative-ai' && (
+        {!showHome && canRenderModule && activeTab === 'generative-ai' && (
           <GenerativeAI onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-city-builder' && (
+        {!showHome && canRenderModule && activeTab === 'ai-city-builder' && (
           <AICityBuilder onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-lab-explorer' && (
+        {!showHome && canRenderModule && activeTab === 'ai-lab-explorer' && (
           <AILabExplorer onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'prompt-heist' && (
+        {!showHome && canRenderModule && activeTab === 'prompt-heist' && (
           <PromptHeist onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'token-budget' && (
+        {!showHome && canRenderModule && activeTab === 'token-budget' && (
           <TokenBudget onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-ethics-tribunal' && (
+        {!showHome && canRenderModule && activeTab === 'ai-ethics-tribunal' && (
           <AIEthicsTribunal onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'pm-simulator' && (
+        {!showHome && canRenderModule && activeTab === 'pm-simulator' && (
           <PMSimulator onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-native-pm' && (
+        {!showHome && canRenderModule && activeTab === 'ai-native-pm' && (
           <AINativePM onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-safety' && (
+        {!showHome && canRenderModule && activeTab === 'ai-safety' && (
           <AISafety onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-fluency' && (
+        {!showHome && canRenderModule && activeTab === 'ai-fluency' && (
           <AIFluency onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'ai-startup-simulator' && (
+        {!showHome && canRenderModule && activeTab === 'ai-startup-simulator' && (
           <AIStartupSimulator onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'alignment-game' && (
+        {!showHome && canRenderModule && activeTab === 'alignment-game' && (
           <AlignmentGame onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'choosing-ai-model' && (
+        {!showHome && canRenderModule && activeTab === 'choosing-ai-model' && (
           <ChoosingAIModel onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
-        {!showHome && activeTab === 'precision-recall' && (
+        {!showHome && canRenderModule && activeTab === 'precision-recall' && (
           <PrecisionRecall onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'profile' && (
