@@ -29,6 +29,7 @@ import AIInProduction from './AIInProduction.jsx'
 import AlignmentGame from './AlignmentGame.jsx'
 import NeuralNetworks from './NeuralNetworks.jsx'
 import ChoosingAIModel from './ChoosingAIModel.jsx'
+import Ollama from './Ollama.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -125,7 +126,7 @@ const VALID_TABS = [
   'ai-lab-explorer', 'prompt-heist', 'token-budget',
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
-  'alignment-game', 'choosing-ai-model', 'neural-networks',
+  'alignment-game', 'choosing-ai-model', 'neural-networks', 'ollama',
   'profile'
 ]
 
@@ -1237,6 +1238,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'precision-recall' && (
           <PrecisionRecall onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'ollama' && (
+          <Ollama onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'profile' && (
           <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

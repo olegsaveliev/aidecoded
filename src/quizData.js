@@ -1167,3 +1167,66 @@ export const neuralNetworksQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const ollamaQuiz = [
+  {
+    question: 'What is the primary advantage of running AI locally with Ollama?',
+    options: ['Local models are always more capable than cloud models', 'Data stays on your machine, there are no API costs, and no rate limits', 'Local models download faster than cloud APIs', 'Ollama automatically fine-tunes models on your data'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What command runs a model interactively in the terminal with Ollama?',
+    options: ['ollama start llama3.2', 'ollama run llama3.2', 'ollama launch llama3.2', 'ollama chat llama3.2'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is an Ollama Modelfile most similar to?',
+    options: ['A Python requirements.txt file', 'A Docker Compose file', 'A Dockerfile for an AI model', 'A git configuration file'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which Modelfile instruction sets the model\'s personality and behaviour rules?',
+    options: ['TEMPLATE', 'PARAMETER', 'ADAPTER', 'SYSTEM'],
+    correct: 3,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does PARAMETER temperature 0.1 do to a model\'s output?',
+    options: ['Makes responses 10% shorter', 'Makes responses more deterministic and focused', 'Reduces the context window to 10%', 'Speeds up inference by 10%'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'On what port does Ollama serve its local REST API by default?',
+    options: ['3000', '8080', '5000', '11434'],
+    correct: 3,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'How do you use Ollama as a drop-in replacement for OpenAI\'s Python SDK?',
+    options: ['Install a special Ollama Python package that replaces OpenAI\'s', 'Change the base_url to http://localhost:11434/v1', 'Export OPENAI_API_KEY=ollama in terminal', 'Ollama cannot be used with OpenAI\'s SDK'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does the PARAMETER num_ctx instruction control?',
+    options: ['The number of CPU cores used for inference', 'The maximum number of output tokens', 'The context window size in tokens', 'The number of model layers to load'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What command builds a custom model from a Modelfile named "Modelfile"?',
+    options: ['ollama build my-model -f Modelfile', 'ollama compile my-model Modelfile', 'ollama create my-model -f Modelfile', 'ollama package my-model --file Modelfile'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which of these is a good use case for running AI locally vs using cloud APIs?',
+    options: ['Tasks requiring GPT-5.2 level reasoning', 'Processing sensitive medical or legal documents that cannot leave your network', 'Running 200B+ parameter frontier models', 'Tasks where you need real-time web access'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+]

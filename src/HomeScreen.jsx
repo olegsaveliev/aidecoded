@@ -267,6 +267,13 @@ const CARDS = [
     tag: 'Practical',
     group: 'Skills',
   },
+  {
+    id: 'ollama',
+    title: 'Run AI Locally',
+    description: 'No API costs. No data leaving your machine. No rate limits. Learn how Ollama lets you run Llama, Gemma, Mistral and more on your own hardware — and build your own custom AI assistant in minutes.',
+    tag: 'Practical',
+    group: 'Skills',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']

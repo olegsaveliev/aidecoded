@@ -30,6 +30,7 @@ const ALL_MODULES = [
   { id: 'ai-in-production', title: 'AI in Production', description: 'Shipping an AI feature is the beginning, not the end. Learn how to monitor quality, measure latency, track cost, detect drift and know when your AI is silently failing.', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'alignment-game', title: 'The Alignment Game', description: 'Give an AI a goal. Watch it achieve the goal perfectly and completely miss the point. Can you write constraints tight enough to stop it?', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'choosing-ai-model', title: 'Choosing the Right AI Model', description: 'GPT-5, Claude, Gemini, DeepSeek, Llama — the choice is paralyzing. Learn the framework that cuts through the noise and matches any task to the right model, every time.', tag: 'Practical', tagColor: '#34C759' },
+  { id: 'ollama', title: 'Run AI Locally', description: 'No API costs. No data leaving your machine. No rate limits. Learn how Ollama lets you run Llama, Gemma, Mistral and more on your own hardware — and build your own custom AI assistant in minutes.', tag: 'Practical', tagColor: '#34C759' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

@@ -46,6 +46,7 @@ Interactive React app for learning how Large Language Models work.
 | `ai-in-production` | AIInProduction.jsx | AIInProduction.css | aiInProductionQuiz | Technical | #5856D6 |
 | `alignment-game` | AlignmentGame.jsx | AlignmentGame.css | — (game) | Game | #F59E0B |
 | `choosing-ai-model` | ChoosingAIModel.jsx | ChoosingAIModel.css | choosingAIModelQuiz | Practical | #34C759 |
+| `ollama` | Ollama.jsx | Ollama.css | ollamaQuiz | Practical | #34C759 |
 
 ## Color System — Two Color Layers
 
@@ -58,7 +59,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
-| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model |
+| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
@@ -74,7 +75,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
-| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model |
+| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally |
 | Advanced | #FF9500 | RAG, Agentic AI, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
 | Professional | #0EA5E9 | AI-Native PM |
@@ -219,6 +220,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/RAGUnderTheHood.jsx` / `src/RAGUnderTheHood.css` — Why RAG Fails tutorial (7 stages: why RAG fails, chunking, metadata, embeddings, retrieval, filtering, production checklist)
 - `src/AIInProduction.jsx` / `src/AIInProduction.css` — AI in Production tutorial (7 stages: silent failure, quality metrics, latency & cost, drift detection, A/B testing, alerting, full observability stack)
 - `src/ChoosingAIModel.jsx` / `src/ChoosingAIModel.css` — Choosing the Right AI Model tutorial (7 stages: wrong question, 7 dimensions, benchmarks, task matching, cost-quality-speed triangle, model snapshot 2026, personal framework)
+- `src/Ollama.jsx` / `src/Ollama.css` — Run AI Locally tutorial (7 stages: why local, install & run, model library, the Modelfile, parameters, the API, build assistant)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -628,6 +630,7 @@ create table quiz_results (
 | AI in Production | Entry screen dismissed | Reach final screen |
 | Neural Networks | Entry screen dismissed | Reach final screen |
 | Choosing the Right AI Model | Entry screen dismissed | Reach final screen |
+| Run AI Locally | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 
