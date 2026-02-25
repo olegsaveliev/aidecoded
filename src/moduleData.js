@@ -26,6 +26,7 @@ const ALL_MODULES = [
   { id: 'precision-recall', title: 'Precision & Recall', description: 'Why accuracy is a lie and what to measure instead. Master TP, TN, FP, FN, precision, recall and F1 through interactive real-world scenarios.', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'rag-under-the-hood', title: 'Why RAG Fails', description: 'Your RAG works in the demo and breaks in production. Learn exactly why — chunking, metadata, retrieval, filtering — and how to fix each layer.', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'ai-in-production', title: 'AI in Production', description: 'Shipping an AI feature is the beginning, not the end. Learn how to monitor quality, measure latency, track cost, detect drift and know when your AI is silently failing.', tag: 'Technical', tagColor: '#5856D6' },
+  { id: 'alignment-game', title: 'The Alignment Game', description: 'Give an AI a goal. Watch it achieve the goal perfectly and completely miss the point. Can you write constraints tight enough to stop it?', tag: 'Game', tagColor: '#F59E0B' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

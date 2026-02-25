@@ -216,6 +216,15 @@ const CARDS = [
     difficulty: 'Strategic',
   },
   {
+    id: 'alignment-game',
+    title: 'The Alignment Game',
+    description: 'Give an AI a goal. Watch it achieve the goal perfectly and completely miss the point. Can you write constraints tight enough to stop it? Goodhart\'s Law has never been this fun.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Thought-Provoking',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',

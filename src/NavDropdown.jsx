@@ -64,6 +64,7 @@ const NAV_GROUPS = [
       { id: 'ai-ethics-tribunal', name: 'AI Ethics Tribunal', tag: 'Game' },
       { id: 'pm-simulator', name: 'PM Simulator', tag: 'Game' },
       { id: 'ai-startup-simulator', name: 'AI Startup Simulator', tag: 'Game' },
+      { id: 'alignment-game', name: 'The Alignment Game', tag: 'Game' },
     ],
   },
   {

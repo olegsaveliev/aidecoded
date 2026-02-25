@@ -40,6 +40,7 @@ const NODES = [
   { id: 'precision-recall', label: 'Precision/Recall', group: 'foundations', desc: 'Why accuracy lies and what to measure instead' },
   { id: 'rag-under-the-hood', label: 'Why RAG Fails', group: 'advanced', desc: 'Fix every layer of your RAG pipeline' },
   { id: 'ai-in-production', label: 'AI in Prod', group: 'advanced', desc: 'Monitor quality, latency, cost and drift in production AI' },
+  { id: 'alignment-game', label: 'Alignment Game', group: 'play', desc: 'Write constraints to stop AI from gaming your goals' },
 ]
 
 
@@ -110,6 +111,9 @@ const CONNECTIONS = [
   ['agentic-ai', 'ai-in-production'],
   ['ai-safety', 'ai-in-production'],
   ['precision-recall', 'ai-in-production'],
+  ['ai-ethics-tribunal', 'alignment-game'],
+  ['ai-safety', 'alignment-game'],
+  ['prompt-heist', 'alignment-game'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -161,6 +165,7 @@ const NEURON_LAYOUT = {
   'precision-recall':      { px: 0.22, py: 0.38 },
   'rag-under-the-hood':    { px: 0.75, py: 0.33 },
   'ai-in-production':      { px: 0.85, py: 0.46 },
+  'alignment-game':        { px: 0.68, py: 0.80 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -172,7 +177,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'ai-native-pm',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */
