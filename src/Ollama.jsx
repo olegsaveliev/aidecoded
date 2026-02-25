@@ -1313,7 +1313,7 @@ function Ollama({ onSwitchTab, onGoHome }) {
   return (
     <div className={`how-llms ol-root ${fading ? 'how-fading' : ''}`}>
       {!showFinal && (
-        <button className="ol-start-over-link" onClick={handleStartOver}>
+        <button className="entry-start-over" onClick={handleStartOver}>
           &larr; Start over
         </button>
       )}

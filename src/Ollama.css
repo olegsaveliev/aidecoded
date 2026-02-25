@@ -14,23 +14,6 @@
 .ol-stepper .how-step-active .how-step-label { color: var(--text-primary); }
 .ol-stepper .how-step-current .how-step-label { color: #34C759; }
 
-/* ── Start over link ── */
-
-.ol-start-over-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: none;
-  border: none;
-  color: var(--text-tertiary);
-  font-size: 13px;
-  cursor: pointer;
-  padding: 4px 0;
-  margin-bottom: 8px;
-  font-family: inherit;
-}
-.ol-start-over-link:hover { color: #34C759; }
-
 /* Welcome banner uses standard how-welcome classes from App.css */
 
 /* ── Stage layout ── */
