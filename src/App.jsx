@@ -26,6 +26,7 @@ import AIStartupSimulator from './AIStartupSimulator.jsx'
 import PrecisionRecall from './PrecisionRecall.jsx'
 import RAGUnderTheHood from './RAGUnderTheHood.jsx'
 import AIInProduction from './AIInProduction.jsx'
+import AlignmentGame from './AlignmentGame.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -121,6 +122,7 @@ const VALID_TABS = [
   'ai-lab-explorer', 'prompt-heist', 'token-budget',
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
+  'alignment-game',
   'profile'
 ]
 
@@ -1109,6 +1111,9 @@ function App() {
         )}
         {!showHome && activeTab === 'ai-startup-simulator' && (
           <AIStartupSimulator onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'alignment-game' && (
+          <AlignmentGame onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'precision-recall' && (
           <PrecisionRecall onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

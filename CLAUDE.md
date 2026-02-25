@@ -43,6 +43,7 @@ Interactive React app for learning how Large Language Models work.
 | `precision-recall` | PrecisionRecall.jsx | PrecisionRecall.css | precisionRecallQuiz | Technical | #5856D6 |
 | `rag-under-the-hood` | RAGUnderTheHood.jsx | RAGUnderTheHood.css | ragUnderTheHoodQuiz | Technical | #5856D6 |
 | `ai-in-production` | AIInProduction.jsx | AIInProduction.css | aiInProductionQuiz | Technical | #5856D6 |
+| `alignment-game` | AlignmentGame.jsx | AlignmentGame.css | — (game) | Game | #F59E0B |
 
 ## Color System — Two Color Layers
 
@@ -57,7 +58,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
-| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator |
+| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
 **Where tag colors are used:**
@@ -73,7 +74,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency |
 | Advanced | #FF9500 | RAG, Agentic AI, Why RAG Fails, AI in Production |
-| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator |
+| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
 | Professional | #0EA5E9 | AI-Native PM |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
@@ -206,6 +207,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/AISafety.jsx` / `src/AISafety.css` — AI Safety & Hallucinations tutorial (8 stages: what is hallucination, five types, detection, prompt fixes, RAG & grounding, evals, safety beyond, toolkit)
 - `src/AIFluency.jsx` / `src/AIFluency.css` — AI Fluency tutorial (8 stages: why plateau, iteration, setting terms, questioning outputs, context, collaborative reasoning, trust limits, fluency system)
 - `src/AIStartupSimulator.jsx` / `src/AIStartupSimulator.css` — AI Startup Simulator game (6 months, AI architecture decisions, build vs buy, RAG vs fine-tune, scaling, reliability)
+- `src/AlignmentGame.jsx` / `src/AlignmentGame.css` — The Alignment Game (8 rounds, AI alignment through constraint writing, Goodhart's Law, specification gaming)
 - `src/PrecisionRecall.jsx` / `src/PrecisionRecall.css` — Precision & Recall tutorial (7 stages: accuracy trap, confusion matrix, precision, recall, trade-off, F1 score, choosing metrics)
 - `src/RAGUnderTheHood.jsx` / `src/RAGUnderTheHood.css` — Why RAG Fails tutorial (7 stages: why RAG fails, chunking, metadata, embeddings, retrieval, filtering, production checklist)
 - `src/AIInProduction.jsx` / `src/AIInProduction.css` — AI in Production tutorial (7 stages: silent failure, quality metrics, latency & cost, drift detection, A/B testing, alerting, full observability stack)
@@ -583,6 +585,7 @@ create table quiz_results (
 | AI Ethics Tribunal | Game started | All 6 cases completed |
 | PM Simulator | Game started | All 5 missions completed |
 | AI Startup Simulator | Game started | All 6 decisions completed |
+| The Alignment Game | Game started | All 8 rounds completed |
 | AI-Native PM | Entry screen dismissed | Reach final screen |
 | Precision & Recall | Entry screen dismissed | Reach final screen |
 | Why RAG Fails | Entry screen dismissed | Reach final screen |
