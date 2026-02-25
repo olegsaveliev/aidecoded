@@ -487,6 +487,49 @@ function App() {
     }
   }, [activeTab, showHome, showLanding])
 
+  // Inject JSON-LD structured data from ALL_MODULES (auto-syncs with moduleData.js)
+  useEffect(() => {
+    const SITE = 'https://www.aidecoded.academy'
+    const jsonLd = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebSite',
+          name: 'AI Decoded',
+          url: `${SITE}/`,
+          description: 'Interactive platform for learning how AI and Large Language Models work through hands-on tutorials and games.',
+        },
+        {
+          '@type': 'Organization',
+          name: 'AI Decoded',
+          url: `${SITE}/`,
+          logo: `${SITE}/favicon.png`,
+        },
+        {
+          '@type': 'ItemList',
+          name: 'AI Learning Modules',
+          description: `${ALL_MODULES.length} interactive tutorials and games covering AI fundamentals, machine learning, prompt engineering, and more.`,
+          numberOfItems: ALL_MODULES.length,
+          itemListElement: ALL_MODULES.map((m, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: m.title,
+            url: `${SITE}/?tab=${m.id}`,
+            description: m.description,
+          })),
+        },
+      ],
+    }
+    const existing = document.getElementById('ld-json-modules')
+    if (existing) existing.remove()
+    const script = document.createElement('script')
+    script.id = 'ld-json-modules'
+    script.type = 'application/ld+json'
+    script.textContent = JSON.stringify(jsonLd)
+    document.head.appendChild(script)
+    return () => script.remove()
+  }, [])
+
   const [homeFilter, setHomeFilter] = useState(null)
   const [model, setModel] = useState('gpt-4o-mini')
 
