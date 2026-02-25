@@ -1104,3 +1104,66 @@ export const choosingAIModelQuiz = [
     accentColor: '#34C759',
   },
 ]
+
+export const neuralNetworksQuiz = [
+  {
+    question: 'What does a single artificial neuron do?',
+    options: ['Stores memories from previous training runs', 'Takes weighted inputs, sums them with a bias, and applies an activation function', 'Directly compares inputs to training examples', 'Randomly selects which inputs to respond to'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What happens to a connection weight of 0?',
+    options: ['The input is doubled in influence', 'The connection transmits the signal unchanged', 'The input is completely ignored', 'The network crashes during training'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why are activation functions necessary?',
+    options: ['They make the network run faster', 'They reduce the number of weights needed', 'They add non-linearity so networks can learn complex patterns beyond straight lines', 'They prevent the network from overfitting'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the main advantage of ReLU over Sigmoid in hidden layers?',
+    options: ['ReLU outputs values between 0 and 1', 'ReLU avoids vanishing gradients and is computationally simpler', 'ReLU works better for output layers', 'ReLU requires fewer training examples'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does the loss function measure?',
+    options: ['How fast the network runs during inference', 'How many neurons are active in the network', 'How wrong the current prediction is, as a single number', 'How many layers the network has'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does a gradient tell you during backpropagation?',
+    options: ['The speed at which neurons fire', 'The direction and magnitude to adjust a weight to reduce the loss', 'The number of training examples processed', 'The current accuracy on the training set'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'If the learning rate is too large, what happens?',
+    options: ['Training is perfectly stable but slower', 'The network underfits the training data', 'Weight updates overshoot the minimum and training becomes unstable', 'The network cannot compute gradients'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is an epoch in neural network training?',
+    options: ['One single gradient update step', 'One complete pass through all training data', 'The time it takes to train one layer', 'The number of neurons in the hidden layer'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is overfitting?',
+    options: ['Using too many training examples', 'When the network learns training data too well including noise, failing on new data', 'When the learning rate is too small', 'When the loss function is too complex'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the correct order of one training iteration?',
+    options: ['Update weights, backprop, forward pass, loss', 'Loss, forward pass, backprop, update', 'Forward pass, loss, backprop, update weights', 'Backprop, forward pass, update weights, loss'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+]

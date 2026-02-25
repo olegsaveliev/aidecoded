@@ -27,6 +27,7 @@ import PrecisionRecall from './PrecisionRecall.jsx'
 import RAGUnderTheHood from './RAGUnderTheHood.jsx'
 import AIInProduction from './AIInProduction.jsx'
 import AlignmentGame from './AlignmentGame.jsx'
+import NeuralNetworks from './NeuralNetworks.jsx'
 import ChoosingAIModel from './ChoosingAIModel.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
@@ -124,7 +125,7 @@ const VALID_TABS = [
   'ai-lab-explorer', 'prompt-heist', 'token-budget',
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
-  'alignment-game', 'choosing-ai-model',
+  'alignment-game', 'choosing-ai-model', 'neural-networks',
   'profile'
 ]
 
@@ -1165,6 +1166,9 @@ function App() {
         )}
         {!showHome && activeTab === 'machine-learning' && (
           <MachineLearning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && activeTab === 'neural-networks' && (
+          <NeuralNetworks onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'deep-learning' && (
           <DeepLearning onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

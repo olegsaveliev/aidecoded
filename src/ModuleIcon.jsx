@@ -92,6 +92,15 @@ const ICON_PATHS = {
   'ai-lab-explorer': (
     <path d="M3 7l6-3 6 3 6-3v13l-6 3-6-3-6 3V7zM9 4v13M15 7v13" strokeLinecap="round" strokeLinejoin="round" />
   ),
+  'neural-networks': (
+    <>
+      <circle cx="5" cy="12" r="2" />
+      <circle cx="19" cy="5" r="2" />
+      <circle cx="19" cy="19" r="2" />
+      <circle cx="12" cy="12" r="2" />
+      <path d="M7 12h5M14 12l3-5M14 12l3 5" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
   'deep-learning': (
     <path d="M12 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM20 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM12 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4zM4 12h3M17 12h3M12 6v3M12 15v3M6.5 11l3.5-3M14 8l3.5 3M6.5 13l3.5 3M14 16l3.5-3" strokeLinecap="round" strokeLinejoin="round" />
   ),

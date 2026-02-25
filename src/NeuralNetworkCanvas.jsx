@@ -20,6 +20,7 @@ const NODES = [
   { id: 'how-llms-work', label: 'How LLMs Work', group: 'foundations', desc: 'An interactive journey inside AI' },
   { id: 'deep-learning', label: 'Deep Learning', group: 'foundations', desc: 'Neural networks powering every AI breakthrough' },
   { id: 'machine-learning', label: 'Machine Learning', group: 'foundations', desc: 'How machines learn from data' },
+  { id: 'neural-networks', label: 'Neural Networks', group: 'foundations', desc: 'Watch a neural network learn in real time' },
   { id: 'model-training', label: 'Model Training', group: 'foundations', desc: 'How AI models are built from scratch' },
   { id: 'fine-tuning', label: 'Fine-Tuning', group: 'foundations', desc: 'Turn a general AI into a domain expert' },
   { id: 'rag', label: 'RAG', group: 'advanced', desc: 'How AI learns from YOUR documents' },
@@ -59,8 +60,12 @@ const CONNECTIONS = [
   ['how-llms-work', 'rag'],
   ['deep-learning', 'model-training'],
   ['deep-learning', 'fine-tuning'],
+  ['machine-learning', 'neural-networks'],
   ['machine-learning', 'fine-tuning'],
   ['machine-learning', 'rag'],
+  ['neural-networks', 'deep-learning'],
+  ['neural-networks', 'model-training'],
+  ['neural-networks', 'precision-recall'],
   ['machine-learning', 'agentic-ai'],
   ['machine-learning', 'prompt-heist'],
   // Layer 3 → Layer 4
@@ -167,6 +172,7 @@ const NEURON_LAYOUT = {
   'pm-simulator':        { px: 0.82, py: 0.76 },
   'ai-native-pm':        { px: 0.92, py: 0.68 },
   'ai-startup-simulator': { px: 0.90, py: 0.84 },
+  'neural-networks':       { px: 0.20, py: 0.63 },
   'precision-recall':      { px: 0.22, py: 0.38 },
   'rag-under-the-hood':    { px: 0.75, py: 0.33 },
   'ai-in-production':      { px: 0.85, py: 0.46 },
@@ -179,7 +185,7 @@ const NEURON_ANIM_ORDER = [
   // Dendrites
   'playground', 'how-llms-work', 'tokenizer', 'deep-learning', 'generation',
   // Soma
-  'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
+  'machine-learning', 'neural-networks', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model',
   // Terminals

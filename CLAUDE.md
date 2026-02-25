@@ -27,6 +27,7 @@ Interactive React app for learning how Large Language Models work.
 | `rag` | RAG.jsx | RAG.css | ragQuiz | Journey | #FF9500 |
 | `agentic-ai` | AgenticAI.jsx | AgenticAI.css | agenticAIQuiz | Technical | #5856D6 |
 | `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | Technical | #5856D6 |
+| `neural-networks` | NeuralNetworks.jsx | NeuralNetworks.css | neuralNetworksQuiz | Technical | #5856D6 |
 | `deep-learning` | DeepLearning.jsx | DeepLearning.css | deepLearningQuiz | Technical | #5856D6 |
 | `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
 | `generative-ai` | GenerativeAI.jsx | GenerativeAI.css | generativeAIQuiz | Journey | #FF9500 |
@@ -58,7 +59,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model |
-| Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
+| Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
@@ -72,7 +73,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Group | Color | Tabs |
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
-| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
+| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model |
 | Advanced | #FF9500 | RAG, Agentic AI, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
@@ -198,6 +199,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/FeedbackWidget.jsx` / `src/FeedbackWidget.css` — Feedback bubble + modal
 - `src/AgenticAI.jsx` / `src/AgenticAI.css` — Agentic AI tutorial (agents, loops, tools, memory, multi-agent, building, real agents, frontier)
 - `src/GenerativeAI.jsx` / `src/GenerativeAI.css` — Generative AI tutorial (discriminative vs generative, diffusion, text, images, audio, video/code, risks, future)
+- `src/NeuralNetworks.jsx` / `src/NeuralNetworks.css` — Neural Networks tutorial (8 stages: neuron, weights, activation, layers, forward pass, loss, backprop, training loop)
 - `src/DeepLearning.jsx` / `src/DeepLearning.css` — Deep Learning tutorial (neurons, networks, backprop, CNN, transformers)
 - `src/AICityBuilder.jsx` / `src/AICityBuilder.css` — AI City Builder game (detective cases, SVG city)
 - `src/AILabExplorer.jsx` / `src/AILabExplorer.css` — AI Lab Explorer game (6-room lab, hands-on challenges)
@@ -621,6 +623,7 @@ create table quiz_results (
 | Precision & Recall | Entry screen dismissed | Reach final screen |
 | Why RAG Fails | Entry screen dismissed | Reach final screen |
 | AI in Production | Entry screen dismissed | Reach final screen |
+| Neural Networks | Entry screen dismissed | Reach final screen |
 | Choosing the Right AI Model | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
