@@ -1620,7 +1620,7 @@
   }
 
   .ol-template-pills {
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .ol-code-block pre {
