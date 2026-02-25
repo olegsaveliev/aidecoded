@@ -413,6 +413,8 @@
   padding: 16px;
   cursor: pointer;
   transition: border-color 0.2s, transform 0.15s;
+  overflow: hidden;
+  min-width: 0;
 }
 .ol-model-card:hover {
   border-color: #34C759;
@@ -465,6 +467,7 @@
   padding: 6px 10px;
   background: var(--bg-secondary);
   border-radius: 8px;
+  min-width: 0;
 }
 .ol-model-pull code {
   font-size: 12px;
@@ -1468,6 +1471,10 @@
 
   .ol-model-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ol-model-card {
+    padding: 12px;
   }
 
   .ol-size-cards {
