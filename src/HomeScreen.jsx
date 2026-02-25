@@ -252,6 +252,13 @@ const CARDS = [
     tag: 'Technical',
     group: 'Foundations',
   },
+  {
+    id: 'choosing-ai-model',
+    title: 'Choosing the Right AI Model',
+    description: 'GPT-5, Claude, Gemini, DeepSeek, Llama — the choice is paralyzing. Learn the framework that cuts through the noise and matches any task to the right model, every time.',
+    tag: 'Practical',
+    group: 'Skills',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']

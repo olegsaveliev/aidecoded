@@ -1041,3 +1041,66 @@ export const aiInProductionQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const choosingAIModelQuiz = [
+  {
+    question: 'What is the most useful question to ask when choosing an AI model?',
+    options: ['Which model scores highest on MMLU?', 'Which company has the best reputation?', 'Which model is the right fit for this task, budget, and constraints?', 'Which model was released most recently?'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does context window refer to in AI models?',
+    options: ['The visual interface of the AI chatbot', 'How much text the model can see and reason over at once', 'The training data size of the model', 'The number of languages the model supports'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Llama 4 Scout has a 10 million token context window. What is its main advantage over closed models?',
+    options: ['It has better reasoning than all closed models', 'It is always faster than closed API models', 'It can be self-hosted with no API costs and data stays on your infrastructure', 'It is supported by all major cloud providers'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is benchmark contamination?',
+    options: ['When a model produces harmful outputs', 'When training data includes test questions, inflating benchmark scores', 'When different benchmarks disagree', 'When providers use outdated test sets'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which model family is currently best known for coding and agentic software tasks?',
+    options: ['Grok (xAI) \u2014 real-time information strength', 'DeepSeek \u2014 cost optimization focus', 'Claude (Anthropic) \u2014 SWE-bench leader, stable long-running agent behavior', 'Gemini Flash \u2014 speed and throughput focus'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the hybrid routing strategy?',
+    options: ['Using two models from the same provider', 'Routing all queries to the frontier model for maximum quality', 'Classifying queries by complexity and sending them to appropriately-priced models', 'Switching models every month as new ones launch'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'DeepSeek V3.2 costs approximately $0.27 per million input tokens. GPT-5.2 Pro costs approximately $21 per million. What does this price difference mean for a high-volume app?',
+    options: ['GPT-5.2 is always worth the premium cost', 'DeepSeek is always better \u2014 ignore expensive models', 'For the right high-volume tasks DeepSeek can save 70-90% with near-equivalent quality', 'The price difference means DeepSeek is lower quality across all tasks'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What should you do before committing to a model for production?',
+    options: ['Trust the provider\'s benchmark claims', 'Use whatever model is currently #1 on the LMArena leaderboard', 'Build an eval suite from your real use case and test candidate models on it', 'Choose the most expensive model available'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which model has the largest context window as of early 2026?',
+    options: ['GPT-5.2 (400K tokens)', 'Claude Opus 4.5 (200K tokens)', 'Gemini 3 Pro (1M tokens)', 'Llama 4 Scout (10M tokens)'],
+    correct: 3,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'How often should you re-evaluate your model selection in a production application?',
+    options: ['Never \u2014 switching models is too risky', 'Only when your model is deprecated', 'Approximately quarterly, checking for new models, price drops and eval changes', 'Every week to stay current with benchmarks'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+]

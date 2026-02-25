@@ -41,6 +41,7 @@ const NODES = [
   { id: 'rag-under-the-hood', label: 'Why RAG Fails', group: 'advanced', desc: 'Fix every layer of your RAG pipeline' },
   { id: 'ai-in-production', label: 'AI in Prod', group: 'advanced', desc: 'Monitor quality, latency, cost and drift in production AI' },
   { id: 'alignment-game', label: 'Alignment Game', group: 'play', desc: 'Write constraints to stop AI from gaming your goals' },
+  { id: 'choosing-ai-model', label: 'Choosing Model', group: 'skills', desc: 'Match any task to the right AI model' },
 ]
 
 
@@ -114,6 +115,10 @@ const CONNECTIONS = [
   ['ai-ethics-tribunal', 'alignment-game'],
   ['ai-safety', 'alignment-game'],
   ['prompt-heist', 'alignment-game'],
+  ['prompt-engineering', 'choosing-ai-model'],
+  ['ai-fluency', 'choosing-ai-model'],
+  ['ai-in-production', 'choosing-ai-model'],
+  ['rag-under-the-hood', 'choosing-ai-model'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -166,6 +171,7 @@ const NEURON_LAYOUT = {
   'rag-under-the-hood':    { px: 0.75, py: 0.33 },
   'ai-in-production':      { px: 0.85, py: 0.46 },
   'alignment-game':        { px: 0.68, py: 0.80 },
+  'choosing-ai-model':     { px: 0.31, py: 0.80 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -175,7 +181,7 @@ const NEURON_ANIM_ORDER = [
   // Soma
   'machine-learning', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   // Axon
-  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency',
+  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model',
   // Terminals
   'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm',
 ]

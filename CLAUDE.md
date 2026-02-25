@@ -44,6 +44,7 @@ Interactive React app for learning how Large Language Models work.
 | `rag-under-the-hood` | RAGUnderTheHood.jsx | RAGUnderTheHood.css | ragUnderTheHoodQuiz | Technical | #5856D6 |
 | `ai-in-production` | AIInProduction.jsx | AIInProduction.css | aiInProductionQuiz | Technical | #5856D6 |
 | `alignment-game` | AlignmentGame.jsx | AlignmentGame.css | — (game) | Game | #F59E0B |
+| `choosing-ai-model` | ChoosingAIModel.jsx | ChoosingAIModel.css | choosingAIModelQuiz | Practical | #34C759 |
 
 ## Color System — Two Color Layers
 
@@ -56,7 +57,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
-| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency |
+| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
@@ -72,7 +73,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
-| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency |
+| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model |
 | Advanced | #FF9500 | RAG, Agentic AI, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game |
 | Professional | #0EA5E9 | AI-Native PM |
@@ -212,6 +213,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/PrecisionRecall.jsx` / `src/PrecisionRecall.css` — Precision & Recall tutorial (7 stages: accuracy trap, confusion matrix, precision, recall, trade-off, F1 score, choosing metrics)
 - `src/RAGUnderTheHood.jsx` / `src/RAGUnderTheHood.css` — Why RAG Fails tutorial (7 stages: why RAG fails, chunking, metadata, embeddings, retrieval, filtering, production checklist)
 - `src/AIInProduction.jsx` / `src/AIInProduction.css` — AI in Production tutorial (7 stages: silent failure, quality metrics, latency & cost, drift detection, A/B testing, alerting, full observability stack)
+- `src/ChoosingAIModel.jsx` / `src/ChoosingAIModel.css` — Choosing the Right AI Model tutorial (7 stages: wrong question, 7 dimensions, benchmarks, task matching, cost-quality-speed triangle, model snapshot 2026, personal framework)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -592,6 +594,7 @@ create table quiz_results (
 | Precision & Recall | Entry screen dismissed | Reach final screen |
 | Why RAG Fails | Entry screen dismissed | Reach final screen |
 | AI in Production | Entry screen dismissed | Reach final screen |
+| Choosing the Right AI Model | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 
@@ -1029,7 +1032,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Comparison panel border-tops use `2px` width
 - No `!important` overrides unless absolutely necessary
 - No emojis or Unicode symbols in UI — all SVG icons
-- Never use `\u2014` or other `\uXXXX` escapes in JSX text — use HTML entities (`&mdash;`, `&rarr;`, etc.) or literal characters instead. `\uXXXX` only works inside JavaScript strings (`'...'` / `"..."` / `` `...` ``), not in JSX template text where it renders as literal characters.
+- Never use `\u2014` or other `\uXXXX` escapes anywhere — use HTML entities (`&mdash;`, `&rarr;`, etc.) in JSX text, and literal characters (`—`, `→`) in JavaScript strings. While `\uXXXX` technically works in JS strings, prefer literal characters for readability and consistency. In JSX template text, `\uXXXX` renders as literal characters and must never be used.
 - Mobile-first: test at 375px, 480px, 768px
 - Grid collapse pattern: 3/4-col → 2-col (768px) → 1-col (480px)
 - Final screens: exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules component

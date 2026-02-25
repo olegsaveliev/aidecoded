@@ -1,0 +1,1564 @@
+/* ═══════════════════════════════════════════════
+   Choosing the Right AI Model — .cam- prefix
+   ═══════════════════════════════════════════════ */
+
+/* ───── Stepper override ───── */
+.cam-stepper .how-step-current .how-step-num {
+  background: #34C759;
+  color: #fff;
+}
+.cam-stepper .how-step-active .how-step-num {
+  border-color: #34C759;
+  color: #34C759;
+}
+.cam-stepper .how-step-completed .how-step-num {
+  background: #34C759;
+  border-color: #34C759;
+  color: #fff;
+}
+.cam-stepper .how-arrow-active svg {
+  stroke: #34C759;
+}
+
+/* ───── Shared ───── */
+.cam-viz {
+  margin: 24px 0;
+}
+
+@keyframes camFadeIn {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.cam-fade-in {
+  animation: camFadeIn 0.4s ease-out;
+}
+
+.cam-warning-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 149, 0, 0.06);
+  border-left: 2px solid #FF9500;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+}
+
+/* ───── Stat card ───── */
+.cam-stat-card {
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: rgba(52, 199, 89, 0.04);
+  margin-top: 16px;
+  line-height: 1.55;
+}
+
+/* ═══════════════════════════════════════════════
+   Stage 1 — Tier Pyramid
+   ═══════════════════════════════════════════════ */
+.cam-pyramid-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cam-pyramid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.cam-tier-layer {
+  width: var(--tier-width);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.cam-tier-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cam-tier-header {
+  margin-bottom: 8px;
+}
+
+.cam-tier-name {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cam-tier-models {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.cam-tier-model-btn {
+  position: relative;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-tier-model-btn:hover,
+.cam-tier-model-active {
+  border-color: var(--tier-color);
+  background: var(--bg-surface);
+}
+
+.cam-tier-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+}
+
+.cam-tier-label {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  font-style: italic;
+}
+
+.cam-pyramid-caption {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 16px;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════════
+   Stage 2 — Radar Chart
+   ═══════════════════════════════════════════════ */
+.cam-radar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cam-radar-presets {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cam-radar-preset-btn {
+  padding: 6px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-radar-preset-btn:hover {
+  border-color: #34C759;
+  color: #34C759;
+}
+
+.cam-radar-preset-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-radar-chart-wrap {
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.cam-radar-svg {
+  width: 100%;
+  height: auto;
+}
+
+.cam-radar-grid {
+  fill: none;
+  stroke: var(--border-light);
+  stroke-width: 0.5;
+}
+
+.cam-radar-axis {
+  stroke: var(--border);
+  stroke-width: 0.5;
+  transition: stroke 0.2s ease, stroke-width 0.2s ease;
+}
+
+.cam-radar-axis-highlight {
+  stroke: #34C759;
+  stroke-width: 1.5;
+}
+
+.cam-radar-label {
+  font-size: 9px;
+  fill: var(--text-secondary);
+  font-weight: 500;
+  transition: fill 0.15s ease;
+}
+
+.cam-radar-label-highlight {
+  fill: #34C759;
+  font-weight: 600;
+}
+
+.cam-radar-label-selected {
+  fill: var(--text-primary);
+  font-weight: 700;
+}
+
+.cam-radar-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.cam-radar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.cam-radar-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cam-radar-note {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 12px;
+  font-style: italic;
+  max-width: 400px;
+}
+
+.cam-dimension-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.cam-dimension-pill {
+  padding: 5px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-dimension-pill:hover {
+  border-color: #34C759;
+  color: #34C759;
+}
+
+.cam-dimension-pill-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-dimension-detail {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 500px;
+  width: 100%;
+  line-height: 1.55;
+}
+
+.cam-dimension-detail strong {
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════
+   Stage 3 — Benchmark Explorer
+   ═══════════════════════════════════════════════ */
+.cam-benchmark-container {
+  max-width: 540px;
+}
+
+.cam-benchmark-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cam-benchmark-tab {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-benchmark-tab:hover {
+  border-color: #34C759;
+  color: #34C759;
+}
+
+.cam-benchmark-tab-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-benchmark-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border-left: 2px solid #34C759;
+}
+
+.cam-benchmark-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cam-benchmark-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: camFadeIn 0.3s ease-out both;
+}
+
+.cam-benchmark-model-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  min-width: 120px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.cam-benchmark-bar-track {
+  flex: 1;
+  height: 24px;
+  background: var(--bg-secondary);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cam-benchmark-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cam-benchmark-score {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 50px;
+  font-variant-numeric: tabular-nums;
+}
+
+.cam-benchmark-insight {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 16px;
+  line-height: 1.55;
+}
+
+.cam-eval-callout {
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 16px;
+  background: rgba(52, 199, 89, 0.04);
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.cam-eval-callout strong {
+  color: var(--text-primary);
+}
+
+.cam-eval-callout ol {
+  margin: 8px 0 8px 20px;
+  padding: 0;
+}
+
+.cam-eval-callout li {
+  margin-bottom: 4px;
+}
+
+/* ═══════════════════════════════════════════════
+   Stage 4 — Task Matcher
+   ═══════════════════════════════════════════════ */
+.cam-matcher-container {
+  max-width: 560px;
+}
+
+.cam-matcher-prompt {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.cam-matcher-tasks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cam-matcher-task-btn {
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  text-align: left;
+}
+
+.cam-matcher-task-btn:hover {
+  border-color: #34C759;
+  transform: translateY(-1px);
+}
+
+.cam-matcher-task-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.06);
+  box-shadow: 0 0 0 1px rgba(52, 199, 89, 0.2);
+}
+
+.cam-matcher-options {
+  margin-bottom: 16px;
+}
+
+.cam-matcher-option-group {
+  margin-bottom: 12px;
+}
+
+.cam-matcher-option-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cam-matcher-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cam-matcher-pill {
+  padding: 5px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-matcher-pill:hover {
+  border-color: #34C759;
+}
+
+.cam-matcher-pill-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-matcher-result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.cam-matcher-rec-primary {
+  border: 1.5px solid #34C759;
+  border-radius: 12px;
+  padding: 16px;
+  background: rgba(52, 199, 89, 0.04);
+}
+
+.cam-matcher-rec-alt {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--bg-card);
+}
+
+.cam-matcher-rec-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.cam-matcher-alt-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+}
+
+.cam-matcher-rec-model {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.cam-matcher-rec-reason {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cam-matcher-rec-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(234, 179, 8, 0.06);
+  border-left: 2px solid #eab308;
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════
+   Stage 5 — Triangle
+   ═══════════════════════════════════════════════ */
+.cam-triangle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cam-triangle-svg-wrap {
+  width: 340px;
+  margin: 12px auto 0;
+}
+
+.cam-triangle-svg {
+  width: 100%;
+  height: auto;
+}
+
+.cam-triangle-corner-text {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cam-triangle-archetype-label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cam-archetype-presets {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.cam-archetype-btn {
+  padding: 6px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-archetype-btn:hover {
+  border-color: #34C759;
+  color: #34C759;
+}
+
+.cam-archetype-btn-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-archetype-detail {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 12px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.cam-archetype-models {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.cam-archetype-detail p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Cost calculator */
+.cam-cost-calculator {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+  max-width: 420px;
+  width: 100%;
+}
+
+.cam-cost-header {
+  margin-bottom: 16px;
+}
+
+.cam-cost-header strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.cam-cost-explainer {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.cam-cost-slider-row {
+  margin-bottom: 16px;
+}
+
+.cam-cost-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cam-cost-label strong {
+  color: var(--text-primary);
+}
+
+.cam-cost-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+}
+
+.cam-cost-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #34C759;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.cam-cost-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #34C759;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.cam-cost-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cam-cost-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.cam-cost-amount {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cam-cost-high {
+  color: #FF3B30;
+}
+
+.cam-cost-low {
+  color: var(--text-primary);
+}
+
+.cam-cost-green {
+  color: #34C759;
+}
+
+.cam-cost-saving {
+  border-top: 1px solid var(--border-light);
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════
+   Stage 6 — Model Table
+   ═══════════════════════════════════════════════ */
+.cam-table-container {
+  max-width: 100%;
+}
+
+.cam-snapshot-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(245, 158, 11, 0.06);
+  border-left: 2px solid #FF9500;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.cam-table-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.cam-table-filter {
+  padding: 5px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-table-filter:hover {
+  border-color: #34C759;
+}
+
+.cam-table-filter-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-table-sort-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.cam-table-sort-label {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.cam-table-sort-btn {
+  padding: 3px 10px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-table-sort-active {
+  border-color: #34C759;
+  color: #34C759;
+}
+
+.cam-table {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.cam-table-header {
+  display: grid;
+  grid-template-columns: 80px 1fr 70px 70px 1fr 36px 36px;
+  gap: 0;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.cam-th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.cam-table-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 70px 70px 1fr 36px 36px;
+  gap: 0;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: background 0.15s ease;
+  align-items: center;
+}
+
+.cam-table-row:last-child {
+  border-bottom: none;
+}
+
+.cam-table-row:hover {
+  background: var(--bg-secondary);
+}
+
+.cam-table-row-expanded {
+  background: rgba(52, 199, 89, 0.04);
+  border-left: 3px solid #34C759;
+  padding-left: 11px;
+}
+
+.cam-td {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.cam-td-model strong {
+  color: var(--text-primary);
+}
+
+.cam-td-best {
+  font-size: 12px;
+}
+
+.cam-td-flags {
+  text-align: center;
+}
+
+/* Price pills */
+.cam-price-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cam-price-free {
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  color: #34C759;
+}
+
+.cam-price-green {
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  color: #34C759;
+}
+
+.cam-price-amber {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #F59E0B;
+}
+
+.cam-price-red {
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.3);
+  color: #FF3B30;
+}
+
+/* Expanded row */
+.cam-table-expand {
+  padding: 12px 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.cam-expand-section ul {
+  margin: 6px 0 0 18px;
+  padding: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.cam-expand-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cam-snapshot-date {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════
+   Stage 7 — Framework Builder
+   ═══════════════════════════════════════════════ */
+.cam-framework-container {
+  max-width: 560px;
+}
+
+.cam-framework-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cam-framework-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cam-framework-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cam-framework-presets-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cam-framework-preset {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-framework-preset:hover {
+  border-color: #34C759;
+}
+
+.cam-framework-preset-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-framework-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cam-framework-pill {
+  padding: 5px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-framework-pill:hover {
+  border-color: #34C759;
+}
+
+.cam-framework-pill-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.cam-generate-btn {
+  padding: 10px 24px;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #34C759;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  align-self: flex-start;
+}
+
+.cam-generate-btn:hover {
+  background: #2db84e;
+  transform: translateY(-1px);
+}
+
+.cam-generate-btn:active {
+  transform: scale(0.97);
+}
+
+.cam-generate-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+}
+
+.cam-generate-hint {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+}
+
+/* Framework output */
+.cam-framework-output {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cam-framework-card {
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.cam-framework-card p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+  line-height: 1.5;
+}
+
+.cam-framework-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.cam-framework-model {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cam-framework-primary {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.04);
+  grid-column: 1 / -1;
+}
+
+.cam-framework-alt {
+  background: var(--bg-card);
+}
+
+.cam-framework-routing {
+  background: var(--bg-card);
+}
+
+.cam-framework-reeval {
+  background: var(--bg-card);
+  grid-column: 1 / -1;
+}
+
+/* Concept pills */
+.cam-concepts-section {
+  margin-top: 24px;
+}
+
+.cam-concepts-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.cam-concept-pill {
+  padding: 6px 14px;
+  border: 1.5px solid #34C759;
+  border-radius: 18px;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: #34C759;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-concept-pill:hover {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+.cam-concept-pill-active {
+  background: rgba(52, 199, 89, 0.1);
+}
+
+.cam-concept-reveal-btn {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  background: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.cam-concept-reveal-btn:hover {
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+.cam-concept-detail {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.cam-concept-detail strong {
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════
+   Final Screen
+   ═══════════════════════════════════════════════ */
+.cam-final-recap {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.cam-final-recap-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.cam-final-recap-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.cam-final-recap-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════════════════
+   Dark Mode
+   ═══════════════════════════════════════════════ */
+[data-theme="dark"] .cam-warning-box {
+  background: rgba(255, 149, 0, 0.08);
+}
+
+[data-theme="dark"] .cam-stat-card {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+[data-theme="dark"] .cam-tier-layer {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-tier-model-btn {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-tier-tooltip {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-dimension-detail {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-benchmark-bar-track {
+  background: var(--bg-surface);
+}
+
+[data-theme="dark"] .cam-eval-callout {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+[data-theme="dark"] .cam-matcher-task-btn {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .cam-matcher-rec-primary {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+[data-theme="dark"] .cam-matcher-rec-alt {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .cam-matcher-rec-note {
+  background: rgba(234, 179, 8, 0.08);
+}
+
+[data-theme="dark"] .cam-archetype-detail {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-cost-calculator {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-cost-slider {
+  background: var(--border);
+}
+
+[data-theme="dark"] .cam-cost-slider::-webkit-slider-thumb {
+  border-color: var(--bg-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .cam-cost-high {
+  color: #ff453a;
+}
+
+[data-theme="dark"] .cam-table {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-table-header {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .cam-table-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .cam-table-row-expanded {
+  background: rgba(52, 199, 89, 0.06);
+}
+
+[data-theme="dark"] .cam-table-expand {
+  background: rgba(52, 199, 89, 0.03);
+}
+
+[data-theme="dark"] .cam-snapshot-notice {
+  background: rgba(245, 158, 11, 0.12);
+}
+
+[data-theme="dark"] .cam-framework-card {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-framework-primary {
+  background: rgba(52, 199, 89, 0.06);
+  border-color: #34C759;
+}
+
+[data-theme="dark"] .cam-concept-detail {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .cam-final-recap {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+/* ═══════════════════════════════════════════════
+   Mobile — 768px
+   ═══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .cam-pyramid {
+    max-width: 320px;
+  }
+
+  .cam-tier-layer {
+    padding: 12px;
+  }
+
+  .cam-tier-model-btn {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .cam-radar-chart-wrap {
+    max-width: 100%;
+  }
+
+  .cam-benchmark-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .cam-benchmark-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cam-benchmark-tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cam-benchmark-model-name {
+    min-width: 90px;
+    font-size: 12px;
+  }
+
+  .cam-matcher-tasks {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cam-final-recap-items {
+    grid-template-columns: 1fr;
+  }
+
+  .cam-triangle-svg-wrap {
+    width: 240px;
+  }
+
+  .cam-table-header,
+  .cam-table-row {
+    grid-template-columns: 70px 1fr 60px;
+  }
+
+  .cam-th-context,
+  .cam-th-best,
+  .cam-th-flags,
+  .cam-td-context,
+  .cam-td-best,
+  .cam-td-flags {
+    display: none;
+  }
+
+  .cam-table-expand {
+    grid-template-columns: 1fr;
+  }
+
+  .cam-table-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .cam-table-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cam-table-filter {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .cam-framework-output {
+    grid-template-columns: 1fr;
+  }
+
+  .cam-framework-primary,
+  .cam-framework-reeval {
+    grid-column: auto;
+  }
+
+  /* Touch targets */
+  .cam-matcher-task-btn,
+  .cam-matcher-pill,
+  .cam-benchmark-tab,
+  .cam-table-filter,
+  .cam-radar-preset-btn,
+  .cam-dimension-pill,
+  .cam-archetype-btn,
+  .cam-framework-preset,
+  .cam-framework-pill,
+  .cam-concept-pill,
+  .cam-concept-reveal-btn,
+  .cam-generate-btn,
+  .cam-table-sort-btn,
+  .cam-tier-model-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   Mobile — 480px
+   ═══════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .cam-pyramid {
+    max-width: 260px;
+  }
+
+  .cam-tier-name {
+    font-size: 11px;
+  }
+
+  .cam-tier-label {
+    font-size: 11px;
+  }
+
+  .cam-matcher-tasks {
+    grid-template-columns: 1fr;
+  }
+
+  .cam-triangle-svg-wrap {
+    width: 200px;
+  }
+
+  .cam-concepts-pills {
+    justify-content: center;
+  }
+
+  .cam-concept-pill {
+    font-size: 12px;
+  }
+}
