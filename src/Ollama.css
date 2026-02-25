@@ -296,6 +296,18 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ol-size-card-left,
+.ol-size-card-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.ol-size-card-right {
+  margin-top: 4px;
 }
 
 .ol-size-card-title {
@@ -668,6 +680,7 @@
   background: rgba(52, 199, 89, 0.03);
   padding: 4px;
   overflow: hidden;
+  animation: ol-fade-in 0.2s ease;
 }
 .ol-example-detail .ol-modelfile-preview {
   border-radius: 8px;
@@ -891,6 +904,12 @@
   border: 1px solid rgba(88, 86, 214, 0.4);
   border-radius: 10px;
   padding: 12px 16px;
+  animation: ol-fade-in 0.2s ease;
+}
+
+@keyframes ol-fade-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .ol-param-desc {
@@ -993,11 +1012,18 @@
   border-color: #34C759;
 }
 
+.ol-integration-header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
 .ol-integration-name {
   font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 2px;
+  white-space: nowrap;
 }
 
 .ol-integration-desc {
@@ -1010,12 +1036,14 @@
   padding: 8px 10px;
   background: var(--bg-secondary);
   border-radius: 6px;
+  animation: ol-fade-in 0.2s ease;
 }
 .ol-integration-snippet code {
   font-size: 11px;
   font-family: 'SF Mono', 'Fira Code', monospace;
   color: #34C759;
   word-break: break-all;
+  line-height: 1.5;
 }
 
 /* ── Build viz (Stage 6) ── */
@@ -1481,6 +1509,23 @@
     grid-template-columns: 1fr;
   }
 
+  .ol-size-card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .ol-size-card-right {
+    margin-top: 0;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .ol-size-card-right .ol-size-card-row {
+    justify-content: flex-end;
+  }
+
   .ol-params-viz {
     flex-direction: column;
   }
@@ -1535,16 +1580,17 @@
   .ol-template-pill,
   .ol-marker-btn,
   .ol-replay-btn,
-  .ol-integration-card,
   .ol-command-card {
     min-height: 44px;
     display: inline-flex;
     align-items: center;
   }
 
-  .ol-model-card,
+  .ol-integration-card {
+    min-height: 44px;
+  }
+
   .ol-example-card,
-  .ol-integration-card,
   .ol-command-card {
     display: flex;
   }

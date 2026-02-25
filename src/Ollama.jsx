@@ -424,11 +424,15 @@ function InstallViz({ active }) {
       <div className="ol-size-cards">
         {MODEL_SIZE_CARDS.map((card, i) => (
           <div key={i} className="ol-size-card">
-            <div className="ol-size-card-title">{card.range}</div>
-            <div className="ol-size-card-row"><span className="ol-badge ol-badge-indigo">{card.ram} RAM</span></div>
-            <div className="ol-size-card-row"><span className="ol-size-label">Speed:</span> {card.speed}</div>
-            <div className="ol-size-card-row"><span className="ol-badge ol-badge-green">{card.quality}</span></div>
-            <div className="ol-size-card-example">{card.example}</div>
+            <div className="ol-size-card-left">
+              <div className="ol-size-card-title">{card.range}</div>
+              <div className="ol-size-card-row"><span className="ol-badge ol-badge-indigo">{card.ram} RAM</span></div>
+              <div className="ol-size-card-row"><span className="ol-size-label">Speed:</span> {card.speed}</div>
+            </div>
+            <div className="ol-size-card-right">
+              <div className="ol-size-card-row"><span className="ol-badge ol-badge-green">{card.quality}</span></div>
+              <div className="ol-size-card-example">{card.example}</div>
+            </div>
           </div>
         ))}
       </div>
@@ -883,8 +887,10 @@ function APIViz({ active }) {
       <div className="ol-integration-grid">
         {INTEGRATIONS.map((integ, i) => (
           <div key={i} className={`ol-integration-card ${expandedIntegration === i ? 'ol-integration-expanded' : ''}`} onClick={() => setExpandedIntegration(expandedIntegration === i ? null : i)}>
-            <div className="ol-integration-name">{integ.name}</div>
-            <div className="ol-integration-desc">{integ.desc}</div>
+            <div className="ol-integration-header">
+              <span className="ol-integration-name">{integ.name}</span>
+              <span className="ol-integration-desc">{integ.desc}</span>
+            </div>
             {expandedIntegration === i && (
               <div className="ol-integration-snippet">
                 <code>{integ.snippet}</code>
