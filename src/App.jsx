@@ -449,7 +449,7 @@ function App() {
   // Dynamic SEO: update document title and meta tags per module
   useEffect(() => {
     const base = 'AI Decoded'
-    const defaultDesc = 'Learn how AI and Large Language Models work through 28 interactive tutorials and games. Explore tokenization, prompt engineering, RAG, agentic AI, deep learning and more — hands-on, visual, free.'
+    const defaultDesc = 'Learn how AI works through interactive tutorials and games. Tokenization, prompt engineering, RAG, agentic AI, deep learning and more — free.'
     let title = base
     let desc = defaultDesc
 
