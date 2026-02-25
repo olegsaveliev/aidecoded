@@ -161,7 +161,8 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `VALID_TABS` — whitelist array of all valid tab IDs (defined outside component)
 - `getTabFromUrl()` — reads `?tab=` from URL, validates against `VALID_TABS`
 - `navigateTo(tab)` — pushes `?tab=X` to history (or bare path for `home`). Guarded by `skipPush` ref to prevent double-pushes during popstate
-- `handleSwitchTab(tab)` — wraps `setActiveTab` + `setShowHome(false)` + `navigateTo()`. Passed as `onSwitchTab` prop to all child modules
+- `handleSwitchTab(tab)` — wraps `setActiveTab` + `setShowHome(false)` + `navigateTo()`. Checks `isModuleLocked` and shows auth modal if locked. Passed as `onSwitchTab` prop to all child modules
+- `AUTH_UNLOCK_MESSAGE` — shared constant for the auth unlock modal message (defined outside component)
 - `onPopState` handler — restores `showHome`/`activeTab` on back/forward. Uses `showLandingRef` and `isModuleLockedRef` refs to avoid stale closures
 
 **How it works:**
@@ -171,6 +172,8 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 4. Initial page load checks `?tab=` via `getTabFromUrl()` before sessionStorage `nav_state` (URL param takes priority)
 5. Sign-out clears the URL via `replaceState` to bare pathname
 6. Locked modules in popstate redirect to home screen instead of the locked module
+7. Deep links to locked modules for unauthenticated users redirect to home screen (guard effect after auth loads) — no modal, modal only on explicit clicks
+8. `canRenderModule` render guard prevents locked module content from flashing during auth loading
 
 **Rules for new navigation handlers:**
 - Always call `navigateTo(tab)` after setting `activeTab` state
@@ -1099,4 +1102,6 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Browser back/forward uses History API (`pushState`/`popstate`) with `?tab=` query params — no React Router
 - All navigation handlers must call `navigateTo(tab)` after state changes; `onSwitchTab` props use `handleSwitchTab` (not raw `setActiveTab`)
 - Popstate handler uses `showLandingRef` and `isModuleLockedRef` refs to avoid stale closures from empty dependency array
-- Deep links supported: `/?tab=tokenizer` skips landing page and goes directly to module
+- Deep links supported: `/?tab=tokenizer` skips landing page and goes directly to module (free modules only for unauthenticated users; locked modules redirect to home)
+- Deep link auth protection: guard effect (`useEffect` on `[authLoading, activeTab, showHome, showLanding, user]`) redirects to home silently; `canRenderModule` flag (`FREE_MODULES.includes(activeTab) || !!user`) prevents locked content from rendering; `handleSwitchTab` checks `isModuleLocked` before navigating
+- Auth modal only appears on explicit user action (clicking locked card on HomeScreen, locked item in nav dropdown, locked item on landing page) — never on passive deep link redirect
