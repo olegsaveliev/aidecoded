@@ -5,7 +5,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { FileCabinetIcon, CrossIcon, CpuIcon, ChatIcon, UserIcon, GraduationIcon, RefreshIcon, GlobeIcon, BookIcon, CodeIcon, FileIcon, MemoIcon } from './ContentIcons.jsx'
+import { FileCabinetIcon, CrossIcon, CpuIcon, ChatIcon, UserIcon, GraduationIcon, RefreshIcon, GlobeIcon, BookIcon, CodeIcon, FileIcon, MemoIcon, BroomIcon, HashIcon } from './ContentIcons.jsx'
 import ToolChips from './ToolChips.jsx'
 import Quiz from './Quiz.jsx'
 import { modelTrainingQuiz } from './quizData.js'
@@ -97,6 +97,15 @@ const TOOLS_BY_STAGE = {
 }
 
 const SAMPLE_TEXT = "The quick brown fox jumps over the lazy dog. AI is transforming how we work and live."
+
+const TOOLKIT = [
+  { concept: 'Data Collection', when: 'Building a training corpus', phrase: 'Trillions of words from web, books, code', icon: <GlobeIcon size={20} color="#FF9500" /> },
+  { concept: 'Data Cleaning', when: 'Preparing raw data for training', phrase: 'Only 40–60% survives — garbage in, garbage out', icon: <BroomIcon size={20} color="#FF9500" /> },
+  { concept: 'Tokenization', when: 'Converting text to numbers', phrase: 'Every word becomes a token ID the model can process', icon: <HashIcon size={20} color="#FF9500" /> },
+  { concept: 'Pre-Training', when: 'Teaching the model language', phrase: 'Predict next token billions of times — months on thousands of GPUs', icon: <CpuIcon size={20} color="#FF9500" /> },
+  { concept: 'Fine-Tuning (SFT)', when: 'Making the model conversational', phrase: 'Human examples teach it to answer, not just complete text', icon: <GraduationIcon size={20} color="#FF9500" /> },
+  { concept: 'RLHF', when: 'Aligning the model with human preferences', phrase: 'Human raters pick better responses — the secret sauce', icon: <UserIcon size={20} color="#FF9500" /> },
+]
 
 function useAnimatedCounter(target, duration, active) {
   const [value, setValue] = useState(0)
@@ -593,44 +602,6 @@ function RLHFViz({ active }) {
   )
 }
 
-// Final Summary timeline
-function FinalTimeline() {
-  const stages = [
-    { label: 'Data Collection', duration: 'weeks', width: 12 },
-    { label: 'Data Cleaning', duration: 'weeks', width: 12 },
-    { label: 'Tokenization', duration: 'days', width: 6 },
-    { label: 'Pre-Training', duration: 'months', width: 40 },
-    { label: 'Fine-Tuning', duration: 'weeks', width: 15 },
-    { label: 'RLHF', duration: 'weeks', width: 15 },
-  ]
-
-  return (
-    <div className="mt-timeline">
-      <div className="mt-timeline-title">Real-World Timeline</div>
-      <div className="mt-timeline-bars">
-        {stages.map((s, i) => (
-          <div key={i} className="mt-timeline-row">
-            <div className="mt-timeline-label">{s.label}</div>
-            <div className="mt-timeline-bar-track">
-              <div
-                className="mt-timeline-bar-fill"
-                style={{
-                  width: `${s.width}%`,
-                  animationDelay: `${i * 0.15}s`,
-                }}
-              />
-            </div>
-            <div className="mt-timeline-duration">{s.duration}</div>
-          </div>
-        ))}
-      </div>
-      <div className="mt-timeline-total">
-        Total: <strong>6–12 months</strong> and <strong>$10–100M+</strong> to build a frontier model
-      </div>
-    </div>
-  )
-}
-
 function ModelTraining({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
   const [stage, setStage] = usePersistedState('model-training', -1) // -1 = welcome
@@ -933,7 +904,36 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You now understand how AI is built!</div>
 
-          <FinalTimeline />
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your Model Training Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="how-final-actions">
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>

@@ -4,7 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { CheckIcon, CrossIcon, TipIcon, WarningIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, TipIcon, WarningIcon, BarChartIcon, ZapIcon, TrendingDownIcon, FlaskIcon, ShieldIcon, LayersIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { aiInProductionQuiz } from './quizData.js'
@@ -19,6 +19,16 @@ const STAGES = [
   { key: 'ab-testing', label: 'A/B Testing', tooltip: 'A/B testing AI — how to improve safely' },
   { key: 'alerting', label: 'Alerting', tooltip: 'Alerting — getting woken up for the right reasons' },
   { key: 'full-stack', label: 'Full Stack', tooltip: 'Your production observability stack' },
+]
+
+const TOOLKIT = [
+  { concept: 'Silent Failures', when: 'AI outputs look fine but aren\'t', phrase: 'Measure quality, not just uptime', icon: <WarningIcon size={24} color="#5856D6" /> },
+  { concept: 'Quality Metrics', when: 'Evaluating what the AI actually says', phrase: 'Relevance, groundedness, toxicity', icon: <BarChartIcon size={24} color="#5856D6" /> },
+  { concept: 'Latency & Cost', when: 'Tracking operational performance', phrase: 'P50/P95 latency, cost per query', icon: <ZapIcon size={24} color="#5856D6" /> },
+  { concept: 'Drift Detection', when: 'Model behavior changes over time', phrase: 'Compare output distributions weekly', icon: <TrendingDownIcon size={24} color="#5856D6" /> },
+  { concept: 'A/B Testing', when: 'Shipping prompt or model changes', phrase: 'Statistical significance before rollout', icon: <FlaskIcon size={24} color="#5856D6" /> },
+  { concept: 'Alerting', when: 'Quality drops below threshold', phrase: 'Alert on quality, not just errors', icon: <ShieldIcon size={24} color="#5856D6" /> },
+  { concept: 'Full Observability', when: 'Building the complete monitoring stack', phrase: 'Logs, metrics, traces, evals', icon: <LayersIcon size={24} color="#5856D6" /> },
 ]
 
 /* ─── Stage 1: Silent Failure ─── */
@@ -1501,9 +1511,37 @@ export default function AIInProduction({ onSwitchTab, onGoHome }) {
       {showFinal && (
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">Your Production Observability Stack is Ready</div>
-          <p style={{ fontSize: 15, color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: 24, textAlign: 'center' }}>
-            You now have the five layers of AI production monitoring: quality, operations, drift, A/B safety, and alerting. The difference between teams that know and teams that hope is measured in hours, not weeks.
-          </p>
+
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your Production Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="how-final-actions">
             <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>

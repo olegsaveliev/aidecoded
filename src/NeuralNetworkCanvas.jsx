@@ -49,6 +49,7 @@ const NODES = [
   { id: 'draw-and-deceive', label: 'Draw & Deceive', group: 'play', desc: 'Draw pixel art and try to fool GPT-4o vision' },
   { id: 'agent-office', label: 'Agent Office', group: 'play', desc: 'Run a pixel art AI startup with four AI agents' },
   { id: 'claude-code', label: 'Claude Code', group: 'skills', desc: 'AI pair programmer that lives in your terminal' },
+  { id: 'agent-teams', label: 'Agent Teams', group: 'advanced', desc: 'Multiple Claude Code agents coordinating in parallel' },
 ]
 
 
@@ -151,6 +152,10 @@ const CONNECTIONS = [
   ['agentic-ai', 'claude-code'],
   ['prompt-engineering', 'claude-code'],
   ['fine-tuning', 'claude-code'],
+  ['agentic-ai', 'agent-teams'],
+  ['claude-code', 'agent-teams'],
+  ['agent-office', 'agent-teams'],
+  ['ai-in-production', 'agent-teams'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -211,6 +216,7 @@ const NEURON_LAYOUT = {
   'draw-and-deceive':      { px: 0.82, py: 0.90 },
   'agent-office':          { px: 0.78, py: 0.97 },
   'claude-code':           { px: 0.27, py: 1.00 },
+  'agent-teams':           { px: 0.58, py: 0.90 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -222,7 +228,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive', 'agent-office',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */

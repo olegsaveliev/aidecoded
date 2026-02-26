@@ -3,7 +3,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { CheckIcon, CrossIcon, TipIcon, WarningIcon, PlayIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, TipIcon, WarningIcon, PlayIcon, LockIcon, TerminalIcon, PackageIcon, FileIcon, SlidersIcon, CodeIcon, WrenchIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import Tooltip from './Tooltip.jsx'
@@ -128,6 +128,18 @@ const STAGE_TOOLTIPS = {
   'api': 'The API — connecting apps to your local AI',
   'build': 'Build your own assistant',
 }
+
+/* ── Final screen toolkit ── */
+
+const OL_TOOLKIT = [
+  { concept: 'Why Local', when: 'Privacy, speed, or offline needs', phrase: 'Your data never leaves your machine', icon: <LockIcon size={24} color="#34C759" /> },
+  { concept: 'Install & Run', when: 'Getting started with Ollama', phrase: 'ollama run llama4', icon: <TerminalIcon size={24} color="#34C759" /> },
+  { concept: 'Model Library', when: 'Choosing the right model', phrase: 'Size, speed, and capability trade-offs', icon: <PackageIcon size={24} color="#34C759" /> },
+  { concept: 'The Modelfile', when: 'Customising model behaviour', phrase: 'System prompt + parameters in one file', icon: <FileIcon size={24} color="#34C759" /> },
+  { concept: 'Parameters', when: 'Tuning output quality', phrase: 'Temperature, context window, top-k/top-p', icon: <SlidersIcon size={24} color="#34C759" /> },
+  { concept: 'The API', when: 'Connecting apps to local AI', phrase: 'OpenAI-compatible REST endpoint', icon: <CodeIcon size={24} color="#34C759" /> },
+  { concept: 'Build Assistant', when: 'Putting it all together', phrase: 'Modelfile + API + UI = local assistant', icon: <WrenchIcon size={24} color="#34C759" /> },
+]
 
 /* ── Terminal component ── */
 
@@ -1427,16 +1439,35 @@ function Ollama({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You can now run AI locally.</div>
 
-          <div className="ol-final-recap">
-            <div className="ol-final-recap-title">Your local AI journey:</div>
-            <div className="ol-final-recap-items">
-              {STAGES.map((s, i) => (
-                <div key={i} className="ol-final-recap-item">
-                  <CheckIcon size={14} />
-                  <span>{s.label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="pe-final-grid">
+            {OL_TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your Local AI Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {OL_TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="how-final-actions">

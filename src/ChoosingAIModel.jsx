@@ -4,7 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { CheckIcon, CrossIcon, TipIcon, WarningIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, TipIcon, WarningIcon, QuestionIcon, LayersIcon, BarChartIcon, TargetIcon, SlidersIcon, CpuIcon, CompassIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { choosingAIModelQuiz } from './quizData.js'
@@ -106,6 +106,17 @@ const STAGE_TOOLTIPS = {
   'snapshot': 'Model snapshot — early 2026',
   'framework': 'Build your own selection framework',
 }
+
+/* ───── Final Screen Toolkit ───── */
+const TOOLKIT = [
+  { concept: 'Right Question', when: 'Starting any model decision', phrase: 'Best for my task, not best overall', icon: <QuestionIcon size={24} color="#34C759" /> },
+  { concept: '7 Dimensions', when: 'Evaluating any model', phrase: 'Score across all axes', icon: <LayersIcon size={24} color="#34C759" /> },
+  { concept: 'Benchmarks', when: 'Comparing model claims', phrase: 'Read methodology, not just scores', icon: <BarChartIcon size={24} color="#34C759" /> },
+  { concept: 'Task Matching', when: 'Picking a model for a use case', phrase: 'Match task type to model strength', icon: <TargetIcon size={24} color="#34C759" /> },
+  { concept: 'Cost-Quality-Speed', when: 'Making production trade-offs', phrase: 'Pick two, optimize the third', icon: <SlidersIcon size={24} color="#34C759" /> },
+  { concept: 'Model Landscape', when: 'Staying current', phrase: 'Tiers shift — re-evaluate quarterly', icon: <CpuIcon size={24} color="#34C759" /> },
+  { concept: 'Personal Framework', when: 'Building a repeatable process', phrase: 'Requirements first, model second', icon: <CompassIcon size={24} color="#34C759" /> },
+]
 
 /* ───── Stage 1 Viz: Tier Pyramid ───── */
 const TIER_DATA = [
@@ -1622,16 +1633,35 @@ function ChoosingAIModel({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You now have a framework for choosing the right AI model for any task.</div>
 
-          <div className="cam-final-recap">
-            <div className="cam-final-recap-title">Your model selection journey:</div>
-            <div className="cam-final-recap-items">
-              {STAGES.map((s, i) => (
-                <div key={i} className="cam-final-recap-item">
-                  <CheckIcon size={14} />
-                  <span>{s.label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your Model Selection Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="how-final-actions">

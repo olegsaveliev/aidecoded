@@ -52,6 +52,7 @@ Interactive React app for learning how Large Language Models work.
 | `choosing-ai-model` | ChoosingAIModel.jsx | ChoosingAIModel.css | choosingAIModelQuiz | Practical | #34C759 |
 | `ollama` | Ollama.jsx | Ollama.css | ollamaQuiz | Practical | #34C759 |
 | `claude-code` | ClaudeCode.jsx | ClaudeCode.css | claudeCodeQuiz | Practical | #34C759 |
+| `agent-teams` | AgentTeams.jsx | AgentTeams.css | agentTeamsQuiz | Technical | #5856D6 |
 
 ## Color System — Two Color Layers
 
@@ -65,7 +66,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
-| Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
+| Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
@@ -81,7 +82,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
-| Advanced | #FF9500 | RAG, Agentic AI, Why RAG Fails, AI in Production |
+| Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office |
 | Professional | #0EA5E9 | AI-Native PM |
 
@@ -94,6 +95,7 @@ Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 - Icon inside a pipeline step with colored border → icon color = border color
 - Icon inside a tag-labeled container → icon color = tag color
 - Module icons (EntryScreen, HomeScreen, LandingPage) → tag color from table above
+- TOOLKIT icons on final screens → tag color from table above (never gray)
 - Icons with semantic meaning keep their semantic color (CheckIcon=green, CrossIcon=red, TipIcon=yellow)
 
 ### CSS Variables (index.css)
@@ -230,6 +232,8 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/ChoosingAIModel.jsx` / `src/ChoosingAIModel.css` — Choosing the Right AI Model tutorial (7 stages: wrong question, 7 dimensions, benchmarks, task matching, cost-quality-speed triangle, model snapshot 2026, personal framework)
 - `src/Ollama.jsx` / `src/Ollama.css` — Run AI Locally tutorial (7 stages: why local, install & run, model library, the Modelfile, parameters, the API, build assistant)
 - `src/ClaudeCode.jsx` / `src/ClaudeCode.css` — Claude Code tutorial (8 stages: what it is, installation, models, CLAUDE.md, skills, MCP, full stack, workflows)
+- `src/AgentTeams.jsx` / `src/AgentTeams.css` — Agent Teams tutorial (5 stages: solo vs team, architecture, first team, patterns, rough edges). TeamVisualiser SVG, TeamBuilderViz interactive builder, DecisionMatrix quadrant chart, ToolChips with colored dots + descriptions
+- `src/ToolChips.jsx` — Reusable tool chips component with colored dots and click-to-expand descriptions (portal popup, viewport clamped)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -568,6 +572,73 @@ Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start
 
 ---
 
+## Agent Teams Module (`src/AgentTeams.jsx`)
+
+Interactive 5-stage tutorial covering Claude Code Agent Teams — multi-agent collaboration for complex coding tasks. Stage-based with stepper navigation. CSS prefix: `.at-`. Uses shared `TeamVisualiser` SVG component across all stages with animated message particles and a task board.
+
+### Entry Screen
+- Title: "Agent Teams", subtitle: "When One Agent Isn't Enough"
+- Description explains what the learner will discover (team lead + teammates, task boards, messaging, real patterns)
+- Button text: "Meet the team"
+
+### Welcome Banner
+Numbered 3-step guide: (1) watch the team of agents work through animations, (2) build your own team in the interactive builder, (3) see when teams help and when they don't
+
+### Stages
+5 stages: The Ceiling → Architecture → First Team → Patterns → Rough Edges. Each stage has info cards, team visualiser SVG animation, and ToolChips with colored dots and descriptions.
+
+### Stage Visualizations
+- **Stage 0 (The Ceiling)**: Two-column comparison (solo vs team), shift block (Sequential→Parallel, One context→Many, Monologue→Collaboration), real failure mode example
+- **Stage 1 (Architecture)**: `TeamVisualiser` with lead circle + 3 teammate circles, animated dashed connection lines, message particles, task board (foreignObject with Todo/Doing/Done columns)
+- **Stage 2 (First Team)**: `TeamBuilderViz` — interactive builder with 3 steps: (1) choose pattern preset, (2) assign roles, (3) write system instructions. Generates copyable prompt. Pattern presets: Exploration, Layer Split, QA Swarm
+- **Stage 3 (Patterns)**: Three tabbed patterns (Exploration, Layer Split, QA Swarm) with `TeamVisualiser` showing different connection/animation patterns per tab, plus `DecisionMatrix` SVG with quadrant labels and positioned dots
+- **Stage 4 (Rough Edges)**: Two-column cards (limitations, when not to use), callout boxes
+
+### Team Visualiser SVG
+Shared `TeamVisualiser` component renders lead agent (large circle at top center) and 1-3 teammate circles (bottom row). Features:
+- **Lead → Teammate lines**: Vector math offsets line endpoints by circle radius (leadR=29, tmR=23) so dashed lines touch circle borders, not pass through
+- **Peer connections**: Adjacent-only pairs (T1↔T2, T2↔T3) to avoid lines crossing through intermediate nodes
+- **Message particles**: `MessageParticle` component animates colored dots along connection paths using `requestAnimationFrame`
+- **Task board**: `foreignObject` at (440, 20) with 175×280px HTML div showing Todo/Doing/Done columns
+- **Active connections**: Each stage/tab highlights different sets of connections (`activeConnections` array)
+
+### Team Builder (Stage 2)
+Interactive 3-step builder:
+1. **Choose pattern** — 3 preset buttons (Exploration, Layer Split, QA Swarm) with description shown below
+2. **Assign roles** — editable text inputs for each teammate, team size buttons (2/3/4)
+3. **Write instructions** — textarea for system prompt
+
+Generates a copyable prompt preview (dark code block with copy button). Each step has a `.at-builder-step-hint` description explaining what to do.
+
+### Decision Matrix (Stage 3)
+SVG quadrant chart with axes: Complexity (Low→High) × Independence (Low→High). 4 quadrant labels, 4 positioned dots (Solo Agent, Layer Split, QA Swarm, Exploration). Helps students choose the right team pattern.
+
+### Animation Pattern
+Uses `setTimeout` chains with `timersRef = useRef([])` (same as AgenticAI). Stage 1 runs a multi-phase animation: lead delegates → teammates work → peer messages → tasks complete. Controlled by `play` state and `runAnimation` callback.
+
+### Progressive Learning Tips
+Milestone-based tips triggered at key stages. No auto-dismiss — user clicks X. Max one visible at a time. Tracked via `dismissedTips` Set with `fadeTimerRef` for cleanup.
+
+| Trigger | Tip |
+|---|---|
+| Stage 0 (The Ceiling) | "The solo agent hits a wall on big tasks — watch the comparison above" |
+| Stage 1 (Architecture) | "Hit Play to watch the lead delegate tasks and teammates work in parallel" |
+| Stage 2 (First Team) | "Try all three patterns — each one generates a different prompt you can copy" |
+| Stage 4 (Rough Edges) | "Teams aren't always the answer — check the decision matrix to know when" |
+
+All tips reset on "Start over". CSS: reuses `.learn-tip` classes from Playground.
+
+### Tool Chips
+All 5 stages use `ToolChips` with `{ name, color, desc }` objects (~40 tools total). Colored dots indicate category, descriptions show on click/tap via tooltip popup.
+
+### Dark Mode
+Uses standard CSS variable overrides. Builder inputs, role inputs, and prompt preview have dark-mode-specific border/background. Active pattern buttons use indigo (`#5856D6`) borders in both modes.
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview
@@ -644,6 +715,7 @@ create table quiz_results (
 | Choosing the Right AI Model | Entry screen dismissed | Reach final screen |
 | Run AI Locally | Entry screen dismissed | Reach final screen |
 | Claude Code | Entry screen dismissed | Reach final screen |
+| Agent Teams | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 
@@ -973,19 +1045,64 @@ Implemented via `[data-theme="dark"]` attribute on `<html>`.
 
 ### Final Screen (after completing all stages, before quiz)
 
-Every stage-based module's `showFinal` screen follows this structure:
-1. Celebration message + toolkit/recap content (module-specific)
-2. **Exactly 2 buttons** in `.how-final-actions`:
+Every stage-based module's `showFinal` screen follows this standardized structure:
+1. Celebration message (`how-final-celebration`)
+2. Icon grid (`pe-final-grid`) — 4-column grid of cards, each with an SVG icon + label
+3. Toolkit table (`pe-reference`) — 3-column table: Concept | When to use | Key phrase
+4. **Exactly 2 buttons** in `.how-final-actions`:
    - `quiz-launch-btn` — "Test Your Knowledge →" (filled, launches quiz)
-   - `how-secondary-btn` — "Start over" (outline, calls `reset()`)
-3. `<SuggestedModules>` component — divider + "What to learn next" + 3 random module cards
+   - `how-secondary-btn` — "Start over" (outline, calls `handleStartOver()`)
+5. `<SuggestedModules>` component — divider + "What to learn next" + 3 random module cards
 
+**TOOLKIT array** — defined at module level (outside the component function), ~5-8 items per module:
 ```jsx
-<div className="how-final-actions">
-  <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>Test Your Knowledge &rarr;</button>
-  <button className="how-secondary-btn" onClick={reset}>Start over</button>
-</div>
-<SuggestedModules currentModuleId="module-id" onSwitchTab={onSwitchTab} />
+const TOOLKIT = [
+  { concept: 'Name', when: 'When to use it', phrase: 'Key phrase', icon: <SomeIcon size={24} color="#TAG_COLOR" /> },
+  // ... one item per stage/concept in the module
+]
+```
+
+**Icon color rule:** Every TOOLKIT icon must use the module's **tag color** (not gray `#8E8E93`):
+- Practical (#34C759): PromptEngineering, ContextEngineering, AISafety, AIFluency, ChoosingAIModel, Ollama, ClaudeCode
+- Technical (#5856D6): AgenticAI, MachineLearning, NeuralNetworks, DeepLearning, FineTuning, PrecisionRecall, RAGUnderTheHood, AIInProduction, AgentTeams
+- Journey (#FF9500): HowLLMsWork, ModelTraining, RAG, GenerativeAI
+- Professional (#0EA5E9): AINativePM
+
+**Full JSX pattern:**
+```jsx
+{showFinal && (
+  <div className="how-final how-fade-in">
+    <div className="how-final-celebration">You now know [Topic]!</div>
+    <div className="pe-final-grid">
+      {TOOLKIT.map((item) => (
+        <div key={item.concept} className="pe-final-card">
+          <div className="pe-final-card-emoji">{item.icon}</div>
+          <div className="pe-final-card-name">{item.concept}</div>
+        </div>
+      ))}
+    </div>
+    <div className="pe-reference-wrapper">
+      <div className="pe-reference-title">Your [Topic] Toolkit</div>
+      <table className="pe-reference">
+        <thead><tr><th>Concept</th><th>When to use</th><th>Key phrase</th></tr></thead>
+        <tbody>
+          {TOOLKIT.map((item) => (
+            <tr key={item.concept}>
+              <td className="pe-ref-technique">{item.concept}</td>
+              <td>{item.when}</td>
+              <td className="pe-ref-phrase">{item.phrase}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div className="how-final-actions">
+      <button className="quiz-launch-btn" onClick={() => setShowQuiz(true)}>Test Your Knowledge &rarr;</button>
+      <button className="how-secondary-btn" onClick={handleStartOver}>Start over</button>
+    </div>
+    <SuggestedModules currentModuleId="module-id" onSwitchTab={onSwitchTab} />
+  </div>
+)}
 ```
 
 **No other buttons** (no "Practice in Playground", no "Try X next"). Module suggestions are handled by `SuggestedModules`.
@@ -1052,7 +1169,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 11. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
 12. All content icons inside colored containers must match the container's border/accent color
 13. Use `border: 1.5px solid transparent` on all filled buttons
-14. Final screen: exactly 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
+14. Final screen: define `TOOLKIT` array at module level with `{ concept, when, phrase, icon }` items (icon color = tag color), use `pe-final-grid` + `pe-reference` + 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
 15. Quiz: pass `onStartOver`, `onSwitchTab`, `currentModuleId` props
 16. Add `useAuth` import and destructure `markModuleStarted`, `markModuleComplete`
 17. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
@@ -1084,7 +1201,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Never use `\u2014` or other `\uXXXX` escapes anywhere — use HTML entities (`&mdash;`, `&rarr;`, etc.) in JSX text, and literal characters (`—`, `→`) in JavaScript strings. While `\uXXXX` technically works in JS strings, prefer literal characters for readability and consistency. In JSX template text, `\uXXXX` renders as literal characters and must never be used.
 - Mobile-first: test at 375px, 480px, 768px
 - Grid collapse pattern: 3/4-col → 2-col (768px) → 1-col (480px)
-- Final screens: exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules component
+- Final screens: TOOLKIT icon grid (`pe-final-grid`) + toolkit table (`pe-reference`) + exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules component; TOOLKIT array defined at module level with `{ concept, when, phrase, icon }` items; icon color = module's tag color
 - Quiz end screens: exactly 2 buttons (Start Over + Take Quiz Again) + explore next cards
 - Tip boxes: always yellow — `rgba(234, 179, 8, 0.06)` bg, `#eab308` border-left, `TipIcon color="#eab308"`
 - NeuralNetworkCanvas has two layout modes: neuron-shaped initial layout (dendrites→soma→axon→terminals) and random replay layout; new nodes need entries in `NODES`, `NEURON_LAYOUT`, and `NEURON_ANIM_ORDER`

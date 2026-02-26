@@ -1076,80 +1076,6 @@
   color: #FF3B30;
 }
 
-/* ── final screen ── */
-
-.cc-final {
-  text-align: center;
-}
-
-.cc-final-celebration {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 32px;
-}
-
-.cc-final-celebration h2 {
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-.cc-final-celebration p {
-  font-size: 16px;
-  color: var(--text-secondary);
-  max-width: 600px;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.cc-final-recap {
-  margin-bottom: 32px;
-}
-
-.cc-final-recap h3 {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0 0 16px;
-}
-
-.cc-recap-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  text-align: left;
-}
-
-.cc-recap-card {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 14px;
-}
-
-.cc-recap-card svg {
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.cc-recap-card strong {
-  display: block;
-  font-size: 14px;
-  color: var(--text-primary);
-  margin-bottom: 2px;
-}
-
-.cc-recap-card span {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
 /* ── dark mode ── */
 
 /* Cards: bg-card = bg-primary in dark, so elevate to bg-secondary for contrast */
@@ -1164,8 +1090,7 @@
 [data-theme="dark"] .cc-mcp-node,
 [data-theme="dark"] .cc-stack-layer,
 [data-theme="dark"] .cc-workflow-card,
-[data-theme="dark"] .cc-prompting-tips,
-[data-theme="dark"] .cc-recap-card {
+[data-theme="dark"] .cc-prompting-tips {
   background: var(--bg-secondary);
 }
 
@@ -1221,10 +1146,6 @@
   }
 
   .cc-workflow-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cc-recap-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1292,15 +1213,6 @@
 
   .cc-try-btn {
     width: 100%;
-  }
-
-  /* Final screen */
-  .cc-final-celebration h2 {
-    font-size: 24px;
-  }
-
-  .cc-final-celebration p {
-    font-size: 15px;
   }
 }
 

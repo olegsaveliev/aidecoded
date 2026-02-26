@@ -191,6 +191,15 @@ const ICON_PATHS = {
       <path d="M19 2l1.5 1.5L19 5M21 1.5h-3" strokeLinecap="round" />
     </>
   ),
+  'agent-teams': (
+    <>
+      <circle cx="12" cy="5" r="2.5" />
+      <circle cx="4" cy="17" r="2.5" />
+      <circle cx="20" cy="17" r="2.5" />
+      <path d="M12 7.5v3M12 10.5l-6.5 5M12 10.5l6.5 5" strokeLinecap="round" />
+      <path d="M7 16h10" strokeLinecap="round" strokeDasharray="2 2" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

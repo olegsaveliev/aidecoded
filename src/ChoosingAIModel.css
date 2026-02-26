@@ -1258,37 +1258,7 @@
   color: var(--text-primary);
 }
 
-/* ═══════════════════════════════════════════════
-   Final Screen
-   ═══════════════════════════════════════════════ */
-.cam-final-recap {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-}
-
-.cam-final-recap-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-}
-
-.cam-final-recap-items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.cam-final-recap-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-}
+/* Final Screen — uses shared pe-final-grid / pe-reference classes from App.css */
 
 /* ═══════════════════════════════════════════════
    Dark Mode
@@ -1407,11 +1377,6 @@
   border-color: var(--border);
 }
 
-[data-theme="dark"] .cam-final-recap {
-  background: var(--bg-secondary);
-  border-color: var(--border);
-}
-
 /* ═══════════════════════════════════════════════
    Mobile — 768px
    ═══════════════════════════════════════════════ */
@@ -1456,10 +1421,6 @@
 
   .cam-matcher-tasks {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .cam-final-recap-items {
-    grid-template-columns: 1fr;
   }
 
   .cam-triangle-svg-wrap {

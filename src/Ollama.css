@@ -1312,37 +1312,6 @@
   margin: 4px 0 0;
 }
 
-/* ── Final screen ── */
-
-.ol-final-recap {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-}
-
-.ol-final-recap-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-}
-
-.ol-final-recap-items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.ol-final-recap-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-
 /* ── Fade animation ── */
 
 @keyframes olFadeIn {
@@ -1454,11 +1423,6 @@
   background: rgba(52, 199, 89, 0.06);
 }
 
-[data-theme="dark"] .ol-final-recap {
-  background: var(--bg-secondary);
-  border-color: var(--border);
-}
-
 [data-theme="dark"] .ol-ram-bar {
   background: var(--bg-primary);
 }
@@ -1535,10 +1499,6 @@
 
   .ol-integration-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .ol-final-recap-items {
-    grid-template-columns: 1fr;
   }
 
   .ol-install-tabs {

@@ -4,7 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { CheckIcon, CrossIcon, TipIcon, WarningIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, TipIcon, WarningIcon, QuestionIcon, RefreshIcon, SlidersIcon, SearchIcon, LayersIcon, ChatIcon, ShieldIcon, CompassIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { aiFluencyQuiz } from './quizData.js'
@@ -71,6 +71,17 @@ const AF_TOOLS = {
     { name: 'Perplexity', color: '#34C759', desc: 'Research-focused AI for verification' },
   ],
 }
+
+const TOOLKIT = [
+  { concept: 'The Fluency Gap', when: 'You get decent outputs but know they could be better', phrase: 'Fluency is a skill, not a feature', icon: <QuestionIcon size={20} color="#34C759" /> },
+  { concept: 'Iteration Loops', when: 'First output falls short of what you need', phrase: 'Refine, don\'t restart', icon: <RefreshIcon size={20} color="#34C759" /> },
+  { concept: 'Setting Terms', when: 'Starting a new task or conversation with AI', phrase: 'Tell AI how to work with you', icon: <SlidersIcon size={20} color="#34C759" /> },
+  { concept: 'Questioning Outputs', when: 'AI response looks polished but might be wrong', phrase: 'Polished does not mean correct', icon: <SearchIcon size={20} color="#34C759" /> },
+  { concept: 'Context Shaping', when: 'Responses miss important nuance or constraints', phrase: 'What you put in shapes what comes out', icon: <LayersIcon size={20} color="#34C759" /> },
+  { concept: 'Collaborative Reasoning', when: 'Solving complex problems or making decisions', phrase: 'Think with AI, not at it', icon: <ChatIcon size={20} color="#34C759" /> },
+  { concept: 'Trust Limits', when: 'Deciding whether to verify or accept AI output', phrase: 'Trust the process, verify the facts', icon: <ShieldIcon size={20} color="#34C759" /> },
+  { concept: 'Fluency System', when: 'Building consistent habits across all AI interactions', phrase: 'Your personal AI operating system', icon: <CompassIcon size={20} color="#34C759" /> },
+]
 
 const STAGES = [
   { key: 'what-is-fluency', label: 'Why Plateau?' },
@@ -1276,16 +1287,35 @@ function AIFluency({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You are now thinking like a fluent AI user.</div>
 
-          <div className="af-final-recap">
-            <div className="af-final-recap-title">Your fluency journey:</div>
-            <div className="af-final-recap-items">
-              {STAGES.map((s, i) => (
-                <div key={i} className="af-final-recap-item">
-                  <CheckIcon size={14} />
-                  <span>{s.label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your AI Fluency Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="how-final-actions">

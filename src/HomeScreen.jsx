@@ -316,6 +316,13 @@ const CARDS = [
     tag: 'Practical',
     group: 'Skills',
   },
+  {
+    id: 'agent-teams',
+    title: 'Agent Teams',
+    description: 'Subagents are function calls. Agent Teams are organisations. Learn how Claude Code\'s experimental multi-agent feature works: lead agents, teammates, shared task lists, and direct messaging between agents working in parallel.',
+    tag: 'Technical',
+    group: 'Advanced',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']

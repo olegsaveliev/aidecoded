@@ -4,7 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { CheckIcon, CrossIcon, TipIcon, WarningIcon, ShieldIcon, SearchIcon, EyeIcon, BarChartIcon, TargetIcon, WrenchIcon } from './ContentIcons.jsx'
+import { CheckIcon, CrossIcon, TipIcon, WarningIcon, ShieldIcon, SearchIcon, EyeIcon, BarChartIcon, TargetIcon, WrenchIcon, BookIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { aiSafetyQuiz } from './quizData.js'
@@ -71,6 +71,17 @@ const STAGES = [
   { key: 'evals', label: 'Evals' },
   { key: 'safety-beyond', label: 'Bigger Picture' },
   { key: 'toolkit', label: 'Toolkit' },
+]
+
+const TOOLKIT = [
+  { concept: 'Hallucinations', when: 'AI generates false info confidently', phrase: 'Confident but wrong', icon: <WarningIcon size={24} color="#34C759" /> },
+  { concept: 'Five Types', when: 'Classifying failure modes', phrase: 'Fabrication, distortion, attribution, instruction, context', icon: <EyeIcon size={24} color="#34C759" /> },
+  { concept: 'Detection', when: 'Before shipping AI outputs', phrase: 'Cross-reference and verify', icon: <SearchIcon size={24} color="#34C759" /> },
+  { concept: 'Prompt Fixes', when: 'Reducing hallucinations at the source', phrase: 'Constrain, ground, and verify', icon: <WrenchIcon size={24} color="#34C759" /> },
+  { concept: 'RAG & Grounding', when: 'AI needs factual accuracy', phrase: 'Anchor to retrieved knowledge', icon: <BookIcon size={24} color="#34C759" /> },
+  { concept: 'Evals', when: 'Measuring AI reliability over time', phrase: 'Benchmark, monitor, regress', icon: <BarChartIcon size={24} color="#34C759" /> },
+  { concept: 'Safety Beyond', when: 'Risks beyond hallucinations', phrase: 'Bias, toxicity, misuse, privacy', icon: <ShieldIcon size={24} color="#34C759" /> },
+  { concept: 'Safety Toolkit', when: 'Building production AI systems', phrase: 'Layer defenses, never trust blindly', icon: <TargetIcon size={24} color="#34C759" /> },
 ]
 
 const STAGE_TOOLTIPS = {
@@ -1291,16 +1302,35 @@ function AISafety({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You now know how to ship AI safely.</div>
 
-          <div className="ais-final-recap">
-            <div className="ais-final-recap-title">Your journey through AI safety:</div>
-            <div className="ais-final-recap-items">
-              {STAGES.map((s, i) => (
-                <div key={i} className="ais-final-recap-item">
-                  <CheckIcon size={14} />
-                  <span>{s.label}</span>
-                </div>
-              ))}
-            </div>
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your AI Safety Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="how-final-actions">
