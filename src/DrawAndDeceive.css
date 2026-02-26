@@ -1233,8 +1233,10 @@
 
   .dd-btn-primary,
   .dd-btn-outline {
+    min-height: 44px;
     height: 44px;
     width: 100%;
+    flex: none;
     font-size: 14px;
   }
 
