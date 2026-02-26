@@ -44,6 +44,7 @@ const NODES = [
   { id: 'alignment-game', label: 'Alignment Game', group: 'play', desc: 'Write constraints to stop AI from gaming your goals' },
   { id: 'choosing-ai-model', label: 'Choosing Model', group: 'skills', desc: 'Match any task to the right AI model' },
   { id: 'ollama', label: 'Run AI Locally', group: 'skills', desc: 'Run open-source AI models on your own hardware' },
+  { id: 'computer-vision', label: 'Computer Vision', group: 'foundations', desc: 'How machines learn to see — from pixels to vision transformers' },
 ]
 
 
@@ -67,6 +68,10 @@ const CONNECTIONS = [
   ['neural-networks', 'deep-learning'],
   ['neural-networks', 'model-training'],
   ['neural-networks', 'precision-recall'],
+  ['neural-networks', 'computer-vision'],
+  ['deep-learning', 'computer-vision'],
+  ['machine-learning', 'computer-vision'],
+  ['computer-vision', 'generative-ai'],
   ['machine-learning', 'agentic-ai'],
   ['machine-learning', 'prompt-heist'],
   // Layer 3 → Layer 4
@@ -184,6 +189,7 @@ const NEURON_LAYOUT = {
   'alignment-game':        { px: 0.68, py: 0.80 },
   'choosing-ai-model':     { px: 0.31, py: 0.80 },
   'ollama':                { px: 0.23, py: 0.93 },
+  'computer-vision':       { px: 0.10, py: 0.80 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -191,7 +197,7 @@ const NEURON_ANIM_ORDER = [
   // Dendrites
   'playground', 'how-llms-work', 'tokenizer', 'deep-learning', 'generation',
   // Soma
-  'machine-learning', 'neural-networks', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
+  'machine-learning', 'neural-networks', 'computer-vision', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama',
   // Terminals

@@ -13,6 +13,7 @@ const ALL_MODULES = [
   { id: 'machine-learning', title: 'Machine Learning', description: 'How machines actually learn from data — the foundation of all modern AI', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'neural-networks', title: 'Neural Networks', description: 'Watch a neural network learn in real time — animated weights, live loss curves, and hands-on backpropagation', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'deep-learning', title: 'Deep Learning', description: 'Discover the neural networks powering every AI breakthrough — from image recognition to ChatGPT', tag: 'Technical', tagColor: '#5856D6' },
+  { id: 'computer-vision', title: 'Computer Vision', description: 'How does AI see a cat and know it\'s a cat? Drag convolution filters over pixel grids, watch feature maps emerge, and build intuition for how CNNs, ResNets, and modern vision transformers actually work.', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'fine-tuning', title: 'Fine-Tuning', description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'generative-ai', title: 'Generative AI', description: 'From noise to masterpiece — discover how AI creates images, music, video, code and text that never existed before', tag: 'Journey', tagColor: '#FF9500' },
   { id: 'ai-city-builder', title: 'AI City Builder', description: 'Investigate AI-powered mysteries in a growing city. Solve detective cases using real AI concepts.', tag: 'Game', tagColor: '#F59E0B' },

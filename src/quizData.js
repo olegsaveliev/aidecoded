@@ -465,7 +465,7 @@ export const fineTuningQuiz = [
   },
   {
     question: 'What is QLoRA?',
-    options: ['A type of neural network', 'Quantized LoRA \u2014 more memory efficient', 'A quality evaluation metric', 'A dataset format'],
+    options: ['A type of neural network', 'Quantized LoRA — more memory efficient', 'A quality evaluation metric', 'A dataset format'],
     correct: 1,
   },
   {
@@ -841,7 +841,7 @@ export const aiFluencyQuiz = [
   },
   {
     question: 'How does AI fluency compound over time?',
-    options: ['It does not \u2014 habits stay separate', 'Each fluency habit reinforces and improves the others', 'Only the most recent habit matters', 'It requires constant effort to maintain'],
+    options: ['It does not — habits stay separate', 'Each fluency habit reinforces and improves the others', 'Only the most recent habit matters', 'It requires constant effort to maintain'],
     correct: 1,
     accentColor: '#34C759',
   },
@@ -943,7 +943,7 @@ export const ragUnderTheHoodQuiz = [
   },
   {
     question: 'What is the sweet spot chunk size for most document types?',
-    options: ['50\u2013100 tokens', '300\u2013500 tokens', '1000\u20132000 tokens', 'Chunk size does not affect retrieval quality'],
+    options: ['50–100 tokens', '300–500 tokens', '1000–2000 tokens', 'Chunk size does not affect retrieval quality'],
     correct: 1,
     accentColor: '#5856D6',
   },
@@ -973,7 +973,7 @@ export const ragUnderTheHoodQuiz = [
   },
   {
     question: 'What is the recommended order for fixing RAG pipeline layers?',
-    options: ['Filtering first, then embeddings, then chunking', 'Embeddings first since they affect all other layers', 'Chunking and metadata first, then retrieval, then filtering', 'The order does not matter \u2014 fix whichever is easiest'],
+    options: ['Filtering first, then embeddings, then chunking', 'Embeddings first since they affect all other layers', 'Chunking and metadata first, then retrieval, then filtering', 'The order does not matter — fix whichever is easiest'],
     correct: 2,
     accentColor: '#5856D6',
   },
@@ -1069,7 +1069,7 @@ export const choosingAIModelQuiz = [
   },
   {
     question: 'Which model family is currently best known for coding and agentic software tasks?',
-    options: ['Grok (xAI) \u2014 real-time information strength', 'DeepSeek \u2014 cost optimization focus', 'Claude (Anthropic) \u2014 SWE-bench leader, stable long-running agent behavior', 'Gemini Flash \u2014 speed and throughput focus'],
+    options: ['Grok (xAI) — real-time information strength', 'DeepSeek — cost optimization focus', 'Claude (Anthropic) — SWE-bench leader, stable long-running agent behavior', 'Gemini Flash — speed and throughput focus'],
     correct: 2,
     accentColor: '#34C759',
   },
@@ -1081,7 +1081,7 @@ export const choosingAIModelQuiz = [
   },
   {
     question: 'DeepSeek V3.2 costs approximately $0.27 per million input tokens. GPT-5.2 Pro costs approximately $21 per million. What does this price difference mean for a high-volume app?',
-    options: ['GPT-5.2 is always worth the premium cost', 'DeepSeek is always better \u2014 ignore expensive models', 'For the right high-volume tasks DeepSeek can save 70-90% with near-equivalent quality', 'The price difference means DeepSeek is lower quality across all tasks'],
+    options: ['GPT-5.2 is always worth the premium cost', 'DeepSeek is always better — ignore expensive models', 'For the right high-volume tasks DeepSeek can save 70-90% with near-equivalent quality', 'The price difference means DeepSeek is lower quality across all tasks'],
     correct: 2,
     accentColor: '#34C759',
   },
@@ -1099,7 +1099,7 @@ export const choosingAIModelQuiz = [
   },
   {
     question: 'How often should you re-evaluate your model selection in a production application?',
-    options: ['Never \u2014 switching models is too risky', 'Only when your model is deprecated', 'Approximately quarterly, checking for new models, price drops and eval changes', 'Every week to stay current with benchmarks'],
+    options: ['Never — switching models is too risky', 'Only when your model is deprecated', 'Approximately quarterly, checking for new models, price drops and eval changes', 'Every week to stay current with benchmarks'],
     correct: 2,
     accentColor: '#34C759',
   },
@@ -1228,5 +1228,68 @@ export const ollamaQuiz = [
     options: ['Tasks requiring GPT-5.2 level reasoning', 'Processing sensitive medical or legal documents that cannot leave your network', 'Running 200B+ parameter frontier models', 'Tasks where you need real-time web access'],
     correct: 1,
     accentColor: '#34C759',
+  },
+]
+
+export const computerVisionQuiz = [
+  {
+    question: 'How does a computer represent an image?',
+    options: ['As a compressed description of objects in the scene', 'As a grid of numbers where each number represents a pixel\'s brightness or colour', 'As a vector of feature descriptions', 'As a sequence of shapes and boundaries'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Why is recognising the same cat in different photos difficult for a raw pixel approach?',
+    options: ['Cats move too fast to be photographed clearly', 'Different lighting and angles produce completely different pixel values for the same object', 'Pixel grids cannot store enough information', 'Computer monitors display colours differently'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does a convolutional filter do?',
+    options: ['Removes colour from an image before processing', 'Slides over an image multiplying and summing pixel values to detect local features', 'Connects every pixel to every output neuron', 'Compresses the image to reduce file size'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is a feature map?',
+    options: ['A map of where objects are in an image', 'The output of applying a filter to an image, showing where that filter activated', 'A list of features detected in training data', 'The final output layer of a CNN'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the purpose of max pooling?',
+    options: ['To increase the resolution of feature maps', 'To add more filters to the convolutional layer', 'To reduce spatial size while keeping the strongest activations, adding translation invariance', 'To normalise pixel values between 0 and 1'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the key innovation of ResNet?',
+    options: ['Using much larger 7×7 convolution filters', 'Skip connections that add the input directly to the output, solving vanishing gradients', 'Training on 10× more data than VGG', 'Removing all pooling layers from the network'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'How do Vision Transformers (ViT) process images?',
+    options: ['With larger convolution filters than standard CNNs', 'By splitting images into patches and treating them as tokens, like words in a sentence', 'By converting images to text descriptions first', 'By processing each colour channel separately'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is transfer learning in computer vision?',
+    options: ['Moving model weights from CPU to GPU', 'Converting a model from one framework to another', 'Starting with a model pretrained on ImageNet and fine-tuning it on your specific task', 'Training a model to transfer images between formats'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What are adversarial examples?',
+    options: ['Training images that are incorrectly labelled', 'Images with added invisible noise that causes a model to confidently misclassify them', 'Images taken from adversarial camera angles', 'Duplicate images that confuse the model'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the difference between object detection and image classification?',
+    options: ['Object detection uses colour, classification does not', 'Classification assigns one label to the whole image, while detection finds and locates multiple objects with bounding boxes', 'Detection is faster, classification is more accurate', 'Classification requires more training data'],
+    correct: 1,
+    accentColor: '#5856D6',
   },
 ]

@@ -29,6 +29,7 @@ Interactive React app for learning how Large Language Models work.
 | `machine-learning` | MachineLearning.jsx | MachineLearning.css | machineLearningQuiz | Technical | #5856D6 |
 | `neural-networks` | NeuralNetworks.jsx | NeuralNetworks.css | neuralNetworksQuiz | Technical | #5856D6 |
 | `deep-learning` | DeepLearning.jsx | DeepLearning.css | deepLearningQuiz | Technical | #5856D6 |
+| `computer-vision` | ComputerVision.jsx | ComputerVision.css | computerVisionQuiz | Technical | #5856D6 |
 | `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
 | `generative-ai` | GenerativeAI.jsx | GenerativeAI.css | generativeAIQuiz | Journey | #FF9500 |
 | `ai-city-builder` | AICityBuilder.jsx | AICityBuilder.css | — (game) | Game | #F59E0B |

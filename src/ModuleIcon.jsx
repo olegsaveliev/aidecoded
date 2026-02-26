@@ -150,6 +150,15 @@ const ICON_PATHS = {
       <line x1="12" y1="16" x2="18" y2="16" strokeLinecap="round" />
     </>
   ),
+  // Eye icon: intentionally uses 1–21 coordinate range (vs some icons using 2–22).
+  // Fits the shared 24×24 viewBox and renders consistently at all sizes.
+  'computer-vision': (
+    <>
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+      <circle cx="12" cy="12" r="3" />
+      <path d="M3 6l2 2M21 6l-2 2M3 18l2-2M21 18l-2-2" strokeLinecap="round" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

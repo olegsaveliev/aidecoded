@@ -142,6 +142,14 @@ const CARDS = [
     group: 'Foundations',
   },
   {
+    id: 'computer-vision',
+    title: 'Computer Vision',
+    description: 'How does AI see a cat and know it\'s a cat? Drag real convolution filters over pixel grids, watch feature maps emerge, and build intuition for how CNNs, ResNets, and modern vision transformers actually work.',
+    tag: 'Technical',
+
+    group: 'Foundations',
+  },
+  {
     id: 'fine-tuning',
     title: 'Fine-Tuning',
     description: 'Turn a general-purpose AI into a domain expert trained on your specific data and style',

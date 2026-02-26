@@ -25,6 +25,7 @@ const NAV_GROUPS = [
       { id: 'model-training', name: 'Model Training', tag: 'Journey' },
       { id: 'machine-learning', name: 'Machine Learning', tag: 'Technical' },
       { id: 'neural-networks', name: 'Neural Networks', tag: 'Technical' },
+      { id: 'computer-vision', name: 'Computer Vision', tag: 'Technical' },
       { id: 'precision-recall', name: 'Precision & Recall', tag: 'Technical' },
       { id: 'deep-learning', name: 'Deep Learning', tag: 'Technical' },
       { id: 'fine-tuning', name: 'Fine-Tuning', tag: 'Technical' },
