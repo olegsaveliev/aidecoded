@@ -1234,6 +1234,7 @@
   .dd-btn-primary,
   .dd-btn-outline {
     height: 44px;
+    width: 100%;
     font-size: 14px;
   }
 
