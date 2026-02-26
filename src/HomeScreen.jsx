@@ -259,6 +259,15 @@ const CARDS = [
     difficulty: 'Creative',
   },
   {
+    id: 'agent-office',
+    title: 'Agent Office',
+    description: 'Run a pixel art AI startup. Assign agents to tasks, give them tools and instructions, watch them work in real time. Learn why tools, memory, and clear instructions determine everything about whether an AI agent succeeds or fails.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Strategic',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',

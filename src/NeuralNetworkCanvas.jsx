@@ -47,6 +47,7 @@ const NODES = [
   { id: 'computer-vision', label: 'Computer Vision', group: 'foundations', desc: 'How machines learn to see — from pixels to vision transformers' },
   { id: 'label-master', label: 'Label Master', group: 'play', desc: 'Draw bounding boxes and learn how training data is annotated' },
   { id: 'draw-and-deceive', label: 'Draw & Deceive', group: 'play', desc: 'Draw pixel art and try to fool GPT-4o vision' },
+  { id: 'agent-office', label: 'Agent Office', group: 'play', desc: 'Run a pixel art AI startup with four AI agents' },
   { id: 'claude-code', label: 'Claude Code', group: 'skills', desc: 'AI pair programmer that lives in your terminal' },
 ]
 
@@ -142,6 +143,10 @@ const CONNECTIONS = [
   ['computer-vision', 'draw-and-deceive'],
   ['alignment-game', 'draw-and-deceive'],
   ['ai-ethics-tribunal', 'draw-and-deceive'],
+  ['agentic-ai', 'agent-office'],
+  ['claude-code', 'agent-office'],
+  ['draw-and-deceive', 'agent-office'],
+  ['alignment-game', 'agent-office'],
   ['ollama', 'claude-code'],
   ['agentic-ai', 'claude-code'],
   ['prompt-engineering', 'claude-code'],
@@ -204,6 +209,7 @@ const NEURON_LAYOUT = {
   'computer-vision':       { px: 0.10, py: 0.80 },
   'label-master':          { px: 0.90, py: 0.87 },
   'draw-and-deceive':      { px: 0.82, py: 0.90 },
+  'agent-office':          { px: 0.78, py: 0.97 },
   'claude-code':           { px: 0.27, py: 1.00 },
 }
 
@@ -216,7 +222,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive', 'agent-office',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */

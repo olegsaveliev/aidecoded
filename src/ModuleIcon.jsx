@@ -173,6 +173,17 @@ const ICON_PATHS = {
       <circle cx="19" cy="5" r="1.5" strokeLinecap="round" />
     </>
   ),
+  'agent-office': (
+    <>
+      <rect x="3" y="8" width="18" height="13" rx="1" />
+      <path d="M3 8l9-5 9 5" />
+      <rect x="7" y="12" width="3" height="3" rx="0.5" />
+      <rect x="14" y="12" width="3" height="3" rx="0.5" />
+      <rect x="10.5" y="15" width="3" height="6" />
+      <circle cx="8.5" cy="6" r="1" />
+      <circle cx="15.5" cy="6" r="1" />
+    </>
+  ),
   'claude-code': (
     <>
       <rect x="2" y="3" width="20" height="16" rx="2" />

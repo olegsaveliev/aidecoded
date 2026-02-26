@@ -33,6 +33,7 @@ import Ollama from './Ollama.jsx'
 import ComputerVision from './ComputerVision.jsx'
 import LabelMaster from './LabelMaster.jsx'
 import DrawAndDeceive from './DrawAndDeceive.jsx'
+import AgentOffice from './AgentOffice.jsx'
 import ClaudeCode from './ClaudeCode.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
@@ -131,7 +132,7 @@ const VALID_TABS = [
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   'alignment-game', 'choosing-ai-model', 'neural-networks', 'ollama', 'computer-vision',
-  'label-master', 'draw-and-deceive', 'claude-code',
+  'label-master', 'draw-and-deceive', 'agent-office', 'claude-code',
   'profile'
 ]
 
@@ -1255,6 +1256,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'draw-and-deceive' && (
           <DrawAndDeceive onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'agent-office' && (
+          <AgentOffice onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && canRenderModule && activeTab === 'claude-code' && (
           <ClaudeCode onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
