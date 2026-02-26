@@ -31,6 +31,7 @@ import NeuralNetworks from './NeuralNetworks.jsx'
 import ChoosingAIModel from './ChoosingAIModel.jsx'
 import Ollama from './Ollama.jsx'
 import ComputerVision from './ComputerVision.jsx'
+import LabelMaster from './LabelMaster.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -128,6 +129,7 @@ const VALID_TABS = [
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   'alignment-game', 'choosing-ai-model', 'neural-networks', 'ollama', 'computer-vision',
+  'label-master',
   'profile'
 ]
 
@@ -1245,6 +1247,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'computer-vision' && (
           <ComputerVision onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'label-master' && (
+          <LabelMaster onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'profile' && (
           <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
