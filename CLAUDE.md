@@ -47,6 +47,7 @@ Interactive React app for learning how Large Language Models work.
 | `ai-in-production` | AIInProduction.jsx | AIInProduction.css | aiInProductionQuiz | Technical | #5856D6 |
 | `alignment-game` | AlignmentGame.jsx | AlignmentGame.css | — (game) | Game | #F59E0B |
 | `label-master` | LabelMaster.jsx | LabelMaster.css | — (game) | Game | #F59E0B |
+| `draw-and-deceive` | DrawAndDeceive.jsx | DrawAndDeceive.css | — (game) | Game | #F59E0B |
 | `choosing-ai-model` | ChoosingAIModel.jsx | ChoosingAIModel.css | choosingAIModelQuiz | Practical | #34C759 |
 | `ollama` | Ollama.jsx | Ollama.css | ollamaQuiz | Practical | #34C759 |
 
@@ -63,7 +64,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
-| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master |
+| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
 **Where tag colors are used:**
@@ -79,7 +80,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally |
 | Advanced | #FF9500 | RAG, Agentic AI, Why RAG Fails, AI in Production |
-| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master |
+| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive |
 | Professional | #0EA5E9 | AI-Native PM |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
@@ -219,6 +220,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/AIStartupSimulator.jsx` / `src/AIStartupSimulator.css` — AI Startup Simulator game (6 months, AI architecture decisions, build vs buy, RAG vs fine-tune, scaling, reliability)
 - `src/AlignmentGame.jsx` / `src/AlignmentGame.css` — The Alignment Game (8 rounds, AI alignment through constraint writing, Goodhart's Law, specification gaming)
 - `src/LabelMaster.jsx` / `src/LabelMaster.css` — Label Master game (8 levels, bounding box annotation, IoU scoring, NMS demo, segmentation). Levels: 1) Single cat bbox, 2) Bird on branch bbox, 3) Car+person+cone multi-bbox, 4) 5 objects timed bbox, 5) Overlapping cat+sofa+person bbox, 6) 7 people crowded scene bbox, 7) Fix bad labels (drag to correct), 8) Cat polygon segmentation
+- `src/DrawAndDeceive.jsx` / `src/DrawAndDeceive.css` — Draw & Deceive game (5 rounds, 32x32 pixel art, GPT-4o vision classification, adversarial examples). Rounds: 1) Draw target for AI, 2) Modify to fool AI, 3) Speed round (30s timer), 4) Adversarial (draw cat, AI says dog), 5) Maximize wrong confidence
 - `src/PrecisionRecall.jsx` / `src/PrecisionRecall.css` — Precision & Recall tutorial (7 stages: accuracy trap, confusion matrix, precision, recall, trade-off, F1 score, choosing metrics)
 - `src/RAGUnderTheHood.jsx` / `src/RAGUnderTheHood.css` — Why RAG Fails tutorial (7 stages: why RAG fails, chunking, metadata, embeddings, retrieval, filtering, production checklist)
 - `src/AIInProduction.jsx` / `src/AIInProduction.css` — AI in Production tutorial (7 stages: silent failure, quality metrics, latency & cost, drift detection, A/B testing, alerting, full observability stack)
@@ -628,6 +630,7 @@ create table quiz_results (
 | AI Startup Simulator | Game started | All 6 decisions completed |
 | The Alignment Game | Game started | All 8 rounds completed |
 | Label Master | Game started | All 8 levels completed |
+| Draw & Deceive | Game started | All 5 rounds completed |
 | AI-Native PM | Entry screen dismissed | Reach final screen |
 | Precision & Recall | Entry screen dismissed | Reach final screen |
 | Why RAG Fails | Entry screen dismissed | Reach final screen |

@@ -46,6 +46,7 @@ const NODES = [
   { id: 'ollama', label: 'Run AI Locally', group: 'skills', desc: 'Run open-source AI models on your own hardware' },
   { id: 'computer-vision', label: 'Computer Vision', group: 'foundations', desc: 'How machines learn to see — from pixels to vision transformers' },
   { id: 'label-master', label: 'Label Master', group: 'play', desc: 'Draw bounding boxes and learn how training data is annotated' },
+  { id: 'draw-and-deceive', label: 'Draw & Deceive', group: 'play', desc: 'Draw pixel art and try to fool GPT-4o vision' },
 ]
 
 
@@ -137,6 +138,9 @@ const CONNECTIONS = [
   ['prompt-engineering', 'ollama'],
   ['computer-vision', 'label-master'],
   ['precision-recall', 'label-master'],
+  ['computer-vision', 'draw-and-deceive'],
+  ['alignment-game', 'draw-and-deceive'],
+  ['ai-ethics-tribunal', 'draw-and-deceive'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -194,6 +198,7 @@ const NEURON_LAYOUT = {
   'ollama':                { px: 0.23, py: 0.93 },
   'computer-vision':       { px: 0.10, py: 0.80 },
   'label-master':          { px: 0.90, py: 0.87 },
+  'draw-and-deceive':      { px: 0.82, py: 0.90 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -205,7 +210,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */

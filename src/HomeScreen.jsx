@@ -250,6 +250,15 @@ const CARDS = [
     difficulty: 'Hands-On',
   },
   {
+    id: 'draw-and-deceive',
+    title: 'Draw & Deceive',
+    description: 'Draw on a pixel grid. GPT-4o tries to classify what you drew. Try to make it say the right thing \u2014 then try to fool it. Teaches how AI vision works and why it sometimes fails spectacularly.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Creative',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',
