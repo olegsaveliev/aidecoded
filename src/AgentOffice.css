@@ -1293,18 +1293,26 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .ao-agent-info {
-    display: none;
-  }
-
   .ao-agent-card {
-    justify-content: center;
-    padding: 8px;
+    padding: 8px 10px;
+    gap: 8px;
   }
 
   .ao-agent-portrait {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .ao-agent-initial {
+    font-size: 14px;
+  }
+
+  .ao-agent-name {
+    font-size: 12px;
+  }
+
+  .ao-agent-title {
+    font-size: 10px;
   }
 
   .ao-instructions {
