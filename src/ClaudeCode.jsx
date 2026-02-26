@@ -1071,8 +1071,7 @@ export default function ClaudeCode({ onSwitchTab }) {
   if (showEntry) {
     return (
       <EntryScreen
-        module="claude-code"
-        iconColor={ACCENT}
+        icon={<ModuleIcon module="claude-code" size={48} style={{ color: ACCENT }} />}
         title="Claude Code"
         subtitle="AI That Lives in Your Terminal"
         description={'Claude Code is not a chatbot you copy-paste from. It reads your entire codebase, edits files, runs commands, and remembers your conventions — all from a single terminal window. This tutorial shows you exactly how it works and how to make it genuinely powerful.'}
