@@ -70,6 +70,7 @@ const NAV_GROUPS = [
       { id: 'ai-startup-simulator', name: 'AI Startup Simulator', tag: 'Game' },
       { id: 'alignment-game', name: 'The Alignment Game', tag: 'Game' },
       { id: 'label-master', name: 'Label Master', tag: 'Game' },
+      { id: 'draw-and-deceive', name: 'Draw & Deceive', tag: 'Game' },
     ],
   },
   {
