@@ -4,7 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { TipIcon, WarningIcon, CheckIcon, CrossIcon, FileIcon, ShieldIcon, TargetIcon, LayersIcon } from './ContentIcons.jsx'
+import { TipIcon, WarningIcon, CheckIcon, CrossIcon, FileIcon, ShieldIcon, TargetIcon, LayersIcon, SearchIcon, GearIcon, TrendingUpIcon, BookIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { aiNativePMQuiz } from './quizData.js'
@@ -953,12 +953,12 @@ function ToolkitDashboardViz({ active }) {
 /* ── Toolkit for final screen ── */
 
 const TOOLKIT = [
-  { label: 'System Instructions', desc: 'Precise behavioral specifications for any AI feature' },
-  { label: 'Eval Suites', desc: 'Measurable test cases: functional, safety, quality' },
-  { label: 'Structured Logic', desc: 'IF/THEN rules that translate intent into testable behavior' },
-  { label: 'Hallucination Prevention', desc: 'Scope limits, confidence handling, RAG grounding' },
-  { label: 'Drift Monitoring', desc: 'Weekly evals, alerts, version control' },
-  { label: 'Complete Playbook', desc: 'Pre-dev, pre-ship, post-ship checklists' },
+  { concept: 'System Instructions', when: 'Defining AI feature behavior before development', phrase: 'The model must never...', icon: <FileIcon size={24} color="#0EA5E9" /> },
+  { concept: 'Eval Suites', when: 'Validating AI output before and after shipping', phrase: 'Pass rate across N test cases', icon: <SearchIcon size={24} color="#0EA5E9" /> },
+  { concept: 'Structured Logic', when: 'Translating product intent into deterministic rules', phrase: 'IF condition THEN behavior', icon: <GearIcon size={24} color="#0EA5E9" /> },
+  { concept: 'Hallucination Prevention', when: 'AI generates answers from external knowledge', phrase: 'Cite source or say I don\'t know', icon: <ShieldIcon size={24} color="#0EA5E9" /> },
+  { concept: 'Drift Monitoring', when: 'Model updates or behavior degrades over time', phrase: 'Eval score dropped below threshold', icon: <TrendingUpIcon size={24} color="#0EA5E9" /> },
+  { concept: 'Complete Playbook', when: 'End-to-end AI feature lifecycle management', phrase: 'Pre-dev, pre-ship, post-ship', icon: <BookIcon size={24} color="#0EA5E9" /> },
 ]
 
 /* ── Main Component ── */
@@ -1236,13 +1236,35 @@ function AINativePM({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You Are Now an AI-Native PM</div>
 
-          <div className="pm-final-grid">
-            {TOOLKIT.map((item, i) => (
-              <div key={i} className="pm-final-card">
-                <div className="pm-final-card-label">{item.label}</div>
-                <div className="pm-final-card-desc">{item.desc}</div>
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
               </div>
             ))}
+          </div>
+
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your AI-Native PM Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="how-final-actions">

@@ -13,6 +13,14 @@ import SuggestedModules from './SuggestedModules.jsx'
 
 const STAGES = ['Prompt', 'Tokenization', 'Embeddings', 'Attention', 'Generation']
 
+const TOOLKIT = [
+  { concept: 'Prompt', when: 'You type a question or instruction for the LLM', phrase: 'Natural language in, structured processing begins', icon: <MemoIcon size={24} color="#FF9500" /> },
+  { concept: 'Tokenization', when: 'Text enters an LLM for processing', phrase: 'Words split into subword pieces the model understands', icon: <TypeIcon size={24} color="#FF9500" /> },
+  { concept: 'Embeddings', when: 'The model needs to understand meaning', phrase: 'Tokens become high-dimensional vectors capturing semantics', icon: <HashIcon size={24} color="#FF9500" /> },
+  { concept: 'Attention', when: 'The model figures out which words relate to which', phrase: 'Every token attends to every other token for context', icon: <EyeIcon size={24} color="#FF9500" /> },
+  { concept: 'Generation', when: 'The model produces its response', phrase: 'One token at a time, each predicted from all previous tokens', icon: <ZapIcon size={24} color="#FF9500" /> },
+]
+
 const HOW_TOOLS = {
   0: [
     { name: 'OpenAI API', color: '#0071E3', desc: 'Most popular LLM API for building AI apps' },
@@ -1097,39 +1105,35 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You just watched an LLM work!</div>
 
-          <div className="how-final-label">AI Response</div>
-          <div className="how-final-bubble">
-            {genStreamedText}
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
           </div>
 
-          <div className="how-final-recap">
-            <div className="how-final-recap-title">Journey Recap</div>
-            <div className="how-final-recap-items">
-              <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_ICONS[0]}</span>
-                <span>Your prompt: {prompt.split(/\s+/).length} words &rarr; {allTokens.length} tokens</span>
-              </div>
-              <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_ICONS[2]}</span>
-                <span>Embeddings: {allTokens.length} vectors calculated</span>
-              </div>
-              <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_ICONS[3]}</span>
-                <span>Attention: every token compared to every other token</span>
-              </div>
-              <div className="how-final-recap-item">
-                <span className="how-final-recap-emoji">{STAGE_ICONS[4]}</span>
-                <span>Generation: response built one token at a time ({genTokenCount} tokens)</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="how-final-stats">
-            <span>{allTokens.length} input tokens</span>
-            <span className="how-final-dot">&middot;</span>
-            <span>{genTokenCount} output tokens</span>
-            <span className="how-final-dot">&middot;</span>
-            <span>{(elapsed / 1000).toFixed(1)}s total</span>
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your LLM Pipeline Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="how-final-actions">

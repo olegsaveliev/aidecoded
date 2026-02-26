@@ -917,38 +917,6 @@
 }
 
 /* ========================================
-   Final screen recap
-   ======================================== */
-.ais-final-recap {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-}
-
-.ais-final-recap-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-}
-
-.ais-final-recap-items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.ais-final-recap-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-
-/* ========================================
    Animations
    ======================================== */
 @keyframes riskReveal {
@@ -1144,11 +1112,6 @@
   background: rgba(255, 149, 0, 0.08);
 }
 
-[data-theme="dark"] .ais-final-recap {
-  background: var(--bg-secondary);
-  border-color: var(--border);
-}
-
 /* ========================================
    Mobile Responsive — 768px
    ======================================== */
@@ -1175,10 +1138,6 @@
   }
 
   .ais-reference-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ais-final-recap-items {
     grid-template-columns: 1fr;
   }
 

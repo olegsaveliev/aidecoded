@@ -73,13 +73,13 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'Problem Fit', when: 'Company-specific AI', phrase: 'Retrieve, inject, generate', icon: <TargetIcon size={24} color="#8E8E93" /> },
-  { technique: 'RAG Pipeline', when: 'Every RAG system', phrase: 'Index once, query many', icon: <RefreshIcon size={24} color="#8E8E93" /> },
-  { technique: 'Embeddings', when: 'Semantic search', phrase: 'Meaning = similar vectors', icon: <HashIcon size={24} color="#8E8E93" /> },
-  { technique: 'Chunking', when: 'Document prep', phrase: '200-500 tokens with overlap', icon: <ScissorsIcon size={24} color="#8E8E93" /> },
-  { technique: 'Vector DB', when: 'Production RAG', phrase: 'ANN search at scale', icon: <FileCabinetIcon size={24} color="#8E8E93" /> },
-  { technique: 'Use Cases', when: 'Enterprise AI', phrase: 'Knowledge that knows you', icon: <BuildingIcon size={24} color="#8E8E93" /> },
-  { technique: 'Implementation', when: 'Building RAG', phrase: 'Start simple, iterate', icon: <RocketIcon size={24} color="#8E8E93" /> },
+  { technique: 'Problem Fit', when: 'Company-specific AI', phrase: 'Retrieve, inject, generate', icon: <TargetIcon size={24} color="#FF9500" /> },
+  { technique: 'RAG Pipeline', when: 'Every RAG system', phrase: 'Index once, query many', icon: <RefreshIcon size={24} color="#FF9500" /> },
+  { technique: 'Embeddings', when: 'Semantic search', phrase: 'Meaning = similar vectors', icon: <HashIcon size={24} color="#FF9500" /> },
+  { technique: 'Chunking', when: 'Document prep', phrase: '200-500 tokens with overlap', icon: <ScissorsIcon size={24} color="#FF9500" /> },
+  { technique: 'Vector DB', when: 'Production RAG', phrase: 'ANN search at scale', icon: <FileCabinetIcon size={24} color="#FF9500" /> },
+  { technique: 'Use Cases', when: 'Enterprise AI', phrase: 'Knowledge that knows you', icon: <BuildingIcon size={24} color="#FF9500" /> },
+  { technique: 'Implementation', when: 'Building RAG', phrase: 'Start simple, iterate', icon: <RocketIcon size={24} color="#FF9500" /> },
 ]
 
 /* ═══════════════════════════════════
@@ -319,7 +319,7 @@ function ChunkingViz({ active }) {
     {
       name: 'Fixed Size',
       tag: 'Simple',
-      icon: <RulerIcon size={18} color="#8E8E93" />,
+      icon: <RulerIcon size={18} color="#FF9500" />,
       desc: 'Split every 500 tokens',
       visual: ['Chunk 1: 500 tokens', 'Chunk 2: 500 tokens', 'Chunk 3: 500 tokens'],
       pro: 'Simple to implement',

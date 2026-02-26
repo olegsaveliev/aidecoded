@@ -76,14 +76,14 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'Zero-Shot', when: 'Clear, well-defined tasks', phrase: '[Role] + [Task] + [Format]', icon: <TargetIcon size={24} color="#8E8E93" /> },
-  { technique: 'Few-Shot', when: 'Pattern tasks, classification', phrase: '"Here are examples..."', icon: <FileIcon size={24} color="#8E8E93" /> },
-  { technique: 'Chain of Thought', when: 'Complex reasoning', phrase: '"Think step by step"', icon: <LinkIcon size={24} color="#8E8E93" /> },
-  { technique: 'Tree of Thoughts', when: 'Hard problems', phrase: '"Consider 3 approaches..."', icon: <TreeIcon size={24} color="#8E8E93" /> },
-  { technique: 'Role Prompting', when: 'Expert answers', phrase: '"You are a senior..."', icon: <TheaterIcon size={24} color="#8E8E93" /> },
-  { technique: 'System Prompts', when: 'Consistent behavior', phrase: 'Set in system prompt', icon: <GearIcon size={24} color="#8E8E93" /> },
-  { technique: 'Prompt Chaining', when: 'Complex tasks', phrase: 'Break into steps', icon: <RefreshIcon size={24} color="#8E8E93" /> },
-  { technique: 'Patterns', when: 'Always', phrase: 'Specific + Format + Constraints', icon: <BookIcon size={24} color="#8E8E93" /> },
+  { technique: 'Zero-Shot', when: 'Clear, well-defined tasks', phrase: '[Role] + [Task] + [Format]', icon: <TargetIcon size={24} color="#34C759" /> },
+  { technique: 'Few-Shot', when: 'Pattern tasks, classification', phrase: '"Here are examples..."', icon: <FileIcon size={24} color="#34C759" /> },
+  { technique: 'Chain of Thought', when: 'Complex reasoning', phrase: '"Think step by step"', icon: <LinkIcon size={24} color="#34C759" /> },
+  { technique: 'Tree of Thoughts', when: 'Hard problems', phrase: '"Consider 3 approaches..."', icon: <TreeIcon size={24} color="#34C759" /> },
+  { technique: 'Role Prompting', when: 'Expert answers', phrase: '"You are a senior..."', icon: <TheaterIcon size={24} color="#34C759" /> },
+  { technique: 'System Prompts', when: 'Consistent behavior', phrase: 'Set in system prompt', icon: <GearIcon size={24} color="#34C759" /> },
+  { technique: 'Prompt Chaining', when: 'Complex tasks', phrase: 'Break into steps', icon: <RefreshIcon size={24} color="#34C759" /> },
+  { technique: 'Patterns', when: 'Always', phrase: 'Specific + Format + Constraints', icon: <BookIcon size={24} color="#34C759" /> },
 ]
 
 async function callOpenAI({ model, temperature, topP, maxTokens, messages }) {

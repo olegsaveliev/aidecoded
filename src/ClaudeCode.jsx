@@ -12,7 +12,8 @@ import {
   CheckIcon, TipIcon, TerminalIcon,
   CodeIcon, SearchIcon, ShieldIcon, CpuIcon,
   BookIcon, ToolsIcon, LayersIcon, LinkIcon,
-  KeyIcon, CrossIcon, RocketIcon
+  KeyIcon, CrossIcon, RocketIcon,
+  FileIcon, ZapIcon, GearIcon
 } from './ContentIcons.jsx'
 import './ClaudeCode.css'
 
@@ -51,6 +52,17 @@ const NEXT_LABELS = [
   'Full Stack →',
   'Workflows →',
   'Test my knowledge →',
+]
+
+const TOOLKIT = [
+  { concept: 'Claude Code', when: 'Agentic coding in terminal', phrase: 'AI that edits, runs, and commits code for you', icon: <TerminalIcon size={24} color="#34C759" /> },
+  { concept: 'Installation', when: 'Getting started', phrase: 'npm install -g @anthropic-ai/claude-code', icon: <RocketIcon size={24} color="#34C759" /> },
+  { concept: 'Model Selection', when: 'Balancing speed and quality', phrase: 'Opus for hard tasks, Sonnet for fast ones', icon: <CpuIcon size={24} color="#34C759" /> },
+  { concept: 'CLAUDE.md', when: 'Project context', phrase: 'Persistent instructions for every session', icon: <FileIcon size={24} color="#34C759" /> },
+  { concept: 'Skills', when: 'Reusable workflows', phrase: 'Slash commands that auto-load context', icon: <ZapIcon size={24} color="#34C759" /> },
+  { concept: 'MCP', when: 'Connecting to tools', phrase: 'Model Context Protocol for external services', icon: <LinkIcon size={24} color="#34C759" /> },
+  { concept: 'Full Stack', when: 'Scaling with subagents and hooks', phrase: 'Parallel workers and deterministic guardrails', icon: <LayersIcon size={24} color="#34C759" /> },
+  { concept: 'Workflows', when: 'Real developer patterns', phrase: 'Explore, plan, code, test, commit', icon: <GearIcon size={24} color="#34C759" /> },
 ]
 
 const TOOLS_0 = [
@@ -1216,33 +1228,38 @@ export default function ClaudeCode({ onSwitchTab }) {
 
       {/* Final screen */}
       {showFinal && (
-        <div className="cc-final how-fade-in">
-          <div className="cc-final-celebration">
-            <ModuleIcon module="claude-code" size={48} style={{ color: ACCENT }} />
-            <h2>You Know Claude Code</h2>
-            <p>You have learned the complete Claude Code stack &mdash; from installation to CLAUDE.md, skills, MCP, subagents, hooks, permissions, and real developer workflows.</p>
+        <div className="how-final how-fade-in">
+          <div className="how-final-celebration">You now know Claude Code!</div>
+
+          <div className="pe-final-grid">
+            {TOOLKIT.map((item) => (
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
+              </div>
+            ))}
           </div>
 
-          <div className="cc-final-recap">
-            <h3>Your Toolkit</h3>
-            <div className="cc-recap-grid">
-              {[
-                { label: 'CLAUDE.md', desc: 'Persistent project memory' },
-                { label: 'Skills', desc: 'Auto-loading intelligent shortcuts' },
-                { label: 'MCP', desc: 'Connect to any external tool' },
-                { label: 'Hooks', desc: 'Deterministic guardrails' },
-                { label: 'Subagents', desc: 'Parallel specialist workers' },
-                { label: '/doctor', desc: 'Health checks in 5 seconds' },
-              ].map((item, i) => (
-                <div key={i} className="cc-recap-card">
-                  <CheckIcon size={14} color={ACCENT} />
-                  <div>
-                    <strong>{item.label}</strong>
-                    <span>{item.desc}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your Claude Code Toolkit</div>
+            <table className="pe-reference">
+              <thead>
+                <tr>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
+                </tr>
+              </thead>
+              <tbody>
+                {TOOLKIT.map((item) => (
+                  <tr key={item.concept}>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.phrase}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
 
           <div className="how-final-actions">

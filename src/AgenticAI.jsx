@@ -4,7 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { TipIcon, SearchIcon, CodeIcon, MailIcon, FileIcon, GlobeIcon, EyeIcon, ZapIcon, RobotIcon, WrenchIcon, CpuIcon, LinkIcon, LayersIcon, RepeatIcon, ShieldIcon, PlayIcon, BookIcon, BarChartIcon, LaptopIcon, RocketIcon, CheckIcon, HospitalIcon, BriefcaseIcon } from './ContentIcons.jsx'
+import { TipIcon, SearchIcon, CodeIcon, MailIcon, FileIcon, GlobeIcon, EyeIcon, ZapIcon, RobotIcon, WrenchIcon, CpuIcon, LinkIcon, LayersIcon, RepeatIcon, ShieldIcon, PlayIcon, BookIcon, BarChartIcon, LaptopIcon, RocketIcon, CheckIcon, HospitalIcon, BriefcaseIcon, RefreshIcon, UserIcon, ConstructionIcon, CompassIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { agenticAIQuiz } from './quizData.js'
@@ -806,14 +806,14 @@ function FrontierViz({ active }) {
 /* ── Final Screen Toolkit ── */
 
 const TOOLKIT = [
-  { concept: 'Agents vs Chatbots', takeaway: 'Agents act toward goals; chatbots just respond' },
-  { concept: 'Agent Loop', takeaway: 'Perceive \u2192 Think \u2192 Act \u2192 Observe \u2192 Repeat' },
-  { concept: 'Tools', takeaway: 'Functions that let agents interact with the world' },
-  { concept: 'Memory', takeaway: 'In-context, external, procedural, episodic' },
-  { concept: 'Multi-Agent', takeaway: 'Orchestrator + specialists + critic' },
-  { concept: 'Building', takeaway: 'Goal + LLM + Tools + Memory + Prompt' },
-  { concept: 'Production', takeaway: 'Coding, support, research, browser agents' },
-  { concept: 'Frontier', takeaway: 'Long-horizon, self-improving, embodied' },
+  { concept: 'Agents vs Chatbots', when: 'Task needs multiple steps or real-world actions', takeaway: 'Agents act toward goals; chatbots just respond', icon: <RobotIcon size={24} color="#5856D6" /> },
+  { concept: 'Agent Loop', when: 'You need iterative reasoning with feedback', takeaway: 'Perceive → Think → Act → Observe → Repeat', icon: <RefreshIcon size={24} color="#5856D6" /> },
+  { concept: 'Tools', when: 'Agent must search, compute, or call APIs', takeaway: 'Functions that let agents interact with the world', icon: <WrenchIcon size={24} color="#5856D6" /> },
+  { concept: 'Memory', when: 'Context exceeds a single conversation', takeaway: 'In-context, external, procedural, episodic', icon: <FileIcon size={24} color="#5856D6" /> },
+  { concept: 'Multi-Agent', when: 'Problem decomposes into specialist roles', takeaway: 'Orchestrator + specialists + critic', icon: <UserIcon size={24} color="#5856D6" /> },
+  { concept: 'Building', when: 'Starting a new agent from scratch', takeaway: 'Goal + LLM + Tools + Memory + Prompt', icon: <ConstructionIcon size={24} color="#5856D6" /> },
+  { concept: 'Production', when: 'Deploying agents for real users', takeaway: 'Coding, support, research, browser agents', icon: <RocketIcon size={24} color="#5856D6" /> },
+  { concept: 'Frontier', when: 'Planning for next-gen agent capabilities', takeaway: 'Long-horizon, self-improving, embodied', icon: <CompassIcon size={24} color="#5856D6" /> },
 ]
 
 /* ── Main Component ── */
@@ -1085,29 +1085,31 @@ function AgenticAI({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You Now Understand Agentic AI</div>
 
-          <div className="aai-final-grid">
+          <div className="pe-final-grid">
             {TOOLKIT.map((item) => (
-              <div key={item.concept} className="aai-final-card">
-                <div className="aai-final-card-concept">{item.concept}</div>
-                <div className="aai-final-card-takeaway">{item.takeaway}</div>
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
               </div>
             ))}
           </div>
 
-          <div className="aai-reference-wrapper">
-            <div className="aai-reference-title">Your Agentic AI Toolkit</div>
-            <table className="aai-reference">
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your Agentic AI Toolkit</div>
+            <table className="pe-reference">
               <thead>
                 <tr>
-                  <th scope="col">Concept</th>
-                  <th scope="col">Key Takeaway</th>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
                 </tr>
               </thead>
               <tbody>
                 {TOOLKIT.map((item) => (
                   <tr key={item.concept}>
-                    <td className="aai-ref-concept">{item.concept}</td>
-                    <td>{item.takeaway}</td>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.takeaway}</td>
                   </tr>
                 ))}
               </tbody>

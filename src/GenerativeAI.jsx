@@ -4,7 +4,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
 import usePersistedState from './usePersistedState.js'
-import { TipIcon, WarningIcon, CheckIcon, ZapIcon, CodeIcon, SearchIcon, PlayIcon, EyeIcon, ShieldIcon, RocketIcon, GlobeIcon, LayersIcon, WrenchIcon, FileIcon, BarChartIcon, SparklesIcon } from './ContentIcons.jsx'
+import { TipIcon, WarningIcon, CheckIcon, ZapIcon, CodeIcon, SearchIcon, PlayIcon, EyeIcon, ShieldIcon, RocketIcon, GlobeIcon, LayersIcon, WrenchIcon, FileIcon, BarChartIcon, SparklesIcon, TreeIcon, TypeIcon, ChatIcon } from './ContentIcons.jsx'
 import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { generativeAIQuiz } from './quizData.js'
@@ -161,14 +161,14 @@ const GAI_TOOLS = {
 }
 
 const TOOLKIT = [
-  { concept: 'Discriminative vs Generative', takeaway: 'Discriminative classifies; generative creates new content' },
-  { concept: 'Diffusion', takeaway: 'Start from noise, remove it step by step to create images' },
-  { concept: 'Autoregressive', takeaway: 'Predict one token at a time, using all previous context' },
-  { concept: 'Image Prompting', takeaway: 'Subject + style + mood + lighting + details = better results' },
-  { concept: 'Audio Generation', takeaway: 'Music, voice, and sound effects from text descriptions' },
-  { concept: 'Video & Code', takeaway: 'Frame consistency for video; testability makes code generation mature' },
-  { concept: 'Risks', takeaway: 'Hallucination, deepfakes, copyright, homogenization, misinformation' },
-  { concept: 'The Future', takeaway: 'Real-time, multimodal, personalized, physical-world generation' },
+  { concept: 'Discriminative vs Generative', when: 'Choosing between classification and creation tasks', takeaway: 'Discriminative classifies; generative creates new content', icon: <TreeIcon size={20} color="#FF9500" /> },
+  { concept: 'Diffusion', when: 'Generating images, video, or audio from scratch', takeaway: 'Start from noise, remove it step by step to create images', icon: <SparklesIcon size={20} color="#FF9500" /> },
+  { concept: 'Autoregressive', when: 'Generating text, code, or sequential content', takeaway: 'Predict one token at a time, using all previous context', icon: <TypeIcon size={20} color="#FF9500" /> },
+  { concept: 'Image Prompting', when: 'Writing prompts for image generation tools', takeaway: 'Subject + style + mood + lighting + details = better results', icon: <EyeIcon size={20} color="#FF9500" /> },
+  { concept: 'Audio Generation', when: 'Creating music, voice, or sound effects', takeaway: 'Music, voice, and sound effects from text descriptions', icon: <ChatIcon size={20} color="#FF9500" /> },
+  { concept: 'Video & Code', when: 'Generating video clips or writing code with AI', takeaway: 'Frame consistency for video; testability makes code generation mature', icon: <CodeIcon size={20} color="#FF9500" /> },
+  { concept: 'Risks', when: 'Evaluating safety and ethics of generated content', takeaway: 'Hallucination, deepfakes, copyright, homogenization, misinformation', icon: <WarningIcon size={20} color="#FF9500" /> },
+  { concept: 'The Future', when: 'Planning ahead for emerging generative capabilities', takeaway: 'Real-time, multimodal, personalized, physical-world generation', icon: <RocketIcon size={20} color="#FF9500" /> },
 ]
 
 /* ==============================
@@ -1121,29 +1121,31 @@ function GenerativeAI({ onSwitchTab, onGoHome }) {
         <div className="how-final how-fade-in">
           <div className="how-final-celebration">You Now Understand Generative AI</div>
 
-          <div className="gai-final-grid">
+          <div className="pe-final-grid">
             {TOOLKIT.map((item) => (
-              <div key={item.concept} className="gai-final-card">
-                <div className="gai-final-card-concept">{item.concept}</div>
-                <div className="gai-final-card-takeaway">{item.takeaway}</div>
+              <div key={item.concept} className="pe-final-card">
+                <div className="pe-final-card-emoji">{item.icon}</div>
+                <div className="pe-final-card-name">{item.concept}</div>
               </div>
             ))}
           </div>
 
-          <div className="gai-reference-wrapper">
-            <div className="gai-reference-title">Your Generative AI Toolkit</div>
-            <table className="gai-reference">
+          <div className="pe-reference-wrapper">
+            <div className="pe-reference-title">Your Generative AI Toolkit</div>
+            <table className="pe-reference">
               <thead>
                 <tr>
-                  <th scope="col">Concept</th>
-                  <th scope="col">Key Takeaway</th>
+                  <th>Concept</th>
+                  <th>When to use</th>
+                  <th>Key phrase</th>
                 </tr>
               </thead>
               <tbody>
                 {TOOLKIT.map((item) => (
                   <tr key={item.concept}>
-                    <td className="gai-ref-concept">{item.concept}</td>
-                    <td>{item.takeaway}</td>
+                    <td className="pe-ref-technique">{item.concept}</td>
+                    <td>{item.when}</td>
+                    <td className="pe-ref-phrase">{item.takeaway}</td>
                   </tr>
                 ))}
               </tbody>

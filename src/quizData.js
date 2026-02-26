@@ -1356,3 +1356,66 @@ export const claudeCodeQuiz = [
     accentColor: '#34C759',
   },
 ]
+
+export const agentTeamsQuiz = [
+  {
+    question: 'What is the key architectural difference between subagents and agent teams?',
+    options: ['Agent teams use more powerful models', 'Subagents can only report back to the parent, while agent team teammates can message each other directly', 'Agent teams run faster than subagents', 'Subagents require more configuration'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What does delegate mode do?',
+    options: ['Allows teammates to spawn their own sub-teams', 'Restricts the team lead to coordination tools only, preventing it from implementing code itself', 'Delegates the lead role to a teammate', 'Enables faster task execution'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Where are shared team task lists stored?',
+    options: ['In the main CLAUDE.md file', 'In each teammate\'s separate context window', 'In file-backed storage at ~/.claude/tasks/{team-name}/', 'Only in memory during the session'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Which of these tasks is BEST suited for agent teams?',
+    options: ['Debugging a single mysterious error', 'Writing a short utility function', 'Building a feature that spans frontend, backend, and tests simultaneously', 'Asking a quick question about the codebase'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the critical rule for the Layer Split pattern?',
+    options: ['All teammates must finish at the same time', 'Each teammate must own non-overlapping file boundaries to prevent conflicts', 'The lead must review every file change', 'Teammates should never message each other'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What causes the "task status lag" rough edge?',
+    options: ['Network latency between agent sessions', 'A teammate finishing work but failing to mark the task as done, blocking dependent tasks', 'The lead being too slow to process results', 'Too many teammates for the task size'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'In the QA Swarm pattern, why do all reviewers work on the same code simultaneously?',
+    options: ['They must verify each other\'s findings', 'Sequential review would miss connections', 'Review is read-only so there are no file conflicts and full parallelism is safe', 'It is the only way to get security findings'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What happens to in-process teammates if you use /resume to restore a session?',
+    options: ['They resume exactly where they left off', 'They merge into the lead session', 'They no longer exist and the lead may try to message them anyway', 'They automatically respawn'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'When does using a solo agent beat using an agent team?',
+    options: ['Never — teams are always better', 'Only for very short tasks under 5 minutes', 'When tasks are sequential and each step depends on the previous step\'s output', 'When you have more than 3 files to change'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the recommended workflow before spawning an agent team?',
+    options: ['Write detailed CLAUDE.md instructions first', 'Use plan mode to generate a task breakdown cheaply, then hand it to a team for parallel execution', 'Spawn teammates first, then define tasks', 'Always start with 4 teammates for coverage'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+]

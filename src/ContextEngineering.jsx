@@ -63,12 +63,12 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'Context Awareness', when: 'Every AI interaction', phrase: 'Include what changes the answer', icon: <EyeIcon size={24} color="#8E8E93" /> },
-  { technique: 'Window Management', when: 'Long conversations', phrase: 'Monitor token usage', icon: <BarChartIcon size={24} color="#8E8E93" /> },
-  { technique: 'Quality Control', when: 'Complex tasks', phrase: 'Every piece earns its place', icon: <CheckIcon size={24} color="#8E8E93" /> },
-  { technique: 'RAG', when: 'Enterprise knowledge', phrase: 'Retrieve, inject, generate', icon: <SearchIcon size={24} color="#8E8E93" /> },
-  { technique: 'Sandwich Method', when: 'Long content', phrase: 'Instructions + Content + Instructions', icon: <LayersIcon size={24} color="#8E8E93" /> },
-  { technique: 'Use Case Matching', when: 'Specific tasks', phrase: 'Match context to task type', icon: <TargetIcon size={24} color="#8E8E93" /> },
+  { technique: 'Context Awareness', when: 'Every AI interaction', phrase: 'Include what changes the answer', icon: <EyeIcon size={24} color="#34C759" /> },
+  { technique: 'Window Management', when: 'Long conversations', phrase: 'Monitor token usage', icon: <BarChartIcon size={24} color="#34C759" /> },
+  { technique: 'Quality Control', when: 'Complex tasks', phrase: 'Every piece earns its place', icon: <CheckIcon size={24} color="#34C759" /> },
+  { technique: 'RAG', when: 'Enterprise knowledge', phrase: 'Retrieve, inject, generate', icon: <SearchIcon size={24} color="#34C759" /> },
+  { technique: 'Sandwich Method', when: 'Long content', phrase: 'Instructions + Content + Instructions', icon: <LayersIcon size={24} color="#34C759" /> },
+  { technique: 'Use Case Matching', when: 'Specific tasks', phrase: 'Match context to task type', icon: <TargetIcon size={24} color="#34C759" /> },
 ]
 
 /* ═══════════════════════════════════

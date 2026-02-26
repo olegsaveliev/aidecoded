@@ -1219,35 +1219,6 @@
 }
 
 /* ============================
-   Final Recap
-   ============================ */
-.af-final-recap {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-light);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-}
-.af-final-recap-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 12px;
-}
-.af-final-recap-items {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-.af-final-recap-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: var(--text-secondary);
-}
-
-/* ============================
    Dark Mode
    ============================ */
 [data-theme="dark"] .af-path-col {
@@ -1335,10 +1306,6 @@
 [data-theme="dark"] .af-terms-result {
   background: var(--bg-surface);
 }
-[data-theme="dark"] .af-final-recap {
-  background: var(--bg-secondary);
-  border-color: var(--border);
-}
 [data-theme="dark"] .af-path-result-bad {
   background: rgba(255, 59, 48, 0.12);
 }
@@ -1399,9 +1366,6 @@
     font-size: 12px;
   }
   .af-assessment-example-comparison {
-    grid-template-columns: 1fr;
-  }
-  .af-final-recap-items {
     grid-template-columns: 1fr;
   }
   /* Reduced padding on cards/panels */

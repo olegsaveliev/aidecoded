@@ -81,14 +81,14 @@ const STAGE_TOOLTIPS = {
 }
 
 const QUICK_REFERENCE = [
-  { technique: 'ML Fundamentals', when: 'Understanding AI', phrase: 'Data in, rules out', icon: <BookIcon size={24} color="#8E8E93" /> },
-  { technique: 'ML Types', when: 'Choosing approach', phrase: 'Supervised, Unsupervised, RL', icon: <TreeIcon size={24} color="#8E8E93" /> },
-  { technique: 'Training Loop', when: 'Building models', phrase: 'Predict, compare, adjust', icon: <RefreshIcon size={24} color="#8E8E93" /> },
-  { technique: 'Neural Networks', when: 'Complex patterns', phrase: 'Layers learn features', icon: <ZapIcon size={24} color="#8E8E93" /> },
-  { technique: 'Generalization', when: 'Model evaluation', phrase: 'Not too simple, not too complex', icon: <TargetIcon size={24} color="#8E8E93" /> },
-  { technique: 'Algorithm Choice', when: 'Problem solving', phrase: 'Start simple, then iterate', icon: <GearIcon size={24} color="#8E8E93" /> },
-  { technique: 'Business Impact', when: 'Real applications', phrase: 'ML is already everywhere', icon: <TrendingUpIcon size={24} color="#8E8E93" /> },
-  { technique: 'ML Lifecycle', when: 'Production ML', phrase: '80% data, 20% models', icon: <RepeatIcon size={24} color="#8E8E93" /> },
+  { technique: 'ML Fundamentals', when: 'Understanding AI', phrase: 'Data in, rules out', icon: <BookIcon size={24} color="#5856D6" /> },
+  { technique: 'ML Types', when: 'Choosing approach', phrase: 'Supervised, Unsupervised, RL', icon: <TreeIcon size={24} color="#5856D6" /> },
+  { technique: 'Training Loop', when: 'Building models', phrase: 'Predict, compare, adjust', icon: <RefreshIcon size={24} color="#5856D6" /> },
+  { technique: 'Neural Networks', when: 'Complex patterns', phrase: 'Layers learn features', icon: <ZapIcon size={24} color="#5856D6" /> },
+  { technique: 'Generalization', when: 'Model evaluation', phrase: 'Not too simple, not too complex', icon: <TargetIcon size={24} color="#5856D6" /> },
+  { technique: 'Algorithm Choice', when: 'Problem solving', phrase: 'Start simple, then iterate', icon: <GearIcon size={24} color="#5856D6" /> },
+  { technique: 'Business Impact', when: 'Real applications', phrase: 'ML is already everywhere', icon: <TrendingUpIcon size={24} color="#5856D6" /> },
+  { technique: 'ML Lifecycle', when: 'Production ML', phrase: '80% data, 20% models', icon: <RepeatIcon size={24} color="#5856D6" /> },
 ]
 
 /* ═══════════════════════════════════
