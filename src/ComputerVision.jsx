@@ -344,8 +344,8 @@ function PixelGrid({ pixels, showNumbers, selectedPixel, onPixelClick, highlight
           const gray = hexToGray(color)
           const isSelected = selectedPixel && selectedPixel[0] === r && selectedPixel[1] === c
           const isHighlighted = highlightRegion && r >= highlightRegion.r && r < highlightRegion.r + 3 && c >= highlightRegion.c && c < highlightRegion.c + 3
-          // Contrast threshold 128 with high alpha ensures readability on this palette
-          const textColor = gray < 128 ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.7)'
+          // Contrast threshold 128: white text on dark pixels, black text on light pixels
+          const textColor = gray < 128 ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.85)'
           const visible = scanned === undefined || (r * 16 + c) < scanned
           return (
             <div
