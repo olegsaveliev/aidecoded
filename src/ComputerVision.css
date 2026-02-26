@@ -127,7 +127,7 @@
 
 .cv-pixel-number {
   font-size: 8px;
-  font-weight: 600;
+  font-weight: 700; /* bold needed for readability at 8px on varied pixel backgrounds */
   font-family: monospace;
   display: flex;
   align-items: center;
@@ -879,7 +879,7 @@
 
 .cv-pool-maps {
   flex: 1;
-  min-width: 280px;
+  min-width: 360px;
 }
 
 .cv-pool-maps-title,
@@ -890,9 +890,11 @@
   margin-bottom: 12px;
 }
 
+/* Fixed 3-col grid — auto-fit caused layout breakage in landscape.
+   Breakpoints handle 2-col (768px) and 1-col (480px). */
 .cv-pool-maps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
 
@@ -1915,10 +1917,12 @@
   text-align: center;
 }
 
+/* 24px gap tested on 900-1400px — no premature wrapping.
+   Portrait override (below) compacts to column with 4px gap. */
 .cv-adversarial-panels {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -2196,6 +2200,10 @@
     max-width: 160px;
   }
 
+  .cv-pixel-number {
+    font-size: 6px;
+  }
+
   /* Depth layer bars: prevent Layer 4 (30% width) from collapsing too narrow */
   .cv-depth-layer {
     min-width: 160px;
@@ -2203,6 +2211,10 @@
 
   .cv-pool-layout {
     flex-direction: column;
+  }
+
+  .cv-pool-maps {
+    min-width: 0;
   }
 
   .cv-pool-maps-grid {
@@ -2294,17 +2306,22 @@
     flex-wrap: wrap;
   }
 
+  .cv-adversarial-slider {
+    width: 160px;
+  }
+}
+
+/* Separate from main 768px block: portrait-only overrides for adversarial demo.
+   Landscape keeps the horizontal row layout; portrait stacks vertically to save space. */
+@media (max-width: 768px) and (orientation: portrait) {
   .cv-adversarial-panels {
     flex-direction: column;
+    gap: 4px;
   }
 
   .cv-adversarial-plus,
   .cv-adversarial-equals {
-    transform: rotate(90deg);
-  }
-
-  .cv-adversarial-slider {
-    width: 160px;
+    font-size: 16px;
   }
 }
 
@@ -2314,7 +2331,7 @@
   }
 
   .cv-pixel-number {
-    display: none;
+    font-size: 5px;
   }
 
   .cv-aug-image .cv-pixel-grid {

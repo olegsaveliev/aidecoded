@@ -344,8 +344,13 @@ function PixelGrid({ pixels, showNumbers, selectedPixel, onPixelClick, highlight
           const gray = hexToGray(color)
           const isSelected = selectedPixel && selectedPixel[0] === r && selectedPixel[1] === c
           const isHighlighted = highlightRegion && r >= highlightRegion.r && r < highlightRegion.r + 3 && c >= highlightRegion.c && c < highlightRegion.c + 3
-          // Contrast threshold 128: white text on dark pixels, black text on light pixels
-          const textColor = gray < 128 ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.85)'
+          // Per-pixel contrast: fully opaque text + matching halo shadow for readability
+          // on any background brightness. Intentionally inline — each pixel needs its own values.
+          const isDark = gray < 128
+          const textColor = isDark ? '#fff' : '#000'
+          const textShadow = isDark
+            ? '0 0 2px rgba(0,0,0,0.8)'
+            : '0 0 2px rgba(255,255,255,0.8)'
           const visible = scanned === undefined || (r * 16 + c) < scanned
           return (
             <div
@@ -354,14 +359,13 @@ function PixelGrid({ pixels, showNumbers, selectedPixel, onPixelClick, highlight
               style={{
                 backgroundColor: visible ? color : 'transparent',
                 animationDelay: scanned !== undefined ? `${(r * 16 + c) * 8}ms` : undefined, // 16 = grid width
-
                 opacity: visible ? 1 : 0,
               }}
               onClick={() => onPixelClick?.(r, c)}
               title={`Row ${r}, Col ${c}`}
             >
               {showNumbers && visible && (
-                <span className="cv-pixel-number" style={{ color: textColor }}>{gray}</span>
+                <span className="cv-pixel-number" style={{ color: textColor, textShadow }}>{gray}</span>
               )}
             </div>
           )
