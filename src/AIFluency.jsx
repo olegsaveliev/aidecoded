@@ -1042,6 +1042,9 @@ function AIFluency({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'questioning', text: 'Think of the last polished AI output you used without questioning \u2014 what might you have missed?' })
     } else if (stage === 5 && !dismissedTips.has('reasoning') && !learnTip) {
       setLearnTip({ id: 'reasoning', text: 'The best fluency exercise: share your thinking on a real decision you are facing right now.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1159,7 +1162,7 @@ function AIFluency({ onSwitchTab, onGoHome }) {
       <button className="entry-start-over" onClick={handleStartOver}>
         &larr; Start over
       </button>
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to AI Fluency</strong> &mdash; this is not about learning more prompts. It is about changing how you think about working with AI. By the end, you will collaborate with AI in a fundamentally different way.

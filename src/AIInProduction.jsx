@@ -1281,6 +1281,9 @@ export default function AIInProduction({ onSwitchTab, onGoHome }) {
       setLearnTip({ key: 'ab', text: 'Try clicking No at the shadow test phase to see what happens when you skip straight to canary — it is a common mistake.' })
     } else if (stage === 6 && !dismissedTips.has('stack')) {
       setLearnTip({ key: 'stack', text: 'Click the Aria incident timeline button to see both paths — with and without monitoring.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1373,7 +1376,7 @@ export default function AIInProduction({ onSwitchTab, onGoHome }) {
     <div className={`how-llms aip-root ${fading ? 'how-fading' : ''}`}>
 
       {/* Welcome banner */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to AI in Production</strong> &mdash; This module covers what happens after you ship &mdash; the metrics, monitors and signals that tell you whether your AI feature is healthy, degrading, or silently failing. Each stage adds one layer to your production observability stack.

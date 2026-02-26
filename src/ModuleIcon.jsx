@@ -173,6 +173,13 @@ const ICON_PATHS = {
       <circle cx="19" cy="5" r="1.5" strokeLinecap="round" />
     </>
   ),
+  'claude-code': (
+    <>
+      <rect x="2" y="3" width="20" height="16" rx="2" />
+      <path d="M6 8l3 3-3 3M11 14h6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M19 2l1.5 1.5L19 5M21 1.5h-3" strokeLinecap="round" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

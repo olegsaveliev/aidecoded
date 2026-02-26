@@ -1143,6 +1143,9 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
       setLearnTip({ id: 'role', text: 'Same question, completely different answers depending on the role. Try clicking different roles in the Role Library below to see it in action.' })
     } else if (stage === 6 && !dismissedTips.has('chaining') && !learnTip) {
       setLearnTip({ id: 'chaining', text: 'Click "Run this chain with real AI" to see how breaking a complex task into steps produces better results than asking everything at once.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1244,7 +1247,7 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
         &larr; Start over
       </button>
       {/* Welcome Banner — shows after entry screen, dismissable */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Prompt Engineering</strong> — here's how to explore:

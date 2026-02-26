@@ -50,6 +50,7 @@ Interactive React app for learning how Large Language Models work.
 | `draw-and-deceive` | DrawAndDeceive.jsx | DrawAndDeceive.css | — (game) | Game | #F59E0B |
 | `choosing-ai-model` | ChoosingAIModel.jsx | ChoosingAIModel.css | choosingAIModelQuiz | Practical | #34C759 |
 | `ollama` | Ollama.jsx | Ollama.css | ollamaQuiz | Practical | #34C759 |
+| `claude-code` | ClaudeCode.jsx | ClaudeCode.css | claudeCodeQuiz | Practical | #34C759 |
 
 ## Color System — Two Color Layers
 
@@ -62,7 +63,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
-| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally |
+| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
@@ -78,7 +79,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
-| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally |
+| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
 | Advanced | #FF9500 | RAG, Agentic AI, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive |
 | Professional | #0EA5E9 | AI-Native PM |
@@ -226,6 +227,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/AIInProduction.jsx` / `src/AIInProduction.css` — AI in Production tutorial (7 stages: silent failure, quality metrics, latency & cost, drift detection, A/B testing, alerting, full observability stack)
 - `src/ChoosingAIModel.jsx` / `src/ChoosingAIModel.css` — Choosing the Right AI Model tutorial (7 stages: wrong question, 7 dimensions, benchmarks, task matching, cost-quality-speed triangle, model snapshot 2026, personal framework)
 - `src/Ollama.jsx` / `src/Ollama.css` — Run AI Locally tutorial (7 stages: why local, install & run, model library, the Modelfile, parameters, the API, build assistant)
+- `src/ClaudeCode.jsx` / `src/ClaudeCode.css` — Claude Code tutorial (8 stages: what it is, installation, models, CLAUDE.md, skills, MCP, full stack, workflows)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -638,6 +640,7 @@ create table quiz_results (
 | Neural Networks | Entry screen dismissed | Reach final screen |
 | Choosing the Right AI Model | Entry screen dismissed | Reach final screen |
 | Run AI Locally | Entry screen dismissed | Reach final screen |
+| Claude Code | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 
@@ -1100,8 +1103,10 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - New modules must use `usePersistedState(moduleId, -1)` for stage (or `usePersistedState(moduleId + '-entry', true)` for entry-based modules)
 - `showFinal` must initialize from persisted stage: `useState(stage >= STAGES.length)` — `useState(false)` causes blank screen on page refresh after completing all stages
 - Welcome banner `<ol>` uses shared `module-welcome-steps` class (one CSS definition in App.css, not per-module copies)
+- Welcome banner only shows on first stage: render condition must include `stage === 0 &&` so the banner auto-dismisses when advancing (no need to click "Got it")
 - All stage-based modules implement `handleStartOver()` that resets stage, welcome, tips, and all module state; used by both "Start over" button and quiz `onStartOver`
 - Progressive learn tips: `learnTip` state + `dismissedTips` Set + `fadeTimerRef` ref; milestone-based useEffect triggers tips at key stages; `dismissLearnTip` fades out then clears
+- Learn tip useEffect must use a single if/else-if chain with `else { setLearnTip(null); setLearnTipFading(false) }` fallback — without the else branch, tips from one stage persist on all subsequent stages
 - Module-specific CSS must include mobile touch targets: `min-height: 44px` on interactive buttons at `@media (max-width: 768px)`
 - Stage → final screen uses fade transition: `setFading(true)` → 250ms → `setShowFinal(true)` + scroll-to-top via DOM ancestor walking
 - Quiz results use fade transition: `setTransitioning(true)` → 300ms → `setShowResult(true)` + scroll-to-top via DOM ancestor walking

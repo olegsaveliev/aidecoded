@@ -1011,6 +1011,9 @@ function PrecisionRecall({ onSwitchTab, onGoHome }) {
       setLearnTip({ key: 'stage4', text: 'Try dragging the threshold slider all the way left and all the way right to see the extremes \u2014 watch precision and recall pull in opposite directions.' })
     } else if (stage === 6 && !dismissedTips.has('stage6')) {
       setLearnTip({ key: 'stage6', text: 'The scenario sorter has one card with no single correct answer \u2014 that is intentional. Real-world metric choices are rarely black and white.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1098,7 +1101,7 @@ function PrecisionRecall({ onSwitchTab, onGoHome }) {
 
   return (
     <div className={`how-llms pr-root${fading ? ' how-fading' : ''}`}>
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Precision &amp; Recall</strong> &mdash; this module uses one running example throughout: a spam filter. By the end you will understand TP, TN, FP, FN, precision, recall and F1 &mdash; and know exactly which one to optimise for in any real situation.

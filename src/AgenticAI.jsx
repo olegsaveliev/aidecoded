@@ -855,6 +855,9 @@ function AgenticAI({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'memory', text: 'Remember RAG from earlier? External memory for agents works exactly the same way \u2014 embed, store, retrieve. Everything you learned connects here.' })
     } else if (stage === 5 && !dismissedTips.has('build') && !learnTip) {
       setLearnTip({ id: 'build', text: 'Walk through all 6 steps to build your agent. Each component you add makes the agent more capable \u2014 this is exactly how real agents are designed.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips])
 
@@ -971,7 +974,7 @@ function AgenticAI({ onSwitchTab, onGoHome }) {
         &larr; Start over
       </button>
 
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Agentic AI</strong> &mdash; everything you have learned so far &mdash; LLMs, RAG, prompt engineering, fine-tuning &mdash; it all comes together here. Agents are AI that acts. This is the cutting edge.

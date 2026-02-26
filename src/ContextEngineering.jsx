@@ -718,6 +718,9 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
       setLearnTip({ id: 'rag', text: 'This 6-step pipeline is how ChatGPT plugins and enterprise AI assistants actually work. You don\'t retrain the model — you just engineer what goes into the context window.' })
     } else if (stage === 5 && !dismissedTips.has('usecases') && !learnTip) {
       setLearnTip({ id: 'usecases', text: 'Click a use case and check the boxes to build a reusable context template. Different tasks need different context — this is where the art meets the science.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -806,7 +809,7 @@ function ContextEngineering({ model, temperature, topP, maxTokens, onSwitchTab, 
       <button className="entry-start-over" onClick={handleStartOver}>
         &larr; Start over
       </button>
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Context Engineering</strong> — here's how to explore:

@@ -1087,6 +1087,9 @@ function DeepLearning({ onSwitchTab, onGoHome }) {
       setLearnTip({ key: 'stage5', text: 'Click the word "it" in the heatmap — see how the model connects it to "cat"? This one insight is why Transformers power every modern AI.' })
     } else if (stage === 7 && !dismissedTips.has('stage7')) {
       setLearnTip({ key: 'stage7', text: 'You\'ve covered the entire deep learning stack — from a single neuron to the Transformer. The starter projects below are real things you can build today.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1205,7 +1208,7 @@ function DeepLearning({ onSwitchTab, onGoHome }) {
   return (
     <div className={`how-llms dl-root ${fading ? 'dl-fading' : ''}`}>
       {/* Welcome banner */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Deep Learning</strong> — here's how to explore:

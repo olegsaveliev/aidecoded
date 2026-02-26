@@ -34,6 +34,7 @@ const ALL_MODULES = [
   { id: 'ollama', title: 'Run AI Locally', description: 'No API costs. No data leaving your machine. No rate limits. Learn how Ollama lets you run Llama, Gemma, Mistral and more on your own hardware — and build your own custom AI assistant in minutes.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'label-master', title: 'Label Master', description: 'Draw bounding boxes around objects as fast as you can. Scored on IoU accuracy. Escalates from single objects to crowded scenes to pixel segmentation. Teaches how object detection really works — and why labelling AI training data is so hard.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'draw-and-deceive', title: 'Draw & Deceive', description: 'Draw on a pixel grid. GPT-4o tries to classify what you drew. Try to make it say the right thing — then try to fool it. Teaches how AI vision works and why it sometimes fails spectacularly.', tag: 'Game', tagColor: '#F59E0B' },
+  { id: 'claude-code', title: 'Claude Code', description: 'Your AI pair programmer that lives in the terminal. Learn how Claude Code reads your codebase, executes real commands, remembers your conventions via CLAUDE.md, and connects to any tool via MCP.', tag: 'Practical', tagColor: '#34C759' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

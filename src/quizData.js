@@ -1293,3 +1293,66 @@ export const computerVisionQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const claudeCodeQuiz = [
+  {
+    question: 'What fundamentally distinguishes Claude Code from a regular AI chat assistant?',
+    options: ['It has access to the internet by default', 'It acts directly in your codebase — reading files, running commands, and making edits without copy-pasting', 'It uses a more powerful AI model', 'It works only inside VS Code'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does the /init command do?',
+    options: ['Installs Claude Code on your machine', 'Initialises a new git repository', 'Generates a CLAUDE.md file by analysing your project structure', 'Resets Claude Code to factory settings'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which model should you use as your default for everyday coding tasks?',
+    options: ['Claude Haiku 4.5 for maximum speed', 'Claude Sonnet 4.6 as a fast, capable general-purpose model', 'Claude Opus 4.6 for maximum quality', 'Always use the most expensive model available'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the purpose of the ~/.claude/CLAUDE.md file (global)?',
+    options: ['Stores credentials for MCP servers', 'Defines personal preferences that apply to all your projects', 'Contains Claude Code\'s system prompt', 'Logs all commands run during sessions'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'How do skills differ from slash commands?',
+    options: ['Skills only work in VS Code, slash commands work in the terminal', 'Skills can auto-load when their description matches the task, without explicitly invoking them', 'Slash commands are more powerful than skills', 'Skills require an Anthropic account to create'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is MCP (Model Context Protocol)?',
+    options: ['A way to pay for Claude Code via API tokens', 'A Claude Code configuration file format', 'An open protocol that connects Claude Code to external tools, databases, and APIs', 'A method for compressing context windows'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What are Claude Code hooks used for?',
+    options: ['Connecting to GitHub repositories', 'Adding new slash commands to Claude Code', 'Running deterministic scripts automatically at specific lifecycle events as guardrails', 'Switching between AI models mid-session'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does the /doctor command do?',
+    options: ['Diagnoses bugs in your code', 'Runs health checks on your Claude Code installation and configuration', 'Generates medical documentation', 'Checks your API key balance'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which approach produces better results when debugging with Claude Code?',
+    options: ['Describing the bug in detail in natural language', 'Running the actual test suite and letting Claude Code see the real error output', 'Pasting the error message from the terminal', 'Asking Claude Code to guess what might be wrong'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the recommended maximum size for a CLAUDE.md file?',
+    options: ['50 lines — keep it minimal', '500 lines, using @imports for larger context instead of one huge file', 'No limit — the more context the better', '100 lines exactly'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+]

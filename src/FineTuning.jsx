@@ -754,6 +754,9 @@ function FineTuning({ onSwitchTab, onGoHome }) {
       setLearnTip({ key: 'stage4', text: 'LoRA is a game-changer: it means you can fine-tune a 7B parameter model on a single consumer GPU. Watch the animation to see how it works.' })
     } else if (stage === 7 && !dismissedTips.has('stage7')) {
       setLearnTip({ key: 'stage7', text: 'This checklist is your real-world guide. Try clicking through all 20 items — skipping steps is the #1 cause of failed fine-tuning projects.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -853,7 +856,7 @@ function FineTuning({ onSwitchTab, onGoHome }) {
 
   return (
     <div className={`how-llms ft-root${fading ? ' how-fading' : ''}`}>
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Fine-Tuning</strong> — here's how to explore:

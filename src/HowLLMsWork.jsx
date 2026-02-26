@@ -429,6 +429,9 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
       setLearnTip({ id: 'attention', text: 'The thicker lines show stronger attention. Notice how the first word attends to many others — this "global view" is what makes Transformers so powerful compared to older AI.' })
     } else if (stage === 4 && genPhase === 'done' && !dismissedTips.has('generation') && !learnTip) {
       setLearnTip({ id: 'generation', text: 'You just saw the full pipeline! Every ChatGPT response goes through these exact 5 stages — hundreds of times per second.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, visibleTokens.length, allTokens.length, vectorsReady, attentionVisible, genPhase, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 

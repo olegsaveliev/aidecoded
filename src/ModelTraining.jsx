@@ -714,6 +714,9 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'pretraining', text: 'Watch the loss curve drop — that\'s the model getting smarter! Lower loss means better predictions. This takes months and costs millions of dollars.' })
     } else if (stage === 5 && !dismissedTips.has('rlhf') && !learnTip) {
       setLearnTip({ id: 'rlhf', text: 'This is what makes ChatGPT feel "smart" — human feedback teaches the model to be helpful instead of just predicting text. The thumbs up/down in ChatGPT? That\'s RLHF data collection!' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -803,7 +806,7 @@ function ModelTraining({ onSwitchTab, onGoHome }) {
         &larr; Start over
       </button>
       {/* Welcome Banner — shows after entry screen, dismissable */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Model Training</strong> — here's how to explore:

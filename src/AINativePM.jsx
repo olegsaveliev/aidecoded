@@ -1000,6 +1000,9 @@ function AINativePM({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'evals', text: 'Try running the evals — notice how one failure can catch a bug before it ships. This is why eval-driven PM work matters.' })
     } else if (stage === 7 && !dismissedTips.has('toolkit') && !learnTip) {
       setLearnTip({ id: 'toolkit', text: 'Check off every item in the toolkit. When all three columns are complete, you have the full AI-native PM playbook.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips])
 
@@ -1116,7 +1119,7 @@ function AINativePM({ onSwitchTab, onGoHome }) {
         &larr; Start over
       </button>
 
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to AI-Native PM</strong> &mdash; this is not a prompt writing course. This is how you become the PM that AI engineers actually want to work with. The one who ships AI products that work &mdash; not just demo well.

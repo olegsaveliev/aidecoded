@@ -1125,6 +1125,9 @@ export default function RAGUnderTheHood({ onSwitchTab, onGoHome }) {
       setLearnTip({ key: 'stage3', text: 'Click between General Model and Domain Model tabs to see exactly which chunks move clusters.' })
     } else if (stage === 5 && !dismissedTips.has('stage5')) {
       setLearnTip({ key: 'stage5', text: 'Toggle the filters one at a time to watch the search space shrink with each addition.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1217,7 +1220,7 @@ export default function RAGUnderTheHood({ onSwitchTab, onGoHome }) {
     <div className={`how-llms ruh-root ${fading ? 'how-fading' : ''}`}>
 
       {/* Welcome banner */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Why RAG Fails</strong> &mdash; You already know what RAG is. This module teaches why most RAG implementations fail quietly in production &mdash; and the specific techniques that separate demo-quality from production-quality retrieval. Each stage fixes one broken layer.

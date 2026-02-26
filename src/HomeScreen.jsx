@@ -300,6 +300,13 @@ const CARDS = [
     tag: 'Practical',
     group: 'Skills',
   },
+  {
+    id: 'claude-code',
+    title: 'Claude Code',
+    description: 'Your AI pair programmer that lives in the terminal. Learn how Claude Code reads your codebase, executes real commands, remembers your conventions via CLAUDE.md, and connects to any tool via MCP.',
+    tag: 'Practical',
+    group: 'Skills',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']

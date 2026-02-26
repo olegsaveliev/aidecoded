@@ -1319,7 +1319,7 @@ function Ollama({ onSwitchTab, onGoHome }) {
       )}
 
       {/* Welcome banner */}
-      {showWelcome && !showFinal && (
+      {showWelcome && stage === 0 && !showFinal && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Run AI Locally</strong> &mdash; This module covers Ollama, the tool that makes running AI on your own hardware as simple as one terminal command. You will learn what local AI means, which models to run, and how to build your own custom model with a Modelfile.

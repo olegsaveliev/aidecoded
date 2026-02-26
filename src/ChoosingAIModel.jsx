@@ -1387,6 +1387,9 @@ function ChoosingAIModel({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'task-matching', text: 'Try selecting High Volume + Budget under $200/month — the recommendation shifts dramatically from the default' })
     } else if (stage === 5 && !dismissedTips.has('snapshot') && !learnTip) {
       setLearnTip({ id: 'snapshot', text: 'Click any model row to expand its full strength and weakness breakdown' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips])
 
@@ -1504,7 +1507,7 @@ function ChoosingAIModel({ onSwitchTab, onGoHome }) {
       )}
 
       {/* Welcome banner */}
-      {showWelcome && !showFinal && (
+      {showWelcome && stage === 0 && !showFinal && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Choosing the Right AI Model</strong> &mdash; This tutorial teaches a decision framework that works for any model, including ones that do not exist yet. Stage 6 gives a current snapshot of the major models as of early 2026 &mdash; labeled clearly so you know it will evolve. The framework in every other stage is timeless.
