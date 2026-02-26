@@ -32,6 +32,7 @@ const ALL_MODULES = [
   { id: 'alignment-game', title: 'The Alignment Game', description: 'Give an AI a goal. Watch it achieve the goal perfectly and completely miss the point. Can you write constraints tight enough to stop it?', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'choosing-ai-model', title: 'Choosing the Right AI Model', description: 'GPT-5, Claude, Gemini, DeepSeek, Llama — the choice is paralyzing. Learn the framework that cuts through the noise and matches any task to the right model, every time.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'ollama', title: 'Run AI Locally', description: 'No API costs. No data leaving your machine. No rate limits. Learn how Ollama lets you run Llama, Gemma, Mistral and more on your own hardware — and build your own custom AI assistant in minutes.', tag: 'Practical', tagColor: '#34C759' },
+  { id: 'label-master', title: 'Label Master', description: 'Draw bounding boxes around objects as fast as you can. Scored on IoU accuracy. Escalates from single objects to crowded scenes to pixel segmentation. Teaches how object detection really works — and why labelling AI training data is so hard.', tag: 'Game', tagColor: '#F59E0B' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

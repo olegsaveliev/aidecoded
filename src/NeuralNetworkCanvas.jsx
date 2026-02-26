@@ -45,6 +45,7 @@ const NODES = [
   { id: 'choosing-ai-model', label: 'Choosing Model', group: 'skills', desc: 'Match any task to the right AI model' },
   { id: 'ollama', label: 'Run AI Locally', group: 'skills', desc: 'Run open-source AI models on your own hardware' },
   { id: 'computer-vision', label: 'Computer Vision', group: 'foundations', desc: 'How machines learn to see — from pixels to vision transformers' },
+  { id: 'label-master', label: 'Label Master', group: 'play', desc: 'Draw bounding boxes and learn how training data is annotated' },
 ]
 
 
@@ -134,6 +135,8 @@ const CONNECTIONS = [
   ['rag-under-the-hood', 'ollama'],
   ['fine-tuning', 'ollama'],
   ['prompt-engineering', 'ollama'],
+  ['computer-vision', 'label-master'],
+  ['precision-recall', 'label-master'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -190,6 +193,7 @@ const NEURON_LAYOUT = {
   'choosing-ai-model':     { px: 0.31, py: 0.80 },
   'ollama':                { px: 0.23, py: 0.93 },
   'computer-vision':       { px: 0.10, py: 0.80 },
+  'label-master':          { px: 0.90, py: 0.87 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -201,7 +205,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */

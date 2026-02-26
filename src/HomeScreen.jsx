@@ -241,6 +241,15 @@ const CARDS = [
     difficulty: 'Thought-Provoking',
   },
   {
+    id: 'label-master',
+    title: 'Label Master',
+    description: 'Draw bounding boxes around objects as fast as you can. Scored on IoU accuracy. Escalates from single objects to crowded scenes to pixel segmentation. Teaches how object detection really works \u2014 and why labelling AI training data is so hard.',
+    tag: 'Game',
+    group: 'Play',
+    isGame: true,
+    difficulty: 'Hands-On',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',

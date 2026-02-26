@@ -159,6 +159,13 @@ const ICON_PATHS = {
       <path d="M3 6l2 2M21 6l-2 2M3 18l2-2M21 18l-2-2" strokeLinecap="round" />
     </>
   ),
+  'label-master': (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="2" strokeDasharray="4 2" />
+      <path d="M3 9h18M9 3v18" strokeLinecap="round" />
+      <circle cx="6" cy="6" r="1.5" fill="currentColor" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
