@@ -1061,6 +1061,9 @@ function AISafety({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'rag', text: 'Toggle between "Without RAG" and "With RAG" to see the difference. Grounding is the single most effective structural fix for hallucinations.' })
     } else if (stage === 7 && !dismissedTips.has('toolkit') && !learnTip) {
       setLearnTip({ id: 'toolkit', text: 'Check off each item in the safety checklist — this is a real-world workflow used by production AI teams.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1174,7 +1177,7 @@ function AISafety({ onSwitchTab, onGoHome }) {
       <button className="entry-start-over" onClick={handleStartOver}>
         &larr; Start over
       </button>
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to AI Safety &amp; Hallucinations</strong> &mdash; this module will change how you use AI. You will understand why the most capable AI systems still fail, how to spot it before it hurts you, and exactly what to do about it.

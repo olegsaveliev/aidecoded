@@ -739,6 +739,9 @@ function RAG({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'chunking', text: 'Chunking strategy is often the biggest factor in RAG quality — more important than the model you choose! Notice the trade-offs between simple and hierarchical approaches.' })
     } else if (stage === 6 && !dismissedTips.has('build') && !learnTip) {
       setLearnTip({ id: 'build', text: 'Follow along with the code snippets — a working RAG system is under 50 lines of Python! Check the boxes as you understand each step.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -832,7 +835,7 @@ function RAG({ onSwitchTab, onGoHome }) {
       <button className="entry-start-over" onClick={handleStartOver}>
         &larr; Start over
       </button>
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to RAG</strong> — here's how to explore:

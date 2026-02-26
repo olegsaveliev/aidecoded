@@ -1004,7 +1004,7 @@ function GenerativeAI({ onSwitchTab, onGoHome }) {
       )}
 
       {/* Welcome banner */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Generative AI</strong> &mdash; you have seen the outputs: the stunning images, the fluent text, the generated music. Now you will understand how they are actually made. It is stranger and more beautiful than you think.

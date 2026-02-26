@@ -43,6 +43,7 @@ const NAV_GROUPS = [
       { id: 'ai-fluency', name: 'AI Fluency', tag: 'Practical' },
       { id: 'choosing-ai-model', name: 'Choosing AI Model', tag: 'Practical' },
       { id: 'ollama', name: 'Run AI Locally', tag: 'Practical' },
+      { id: 'claude-code', name: 'Claude Code', tag: 'Practical' },
     ],
   },
   {

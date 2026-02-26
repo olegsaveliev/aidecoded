@@ -47,6 +47,7 @@ const NODES = [
   { id: 'computer-vision', label: 'Computer Vision', group: 'foundations', desc: 'How machines learn to see — from pixels to vision transformers' },
   { id: 'label-master', label: 'Label Master', group: 'play', desc: 'Draw bounding boxes and learn how training data is annotated' },
   { id: 'draw-and-deceive', label: 'Draw & Deceive', group: 'play', desc: 'Draw pixel art and try to fool GPT-4o vision' },
+  { id: 'claude-code', label: 'Claude Code', group: 'skills', desc: 'AI pair programmer that lives in your terminal' },
 ]
 
 
@@ -141,6 +142,10 @@ const CONNECTIONS = [
   ['computer-vision', 'draw-and-deceive'],
   ['alignment-game', 'draw-and-deceive'],
   ['ai-ethics-tribunal', 'draw-and-deceive'],
+  ['ollama', 'claude-code'],
+  ['agentic-ai', 'claude-code'],
+  ['prompt-engineering', 'claude-code'],
+  ['fine-tuning', 'claude-code'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -199,6 +204,7 @@ const NEURON_LAYOUT = {
   'computer-vision':       { px: 0.10, py: 0.80 },
   'label-master':          { px: 0.90, py: 0.87 },
   'draw-and-deceive':      { px: 0.82, py: 0.90 },
+  'claude-code':           { px: 0.27, py: 1.00 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -208,7 +214,7 @@ const NEURON_ANIM_ORDER = [
   // Soma
   'machine-learning', 'neural-networks', 'computer-vision', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   // Axon
-  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama',
+  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code',
   // Terminals
   'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive',
 ]

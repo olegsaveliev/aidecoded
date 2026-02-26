@@ -1626,6 +1626,9 @@ function NeuralNetworks({ onSwitchTab, onGoHome }) {
       setLearnTip({ key: 'stage4', text: 'Click Step Through to walk the forward pass one computation at a time — this is exactly what PyTorch does internally.' })
     } else if (stage === 7 && !dismissedTips.has('stage7')) {
       setLearnTip({ key: 'stage7', text: 'Try training with learning rate 0.1 vs 0.001 — watch how differently the loss curve behaves. This is the most important hyperparameter to understand.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips])
 
@@ -1685,7 +1688,7 @@ function NeuralNetworks({ onSwitchTab, onGoHome }) {
   return (
     <div className={`how-llms nn-root${fading ? ' how-fading' : ''}`}>
       {/* Welcome banner */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Neural Networks</strong> &mdash; This module builds a complete neural network understanding from scratch. You will start with a single neuron and end by watching a real network train on live data &mdash; weights animating, loss falling, the network getting smarter with every example you feed it.

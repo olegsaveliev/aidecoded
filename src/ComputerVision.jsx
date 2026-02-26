@@ -1503,6 +1503,9 @@ function ComputerVision({ onSwitchTab, onGoHome }) {
       setLearnTip({ key: 'stage5', text: 'Click "Random combo" three times and notice how different each augmented cat looks — all of these are treated as different training examples, multiplying your effective dataset size' })
     } else if (stage === 6 && !dismissedTips.has('stage6')) {
       setLearnTip({ key: 'stage6', text: 'Click on ResNet-50 on the timeline, then look at the skip connection diagram — this is the most copied idea in all of deep learning' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips])
 
@@ -1654,7 +1657,7 @@ function ComputerVision({ onSwitchTab, onGoHome }) {
   return (
     <div className={`how-llms cv-root${fading ? ' cv-fading' : ''}`}>
       {/* Welcome banner */}
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Computer Vision</strong> — this tutorial takes you from a single pixel to modern vision transformers. Every stage uses the same image &mdash; a photo of a cat &mdash; processed in a different way. By the end you will understand exactly how AI sees, what it actually detects, and why it sometimes fails.

@@ -1140,6 +1140,9 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
       setLearnTip({ id: 'overfitting', text: 'Look at the three charts carefully — the middle one captures the real pattern, the right one memorized every wiggle. When ChatGPT "hallucinates," it\'s partly an overfitting problem.' })
     } else if (stage === 7 && !dismissedTips.has('lifecycle') && !learnTip) {
       setLearnTip({ id: 'lifecycle', text: 'Notice the percentages — 80% of an ML project is data work, not model building! This is the "dirty secret" of machine learning that most courses don\'t teach you.' })
+    } else {
+      setLearnTip(null)
+      setLearnTipFading(false)
     }
   }, [stage, dismissedTips]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -1238,7 +1241,7 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
       <button className="entry-start-over" onClick={handleStartOver}>
         &larr; Start over
       </button>
-      {showWelcome && (
+      {showWelcome && stage === 0 && (
         <div className="how-welcome how-fade-in">
           <div className="how-welcome-text">
             <strong>Welcome to Machine Learning</strong> — here's how to explore:
