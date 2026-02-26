@@ -882,7 +882,7 @@
   border-radius: 10px;
   padding: 12px 16px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 0;
   transform: translateY(12px);
 }
