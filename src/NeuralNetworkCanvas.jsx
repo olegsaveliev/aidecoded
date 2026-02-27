@@ -54,6 +54,7 @@ const NODES = [
   { id: 'custom-agents', label: 'Custom Agents', group: 'advanced', desc: 'Define specialist AI assistants in Markdown files' },
   { id: 'model-training-tycoon', label: 'Training Tycoon', group: 'play', desc: 'Allocate $50K across six phases of model training' },
   { id: 'spec-driven-dev', label: 'Spec-Driven Dev', group: 'skills', desc: 'Write specs before AI writes code' },
+  { id: 'ai-coding-tools', label: 'AI Coding Tools', group: 'skills', desc: 'Cursor, Copilot, Windsurf, Cline and more — the full market map' },
 ]
 
 
@@ -172,6 +173,10 @@ const CONNECTIONS = [
   ['agentic-ai', 'spec-driven-dev'],
   ['prompt-engineering', 'spec-driven-dev'],
   ['context-engineering', 'spec-driven-dev'],
+  ['claude-code', 'ai-coding-tools'],
+  ['spec-driven-dev', 'ai-coding-tools'],
+  ['agentic-ai', 'ai-coding-tools'],
+  ['prompt-engineering', 'ai-coding-tools'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -236,6 +241,7 @@ const NEURON_LAYOUT = {
   'custom-agents':         { px: 0.65, py: 0.82 },
   'model-training-tycoon': { px: 0.45, py: 0.97 },
   'spec-driven-dev':       { px: 0.40, py: 0.82 },
+  'ai-coding-tools':       { px: 0.35, py: 0.93 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -245,7 +251,7 @@ const NEURON_ANIM_ORDER = [
   // Soma
   'machine-learning', 'neural-networks', 'computer-vision', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   // Axon
-  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'spec-driven-dev',
+  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'spec-driven-dev', 'ai-coding-tools',
   // Terminals
   'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon',
 ]

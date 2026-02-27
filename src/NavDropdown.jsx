@@ -46,6 +46,7 @@ const NAV_GROUPS = [
       { id: 'ollama', name: 'Run AI Locally', tag: 'Practical' },
       { id: 'claude-code', name: 'Claude Code', tag: 'Practical' },
       { id: 'spec-driven-dev', name: 'Spec-Driven Dev', tag: 'Practical' },
+      { id: 'ai-coding-tools', name: 'AI Coding Tools', tag: 'Practical' },
     ],
   },
   {

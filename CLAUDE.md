@@ -56,6 +56,7 @@ Interactive React app for learning how Large Language Models work.
 | `custom-agents` | CustomAgents.jsx | CustomAgents.css | customAgentsQuiz | Technical | #5856D6 |
 | `model-training-tycoon` | ModelTrainingTycoon.jsx | ModelTrainingTycoon.css | — (game) | Game | #F59E0B |
 | `spec-driven-dev` | SpecDrivenDev.jsx | SpecDrivenDev.css | specDrivenDevQuiz | Practical | #34C759 |
+| `ai-coding-tools` | AICodingTools.jsx | AICodingTools.css | aiCodingToolsQuiz | Practical | #34C759 |
 
 ## Color System — Two Color Layers
 
@@ -68,7 +69,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
-| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Spec-Driven Development |
+| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Spec-Driven Development, AI Coding Tools |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams, Custom Agents |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
@@ -84,7 +85,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
-| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Spec-Driven Development |
+| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Spec-Driven Development, AI Coding Tools |
 | Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Custom Agents, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon |
 | Professional | #0EA5E9 | AI-Native PM |
@@ -644,6 +645,64 @@ Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start
 
 ---
 
+## AI Coding Tools Module (`src/AICodingTools.jsx`)
+
+Interactive 4-stage tutorial covering the AI coding tools landscape — three categories, eight tool profiles, a recommendation quiz, and shared concepts. Stage-based with stepper navigation. CSS prefix: `.act-`. Uses subgrid for cross-card alignment in the category stage.
+
+### Entry Screen
+- Title: "AI Coding Tools", subtitle: "The Market, the Players, Your Pick"
+- Description explains the landscape: three categories, eight tools, one framework for choosing
+- Button text: "Explore the Market"
+
+### Welcome Banner
+Numbered 3-step guide: (1) three categories that define the market, (2) eight tool profiles with honest trade-offs, (3) a quick quiz that recommends your starting point
+
+### Stages
+4 stages: Categories → The Tools → Find Yours → Shared DNA. Each stage has info cards, ToolChips, and stage-specific interactive elements.
+
+### Stage Visualizations
+- **Stage 0 (Categories)**: Three category cards using CSS `subgrid` with `grid-row: span 7` — AI Extensions (Copilot, Cline, Continue.dev), AI-Native IDEs (Cursor, Windsurf, Kiro, VS Code), Terminal Agents (Claude Code, Codex CLI). Each card has icon, label, tagline, description, tool pills, trade-offs, and best-if sections
+- **Stage 1 (The Tools)**: 8 expandable tool profile cards with click-to-expand accordion (`act-expandDown` animation). Each profile has: name, category badge, price, free-tier indicator, intro, "what makes it different", "best for" list, good/not-good trade-offs, and standout feature. Tools: GitHub Copilot, Cursor, Windsurf, Kiro, Cline, Claude Code, Continue.dev, VS Code
+- **Stage 2 (Find Yours)**: 4-question recommendation quiz with fade transitions between questions. Scoring weights per tool, computes top match with explanation. Shows result card with "See why" expandable reasoning. Tools scored: Cursor, GitHub Copilot, Claude Code, Cline, Windsurf
+- **Stage 3 (Shared DNA)**: Fluency ladder — 6 clickable concept steps (Context Window, Conventions File, MCP, Agentic Loop, Review Gates) with expandable detail panels showing cross-tool examples
+
+### Tool Profiles (8)
+| Tool | Category | Price |
+|---|---|---|
+| GitHub Copilot | AI Extension | Free / $10/mo / $19/mo |
+| Cursor | AI-Native IDE | Free (limited) / $20/mo / $60/mo |
+| Windsurf | AI-Native IDE | Free tier / $15/mo |
+| Kiro | AI-Native IDE | Free (50 credits/mo) / $20/mo |
+| Cline | AI Extension | Free (open source) + API cost |
+| Claude Code | Terminal Agent | $20/mo / $100/mo / API |
+| Continue.dev | AI Extension | Free (open source) + API cost |
+| VS Code | AI-Native IDE | Free |
+
+### Progressive Learning Tips
+Milestone-based tips triggered at key stages. No auto-dismiss — user clicks X. Max one visible at a time. Tracked via `dismissedTips` Set with `fadeTimerRef` for cleanup.
+
+| Trigger | Tip |
+|---|---|
+| Stage 1 (The Tools) | "Click any card to expand it — each tool has a standout feature and honest trade-offs" |
+| Stage 2 (Find Yours) | "Answer four quick questions — the quiz recommends a starting point based on how you work" |
+
+All tips reset on "Start over". CSS: reuses `.learn-tip` classes from Playground.
+
+### CSS Patterns
+- Category cards use CSS `subgrid` with `grid-row: span 7` for cross-card alignment (7 children: icon, label, tagline, desc, tools, tradeoffs, bestif)
+- Tool profile cards use `act-expandDown` keyframe animation (`max-height: 0 → 600px`) for accordion expand
+- Finder quiz uses `act-quiz-fading` opacity transition between questions
+- Fluency ladder detail panels use `act-ladder-detail` with `min-width: 220px`, `max-width: 280px`
+- Statistics badges row (`.act-stats-row`) with 4 metric cards
+
+### Dark Mode
+Uses standard CSS variable overrides. Category cards, tool profiles, finder quiz, and ladder detail panels have dark-mode-specific border/background overrides. Answer hover state uses `rgba(52, 199, 89, 0.08)` in dark mode.
+
+### Bottom Actions
+Standard `how-final-actions` pattern: "Test Your Knowledge" quiz button + "Start over" secondary button + `<SuggestedModules>`.
+
+---
+
 ## Authentication & Progress
 
 ### Overview
@@ -724,6 +783,7 @@ create table quiz_results (
 | Agent Teams | Entry screen dismissed | Reach final screen |
 | Custom Agents | Entry screen dismissed | Reach final screen |
 | Spec-Driven Development | Entry screen dismissed | Reach final screen |
+| AI Coding Tools | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 

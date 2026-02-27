@@ -337,6 +337,15 @@ const CARDS = [
     accent: '#34C759',
   },
   {
+    id: 'ai-coding-tools',
+    group: 'Skills',
+    tag: 'Practical',
+    title: 'AI Coding Tools',
+    description: 'Cursor, Copilot, Windsurf, Kiro, Cline — learn the 8 tools every developer needs to know, how they differ, and find the right one for your workflow.',
+    icon: 'ai-coding-tools',
+    accent: '#34C759',
+  },
+  {
     id: 'agent-teams',
     title: 'Agent Teams',
     description: 'Subagents are function calls. Agent Teams are organisations. Learn how Claude Code\'s experimental multi-agent feature works: lead agents, teammates, shared task lists, and direct messaging between agents working in parallel.',
