@@ -1,0 +1,1479 @@
+/* ===== Spec-Driven Development Module ===== */
+
+/* Reset inherited .how-info-card strong styling for stage content */
+.sdd-info-content strong {
+  display: inline;
+  font-size: inherit;
+  padding-left: 0;
+  border-left: none;
+}
+
+/* --- Spec Transformer --- */
+.sdd-transformer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* --- Left Panel (Vibe) --- */
+.sdd-vibe-panel {
+  background: #1a1a1e;
+  padding: 16px 18px;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+/* --- Right Panel (Spec) --- */
+.sdd-spec-panel {
+  background: var(--bg-secondary);
+  padding: 16px 18px;
+  overflow-y: auto;
+}
+
+/* --- Panel Badges --- */
+.sdd-panel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.sdd-badge-vibe {
+  background: rgba(255, 149, 0, 0.15);
+  color: #FF9500;
+  border: 1px solid rgba(255, 149, 0, 0.25);
+}
+
+.sdd-badge-spec {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34C759;
+  border: 1px solid rgba(52, 199, 89, 0.25);
+}
+
+/* --- Chat Log --- */
+.sdd-chat-log {
+  font-size: 11px;
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  color: #9ca3af;
+  line-height: 1.7;
+}
+
+.sdd-chat-user {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.sdd-chat-ai {
+  color: #9ca3af;
+}
+
+/* --- Context Bar (see full layout below) --- */
+
+/* --- Spec Document --- */
+.sdd-spec-doc {
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  font-family: monospace;
+}
+
+.sdd-spec-doc h3 {
+  color: #34C759;
+  font-size: 12px;
+  margin: 0 0 8px;
+}
+
+.sdd-spec-doc h4 {
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 12px 0 6px;
+}
+
+/* --- Checkbox Items --- */
+.sdd-check-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  margin: 2px 0;
+}
+
+/* --- Status Badges --- */
+.sdd-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+.sdd-status-badge-green {
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.25);
+  color: #34C759;
+}
+
+.sdd-status-badge-red {
+  background: rgba(255, 59, 48, 0.1);
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  color: #FF3B30;
+}
+
+/* --- Quality Bar Row --- */
+.sdd-quality-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.sdd-bar-track {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--bg-surface);
+}
+
+.sdd-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+.sdd-bar-fill-red {
+  background: #FF3B30;
+}
+
+.sdd-bar-fill-green {
+  background: #34C759;
+}
+
+.sdd-quality-label {
+  font-size: 10px;
+  min-width: 90px;
+  text-align: right;
+}
+
+/* --- Document Tabs --- */
+.sdd-doc-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sdd-doc-tab {
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-secondary);
+  font-size: 12px;
+  font-family: monospace;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-secondary);
+}
+
+.sdd-doc-tab:hover {
+  border-color: var(--border-light);
+}
+
+.sdd-doc-tab-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.06);
+  color: #34C759;
+}
+
+/* --- Doc Viewer --- */
+.sdd-doc-viewer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  font-size: 13px;
+  font-family: monospace;
+  line-height: 1.8;
+  max-height: 360px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  position: relative;
+}
+
+.sdd-doc-viewer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sdd-doc-viewer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sdd-doc-viewer::-webkit-scrollbar-thumb {
+  background: rgba(52, 199, 89, 0.3);
+  border-radius: 3px;
+}
+
+/* --- Green Banner --- */
+.sdd-reviewed-banner {
+  background: rgba(52, 199, 89, 0.06);
+  border: 1px solid rgba(52, 199, 89, 0.2);
+  border-left: 3px solid #34C759;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #34C759;
+  margin-top: 16px;
+}
+
+/* --- Copy Button --- */
+.sdd-copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(52, 199, 89, 0.08);
+  border: 1px solid rgba(52, 199, 89, 0.25);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: #34C759;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sdd-copy-btn:hover {
+  background: rgba(52, 199, 89, 0.15);
+}
+
+/* (Toggle styles moved into .sdd-comparator-toggle section below) */
+
+/* --- Prompt Box --- */
+.sdd-prompt-box {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: monospace;
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.8;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+/* --- Flow Diagram --- */
+.sdd-flow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.sdd-flow-node {
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  border-radius: 6px;
+  padding: 4px 10px;
+  color: #34C759;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.sdd-flow-arrow {
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+/* --- Section Blocks --- */
+.sdd-section {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.sdd-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- Failure Cards --- */
+.sdd-failure-card {
+  padding: 12px 16px;
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  background: var(--bg-card);
+  margin: 8px 0;
+}
+
+.sdd-failure-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.sdd-failure-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* --- Rule Blocks --- */
+.sdd-rule {
+  margin: 16px 0;
+  padding: 16px 20px;
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+}
+
+.sdd-rule-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* --- Comparator Example --- */
+.sdd-comparator-example {
+  margin: 16px 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sdd-comparator-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.sdd-comparator-body {
+  padding: 16px;
+}
+
+/* --- Concept Pills --- */
+.sdd-concept-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.sdd-concept-pill {
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #34C759;
+  animation: sddPillIn 0.3s ease-out both;
+}
+
+/* --- Doc Section Labels --- */
+.sdd-doc-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+  margin: 16px 0 6px;
+}
+
+/* --- Root Cause Box --- */
+.sdd-root-cause {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: rgba(52, 199, 89, 0.04);
+  border: 1px solid rgba(52, 199, 89, 0.15);
+  border-radius: 12px;
+}
+
+.sdd-root-cause-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #34C759;
+  margin-bottom: 8px;
+}
+
+.sdd-root-cause-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.sdd-bold {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* --- Stepper Override --- */
+.sdd-stepper .how-step-active .how-step-num {
+  background: #34C759;
+  color: white;
+}
+
+.sdd-stepper .how-step-current .how-step-num {
+  background: #34C759;
+  color: white;
+  box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.2);
+}
+
+.sdd-stepper .how-arrow-active svg {
+  color: #34C759;
+}
+
+/* --- Tab Flow Arrows --- */
+.sdd-tab-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 8px 0 16px;
+}
+
+.sdd-tab-flow-arrow {
+  color: var(--text-tertiary);
+  font-size: 14px;
+  padding: 0 4px;
+}
+
+/* --- Chat Messages --- */
+.sdd-chat-msg {
+  margin: 2px 0;
+}
+
+.sdd-chat-role {
+  font-weight: 600;
+}
+
+.sdd-chat-fade {
+  color: #6b7280;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* --- Context Bar (full layout) --- */
+.sdd-context-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  height: auto;
+  background: none;
+  border-radius: 0;
+}
+
+.sdd-context-track {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sdd-context-pct {
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sdd-pct-red {
+  color: #FF3B30;
+}
+
+/* --- Spec Document Inline Styles --- */
+.sdd-spec-heading {
+  color: #34C759;
+  font-size: 12px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  font-family: monospace;
+}
+
+.sdd-spec-subheading {
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 10px 0 4px;
+  font-family: monospace;
+}
+
+.sdd-spec-text {
+  font-size: 11px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-family: monospace;
+}
+
+.sdd-spec-check,
+.sdd-spec-cross {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  margin: 2px 0;
+  font-family: monospace;
+  color: var(--text-primary);
+}
+
+/* --- Reviewed Badge (inline) --- */
+.sdd-reviewed-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #34C759;
+}
+
+/* --- Blob Prompt (Stage 1 left) --- */
+.sdd-blob-prompt {
+  font-size: 11px;
+  font-family: monospace;
+  color: #e2e8f0;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.sdd-blob-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #FF3B30;
+}
+
+/* --- Document Preview (Stage 1 right) --- */
+.sdd-doc-preview {
+  font-size: 11px;
+  font-family: monospace;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+.sdd-doc-content {
+  animation: sddDocSlideIn 0.3s ease-out;
+}
+
+.sdd-mini-heading {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #34C759;
+  font-weight: 700;
+  margin: 8px 0 2px;
+}
+
+.sdd-mini-heading:first-child {
+  margin-top: 0;
+}
+
+.sdd-mini-text {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* --- Flow Diagram (Stage 1 right) --- */
+.sdd-flow-diagram {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.sdd-flow-step {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: monospace;
+  color: var(--text-tertiary);
+  background: var(--bg-surface);
+}
+
+.sdd-flow-step-active {
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.1);
+}
+
+.sdd-flow-arrow {
+  color: var(--text-tertiary);
+  display: flex;
+  align-items: center;
+}
+
+/* --- Quality Bars (variant classes used in JSX) --- */
+.sdd-quality-bars {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--border);
+}
+
+.sdd-quality-track {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: var(--bg-surface);
+}
+
+.sdd-quality-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: var(--target-width);
+  transition: width 0.8s ease;
+}
+
+.sdd-fill-red {
+  background: #FF3B30;
+}
+
+.sdd-fill-green {
+  background: #34C759;
+}
+
+.sdd-quality-text {
+  font-size: 10px;
+  min-width: 90px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sdd-text-red {
+  color: #FF3B30;
+}
+
+.sdd-text-green {
+  color: #34C759;
+}
+
+/* --- Correction List (Stage 3 left) --- */
+.sdd-correction-list {
+  font-size: 11px;
+  font-family: monospace;
+  color: #e2e8f0;
+  line-height: 1.8;
+}
+
+.sdd-correction-item {
+  margin: 2px 0;
+}
+
+.sdd-correction-fade {
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* --- Timer Badge (Stage 3) --- */
+.sdd-timer-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.sdd-timer-red {
+  color: #FF3B30;
+  background: rgba(255, 59, 48, 0.1);
+}
+
+.sdd-timer-green {
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.1);
+}
+
+/* --- Spec Flow (Stage 3 right) --- */
+.sdd-spec-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sdd-spec-flow-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-family: monospace;
+  color: var(--text-secondary);
+}
+
+.sdd-spec-flow-done {
+  color: #34C759;
+}
+
+.sdd-spec-flow-build {
+  color: #34C759;
+  font-weight: 600;
+}
+
+.sdd-spec-flow-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+/* --- Failure Cards Container --- */
+.sdd-failure-cards {
+  margin: 12px 0;
+}
+
+/* --- Rule Details --- */
+.sdd-rule-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.sdd-rule-body {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.sdd-rule-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.sdd-rule-must {
+  margin: 8px 0 4px;
+  padding-left: 0;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+}
+
+.sdd-rule-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 2px 0;
+}
+
+.sdd-rules-list {
+  margin: 12px 0;
+}
+
+/* --- Doc Rules (Stage 1) --- */
+.sdd-doc-rules {
+  margin: 12px 0;
+}
+
+/* --- Gate Flow (Stage 1 flow diagram) --- */
+.sdd-gate-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: 20px 0;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.sdd-gate-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  text-align: center;
+}
+
+.sdd-gate-review {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #34C759;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+}
+
+.sdd-gate-doc {
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: monospace;
+  background: rgba(52, 199, 89, 0.1);
+  border: 1px solid rgba(52, 199, 89, 0.3);
+  color: #34C759;
+  white-space: nowrap;
+}
+
+.sdd-gate-label {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.sdd-gate-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-tertiary);
+  font-size: 16px;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .sdd-gate-flow {
+    flex-direction: column;
+  }
+  .sdd-gate-arrow {
+    transform: rotate(90deg);
+    padding: 2px 0;
+  }
+}
+
+/* --- Comparator (Stage 2) --- */
+.sdd-comparator {
+  margin: 20px 0;
+}
+
+.sdd-comparator-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 0;
+}
+
+.sdd-comparator-tab {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.sdd-comparator-tab:hover {
+  color: var(--text-secondary);
+}
+
+.sdd-comparator-tab-active {
+  color: #34C759;
+  border-bottom-color: #34C759;
+}
+
+.sdd-comparator-card {
+  border: 1px solid var(--border-light);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 16px;
+  background: var(--bg-card);
+}
+
+.sdd-comparator-toggle {
+  display: flex;
+  background: var(--bg-surface);
+  border-radius: 8px;
+  padding: 3px;
+  gap: 3px;
+  margin-bottom: 14px;
+}
+
+.sdd-comparator-toggle .sdd-toggle-option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+}
+
+.sdd-comparator-toggle .sdd-toggle-poor-active {
+  background: #FF3B30;
+  color: #fff;
+}
+
+.sdd-comparator-toggle .sdd-toggle-good-active {
+  background: #34C759;
+  color: #fff;
+}
+
+.sdd-comparator-content {
+  min-height: 80px;
+}
+
+.sdd-comparator-text {
+  font-size: 13px;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  line-height: 1.7;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  padding: 14px 16px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+}
+
+.sdd-comparator-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+/* --- Info Content --- */
+.sdd-info-content {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.sdd-info-content p {
+  margin: 0 0 12px;
+}
+
+.sdd-info-content p:last-child {
+  margin-bottom: 0;
+}
+
+.sdd-info-content ul {
+  margin: 4px 0 8px;
+  padding-left: 20px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.sdd-info-content ul li {
+  margin: 2px 0;
+}
+
+/* --- Viewer (Stage 3 document viewer) --- */
+.sdd-viewer {
+  margin: 20px 0;
+}
+
+.sdd-viewer-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: 0;
+}
+
+.sdd-viewer-tab {
+  flex: 1;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.sdd-viewer-tab:hover {
+  color: var(--text-secondary);
+}
+
+.sdd-viewer-tab-active {
+  color: #34C759;
+  border-bottom-color: #34C759;
+}
+
+.sdd-viewer-body {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 20px 24px;
+  font-size: 13px;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  line-height: 1.8;
+  max-height: 360px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  position: relative;
+  color: var(--text-primary);
+}
+
+.sdd-viewer-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sdd-viewer-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sdd-viewer-body::-webkit-scrollbar-thumb {
+  background: rgba(52, 199, 89, 0.3);
+  border-radius: 3px;
+}
+
+.sdd-viewer-pre {
+  white-space: pre-wrap;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.sdd-viewer-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.06);
+  border: 1px solid rgba(52, 199, 89, 0.2);
+  border-left: 3px solid #34C759;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+/* --- Implementation Box (Stage 3) --- */
+.sdd-impl-box {
+  margin: 20px 0;
+}
+
+.sdd-impl-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.sdd-impl-prompt {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: monospace;
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.8;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+.sdd-impl-pre {
+  white-space: pre-wrap;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* --- Final Line --- */
+.sdd-final-line {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 20px 0 0;
+  text-align: center;
+}
+
+/* --- Fade In Helper --- */
+.sdd-fade-in {
+  animation: sddDocSlideIn 0.3s ease-out;
+}
+
+/* ===== Keyframes ===== */
+
+@keyframes sddPillIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sddQualityFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--target-width);
+  }
+}
+
+@keyframes sddDocSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Dark Mode ===== */
+
+[data-theme="dark"] .sdd-vibe-panel {
+  background: #0f0f12;
+}
+
+[data-theme="dark"] .sdd-spec-panel {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .sdd-doc-viewer {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-section {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-failure-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .sdd-rule {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .sdd-comparator-example {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-comparator-card {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-comparator-tabs {
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-comparator-text {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-prompt-box {
+  background: #0f0f1e;
+}
+
+[data-theme="dark"] .sdd-impl-prompt {
+  background: #0f0f1e;
+}
+
+[data-theme="dark"] .sdd-comparator-toggle {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .sdd-viewer-tabs {
+  border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-viewer-body {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-viewer-status {
+  background: rgba(52, 199, 89, 0.08);
+  border-color: rgba(52, 199, 89, 0.25);
+}
+
+[data-theme="dark"] .sdd-gate-flow {
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-gate-doc {
+  background: rgba(52, 199, 89, 0.12);
+  border-color: rgba(52, 199, 89, 0.35);
+}
+
+[data-theme="dark"] .sdd-context-bar {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .sdd-root-cause {
+  background: rgba(52, 199, 89, 0.06);
+  border-color: rgba(52, 199, 89, 0.2);
+}
+
+[data-theme="dark"] .sdd-quality-row {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .sdd-doc-tab {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .sdd-doc-tab-active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+}
+
+[data-theme="dark"] .sdd-concept-pill {
+  background: rgba(52, 199, 89, 0.12);
+  border-color: rgba(52, 199, 89, 0.35);
+}
+
+[data-theme="dark"] .sdd-flow-node {
+  background: rgba(52, 199, 89, 0.12);
+  border-color: rgba(52, 199, 89, 0.35);
+}
+
+[data-theme="dark"] .sdd-copy-btn {
+  background: rgba(52, 199, 89, 0.1);
+  border-color: rgba(52, 199, 89, 0.3);
+}
+
+/* ===== Responsive: 768px ===== */
+
+@media (max-width: 768px) {
+  .sdd-transformer {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+
+  .sdd-vibe-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sdd-doc-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .sdd-doc-viewer {
+    max-height: 240px;
+    padding: 16px;
+    font-size: 12px;
+  }
+
+  .sdd-prompt-box {
+    font-size: 12px;
+    padding: 12px 16px;
+  }
+
+  .sdd-impl-prompt {
+    font-size: 12px;
+    padding: 12px 16px;
+  }
+
+  .sdd-flow {
+    flex-wrap: wrap;
+  }
+
+  .sdd-rule {
+    padding: 12px 16px;
+  }
+
+  .sdd-failure-card {
+    padding: 10px 14px;
+  }
+
+  .sdd-section {
+    padding: 12px 16px;
+  }
+
+  .sdd-comparator-card {
+    padding: 12px;
+  }
+
+  .sdd-comparator-text {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .sdd-viewer-body {
+    padding: 14px 16px;
+    max-height: 260px;
+    font-size: 12px;
+  }
+
+  .sdd-viewer-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sdd-comparator-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sdd-toggle-option {
+    min-height: 44px;
+  }
+
+  .sdd-doc-tab,
+  .sdd-viewer-tab,
+  .sdd-comparator-tab {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .sdd-copy-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .sdd-root-cause {
+    padding: 12px 16px;
+  }
+
+  .sdd-rule-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sdd-rule-num {
+    margin-right: 0;
+  }
+
+  .sdd-gate-step {
+    padding: 10px 6px;
+  }
+
+  .sdd-gate-label {
+    font-size: 9px;
+  }
+
+  .sdd-gate-doc {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+}
+
+/* ===== Responsive: 480px ===== */
+
+@media (max-width: 480px) {
+  .sdd-doc-tab {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  .sdd-doc-viewer {
+    font-size: 11px;
+    max-height: 200px;
+  }
+
+  .sdd-viewer-body {
+    font-size: 11px;
+    max-height: 200px;
+    padding: 10px 12px;
+  }
+
+  .sdd-viewer-tab {
+    font-size: 11px;
+    padding: 8px 6px;
+  }
+
+  .sdd-comparator-tab {
+    font-size: 11px;
+    padding: 8px 6px;
+  }
+
+  .sdd-comparator-text {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .sdd-quality-label {
+    display: none;
+  }
+
+  .sdd-concept-pills {
+    gap: 6px;
+  }
+
+  .sdd-concept-pill {
+    padding: 4px 12px;
+    font-size: 11px;
+  }
+
+  .sdd-impl-prompt {
+    font-size: 11px;
+    padding: 10px 12px;
+  }
+}

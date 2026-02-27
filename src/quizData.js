@@ -1482,3 +1482,54 @@ export const customAgentsQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const specDrivenDevQuiz = [
+  {
+    question: 'What is the main problem spec-driven development solves vs vibe coding?',
+    options: ['It makes AI faster at writing code', 'It separates the what from the how, so AI has a clear brief before building', 'It eliminates the need for code review', 'It lets AI work without any human input'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'In the three-document structure, what is the correct order?',
+    options: ['Design → Requirements → Tasks', 'Tasks → Design → Requirements', 'Requirements → Design → Tasks', 'Requirements → Tasks → Design'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Why is the "out of scope" section as important as the features list?',
+    options: ['It makes the spec document longer', 'AI has a bias toward completeness and will add features unless explicitly fenced out', 'It helps AI understand the tech stack', 'It replaces the need for a design document'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What makes a task "well-written" in tasks.md?',
+    options: ['It is as detailed and comprehensive as possible', 'It covers multiple features at once for efficiency', 'It has a testable success condition and fits in one context window', 'It is written in a specific programming language'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'In the spec-driven workflow, who writes the first draft of design.md?',
+    options: ['The developer, manually', 'A design tool or framework', 'AI, from requirements.md — then the developer reviews and approves', 'The project manager'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is a "review gate" in spec-driven development?',
+    options: ['A security check before deploying code', 'A point where the human reviews and approves a spec document before AI proceeds to the next phase', 'An automated test that runs after each implementation task', 'A meeting between developers and stakeholders'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which of these is a testable success condition?',
+    options: ['The auth system works correctly', 'Users can log in', 'POST /auth/google returns a JWT. Unauthenticated requests to /api/tasks return 401. auth.test.ts passes.', 'Authentication is implemented'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the correct mental model for working with AI in spec-driven development?',
+    options: ['AI as the architect, human as the builder', 'Human writes all specs, AI just implements', 'AI as the drafter, human as the reviewer — AI generates documents, human corrects and locks them', 'AI does everything, human only reviews the final result'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+]

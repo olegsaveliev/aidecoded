@@ -216,6 +216,15 @@ const ICON_PATHS = {
       <circle cx="19" cy="5" r="2" fill="currentColor" />
     </>
   ),
+  'spec-driven-dev': (
+    <>
+      <rect x="4" y="2" width="16" height="20" rx="2" />
+      <path d="M8 7h8M8 11h8M8 15h5" strokeLinecap="round" />
+      <circle cx="6" cy="7" r="1" fill="currentColor" />
+      <circle cx="6" cy="11" r="1" fill="currentColor" />
+      <circle cx="6" cy="15" r="1" fill="currentColor" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
