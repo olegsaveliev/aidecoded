@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import ModuleIcon from './ModuleIcon.jsx'
 import { LockIcon } from './ContentIcons.jsx'
 import { useAuth } from './AuthContext'
+import { useRelease } from './ReleaseContext'
 import './NavDropdown.css'
 
 const NAV_GROUPS = [
@@ -100,6 +101,7 @@ function getGroupForTab(tabId) {
 
 function NavDropdown({ activeTab, onSelectTab, showHome }) {
   const { isModuleLocked } = useAuth()
+  const { hiddenModules } = useRelease()
   const [openGroup, setOpenGroup] = useState(null)
   const [menuPos, setMenuPos] = useState(null)
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -179,7 +181,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome }) {
     <>
       {/* Desktop nav */}
       <nav className={`nav-dropdown-bar${showHome ? ' nav-dropdown-bar-hidden' : ''}`} ref={navRef}>
-        {NAV_GROUPS.map((group, i) => {
+        {NAV_GROUPS.filter(g => g.items.some(item => !hiddenModules.has(item.id))).map((group, i) => {
           const isActive = activeGroup?.id === group.id
           const isOpen = openGroup === group.id
           return (
@@ -213,7 +215,7 @@ function NavDropdown({ activeTab, onSelectTab, showHome }) {
           }}
         >
           <div className="nav-dropdown-menu">
-            {openGroupData.items.map((item) => {
+            {openGroupData.items.filter(item => !hiddenModules.has(item.id)).map((item) => {
               const locked = isModuleLocked(item.id)
               return (
                 <button
@@ -251,12 +253,12 @@ function NavDropdown({ activeTab, onSelectTab, showHome }) {
       {mobileOpen && (
         <div className="nav-mobile-overlay" ref={mobileRef}>
           <div className="nav-mobile-panel">
-            {NAV_GROUPS.map((group) => (
+            {NAV_GROUPS.filter(g => g.items.some(item => !hiddenModules.has(item.id))).map((group) => (
               <div key={group.id} className="nav-mobile-group">
                 <div className="nav-mobile-group-label">
                   <span style={{ color: group.color }}>{'\u2014'}</span> {group.label}
                 </div>
-                {group.items.map((item) => {
+                {group.items.filter(item => !hiddenModules.has(item.id)).map((item) => {
                   const locked = isModuleLocked(item.id)
                   return (
                     <button

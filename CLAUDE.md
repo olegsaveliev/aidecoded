@@ -9,7 +9,7 @@ Interactive React app for learning how Large Language Models work.
 - **API Proxy**: Vercel Edge Runtime functions in `/api/` — frontend calls `/api/chat` and `/api/embeddings`, proxy adds `OPENAI_API_KEY` server-side
 - **Auth**: Supabase Auth (Google OAuth + email/password) with PostgreSQL progress tracking
 - **Styling**: Per-module CSS files, CSS variables for theming (light/dark)
-- **State**: React useState/useEffect, AuthContext for auth/progress state
+- **State**: React useState/useEffect, AuthContext for auth/progress state, ReleaseContext for module feature flags
 - **Icons**: SVG-only (no emojis anywhere in UI). Two icon systems: `ContentIcons.jsx` and `ModuleIcon.jsx`
 - **Font Stack**: `-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif`
 
@@ -242,6 +242,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
 - `src/supabase.js` — Supabase client (null-safe, handles missing env vars)
+- `src/ReleaseContext.jsx` — Module release feature flags (fetches hidden modules from Supabase `module_releases` table)
 - `src/AuthContext.jsx` — Auth provider: user state, progress, quiz results, module started/complete tracking
 - `src/UserProfile.jsx` / `src/UserProfile.css` — User profile page (stats grid, progress by category, achievements/badges, completed modules list)
 - `src/AuthModal.jsx` — Sign In/Sign Up modal (Google OAuth + email/password)
@@ -772,6 +773,60 @@ Logged-in users stay on their current screen after page refresh. Non-logged-in u
 
 ---
 
+## Module Release Feature Flags
+
+Modules can be built and deployed ahead of time, then toggled visible/hidden via a Supabase table — no redeployment needed. The Supabase dashboard is the admin panel.
+
+### Supabase Table: `module_releases`
+
+```sql
+create table module_releases (
+  module_id text primary key,
+  released boolean not null default true,
+  created_at timestamptz default now()
+);
+
+alter table module_releases enable row level security;
+
+create policy "Anyone can read module releases"
+  on module_releases for select using (true);
+```
+
+**Rules:**
+- Only modules with a row AND `released = false` are hidden
+- Modules without a row are visible by default (backward compatible)
+- Write access is admin-only (Supabase dashboard / service key)
+- Empty table = all modules visible
+
+### ReleaseContext (`src/ReleaseContext.jsx`)
+
+- Context provides `hiddenModules` (Set of module IDs) and `releaseLoading` (boolean)
+- Fetches `module_releases` where `released = false` on mount (independent of auth)
+- Null-safe: if no Supabase client, defaults to empty Set (all modules show)
+- On fetch error, defaults to empty Set (graceful fallback)
+- Wrapped around `<AuthProvider>` in `src/main.jsx`
+
+### Where hidden modules are filtered
+
+| File | What's filtered |
+|---|---|
+| `src/App.jsx` | Guard effect redirects hidden tab to home; popstate handler blocks hidden tabs; JSON-LD structured data excludes hidden modules |
+| `src/NavDropdown.jsx` | Desktop triggers, portal dropdown items, mobile overlay items; hides entire group if all items hidden |
+| `src/HomeScreen.jsx` | CARDS filtered before tag/group/search; progress bar uses `visibleTotal` |
+| `src/NeuralNetworkCanvas.jsx` | NODES, CONNECTIONS, NEURON_ANIM_ORDER filtered via useMemo; layout recomputed |
+| `src/SuggestedModules.jsx` | Passes `hiddenModules` to `getRandomModules` |
+| `src/Quiz.jsx` | Passes `hiddenModules` to `getRandomModules` |
+| `src/UserProfile.jsx` | Badge conditions and stats use `visibleTotal` |
+| `src/moduleData.js` | `getRandomModules(excludeId, count, hiddenIds)` accepts optional hidden set |
+
+### Files NOT affected by release flags
+
+- `src/AuthContext.jsx` — tracks all completions regardless of visibility
+- `vite.config.js` — build-time sitemap includes all modules (hidden modules exist in sitemap but aren't linked from UI)
+- Individual module components — only render when their tab is active, which can't happen for hidden modules
+
+---
+
 ## Icon System
 
 ### Rule: No Emojis
@@ -1188,6 +1243,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 23. Add `handleStartOver` function that resets stage, tips, welcome, and all module state
 24. Add mobile touch targets (min-height: 44px) for module-specific buttons at 768px breakpoint
 25. Update this file
+26. To hide the module before release: insert `(module_id, false)` into `module_releases` table in Supabase. To release: set `released = true` or delete the row. No code changes needed — the module is already filtered by `ReleaseContext`
 
 ## Conventions
 
@@ -1247,3 +1303,6 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Deep links supported: `/?tab=tokenizer` skips landing page and goes directly to module (free modules only for unauthenticated users; locked modules redirect to home)
 - Deep link auth protection: guard effect (`useEffect` on `[authLoading, activeTab, showHome, showLanding, user]`) redirects to home silently; `canRenderModule` flag (`FREE_MODULES.includes(activeTab) || !!user`) prevents locked content from rendering; `handleSwitchTab` checks `isModuleLocked` before navigating
 - Auth modal only appears on explicit user action (clicking locked card on HomeScreen, locked item in nav dropdown, locked item on landing page) — never on passive deep link redirect
+- Module release flags: `ReleaseContext` provides `hiddenModules` Set; modules with `released = false` in Supabase `module_releases` table are hidden across nav, home, canvas, suggestions, and deep links
+- New modules are visible by default (no row needed in `module_releases`); to hide, insert row with `released = false`
+- Release flags are independent of auth — fetched once on app mount, not tied to user session

@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import ModuleIcon from './ModuleIcon.jsx'
 import { CrossIcon, CheckIcon, StarIcon, LockIcon } from './ContentIcons.jsx'
 import { useAuth } from './AuthContext'
+import { useRelease } from './ReleaseContext'
 import { NAV_GROUPS } from './NavDropdown.jsx'
 import './HomeScreen.css'
 
@@ -359,6 +360,7 @@ const TOTAL_MODULES = NAV_GROUPS.reduce((sum, g) => sum + g.items.length, 0)
 
 function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
   const { user, isModuleLocked, isModuleStarted, isModuleComplete, getQuizResult, completedCount } = useAuth()
+  const { hiddenModules } = useRelease()
   const [filter, setFilter] = useState('All')
   const [activeGroup, setActiveGroup] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
@@ -380,7 +382,10 @@ function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
     onClearFilter?.()
   }
 
-  const filteredCards = CARDS.filter((card) => {
+  const visibleCards = useMemo(() => CARDS.filter(card => !hiddenModules.has(card.id)), [hiddenModules])
+  const visibleTotal = TOTAL_MODULES - hiddenModules.size
+
+  const filteredCards = visibleCards.filter((card) => {
     const matchesGroup = !activeGroup || card.group === activeGroup
     const matchesFilter = filter === 'All' || card.tag === filter
     if (!searchQuery.trim()) return matchesGroup && matchesFilter
@@ -402,9 +407,9 @@ function HomeScreen({ onSelectTab, homeFilter, onClearFilter }) {
         <div className="home-progress-summary">
           <div className="home-progress-welcome">Welcome back, {userName}</div>
           <div className="home-progress-bar-wrap">
-            <span className="home-progress-text">Progress: {completedCount} / {TOTAL_MODULES} modules</span>
+            <span className="home-progress-text">Progress: {completedCount} / {visibleTotal} modules</span>
             <div className="home-progress-bar">
-              <div className="home-progress-fill" style={{ width: `${(completedCount / TOTAL_MODULES) * 100}%` }} />
+              <div className="home-progress-fill" style={{ width: `${(completedCount / visibleTotal) * 100}%` }} />
             </div>
           </div>
         </div>
