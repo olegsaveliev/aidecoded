@@ -1,7 +1,7 @@
 /* ===== Spec-Driven Development Module ===== */
 
-/* Reset inherited .how-info-card strong styling for stage content */
-.sdd-info-content strong {
+/* Reset inherited .how-info-card strong styling for all stage content */
+.how-info-card .sdd-info-content strong {
   display: inline;
   font-size: inherit;
   padding-left: 0;
