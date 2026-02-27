@@ -36,6 +36,7 @@ import DrawAndDeceive from './DrawAndDeceive.jsx'
 import AgentOffice from './AgentOffice.jsx'
 import ClaudeCode from './ClaudeCode.jsx'
 import AgentTeams from './AgentTeams.jsx'
+import CustomAgents from './CustomAgents.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -133,7 +134,7 @@ const VALID_TABS = [
   'ai-ethics-tribunal', 'pm-simulator', 'ai-safety', 'ai-fluency',
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   'alignment-game', 'choosing-ai-model', 'neural-networks', 'ollama', 'computer-vision',
-  'label-master', 'draw-and-deceive', 'agent-office', 'claude-code', 'agent-teams',
+  'label-master', 'draw-and-deceive', 'agent-office', 'claude-code', 'agent-teams', 'custom-agents',
   'profile'
 ]
 
@@ -1266,6 +1267,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'agent-teams' && (
           <AgentTeams onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'custom-agents' && (
+          <CustomAgents onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'profile' && (
           <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
