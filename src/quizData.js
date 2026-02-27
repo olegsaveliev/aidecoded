@@ -1533,3 +1533,66 @@ export const specDrivenDevQuiz = [
     accentColor: '#34C759',
   },
 ]
+
+export const aiCodingToolsQuiz = [
+  {
+    question: 'What is the key difference between an AI-native IDE and an AI extension?',
+    options: ['AI-native IDEs are always more expensive', 'AI extensions support more programming languages', 'AI-native IDEs rebuild the entire editor around AI, while extensions add AI to your existing editor', 'AI extensions are always open source'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which tool is best known for spec-driven development with automatic requirements, design, and task generation?',
+    options: ['Cursor', 'GitHub Copilot', 'Cline', 'Kiro'],
+    correct: 3,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does BYOK mean in the context of tools like Cline and Continue.dev?',
+    options: ['Build Your Own Keyboard', 'Bring Your Own API Key — you connect directly to AI models using your own credentials', 'Back Up Your Old Knowledge', 'Build Your Own Kodebase'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'A developer works in a financial institution where no code can leave company servers. Which tool category fits best?',
+    options: ['AI-native IDEs like Cursor', 'Terminal agents like Claude Code', 'Open-source extensions like Continue.dev that support self-hosting and local models', 'GitHub Copilot Enterprise'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the "conventions file" concept that all major AI coding tools share?',
+    options: ['A file that lists all available keyboard shortcuts', 'A configuration file where you write your stack, coding standards, and preferences so every AI session starts knowing them', 'A log file of all AI suggestions made', 'A file required by the MCP protocol'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does MCP (Model Context Protocol) enable across AI coding tools?',
+    options: ['It speeds up code completion by 10x', 'It lets tools connect to external services like databases, GitHub, and APIs — and works across all major tools', 'It synchronises settings between Cursor and Windsurf', 'It replaces the need for API keys'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'In the "fluency ladder" concept, what characterises the advanced level of AI tool usage?',
+    options: ['Using autocomplete inline, one file at a time', 'Using chat to explain or refactor code', 'Delegating full tasks to agents, using MCP integrations, reviewing plans not individual lines', 'Reading the documentation for each tool'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Why do experienced developers often use multiple AI coding tools rather than picking just one?',
+    options: ['It is cheaper to combine free tiers', 'Different tools have different strengths and are suited to different parts of the workflow', 'Single tools are always less capable', 'It is required by most company policies'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the primary advantage of terminal-based AI agents like Claude Code over IDE-based tools?',
+    options: ['They have better syntax highlighting', 'They are the most autonomous category — they can read files, run commands, edit code, and run tests independently', 'They are always free to use', 'They only work with JavaScript projects'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the "agentic loop" that all modern AI coding tools share?',
+    options: ['A method for writing recursive functions', 'Plan, use tools, observe result, decide next step, repeat until done', 'A way to loop through code suggestions faster', 'A subscription billing model used by AI companies'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+]

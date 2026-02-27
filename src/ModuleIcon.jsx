@@ -225,6 +225,15 @@ const ICON_PATHS = {
       <circle cx="6" cy="15" r="1" fill="currentColor" />
     </>
   ),
+  'ai-coding-tools': (
+    <>
+      <rect x="2" y="3" width="9" height="8" rx="1.5" />
+      <rect x="13" y="3" width="9" height="8" rx="1.5" />
+      <rect x="2" y="13" width="9" height="8" rx="1.5" />
+      <rect x="13" y="13" width="9" height="8" rx="1.5" />
+      <path d="M5 7h3M16 7h3M5 17h3M16 17h3" strokeLinecap="round" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

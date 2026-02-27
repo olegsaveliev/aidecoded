@@ -40,6 +40,7 @@ const ALL_MODULES = [
   { id: 'custom-agents', title: 'Custom Agents', description: 'Define specialist AI assistants for your own workflow. A security auditor, a test writer, a doc generator — each with its own system prompt, tools, model, and memory. Claude delegates to them automatically. One Markdown file. Infinite leverage.', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'model-training-tycoon', title: 'Model Training Tycoon', description: 'You have $50,000 and 6 weeks. Train the best AI model you can. Allocate budget across data, architecture, training, and fine-tuning. Survive GPU outages, bad labels, and rival model drops.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'spec-driven-dev', title: 'Spec-Driven Development', description: 'Stop vibe coding. Start speccing. Write what you want before AI writes how to build it. Learn the three-document pattern that turns chaotic AI sessions into structured, reviewable, reproducible builds.', tag: 'Practical', tagColor: '#34C759' },
+  { id: 'ai-coding-tools', title: 'AI Coding Tools', description: 'Cursor, Copilot, Windsurf, Kiro, Cline — the market is exploding. This tour covers the 8 tools every developer needs to know, how they differ, and a quick quiz that recommends the right one for your workflow.', tag: 'Practical', tagColor: '#34C759' },
 ]
 
 export function getRandomModules(excludeId, count = 3, hiddenIds = new Set()) {
