@@ -1,5 +1,13 @@
 /* ─── RAG Under The Hood (.ruh-) ─── */
 
+/* Reset inherited .how-info-card strong styling for stage content */
+.how-info-card .ruh-info-content strong {
+  display: inline;
+  font-size: inherit;
+  padding-left: 0;
+  border-left: none;
+}
+
 .ruh-root {
   max-width: 800px;
   margin: 0 auto;
