@@ -323,6 +323,15 @@ const CARDS = [
     tag: 'Technical',
     group: 'Advanced',
   },
+  {
+    id: 'custom-agents',
+    group: 'Advanced',
+    tag: 'Technical',
+    title: 'Custom Agents',
+    description: 'Define specialist AI assistants for your own workflow. A security auditor, a test writer, a doc generator — each with its own system prompt, tools, model, and memory. Claude delegates to them automatically. One Markdown file. Infinite leverage.',
+    icon: 'custom-agents',
+    accent: '#5856D6',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']

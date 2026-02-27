@@ -1419,3 +1419,66 @@ export const agentTeamsQuiz = [
     accentColor: '#5856D6',
   },
 ]
+
+export const customAgentsQuiz = [
+  {
+    question: 'Where do you save a custom agent so it is available in ALL your projects?',
+    options: ['.claude/agents/ in each project root', '~/.claude/agents/ in your home directory', '~/.claude/CLAUDE.md global memory file', '.claude/skills/ in your project'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the most important field in a custom agent definition for controlling when Claude routes tasks to it?',
+    options: ['The name field — becomes the slash command', 'The tools field — defines its capabilities', 'The description field — tells Claude when to delegate to this agent', 'The model field — sets intelligence level'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'You are building a read-only security reviewer agent. Which tools configuration best follows the principle of least privilege?',
+    options: ['tools: Read, Write, Edit, Bash, Glob, Grep', 'tools: Read, Glob, Grep, Bash(git diff *)', 'tools: All tools', 'tools: Bash'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'You want an agent that builds up knowledge of your codebase\'s security patterns over many sessions across different projects. Which memory setting is correct?',
+    options: ['memory: local — stored in .claude/memory/', 'memory: project — stored per project', 'memory: user — stored in ~/.claude/memory/ and available across all projects', 'No memory field — memory is not possible'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'What is the key difference between a custom agent and an Agent Team?',
+    options: ['Custom agents are more expensive to run', 'Agent Teams require a paid subscription', 'Custom agents report to the delegating agent only, while Agent Team teammates can message each other directly', 'Custom agents cannot use Bash commands'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'An agent with model: haiku is best suited for which type of task?',
+    options: ['Complex architectural decisions', 'Deep security analysis requiring reasoning', 'Fast, simple, repetitive tasks like pattern search or format conversion', 'Writing comprehensive documentation'],
+    correct: 2,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'You want Claude to NEVER modify files but your agent currently has Write and Edit access. What is the correct fix?',
+    options: ['Add a note in the instructions body', 'Remove Write and Edit from tools and use Read, Glob, Grep only', 'Set model: haiku so it is less capable', 'Add a color: red to warn teammates'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'How does Claude know to automatically delegate a task to your custom agent without you typing /agent-name?',
+    options: ['It reads the color field to identify agents', 'It reads the description field and matches it against the current task context', 'It always delegates all tasks to all agents', 'You must set invoke: auto in the frontmatter'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'Which scope should you use for an agent you want to share with your whole team through version control?',
+    options: ['~/.claude/agents/ — personal scope', '.claude/agents/ — project scope, committed to git', '~/.claude/skills/ — skills directory', '.claude/commands/ — commands directory'],
+    correct: 1,
+    accentColor: '#5856D6',
+  },
+  {
+    question: 'In the three-way comparison, which feature is available in Agent Teams but NOT in custom agents?',
+    options: ['Custom system prompts', 'Model selection per agent', 'Persistent memory across sessions', 'Direct peer messaging between teammates without going through the lead'],
+    correct: 3,
+    accentColor: '#5856D6',
+  },
+]

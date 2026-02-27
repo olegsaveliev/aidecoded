@@ -53,6 +53,7 @@ Interactive React app for learning how Large Language Models work.
 | `ollama` | Ollama.jsx | Ollama.css | ollamaQuiz | Practical | #34C759 |
 | `claude-code` | ClaudeCode.jsx | ClaudeCode.css | claudeCodeQuiz | Practical | #34C759 |
 | `agent-teams` | AgentTeams.jsx | AgentTeams.css | agentTeamsQuiz | Technical | #5856D6 |
+| `custom-agents` | CustomAgents.jsx | CustomAgents.css | customAgentsQuiz | Technical | #5856D6 |
 
 ## Color System — Two Color Layers
 
@@ -66,7 +67,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
-| Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams |
+| Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams, Custom Agents |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
@@ -82,7 +83,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
-| Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Why RAG Fails, AI in Production |
+| Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Custom Agents, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office |
 | Professional | #0EA5E9 | AI-Native PM |
 
@@ -233,6 +234,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/Ollama.jsx` / `src/Ollama.css` — Run AI Locally tutorial (7 stages: why local, install & run, model library, the Modelfile, parameters, the API, build assistant)
 - `src/ClaudeCode.jsx` / `src/ClaudeCode.css` — Claude Code tutorial (8 stages: what it is, installation, models, CLAUDE.md, skills, MCP, full stack, workflows)
 - `src/AgentTeams.jsx` / `src/AgentTeams.css` — Agent Teams tutorial (5 stages: solo vs team, architecture, first team, patterns, rough edges). TeamVisualiser SVG, TeamBuilderViz interactive builder, DecisionMatrix quadrant chart, ToolChips with colored dots + descriptions
+- `src/CustomAgents.jsx` / `src/CustomAgents.css` — Custom Agents tutorial (5 stages: what they are, name and description, frontmatter fields, three example agents, comparison). AgentCard component, DescriptionTester interactive, FrontmatterBuilder interactive, three-way comparison table
 - `src/ToolChips.jsx` — Reusable tool chips component with colored dots and click-to-expand descriptions (portal popup, viewport clamped)
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
@@ -716,6 +718,7 @@ create table quiz_results (
 | Run AI Locally | Entry screen dismissed | Reach final screen |
 | Claude Code | Entry screen dismissed | Reach final screen |
 | Agent Teams | Entry screen dismissed | Reach final screen |
+| Custom Agents | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 

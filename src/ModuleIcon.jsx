@@ -200,6 +200,14 @@ const ICON_PATHS = {
       <path d="M7 16h10" strokeLinecap="round" strokeDasharray="2 2" />
     </>
   ),
+  'custom-agents': (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <circle cx="9" cy="10" r="2" />
+      <path d="M13 9h4M13 12h3" strokeLinecap="round" />
+      <path d="M5 19l2-2M17 3l2 2-5 5-3-1-1-3 5-3z" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
