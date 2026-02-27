@@ -52,6 +52,7 @@ import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import AuthModal from './AuthModal.jsx'
 import { useAuth, FREE_MODULES } from './AuthContext'
+import { useRelease } from './ReleaseContext'
 import { UserIcon, SignOutIcon } from './ContentIcons.jsx'
 import ALL_MODULES from './moduleData.js'
 import logoImg from './assets/logo_dark.png'
@@ -151,6 +152,8 @@ const AUTH_UNLOCK_MESSAGE = 'Create a free account to unlock all modules'
 
 function App() {
   const { user, loading: authLoading, signOut, isModuleLocked, markModuleStarted, markModuleComplete } = useAuth()
+  const { hiddenModules, releaseLoading } = useRelease()
+  const hiddenModulesRef = useRef(hiddenModules)
   const skipPush = useRef(false)
   const showLandingRef = useRef(false)
   const isModuleLockedRef = useRef(isModuleLocked)
@@ -259,6 +262,7 @@ function App() {
   // Keep refs in sync for popstate handler (avoids stale closures)
   showLandingRef.current = showLanding
   isModuleLockedRef.current = isModuleLocked
+  hiddenModulesRef.current = hiddenModules
 
   function handleGetStarted() {
     setFadingOut(true)
@@ -340,7 +344,7 @@ function App() {
           setHomeFilter(null)
 
         }
-      } else if (VALID_TABS.includes(tab)) {
+      } else if (VALID_TABS.includes(tab) && !hiddenModulesRef.current.has(tab)) {
         if (isModuleLockedRef.current(tab)) {
           setShowHome(true)
           setHomeFilter(null)
@@ -459,6 +463,15 @@ function App() {
     }
   }, [authLoading, activeTab, showHome, showLanding, user])
 
+  // Guard: redirect hidden (unreleased) modules to home
+  useEffect(() => {
+    if (hiddenModules.size === 0) return
+    if (!showHome && !showLanding && hiddenModules.has(activeTab)) {
+      setShowHome(true)
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+  }, [hiddenModules, activeTab, showHome, showLanding])
+
   // Persist navigation state for logged-in users
   useEffect(() => {
     if (user && !showLanding && !showBootScreen) {
@@ -519,6 +532,7 @@ function App() {
 
   // Inject JSON-LD structured data from ALL_MODULES (auto-syncs with moduleData.js)
   useEffect(() => {
+    const visibleModules = ALL_MODULES.filter(m => !hiddenModules.has(m.id))
     const SITE = 'https://www.aidecoded.academy'
     const jsonLd = {
       '@context': 'https://schema.org',
@@ -539,9 +553,9 @@ function App() {
         {
           '@type': 'ItemList',
           name: 'AI Learning Modules',
-          description: `${ALL_MODULES.length} interactive tutorials and games covering AI fundamentals, machine learning, prompt engineering, and more.`,
-          numberOfItems: ALL_MODULES.length,
-          itemListElement: ALL_MODULES.map((m, i) => ({
+          description: `${visibleModules.length} interactive tutorials and games covering AI fundamentals, machine learning, prompt engineering, and more.`,
+          numberOfItems: visibleModules.length,
+          itemListElement: visibleModules.map((m, i) => ({
             '@type': 'ListItem',
             position: i + 1,
             name: m.title,
@@ -559,7 +573,7 @@ function App() {
     script.textContent = JSON.stringify(jsonLd)
     document.head.appendChild(script)
     return () => script.remove()
-  }, [])
+  }, [hiddenModules])
 
   const [homeFilter, setHomeFilter] = useState(null)
   const [model, setModel] = useState('gpt-4o-mini')
@@ -787,8 +801,8 @@ function App() {
   }
 
   const showSidebar = !showHome && activeTab === 'playground' && !showPlaygroundEntry
-  // Render guard: prevent locked module content from rendering (defense in depth for deep links)
-  const canRenderModule = FREE_MODULES.includes(activeTab) || !!user
+  // Render guard: prevent locked/hidden module content from rendering (defense in depth for deep links)
+  const canRenderModule = (FREE_MODULES.includes(activeTab) || !!user) && !hiddenModules.has(activeTab) && !releaseLoading
 
   if (showLanding) {
     return (

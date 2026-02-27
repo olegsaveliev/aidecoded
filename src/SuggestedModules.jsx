@@ -1,9 +1,11 @@
 import { useMemo } from 'react'
 import ModuleIcon from './ModuleIcon.jsx'
 import { getRandomModules } from './moduleData.js'
+import { useRelease } from './ReleaseContext'
 
 function SuggestedModules({ currentModuleId, onSwitchTab }) {
-  const suggestions = useMemo(() => getRandomModules(currentModuleId, 3), [currentModuleId])
+  const { hiddenModules } = useRelease()
+  const suggestions = useMemo(() => getRandomModules(currentModuleId, 3, hiddenModules), [currentModuleId, hiddenModules])
 
   if (!onSwitchTab || suggestions.length === 0) return null
 

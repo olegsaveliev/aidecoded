@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 import ModuleIcon from './ModuleIcon.jsx'
 import { useAuth } from './AuthContext'
+import { useRelease } from './ReleaseContext'
 import './NeuralNetworkCanvas.css'
 
 const GROUP_COLORS = {
@@ -308,51 +309,53 @@ function computeLayout(nodes, refW, refH, nodeR, attraction) {
 
 /* ── Generate timing from an ordered node list ── */
 
-function generateTiming(nodeDelays) {
-  const connDelays = CONNECTIONS.map(([src, tgt]) =>
-    Math.max(nodeDelays[src], nodeDelays[tgt]) + NODE_APPEAR_DUR
+function generateTiming(nodeDelays, connections) {
+  const connDelays = connections.map(([src, tgt]) =>
+    Math.max(nodeDelays[src] || 0, nodeDelays[tgt] || 0) + NODE_APPEAR_DUR
   )
   const dotDelays = connDelays.map(d => d + CONN_DRAW_DUR)
-  const totalAnimTime = Math.max(...dotDelays) + 500
+  const totalAnimTime = dotDelays.length > 0 ? Math.max(...dotDelays) + 500 : 2000
   return { connDelays, dotDelays, totalAnimTime }
 }
 
 /* ── Initial neuron layout ── */
 
-function generateNeuronLayout() {
-  for (const node of NODES) {
+function generateNeuronLayout(nodes = NODES, connections = CONNECTIONS, animOrder = NEURON_ANIM_ORDER) {
+  for (const node of nodes) {
     const nPos = NEURON_LAYOUT[node.id]
+    if (!nPos) continue
     node.px = nPos.px
     node.py = nPos.py
   }
-  const positions = computeLayout(NODES, REF_W, REF_H, NODE_RADIUS, 0.06)
+  const positions = computeLayout(nodes, REF_W, REF_H, NODE_RADIUS, 0.06)
 
   const nodeDelays = {}
-  NEURON_ANIM_ORDER.forEach((id, i) => { nodeDelays[id] = i * 100 })
+  animOrder.forEach((id, i) => { nodeDelays[id] = i * 100 })
 
-  return { positions, nodeDelays, ...generateTiming(nodeDelays) }
+  return { positions, nodeDelays, ...generateTiming(nodeDelays, connections) }
 }
 
 /* ── Random layout for replay ── */
 
-function generateRandom() {
-  for (const node of NODES) {
+function generateRandom(nodes = NODES, connections = CONNECTIONS) {
+  for (const node of nodes) {
     node.px = 0.08 + Math.random() * 0.84
     node.py = 0.08 + Math.random() * 0.84
   }
-  const positions = computeLayout(NODES, REF_W, REF_H, NODE_RADIUS, 0.02)
+  const positions = computeLayout(nodes, REF_W, REF_H, NODE_RADIUS, 0.02)
 
-  const ids = NODES.map(n => n.id).sort(() => Math.random() - 0.5)
+  const ids = nodes.map(n => n.id).sort(() => Math.random() - 0.5)
   const nodeDelays = {}
   ids.forEach((id, i) => { nodeDelays[id] = i * 120 })
 
-  return { positions, nodeDelays, ...generateTiming(nodeDelays) }
+  return { positions, nodeDelays, ...generateTiming(nodeDelays, connections) }
 }
 
 const initialLayout = generateNeuronLayout()
 
 function NeuralNetworkCanvas({ onSelectTab }) {
   const { isModuleLocked } = useAuth()
+  const { hiddenModules } = useRelease()
   const canvasRef = useRef(null)
   const containerRef = useRef(null)
   const svgRef = useRef(null)
@@ -362,9 +365,40 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   const [animKey, setAnimKey] = useState(0)
   const [tooltip, setTooltip] = useState(null)
 
+  // Filter nodes/connections by hidden modules
+  const visibleNodes = useMemo(
+    () => NODES.filter(n => !hiddenModules.has(n.id)),
+    [hiddenModules]
+  )
+  const visibleConnections = useMemo(
+    () => CONNECTIONS.filter(([src, tgt]) => !hiddenModules.has(src) && !hiddenModules.has(tgt)),
+    [hiddenModules]
+  )
+  const visibleAnimOrder = useMemo(
+    () => NEURON_ANIM_ORDER.filter(id => !hiddenModules.has(id)),
+    [hiddenModules]
+  )
+
+  // Recompute layout when hidden modules change
+  const filteredLayout = useMemo(() => {
+    if (hiddenModules.size === 0) return initialLayout
+    const nodes = visibleNodes.map(n => ({ ...n }))
+    return generateNeuronLayout(nodes, visibleConnections, visibleAnimOrder)
+  }, [hiddenModules, visibleNodes, visibleConnections, visibleAnimOrder])
+
   // Layout + timing state
   const [layoutState, setLayoutState] = useState(initialLayout)
   const { positions: originalPositions, nodeDelays, connDelays, dotDelays, totalAnimTime } = layoutState
+
+  // Sync layout state when filtered layout changes (hidden modules loaded)
+  const prevHiddenSize = useRef(0)
+  useEffect(() => {
+    if (hiddenModules.size !== prevHiddenSize.current) {
+      prevHiddenSize.current = hiddenModules.size
+      setLayoutState(filteredLayout)
+      setNodePositions(filteredLayout.positions)
+    }
+  }, [filteredLayout, hiddenModules.size])
 
   // Drag state
   const [draggable, setDraggable] = useState(false)
@@ -507,12 +541,12 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   const connectedTo = useMemo(() => {
     if (!hoveredNode) return new Set()
     const set = new Set()
-    for (const [a, b] of CONNECTIONS) {
+    for (const [a, b] of visibleConnections) {
       if (a === hoveredNode) set.add(b)
       if (b === hoveredNode) set.add(a)
     }
     return set
-  }, [hoveredNode])
+  }, [hoveredNode, visibleConnections])
 
   const handleNodeClick = useCallback(
     (nodeId) => {
@@ -623,18 +657,20 @@ function NeuralNetworkCanvas({ onSelectTab }) {
   }, [draggable, screenToSVG])
 
   const handleReplay = useCallback(() => {
-    const next = generateRandom()
+    const nodes = visibleNodes.map(n => ({ ...n }))
+    const next = generateRandom(nodes, visibleConnections)
     setLayoutState(next)
     setNodePositions(next.positions)
     setAnimKey((k) => k + 1)
     setDraggable(false)
     setPositionsModified(false)
     setMotionKey((k) => k + 1)
-  }, [])
+  }, [visibleNodes, visibleConnections])
 
   const handleReset = useCallback(() => {
     const start = {}
-    for (const node of NODES) {
+    for (const node of visibleNodes) {
+      if (!nodePositions[node.id]) continue
       start[node.id] = { x: nodePositions[node.id].x, y: nodePositions[node.id].y }
     }
     setDraggable(false)
@@ -645,7 +681,8 @@ function NeuralNetworkCanvas({ onSelectTab }) {
       const t = Math.min((performance.now() - startTime) / 500, 1)
       const ease = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2
       const newPos = {}
-      for (const node of NODES) {
+      for (const node of visibleNodes) {
+        if (!start[node.id] || !target[node.id]) continue
         newPos[node.id] = {
           x: start[node.id].x + (target[node.id].x - start[node.id].x) * ease,
           y: start[node.id].y + (target[node.id].y - start[node.id].y) * ease,
@@ -661,7 +698,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
       }
     }
     requestAnimationFrame(animate)
-  }, [nodePositions, originalPositions])
+  }, [visibleNodes, nodePositions, originalPositions])
 
   const { width, height } = dimensions // for background canvas
   const nodeRadius = NODE_RADIUS
@@ -694,12 +731,12 @@ function NeuralNetworkCanvas({ onSelectTab }) {
         </defs>
 
         {/* Connection lines with animated dots */}
-        {CONNECTIONS.map(([sourceId, targetId], i) => {
+        {visibleConnections.map(([sourceId, targetId], i) => {
           const source = nodePositions[sourceId]
           const target = nodePositions[targetId]
           if (!source || !target) return null
 
-          const sourceNode = NODES.find((n) => n.id === sourceId)
+          const sourceNode = visibleNodes.find((n) => n.id === sourceId)
           const color = GROUP_COLORS[sourceNode.group]
           const isHighlighted = hoveredNode === sourceId || hoveredNode === targetId
           const hoverOpacity = isHighlighted ? 0.8 : 0.3
@@ -752,7 +789,7 @@ function NeuralNetworkCanvas({ onSelectTab }) {
         })}
 
         {/* Nodes — outer: translate, middle: entrance anim, inner: hover/click */}
-        {NODES.map((node) => {
+        {visibleNodes.map((node) => {
           const pos = nodePositions[node.id]
           if (!pos) return null
           const color = GROUP_COLORS[node.group]

@@ -3,6 +3,7 @@ import { SeedlingIcon, TargetIcon, StarIcon, TrophyIcon } from './ContentIcons.j
 import ModuleIcon from './ModuleIcon.jsx'
 import { getRandomModules } from './moduleData.js'
 import { useAuth } from './AuthContext'
+import { useRelease } from './ReleaseContext'
 import './Quiz.css'
 
 const SCORE_MESSAGES = [
@@ -96,6 +97,7 @@ function ScoreCircle({ score, total }) {
 
 function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentModuleId }) {
   const { saveQuizResult } = useAuth()
+  const { hiddenModules } = useRelease()
   const [current, setCurrent] = useState(0)
   const [score, setScore] = useState(0)
   const [selected, setSelected] = useState(null) // index of selected answer
@@ -169,8 +171,8 @@ function Quiz({ questions, tabName, onBack, onStartOver, onSwitchTab, currentMod
   }, [showResult]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const suggestions = useMemo(
-    () => (currentModuleId ? getRandomModules(currentModuleId, 3) : []),
-    [currentModuleId, showResult]  // eslint-disable-line react-hooks/exhaustive-deps
+    () => (currentModuleId ? getRandomModules(currentModuleId, 3, hiddenModules) : []),
+    [currentModuleId, showResult, hiddenModules]  // eslint-disable-line react-hooks/exhaustive-deps
   )
 
   // Final score screen

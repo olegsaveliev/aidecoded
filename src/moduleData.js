@@ -42,8 +42,8 @@ const ALL_MODULES = [
   { id: 'spec-driven-dev', title: 'Spec-Driven Development', description: 'Stop vibe coding. Start speccing. Write what you want before AI writes how to build it. Learn the three-document pattern that turns chaotic AI sessions into structured, reviewable, reproducible builds.', tag: 'Practical', tagColor: '#34C759' },
 ]
 
-export function getRandomModules(excludeId, count = 3) {
-  const others = ALL_MODULES.filter((m) => m.id !== excludeId)
+export function getRandomModules(excludeId, count = 3, hiddenIds = new Set()) {
+  const others = ALL_MODULES.filter((m) => m.id !== excludeId && !hiddenIds.has(m.id))
   const shuffled = others.sort(() => Math.random() - 0.5)
   return shuffled.slice(0, count)
 }

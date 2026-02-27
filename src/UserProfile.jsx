@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useAuth } from './AuthContext'
+import { useRelease } from './ReleaseContext'
 import { NAV_GROUPS } from './NavDropdown.jsx'
 import ALL_MODULES from './moduleData.js'
 import {
@@ -27,8 +28,8 @@ const BADGES = [
   // Tier 3 — Hard
   { id: 'perfectionist', name: 'Perfectionist', hint: 'Score 100% on a quiz', icon: CheckIcon, color: '#34C759', condition: (d) => d.perfectQuizCount >= 1 },
   { id: 'overachiever', name: 'Overachiever', hint: 'Score 100% on 3 quizzes', icon: SparklesIcon, color: '#F59E0B', condition: (d) => d.perfectQuizCount >= 3 },
-  { id: 'half-way', name: 'Half Way There', hint: 'Complete half of all modules', icon: TargetIcon, color: '#FF9500', condition: (d) => d.completedCount >= Math.ceil(TOTAL_MODULES / 2) },
-  { id: 'knowledge-master', name: 'Knowledge Master', hint: 'Complete every module', icon: TrophyIcon, color: '#AF52DE', condition: (d) => d.completedCount >= TOTAL_MODULES },
+  { id: 'half-way', name: 'Half Way There', hint: 'Complete half of all modules', icon: TargetIcon, color: '#FF9500', condition: (d) => d.completedCount >= Math.ceil(d.totalModules / 2) },
+  { id: 'knowledge-master', name: 'Knowledge Master', hint: 'Complete every module', icon: TrophyIcon, color: '#AF52DE', condition: (d) => d.completedCount >= d.totalModules },
 ]
 
 function getScoreColor(score) {
@@ -322,6 +323,8 @@ function UserProfile({ onSwitchTab, onGoHome }) {
     user, progress, quizResults, startedModules,
     completedCount, updateDisplayName,
   } = useAuth()
+  const { hiddenModules } = useRelease()
+  const visibleTotal = TOTAL_MODULES - hiddenModules.size
 
   const [editing, setEditing] = useState(false)
   const [editName, setEditName] = useState('')
@@ -458,13 +461,14 @@ function UserProfile({ onSwitchTab, onGoHome }) {
       quizScoresOver70: stats.quizScoresOver70,
       perfectQuizCount: stats.perfectQuizCount,
       totalCategories: stats.totalCategories,
+      totalModules: visibleTotal,
       streak: stats.streak,
     }
     return BADGES.map(badge => ({
       ...badge,
       earned: badge.condition(d),
     }))
-  }, [stats])
+  }, [stats, visibleTotal])
 
   // Completed modules (base, unsorted) — uses moduleMap so new modules auto-populate
   const completedModulesBase = useMemo(() => {
@@ -568,7 +572,7 @@ function UserProfile({ onSwitchTab, onGoHome }) {
       <div className="up-stats">
         <div className="up-stat-card">
           <div className="up-stat-icon"><CheckIcon size={20} color="#34C759" /></div>
-          <div className="up-stat-value">{stats.completedCount}<span style={{ fontSize: 16, fontWeight: 400, color: 'var(--text-tertiary)' }}>/{TOTAL_MODULES}</span></div>
+          <div className="up-stat-value">{stats.completedCount}<span style={{ fontSize: 16, fontWeight: 400, color: 'var(--text-tertiary)' }}>/{visibleTotal}</span></div>
           <div className="up-stat-label">Modules Completed</div>
         </div>
         <div className="up-stat-card">
