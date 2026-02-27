@@ -521,13 +521,15 @@ function App() {
     const ogDesc = document.querySelector('meta[property="og:description"]')
     if (ogDesc) ogDesc.setAttribute('content', desc)
 
+    const url = activeTab && !showHome && !showLanding
+      ? `https://www.aidecoded.academy/?tab=${activeTab}`
+      : 'https://www.aidecoded.academy/'
+
     const ogUrl = document.querySelector('meta[property="og:url"]')
-    if (ogUrl) {
-      const url = activeTab && !showHome && !showLanding
-        ? `https://www.aidecoded.academy/?tab=${activeTab}`
-        : 'https://www.aidecoded.academy/'
-      ogUrl.setAttribute('content', url)
-    }
+    if (ogUrl) ogUrl.setAttribute('content', url)
+
+    const canonical = document.querySelector('link[rel="canonical"]')
+    if (canonical) canonical.setAttribute('href', url)
   }, [activeTab, showHome, showLanding])
 
   // Inject JSON-LD structured data from ALL_MODULES (auto-syncs with moduleData.js)
@@ -574,6 +576,33 @@ function App() {
     document.head.appendChild(script)
     return () => script.remove()
   }, [hiddenModules])
+
+  // Dynamic BreadcrumbList JSON-LD for current page
+  useEffect(() => {
+    const SITE = 'https://www.aidecoded.academy'
+    let breadcrumbItems = [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+    ]
+
+    if (!showLanding && !showHome && activeTab && activeTab !== 'profile') {
+      const mod = ALL_MODULES.find(m => m.id === activeTab)
+      if (mod) {
+        breadcrumbItems.push({
+          '@type': 'ListItem', position: 2, name: mod.title, item: `${SITE}/?tab=${activeTab}`,
+        })
+      }
+    }
+
+    const jsonLd = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: breadcrumbItems }
+    const existing = document.getElementById('ld-json-breadcrumb')
+    if (existing) existing.remove()
+    const script = document.createElement('script')
+    script.id = 'ld-json-breadcrumb'
+    script.type = 'application/ld+json'
+    script.textContent = JSON.stringify(jsonLd)
+    document.head.appendChild(script)
+    return () => script.remove()
+  }, [activeTab, showHome, showLanding])
 
   const [homeFilter, setHomeFilter] = useState(null)
   const [model, setModel] = useState('gpt-4o-mini')
@@ -821,6 +850,12 @@ function App() {
     <div className={`app ${!showSidebar ? 'app-no-sidebar' : ''} app-fade-in`}>
       <NeuronBackground />
       <main className="main">
+        <h1 className="sr-only">
+          {showLanding ? 'AI Decoded — Interactive AI Learning Platform'
+            : showHome ? 'AI Decoded — Learn How AI Works'
+            : activeTab === 'profile' ? 'User Profile — AI Decoded'
+            : (() => { const mod = ALL_MODULES.find(m => m.id === activeTab); return mod ? `${mod.title} — AI Decoded` : 'AI Decoded' })()}
+        </h1>
         <header className="header header-grouped">
           <div className="header-left">
             <div className="header-brand header-brand-clickable" onClick={handleGoHome} role="button" tabIndex={0} onKeyDown={(e) => e.key === 'Enter' && handleGoHome()}>
