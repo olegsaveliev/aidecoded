@@ -327,6 +327,15 @@ const CARDS = [
     group: 'Skills',
   },
   {
+    id: 'spec-driven-dev',
+    group: 'Skills',
+    tag: 'Practical',
+    title: 'Spec-Driven Development',
+    description: 'Stop vibe coding. Start speccing. Write what you want before AI writes how to build it. Learn the three-document pattern that turns chaotic AI sessions into structured, reviewable, reproducible builds.',
+    icon: 'spec-driven-dev',
+    accent: '#34C759',
+  },
+  {
     id: 'agent-teams',
     title: 'Agent Teams',
     description: 'Subagents are function calls. Agent Teams are organisations. Learn how Claude Code\'s experimental multi-agent feature works: lead agents, teammates, shared task lists, and direct messaging between agents working in parallel.',
