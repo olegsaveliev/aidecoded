@@ -75,6 +75,7 @@ const NAV_GROUPS = [
       { id: 'label-master', name: 'Label Master', tag: 'Game' },
       { id: 'draw-and-deceive', name: 'Draw & Deceive', tag: 'Game' },
       { id: 'agent-office', name: 'Agent Office', tag: 'Game' },
+      { id: 'model-training-tycoon', name: 'Training Tycoon', tag: 'Game' },
     ],
   },
   {

@@ -208,6 +208,14 @@ const ICON_PATHS = {
       <path d="M5 19l2-2M17 3l2 2-5 5-3-1-1-3 5-3z" strokeLinecap="round" strokeLinejoin="round" />
     </>
   ),
+  'model-training-tycoon': (
+    <>
+      <rect x="2" y="10" width="20" height="11" rx="1" />
+      <path d="M6 10V7M10 10V4M14 10V6M18 10V2" />
+      <path d="M2 16l4-2 4 2 4-2 4 2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="19" cy="5" r="2" fill="currentColor" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

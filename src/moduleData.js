@@ -38,6 +38,7 @@ const ALL_MODULES = [
   { id: 'claude-code', title: 'Claude Code', description: 'Your AI pair programmer that lives in the terminal. Learn how Claude Code reads your codebase, executes real commands, remembers your conventions via CLAUDE.md, and connects to any tool via MCP.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'agent-teams', title: 'Agent Teams', description: 'Subagents are function calls. Agent Teams are organisations. Learn how Claude Code\'s experimental multi-agent feature works: lead agents, teammates, shared task lists, and direct messaging between agents working in parallel.', tag: 'Technical', tagColor: '#5856D6' },
   { id: 'custom-agents', title: 'Custom Agents', description: 'Define specialist AI assistants for your own workflow. A security auditor, a test writer, a doc generator — each with its own system prompt, tools, model, and memory. Claude delegates to them automatically. One Markdown file. Infinite leverage.', tag: 'Technical', tagColor: '#5856D6' },
+  { id: 'model-training-tycoon', title: 'Model Training Tycoon', description: 'You have $50,000 and 6 weeks. Train the best AI model you can. Allocate budget across data, architecture, training, and fine-tuning. Survive GPU outages, bad labels, and rival model drops.', tag: 'Game', tagColor: '#F59E0B' },
 ]
 
 export function getRandomModules(excludeId, count = 3) {

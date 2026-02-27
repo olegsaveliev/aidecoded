@@ -54,6 +54,7 @@ Interactive React app for learning how Large Language Models work.
 | `claude-code` | ClaudeCode.jsx | ClaudeCode.css | claudeCodeQuiz | Practical | #34C759 |
 | `agent-teams` | AgentTeams.jsx | AgentTeams.css | agentTeamsQuiz | Technical | #5856D6 |
 | `custom-agents` | CustomAgents.jsx | CustomAgents.css | customAgentsQuiz | Technical | #5856D6 |
+| `model-training-tycoon` | ModelTrainingTycoon.jsx | ModelTrainingTycoon.css | — (game) | Game | #F59E0B |
 
 ## Color System — Two Color Layers
 
@@ -68,7 +69,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams, Custom Agents |
-| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office |
+| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM |
 
 **Where tag colors are used:**
@@ -84,7 +85,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code |
 | Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Custom Agents, Why RAG Fails, AI in Production |
-| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office |
+| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon |
 | Professional | #0EA5E9 | AI-Native PM |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
@@ -709,6 +710,7 @@ create table quiz_results (
 | Label Master | Game started | All 8 levels completed |
 | Draw & Deceive | Game started | All 5 rounds completed |
 | Agent Office | Game started | All 6 levels completed |
+| Model Training Tycoon | Game started | First completion (any score) |
 | AI-Native PM | Entry screen dismissed | Reach final screen |
 | Precision & Recall | Entry screen dismissed | Reach final screen |
 | Why RAG Fails | Entry screen dismissed | Reach final screen |

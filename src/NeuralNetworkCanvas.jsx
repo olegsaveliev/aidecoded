@@ -51,6 +51,7 @@ const NODES = [
   { id: 'claude-code', label: 'Claude Code', group: 'skills', desc: 'AI pair programmer that lives in your terminal' },
   { id: 'agent-teams', label: 'Agent Teams', group: 'advanced', desc: 'Multiple Claude Code agents coordinating in parallel' },
   { id: 'custom-agents', label: 'Custom Agents', group: 'advanced', desc: 'Define specialist AI assistants in Markdown files' },
+  { id: 'model-training-tycoon', label: 'Training Tycoon', group: 'play', desc: 'Allocate $50K across six phases of model training' },
 ]
 
 
@@ -161,6 +162,10 @@ const CONNECTIONS = [
   ['claude-code', 'custom-agents'],
   ['agentic-ai', 'custom-agents'],
   ['agent-office', 'custom-agents'],
+  ['model-training', 'model-training-tycoon'],
+  ['ai-startup-simulator', 'model-training-tycoon'],
+  ['fine-tuning', 'model-training-tycoon'],
+  ['deep-learning', 'model-training-tycoon'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -223,6 +228,7 @@ const NEURON_LAYOUT = {
   'claude-code':           { px: 0.27, py: 1.00 },
   'agent-teams':           { px: 0.58, py: 0.90 },
   'custom-agents':         { px: 0.65, py: 0.82 },
+  'model-training-tycoon': { px: 0.45, py: 0.97 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -234,7 +240,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */

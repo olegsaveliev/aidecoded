@@ -268,6 +268,16 @@ const CARDS = [
     difficulty: 'Strategic',
   },
   {
+    id: 'model-training-tycoon',
+    group: 'Play',
+    tag: 'Game',
+    title: 'Model Training Tycoon',
+    description: 'You have $50,000 and 6 weeks. Train the best AI model you can. Allocate budget across data, architecture, training, and fine-tuning. Survive GPU outages, bad labels, and rival model drops. Learn why garbage data beats a giant model every time.',
+    icon: 'model-training-tycoon',
+    isGame: true,
+    difficulty: 'Strategic',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',
