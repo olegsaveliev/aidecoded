@@ -1,0 +1,882 @@
+/* ===== AI PM Workflows Module ===== */
+
+/* --- Stepper Override --- */
+.aipw-stepper .how-step-active .how-step-num {
+  background: #0EA5E9;
+  color: white;
+}
+
+.aipw-stepper .how-step-current .how-step-num {
+  background: #0EA5E9;
+  color: white;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+.aipw-stepper .how-arrow-active svg {
+  color: #0EA5E9;
+}
+
+/* --- Info Content Reset --- */
+.how-info-card .aipw-info-content strong {
+  display: inline;
+  font-size: inherit;
+  padding-left: 0;
+  border-left: none;
+}
+
+/* ===== PM Week View ===== */
+.aipw-week-view {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+}
+
+.aipw-week-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  min-width: 480px;
+}
+
+.aipw-day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.aipw-day-nodes {
+  display: contents;
+}
+
+.aipw-day-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  margin-bottom: 4px;
+}
+
+.aipw-node-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.aipw-node {
+  width: 64px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-tertiary);
+  transition: all 0.4s ease;
+  white-space: nowrap;
+}
+
+.aipw-node--active {
+  background: rgba(14, 165, 233, 0.1);
+  border: 1.5px solid #0EA5E9;
+  color: #0EA5E9;
+}
+
+@keyframes aipwNodeGlow {
+  0%, 100% {
+    box-shadow: none;
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.3);
+  }
+}
+
+.aipw-node--active {
+  animation: aipwNodeGlow 2s ease-in-out infinite;
+}
+
+.aipw-tool-badge {
+  font-size: 8px;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  height: 14px;
+}
+
+.aipw-node-wrap--active .aipw-tool-badge {
+  opacity: 1;
+  color: #0EA5E9;
+}
+
+/* ===== Relationship Callout ===== */
+.aipw-relation-note {
+  background: rgba(14, 165, 233, 0.05);
+  border-left: 3px solid #0EA5E9;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.aipw-relation-link {
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: #0EA5E9;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.aipw-relation-link:hover {
+  background: rgba(14, 165, 233, 0.2);
+}
+
+/* ===== Tool Stack ===== */
+.aipw-tool-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 16px 0;
+}
+
+.aipw-tool-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.aipw-tool-cat {
+  min-width: 110px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: right;
+}
+
+.aipw-tool-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.aipw-tool-pill {
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  color: #0EA5E9;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ===== Synthesis Comparison ===== */
+.aipw-comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.aipw-comp-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.aipw-comp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.aipw-badge-without {
+  background: rgba(255, 149, 0, 0.15);
+  color: #FF9500;
+  border: 1px solid rgba(255, 149, 0, 0.25);
+}
+
+.aipw-badge-with {
+  background: rgba(52, 199, 89, 0.15);
+  color: #34C759;
+  border: 1px solid rgba(52, 199, 89, 0.25);
+}
+
+.aipw-timeline-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.aipw-timeline-day {
+  min-width: 60px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.aipw-bar-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg-surface);
+}
+
+.aipw-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.aipw-bar-amber {
+  background: #FF9500;
+}
+
+.aipw-bar-green {
+  background: #34C759;
+}
+
+.aipw-timeline-dur {
+  font-size: 11px;
+  color: var(--text-secondary);
+  min-width: 60px;
+}
+
+.aipw-comp-total {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ===== Prompt Card ===== */
+.aipw-prompt-card {
+  background: #0d1117;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.7;
+  position: relative;
+  white-space: pre-wrap;
+  margin: 14px 0;
+}
+
+.aipw-placeholder {
+  color: #F59E0B;
+  font-style: italic;
+}
+
+.aipw-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #0EA5E9;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 10px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.2s;
+}
+
+.aipw-copy-btn:hover {
+  background: rgba(14, 165, 233, 0.2);
+}
+
+/* ===== Playbook Tabs ===== */
+.aipw-playbook-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.aipw-pb-tab {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text-secondary);
+}
+
+.aipw-pb-tab:hover {
+  border-color: var(--border-light);
+}
+
+.aipw-pb-tab--active {
+  border-color: #0EA5E9;
+  background: rgba(14, 165, 233, 0.06);
+  color: #0EA5E9;
+}
+
+/* ===== Playbook Prompt Card ===== */
+.aipw-playbook-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.aipw-pb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.aipw-pb-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.aipw-pb-tool {
+  background: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.2);
+  color: #0EA5E9;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.aipw-pb-situation {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+
+.aipw-playbook-card .aipw-prompt-card {
+  margin: 0;
+  border-radius: 0;
+}
+
+.aipw-pb-tip {
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* ===== Motion Section ===== */
+.aipw-motion {
+  margin: 20px 0;
+  padding: 16px 20px;
+  border-left: 2px solid #0EA5E9;
+  border-radius: 10px;
+  background: var(--bg-secondary);
+}
+
+.aipw-motion-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ===== Feature List (structured bullet replacement) ===== */
+.aipw-feature-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.aipw-feature-item {
+  padding: 10px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+}
+
+.aipw-feature-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0EA5E9;
+  margin-bottom: 2px;
+}
+
+.aipw-feature-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+[data-theme="dark"] .aipw-feature-item {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+/* ===== Notion AI Panel ===== */
+.aipw-notion-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+
+.aipw-notion-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.aipw-notion-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 6px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* ===== Context Template ===== */
+.aipw-context-template {
+  background: #0d1117;
+  border-radius: 12px;
+  padding: 18px 22px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  position: relative;
+  margin: 16px 0;
+}
+
+.aipw-ctx-heading {
+  color: #0EA5E9;
+  font-weight: 700;
+}
+
+/* ===== Roadmap Scorer ===== */
+.aipw-scorer {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+
+.aipw-scorer-disclaimer {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin-bottom: 12px;
+}
+
+.aipw-scorer-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.aipw-scorer-table th {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.aipw-scorer-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary);
+}
+
+.aipw-uncertainty {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.aipw-uncertainty-high {
+  background: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+}
+
+.aipw-uncertainty-uncertain {
+  background: rgba(255, 149, 0, 0.1);
+  color: #FF9500;
+}
+
+/* ===== Takeaway Block ===== */
+.aipw-takeaway {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border-left: 2px solid #0EA5E9;
+}
+
+.aipw-takeaway p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.aipw-takeaway p + p {
+  margin-top: 8px;
+}
+
+/* ===== Section Divider ===== */
+.aipw-section-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 28px 0;
+}
+
+/* ===== Section Heading ===== */
+.aipw-section-heading {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 16px;
+}
+
+/* ===== Four Motions Grid ===== */
+.aipw-motions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.aipw-motion-card {
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  border-left: 2px solid #0EA5E9;
+}
+
+.aipw-motion-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(14, 165, 233, 0.1);
+  color: #0EA5E9;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.aipw-motion-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.aipw-motion-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.aipw-motion-judgment {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* ===== Data Privacy Box ===== */
+.aipw-privacy-box {
+  background: rgba(255, 59, 48, 0.04);
+  border: 1px solid rgba(255, 59, 48, 0.15);
+  border-left: 3px solid #FF3B30;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 16px 0;
+}
+
+/* ===== Dark Mode ===== */
+
+[data-theme="dark"] .aipw-week-view {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aipw-comp-panel {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aipw-prompt-card {
+  background: #0a0e14;
+}
+
+[data-theme="dark"] .aipw-context-template {
+  background: #0a0e14;
+}
+
+[data-theme="dark"] .aipw-playbook-card {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aipw-pb-situation {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .aipw-motion {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .aipw-notion-panel {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aipw-scorer {
+  background: var(--bg-secondary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aipw-motion-card {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .aipw-privacy-box {
+  background: rgba(255, 59, 48, 0.06);
+}
+
+[data-theme="dark"] .aipw-relation-note {
+  background: rgba(14, 165, 233, 0.06);
+}
+
+[data-theme="dark"] .aipw-pb-tab {
+  background: var(--bg-primary);
+  border-color: var(--border);
+}
+
+[data-theme="dark"] .aipw-copy-btn {
+  background: rgba(14, 165, 233, 0.1);
+}
+
+[data-theme="dark"] .aipw-takeaway {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .aipw-bar-track {
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .aipw-comp-total {
+  border-top-color: var(--border);
+}
+
+[data-theme="dark"] .aipw-section-divider {
+  background: var(--border);
+}
+
+/* ===== Responsive: 768px ===== */
+
+@media (max-width: 768px) {
+  .aipw-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .aipw-motions-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .aipw-feature-list {
+    grid-template-columns: 1fr;
+  }
+
+  .aipw-tool-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .aipw-tool-cat {
+    min-width: auto;
+    text-align: left;
+  }
+
+  .aipw-playbook-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .aipw-prompt-card {
+    padding: 12px 16px;
+    font-size: 11px;
+  }
+
+  .aipw-context-template {
+    padding: 12px 16px;
+    font-size: 11px;
+  }
+
+  .aipw-pb-tab,
+  .aipw-copy-btn,
+  .aipw-relation-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .aipw-scorer-table {
+    font-size: 11px;
+  }
+
+  .aipw-scorer-table th,
+  .aipw-scorer-table td {
+    padding: 6px 8px;
+  }
+
+  .aipw-section-heading {
+    font-size: 16px;
+  }
+
+  .aipw-timeline-day {
+    min-width: 50px;
+    font-size: 11px;
+  }
+
+  .aipw-timeline-dur {
+    min-width: 50px;
+    font-size: 10px;
+  }
+
+  .aipw-takeaway {
+    padding: 12px 16px;
+  }
+
+  /* Week view: vertical row layout on mobile */
+  .aipw-week-view {
+    overflow-x: visible;
+    padding: 12px 14px;
+  }
+
+  .aipw-week-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .aipw-day {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .aipw-day:last-child {
+    border-bottom: none;
+  }
+
+  .aipw-day-label {
+    min-width: 36px;
+    margin-bottom: 0;
+    font-size: 11px;
+    text-align: left;
+    padding-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .aipw-day-nodes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .aipw-node-wrap {
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+  }
+
+  .aipw-node {
+    width: auto;
+    padding: 0 12px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .aipw-tool-badge {
+    height: auto;
+    margin-top: 1px;
+    font-size: 8px;
+  }
+}
+
+/* ===== Responsive: 480px ===== */
+
+@media (max-width: 480px) {
+
+  .aipw-prompt-card,
+  .aipw-context-template {
+    font-size: 10px;
+  }
+
+  .aipw-playbook-tabs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .aipw-scorer-table {
+    display: block;
+    overflow-x: auto;
+  }
+}

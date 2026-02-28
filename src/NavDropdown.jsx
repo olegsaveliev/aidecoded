@@ -87,6 +87,7 @@ const NAV_GROUPS = [
     color: '#0EA5E9',
     items: [
       { id: 'ai-native-pm', name: 'AI-Native PM', tag: 'Professional' },
+      { id: 'ai-pm-workflows', name: 'AI-Native PM Workflows', tag: 'Professional' },
     ],
   },
 ]

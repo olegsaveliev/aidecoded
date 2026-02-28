@@ -1596,3 +1596,54 @@ export const aiCodingToolsQuiz = [
     accentColor: '#34C759',
   },
 ]
+
+export const aiPMWorkflowsQuiz = [
+  {
+    question: 'What is the biggest difference between a traditional PM week and an AI-native PM week?',
+    options: ['AI-native PMs attend fewer meetings', 'AI-native PMs replace discovery with automation', 'AI handles synthesis and first drafts so PMs spend more time on judgement and alignment', 'AI-native PMs skip stakeholder communication entirely'],
+    correct: 2,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'Why should you paste raw interview notes into a prompt instead of summarising them yourself first?',
+    options: ['It saves you the effort of reading the notes', 'The AI can spot patterns across all notes at once — patterns you might miss when reading sequentially', 'AI summaries are always more accurate than human summaries', 'Raw notes use fewer tokens than summaries'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What is the purpose of the [PLACEHOLDER] text in the prompt templates?',
+    options: ['It tells the AI to skip that section', 'It marks where you paste your own real context before running the prompt', 'It indicates optional sections you can delete', 'It triggers a special AI mode for that field'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'When using AI to draft a prioritisation framework, what should the PM always do before sharing the output?',
+    options: ['Run the prompt three times and pick the best result', 'Review the reasoning, check for hallucinated evidence, and apply their own judgement', 'Share it immediately to get fast feedback', 'Ask the AI to verify its own output'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'Why is a PM context document valuable when working with AI?',
+    options: ['It replaces the need for a PRD', 'It gives the AI stable context about your product, users, and constraints so every prompt starts informed', 'It automatically syncs with your project management tool', 'It trains a custom model on your product data'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What is the recommended approach when AI generates a stakeholder update draft?',
+    options: ['Send it as-is to save time', 'Rewrite it completely since AI cannot understand stakeholders', 'Use it as a starting point, then add your judgement about what to emphasise and what to soften', 'Delete the draft and write from scratch for authenticity'],
+    correct: 2,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'Which PM activity benefits LEAST from AI assistance?',
+    options: ['Synthesising 20 user interview transcripts', 'Drafting a weekly status update', 'Making a judgement call about whether to pivot strategy', 'Writing the first draft of acceptance criteria'],
+    correct: 2,
+    accentColor: '#0EA5E9',
+  },
+  {
+    question: 'What makes AI-native discovery different from traditional discovery?',
+    options: ['AI replaces the need for user interviews', 'The PM uses AI to synthesise patterns across multiple data sources simultaneously, then validates with real users', 'AI tools automatically conduct user research', 'Traditional discovery is more thorough'],
+    correct: 1,
+    accentColor: '#0EA5E9',
+  },
+]

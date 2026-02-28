@@ -361,6 +361,13 @@ const CARDS = [
     icon: 'custom-agents',
     accent: '#5856D6',
   },
+  {
+    id: 'ai-pm-workflows',
+    group: 'Professional',
+    tag: 'Professional',
+    title: 'AI-Native PM Workflows',
+    description: 'The prompts, templates and weekly rhythms that separate AI-native PMs from everyone else. Copy-ready prompts for discovery, planning and stakeholder communication.',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']

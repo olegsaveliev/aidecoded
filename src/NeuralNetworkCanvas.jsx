@@ -55,6 +55,7 @@ const NODES = [
   { id: 'model-training-tycoon', label: 'Training Tycoon', group: 'play', desc: 'Allocate $50K across six phases of model training' },
   { id: 'spec-driven-dev', label: 'Spec-Driven Dev', group: 'skills', desc: 'Write specs before AI writes code' },
   { id: 'ai-coding-tools', label: 'AI Coding Tools', group: 'skills', desc: 'Cursor, Copilot, Windsurf, Cline and more — the full market map' },
+  { id: 'ai-pm-workflows', label: 'PM Workflows', group: 'professional', desc: 'Copy-ready prompts and weekly rhythms for AI-native PMs' },
 ]
 
 
@@ -177,6 +178,10 @@ const CONNECTIONS = [
   ['spec-driven-dev', 'ai-coding-tools'],
   ['agentic-ai', 'ai-coding-tools'],
   ['prompt-engineering', 'ai-coding-tools'],
+  ['ai-native-pm', 'ai-pm-workflows'],
+  ['spec-driven-dev', 'ai-pm-workflows'],
+  ['prompt-engineering', 'ai-pm-workflows'],
+  ['agentic-ai', 'ai-pm-workflows'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -242,6 +247,7 @@ const NEURON_LAYOUT = {
   'model-training-tycoon': { px: 0.45, py: 0.97 },
   'spec-driven-dev':       { px: 0.40, py: 0.82 },
   'ai-coding-tools':       { px: 0.35, py: 0.93 },
+  'ai-pm-workflows':       { px: 0.98, py: 0.80 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -253,7 +259,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'spec-driven-dev', 'ai-coding-tools',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */
