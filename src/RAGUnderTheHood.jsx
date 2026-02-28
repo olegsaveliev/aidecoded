@@ -10,6 +10,7 @@ import ToolChips from './ToolChips.jsx'
 import { ragUnderTheHoodQuiz } from './quizData.js'
 import SuggestedModules from './SuggestedModules.jsx'
 import './RAGUnderTheHood.css'
+import { scrollStageToTop } from './scrollUtils.js'
 
 const STAGES = [
   { key: 'why-rag-fails', label: 'Why It Fails', tooltip: 'Why RAG fails in production when it worked in demos' },
@@ -1105,25 +1106,9 @@ export default function RAGUnderTheHood({ onSwitchTab, onGoHome }) {
     if (stage > maxStageReached) setMaxStageReached(stage)
   }, [stage, maxStageReached])
 
-  /* scroll on stage change */
   useEffect(() => {
-    const rafId = requestAnimationFrame(() => {
-      let el = document.querySelector('.ruh-root')
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
-        el = el.parentElement
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      if (activeStepRef.current) {
-        const step = activeStepRef.current
-        const stepper = step.closest('.how-stepper')
-        if (stepper) {
-          const left = stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2
-          stepper.scrollTo({ left, behavior: 'smooth' })
-        }
-      }
-    })
-    return () => cancelAnimationFrame(rafId)
+    const cancel = scrollStageToTop('.ruh-root', activeStepRef)
+    return cancel
   }, [stage])
 
   /* milestone-based learn tips */

@@ -10,6 +10,7 @@ import ToolChips from './ToolChips.jsx'
 import { machineLearningQuiz } from './quizData.js'
 import SuggestedModules from './SuggestedModules.jsx'
 import './MachineLearning.css'
+import { scrollStageToTop } from './scrollUtils.js'
 
 const ML_TOOLS = {
   0: [
@@ -1076,23 +1077,8 @@ function MachineLearning({ onSwitchTab, onGoHome }) {
   }, [stage, maxStageReached])
 
   useEffect(() => {
-    const rafId = requestAnimationFrame(() => {
-      let el = document.querySelector('.ml-root')
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
-        el = el.parentElement
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      if (activeStepRef.current) {
-        const step = activeStepRef.current
-        const stepper = step.closest('.how-stepper')
-        if (stepper) {
-          const left = stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2
-          stepper.scrollTo({ left, behavior: 'smooth' })
-        }
-      }
-    })
-    return () => cancelAnimationFrame(rafId)
+    const cancel = scrollStageToTop('.ml-root', activeStepRef)
+    return cancel
   }, [stage])
 
   function goToStage(target) {
