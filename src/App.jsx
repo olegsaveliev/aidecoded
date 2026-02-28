@@ -42,6 +42,7 @@ import SpecDrivenDev from './SpecDrivenDev.jsx'
 import AICodingTools from './AICodingTools.jsx'
 import AIPMWorkflows from './AIPMWorkflows.jsx'
 import SystemDesignInterview from './SystemDesignInterview.jsx'
+import PromptInjection from './PromptInjection.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -141,7 +142,7 @@ const VALID_TABS = [
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   'alignment-game', 'choosing-ai-model', 'neural-networks', 'ollama', 'computer-vision',
   'label-master', 'draw-and-deceive', 'agent-office', 'claude-code', 'agent-teams', 'custom-agents',
-  'model-training-tycoon', 'spec-driven-dev', 'ai-coding-tools', 'ai-pm-workflows', 'system-design-interview',
+  'model-training-tycoon', 'spec-driven-dev', 'ai-coding-tools', 'ai-pm-workflows', 'system-design-interview', 'prompt-injection',
   'profile'
 ]
 
@@ -641,7 +642,7 @@ function App() {
   const inputRef = useRef(null)
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messages.length > 0) chatEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
   }, [messages, loading])
 
   const totalTokens = useMemo(() => {
@@ -1340,6 +1341,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'system-design-interview' && (
           <SystemDesignInterview onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'prompt-injection' && (
+          <PromptInjection onSwitchTab={handleSwitchTab} />
         )}
         {!showHome && activeTab === 'profile' && (
           <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

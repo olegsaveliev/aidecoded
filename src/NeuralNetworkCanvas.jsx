@@ -12,6 +12,7 @@ const GROUP_COLORS = {
   advanced: '#FF9500',
   play: '#F59E0B',
   professional: '#0EA5E9',
+  security: '#EF4444',
 }
 
 const NODES = [
@@ -57,6 +58,7 @@ const NODES = [
   { id: 'ai-coding-tools', label: 'AI Coding Tools', group: 'skills', desc: 'Cursor, Copilot, Windsurf, Cline and more — the full market map' },
   { id: 'ai-pm-workflows', label: 'PM Workflows', group: 'professional', desc: 'Copy-ready prompts and weekly rhythms for AI-native PMs' },
   { id: 'system-design-interview', label: 'System Design', group: 'play', desc: 'Design AI systems and defend trade-offs under pressure' },
+  { id: 'prompt-injection', label: 'Prompt Injection', group: 'security', desc: 'The #1 AI security risk — attacks that use nothing but text' },
 ]
 
 
@@ -187,6 +189,9 @@ const CONNECTIONS = [
   ['agentic-ai', 'system-design-interview'],
   ['rag-under-the-hood', 'system-design-interview'],
   ['model-training-tycoon', 'system-design-interview'],
+  ['ai-in-production', 'prompt-injection'],
+  ['agentic-ai', 'prompt-injection'],
+  ['ai-safety', 'prompt-injection'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -254,6 +259,7 @@ const NEURON_LAYOUT = {
   'ai-coding-tools':       { px: 0.35, py: 0.93 },
   'ai-pm-workflows':       { px: 0.98, py: 0.80 },
   'system-design-interview': { px: 0.52, py: 0.82 },
+  'prompt-injection':        { px: 0.85, py: 0.70 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -265,7 +271,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'spec-driven-dev', 'ai-coding-tools',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview', 'prompt-injection',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */

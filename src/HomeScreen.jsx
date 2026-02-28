@@ -15,6 +15,7 @@ const FILTER_COLORS = {
   Technical: '#5856D6',
   Game: '#F59E0B',
   Professional: '#0EA5E9',
+  Security: '#EF4444',
 }
 
 const FILTERS = Object.keys(FILTER_COLORS)
@@ -27,6 +28,7 @@ const TAG_BORDER_COLORS = {
   Technical: 'rgba(88, 86, 214, 0.5)',
   Game: 'rgba(245, 158, 11, 0.5)',
   Professional: 'rgba(14, 165, 233, 0.5)',
+  Security: 'rgba(239, 68, 68, 0.5)',
 }
 
 const CARDS = [
@@ -288,6 +290,15 @@ const CARDS = [
     difficulty: 'Strategic',
   },
   {
+    id: 'prompt-injection',
+    group: 'Security',
+    tag: 'Security',
+    title: 'Prompt Injection Explained',
+    description: 'The number one AI security risk according to OWASP 2025. Learn how attackers hijack AI systems using nothing but carefully crafted text — then try the attacks yourself in a live simulation. No coding required.',
+    icon: 'prompt-injection',
+    accent: '#EF4444',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',
@@ -379,7 +390,7 @@ const CARDS = [
   },
 ]
 
-const GROUP_NAMES = ['Tools', 'Foundations', 'Skills', 'Advanced', 'Play', 'Professional']
+const GROUP_NAMES = ['Tools', 'Foundations', 'Security', 'Skills', 'Advanced', 'Play', 'Professional']
 
 const TOTAL_MODULES = NAV_GROUPS.reduce((sum, g) => sum + g.items.length, 0)
 

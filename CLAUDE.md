@@ -59,12 +59,13 @@ Interactive React app for learning how Large Language Models work.
 | `ai-coding-tools` | AICodingTools.jsx | AICodingTools.css | aiCodingToolsQuiz | Practical | #34C759 |
 | `ai-pm-workflows` | AIPMWorkflows.jsx | AIPMWorkflows.css | aiPMWorkflowsQuiz | Professional | #0EA5E9 |
 | `system-design-interview` | SystemDesignInterview.jsx | SystemDesignInterview.css | — (game) | Game | #F59E0B |
+| `prompt-injection` | PromptInjection.jsx | PromptInjection.css | promptInjectionQuiz | Security | #EF4444 |
 
 ## Color System — Two Color Layers
 
 ### Tag Colors (Primary — used for icons, borders, visual identity)
 
-These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen icons, and landing page icons:
+These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen icons, and landing page icons:
 
 | Tag | Color | Modules |
 |---|---|---|
@@ -75,6 +76,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams, Custom Agents |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM, AI-Native PM Workflows |
+| Security | #EF4444 (red) | Prompt Injection Explained |
 
 **Where tag colors are used:**
 - HomeScreen card left borders + card icons: `FILTER_COLORS[card.tag]`
@@ -91,6 +93,7 @@ These 6 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Custom Agents, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview |
 | Professional | #0EA5E9 | AI-Native PM, AI-Native PM Workflows |
+| Security | #EF4444 | Prompt Injection Explained |
 
 Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 
@@ -155,7 +158,7 @@ Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 
 Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 
-- Desktop: `[Logo + AI Decoded]  [Tools] [Foundations] [Skills] [Advanced] [Play] [Professional]  [dark mode toggle]`
+- Desktop: `[Logo + AI Decoded]  [Tools] [Foundations] [Security] [Skills] [Advanced] [Play] [Professional]  [dark mode toggle]`
 - Mobile (< 768px): Hamburger menu with full-screen overlay
 - Active tab's parent group label turns Apple blue (#0071E3)
 - Breadcrumb shows `Group > Tab Name` on wider screens (>= 900px)
@@ -788,6 +791,7 @@ create table quiz_results (
 | Spec-Driven Development | Entry screen dismissed | Reach final screen |
 | AI Coding Tools | Entry screen dismissed | Reach final screen |
 | AI-Native PM Workflows | Entry screen dismissed | Reach final screen |
+| Prompt Injection Explained | Entry screen dismissed | Reach final screen |
 
 ### Header Auth UI
 
@@ -1363,8 +1367,8 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Module-specific CSS must include mobile touch targets: `min-height: 44px` on interactive buttons at `@media (max-width: 768px)`
 - Stage → final screen uses fade transition: `setFading(true)` → 250ms → `setShowFinal(true)` + scroll-to-top via DOM ancestor walking
 - Quiz results use fade transition: `setTransitioning(true)` → 300ms → `setShowResult(true)` + scroll-to-top via DOM ancestor walking
-- Scroll-to-top pattern: walk up DOM from root element, reset every `scrollTop > 0`, then `window.scrollTo(0, 0)`
-- Stage-change scroll: every module's `useEffect([stage])` calls `window.scrollTo(0, 0)` after stepper `scrollIntoView` — ensures page starts at top on mobile (body scroll) while stepper still scrolls horizontally
+- Scroll-to-top pattern: `requestAnimationFrame` → walk up DOM from module root element (stopping before `document.body` / `document.documentElement`), smooth-scroll every ancestor with `scrollTop > 0`, then `window.scrollTo({ top: 0, behavior: 'smooth' })`. Capture RAF ID and cancel in useEffect cleanup: `const rafId = requestAnimationFrame(...)` / `return () => cancelAnimationFrame(rafId)`
+- Stage-change scroll: every module's `useEffect([stage])` uses the scroll-to-top pattern above, then centers the active stepper step horizontally via `getBoundingClientRect`-based math (`stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2`)
 - Navigation scroll: `scrollAllToTop()` in App.jsx uses same DOM-walking pattern; called by `handleGoHome`, `handleBreadcrumbGroupClick`, `handleSelectTab`
 - HomeScreen does NOT auto-scroll to cards on group filter — mobile fixed header makes `scrollIntoView` push content behind header; navigation handlers already scroll to top
 - Browser back/forward uses History API (`pushState`/`popstate`) with `?tab=` query params — no React Router

@@ -252,6 +252,12 @@ const ICON_PATHS = {
       <path d="M7 18v2M17 18v2M12 18v2" strokeLinecap="round" />
     </>
   ),
+  'prompt-injection': (
+    <>
+      <path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6L12 2z" />
+      <path d="M12 7v5M12 15v1" strokeLinecap="round" strokeWidth="2.5" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

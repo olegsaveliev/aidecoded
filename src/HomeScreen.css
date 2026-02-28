@@ -277,6 +277,11 @@
   color: #0EA5E9;
 }
 
+.home-tag-security {
+  background: #FEE2E2;
+  color: #EF4444;
+}
+
 [data-theme="dark"] .home-tag-interactive {
   background: rgba(0, 113, 227, 0.15);
   color: #4da3ff;
@@ -305,6 +310,11 @@
 [data-theme="dark"] .home-tag-professional {
   background: rgba(14, 165, 233, 0.15);
   color: #38BDF8;
+}
+
+[data-theme="dark"] .home-tag-security {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
 }
 
 /* ── Game Card ── */
