@@ -234,6 +234,13 @@ const ICON_PATHS = {
       <path d="M5 7h3M16 7h3M5 17h3M16 17h3" strokeLinecap="round" />
     </>
   ),
+  'ai-pm-workflows': (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <path d="M3 9h18M9 9v12" strokeLinecap="round" />
+      <path d="M13 13l2 2 3-4" strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
