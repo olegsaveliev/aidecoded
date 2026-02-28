@@ -34,6 +34,14 @@ const NAV_GROUPS = [
     ],
   },
   {
+    id: 'security',
+    label: 'Security',
+    color: '#EF4444',
+    items: [
+      { id: 'prompt-injection', name: 'Prompt Injection', tag: 'Security' },
+    ],
+  },
+  {
     id: 'skills',
     label: 'Skills',
     color: '#34C759',

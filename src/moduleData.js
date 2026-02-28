@@ -43,6 +43,7 @@ const ALL_MODULES = [
   { id: 'spec-driven-dev', title: 'Spec-Driven Development', description: 'Stop vibe coding. Start speccing. Write what you want before AI writes how to build it. Learn the three-document pattern that turns chaotic AI sessions into structured, reviewable, reproducible builds.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'ai-coding-tools', title: 'AI Coding Tools', description: 'Cursor, Copilot, Windsurf, Kiro, Cline — the market is exploding. This tour covers the 8 tools every developer needs to know, how they differ, and a quick quiz that recommends the right one for your workflow.', tag: 'Practical', tagColor: '#34C759' },
   { id: 'ai-pm-workflows', title: 'AI-Native PM Workflows', description: 'The prompts, templates and weekly rhythms that separate AI-native PMs from everyone else. Copy-ready prompts for discovery, planning and stakeholder communication.', tag: 'Professional', tagColor: '#0EA5E9' },
+  { id: 'prompt-injection', title: 'Prompt Injection Explained', description: 'The number one AI security risk according to OWASP 2025. Learn how attackers hijack AI systems using nothing but carefully crafted text — then try the attacks yourself in a live simulation.', tag: 'Security', tagColor: '#EF4444' },
 ]
 
 export function getRandomModules(excludeId, count = 3, hiddenIds = new Set()) {
