@@ -56,6 +56,7 @@ const NODES = [
   { id: 'spec-driven-dev', label: 'Spec-Driven Dev', group: 'skills', desc: 'Write specs before AI writes code' },
   { id: 'ai-coding-tools', label: 'AI Coding Tools', group: 'skills', desc: 'Cursor, Copilot, Windsurf, Cline and more — the full market map' },
   { id: 'ai-pm-workflows', label: 'PM Workflows', group: 'professional', desc: 'Copy-ready prompts and weekly rhythms for AI-native PMs' },
+  { id: 'system-design-interview', label: 'System Design', group: 'play', desc: 'Design AI systems and defend trade-offs under pressure' },
 ]
 
 
@@ -182,6 +183,10 @@ const CONNECTIONS = [
   ['spec-driven-dev', 'ai-pm-workflows'],
   ['prompt-engineering', 'ai-pm-workflows'],
   ['agentic-ai', 'ai-pm-workflows'],
+  ['ai-in-production', 'system-design-interview'],
+  ['agentic-ai', 'system-design-interview'],
+  ['rag-under-the-hood', 'system-design-interview'],
+  ['model-training-tycoon', 'system-design-interview'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -245,9 +250,10 @@ const NEURON_LAYOUT = {
   'agent-teams':           { px: 0.58, py: 0.90 },
   'custom-agents':         { px: 0.65, py: 0.82 },
   'model-training-tycoon': { px: 0.45, py: 0.97 },
-  'spec-driven-dev':       { px: 0.40, py: 0.82 },
+  'spec-driven-dev':       { px: 0.38, py: 0.82 },
   'ai-coding-tools':       { px: 0.35, py: 0.93 },
   'ai-pm-workflows':       { px: 0.98, py: 0.80 },
+  'system-design-interview': { px: 0.52, py: 0.82 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -259,7 +265,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'spec-driven-dev', 'ai-coding-tools',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */
