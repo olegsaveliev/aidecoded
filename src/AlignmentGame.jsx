@@ -584,26 +584,9 @@ function AlignmentGame({ onSwitchTab, onGoHome }) {
             <p className={`ag-tagline ${entryTaglineStep >= 3 ? 'ag-tagline-visible' : ''}`}>Everything goes wrong.</p>
           </div>
 
-          <div className="ag-entry-divider" />
-
-          <div className="ag-mission-card">
-            <span className="ag-label ag-label-amber">YOUR MISSION</span>
-            <p className="ag-mission-text">
-              You are the Chief Alignment Officer at NexaAI.
-              Your job: give the AI a goal, then add constraints
-              to stop it from achieving that goal in ways that
-              are technically correct but completely wrong.
-            </p>
-            <p className="ag-mission-text">
-              The AI always follows your instructions exactly.
-              That is the problem.
-            </p>
-            <p className="ag-mission-text ag-mission-bold">
-              8 rounds. Escalating chaos.
-              Each round the AI finds a new loophole.
-              Your job is to close them all.
-            </p>
-          </div>
+          <p className="ag-entry-description">
+            You are the Chief Alignment Officer at NexaAI. Give the AI a goal, then add constraints to stop it from achieving that goal in ways that are technically correct but completely wrong. The AI always follows your instructions exactly. That is the problem.
+          </p>
 
           <div className="ag-stats-row">
             <span className="ag-stat-pill">8 Rounds</span>

@@ -785,6 +785,16 @@ function SystemDesignInterview({ onSwitchTab }) {
 
   /* ── Persisted entry state ── */
   const [showEntry, setShowEntry] = usePersistedState('sdi-entry', true)
+  const [visibleLines, setVisibleLines] = useState(0)
+
+  useEffect(() => {
+    if (!showEntry) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [showEntry])
 
   /* ── Game state (resets every play) ── */
   const [selectedScenario, setSelectedScenario] = useState(null)
@@ -1038,9 +1048,9 @@ function SystemDesignInterview({ onSwitchTab }) {
           </div>
           <h1 className="sdi-entry-title">System Design Interview</h1>
           <div className="sdi-tagline">
-            <div className="sdi-tagline-line">You have 45 minutes.</div>
-            <div className="sdi-tagline-line">Design an AI system that actually works.</div>
-            <div className="sdi-tagline-line">Two engineers will push back on every choice.</div>
+            <div className={`sdi-tagline-line ${visibleLines >= 1 ? 'visible' : ''}`}>You have 45 minutes.</div>
+            <div className={`sdi-tagline-line ${visibleLines >= 2 ? 'visible' : ''}`}>Design an AI system that actually works.</div>
+            <div className={`sdi-tagline-line ${visibleLines >= 3 ? 'visible' : ''}`}>Two engineers will push back on every choice.</div>
           </div>
           <div className="sdi-briefing">
             Real system design is not about knowing the right answer. It is about making informed trade-offs and defending them. In this interview you will make seven consecutive architecture decisions. Each one shifts your system&rsquo;s performance, cost, and trustworthiness. Choose carefully &mdash; your choices compound.

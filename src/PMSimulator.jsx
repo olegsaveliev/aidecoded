@@ -200,6 +200,7 @@ function PMSimulator({ onSwitchTab, onGoHome }) {
 
   // ── Game state ─────────────────────────────────
   const [started, setStarted] = useState(false)
+  const [visibleLines, setVisibleLines] = useState(0)
   const [currentMission, setCurrentMission] = useState(0)
   const [shipScore, setShipScore] = useState(0)
   const [missionScores, setMissionScores] = useState([0, 0, 0, 0, 0])
@@ -329,6 +330,15 @@ function PMSimulator({ onSwitchTab, onGoHome }) {
       setM5Checklist([true, true, true, true, true, true, true, true, true, false])
     }
   }
+
+  useEffect(() => {
+    if (started) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [started])
 
   /* ── Start game ───────────────────────────────── */
   const handleStart = useCallback(() => {
@@ -764,12 +774,15 @@ function PMSimulator({ onSwitchTab, onGoHome }) {
         <EntryScreen
           icon={<ModuleIcon module="pm-simulator" size={64} style={{ color: '#F59E0B' }} />}
           title="PM Simulator"
-          subtitle="Ship it. Or watch it burn."
+          taglines={['Ship it.', 'Or watch it burn.']}
+          visibleLines={visibleLines}
           description="You just joined Nexus AI as Lead PM. Your first task: ship the AI customer assistant. Write the system instructions. Design the evals. Fix what breaks. Every decision has consequences."
           buttonText="Join Nexus AI"
+          buttonClassName="entry-screen-btn-game"
           onStart={handleStart}
-        />
-        <div className="pms-entry-meta">5 missions &middot; Decisions matter</div>
+        >
+          <div className="pms-entry-meta">5 missions &middot; Decisions matter</div>
+        </EntryScreen>
       </div>
     )
   }

@@ -820,19 +820,9 @@ Confidence values must sum to 100. Be honest about uncertainty — pixel art can
             <p className={`dd-tagline ${entryTaglineStep >= 3 ? 'dd-tagline-visible' : ''}`}>Then you try to fool it.</p>
           </div>
 
-          <div className="dd-entry-divider" />
-
-          <div className="dd-mission-card">
-            <p className="dd-mission-text">
-              You have 32&times;32 pixels and a color palette.
-              Your goal changes every round. Round 1:
-              make the AI see what you drew. Rounds 2&ndash;5:
-              trick it into seeing something completely different.
-            </p>
-            <p className="dd-mission-text dd-mission-bold">
-              The AI uses real GPT-4o vision. The confusion is real.
-            </p>
-          </div>
+          <p className="dd-entry-description">
+            You have 32&times;32 pixels and a color palette. Your goal changes every round. Round 1: make the AI see what you drew. Rounds 2&ndash;5: trick it into seeing something completely different. The AI uses real GPT-4o vision. The confusion is real.
+          </p>
 
           <div className="dd-stats-row">
             <span className="dd-stat-pill">5 Rounds</span>
