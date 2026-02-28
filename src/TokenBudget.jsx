@@ -168,6 +168,7 @@ function TokenBudget({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
 
   const [started, setStarted] = useState(false)
+  const [visibleLines, setVisibleLines] = useState(0)
   const [currentLevel, setCurrentLevel] = useState(0)
   const [rewriteText, setRewriteText] = useState('')
   const [evaluation, setEvaluation] = useState(null)
@@ -219,6 +220,15 @@ function TokenBudget({ onSwitchTab, onGoHome }) {
   const budgetPct = effectiveBudget > 0 ? Math.min((currentTokens / effectiveBudget) * 100, 100) : 0
 
   const budgetColor = isOverBudget ? '#FF3B30' : tokensOverBudget > -5 ? '#FF9500' : savedTokens > originalTokens * 0.8 ? '#0071E3' : '#34C759'
+
+  useEffect(() => {
+    if (started) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [started])
 
   /* ── Handlers ── */
 
@@ -322,19 +332,22 @@ function TokenBudget({ onSwitchTab, onGoHome }) {
         <EntryScreen
           icon={<ModuleIcon module="token-budget" size={64} style={{ color: '#F59E0B' }} />}
           title="Token Budget"
-          subtitle="Same output. Fewer tokens. Lower cost."
+          taglines={['Same output.', 'Fewer tokens.', 'Lower cost.']}
+          visibleLines={visibleLines}
           description="Every word you send to an AI costs money. In 5 increasingly brutal challenges, rewrite prompts to fit a shrinking token budget — without losing a single drop of quality. This is how pros think."
           buttonText="Start Saving"
+          buttonClassName="entry-screen-btn-game"
           onStart={handleStart}
-        />
-        <div className="tb-entry-meta">5 levels &middot; Gets harder fast</div>
-        <div className="tb-entry-meters">
-          {Array.from({ length: 5 }, (_, i) => (
-            <div key={i} className="tb-entry-meter">
-              <div className="tb-entry-meter-fill" />
-            </div>
-          ))}
-        </div>
+        >
+          <div className="tb-entry-meta">5 levels &middot; Gets harder fast</div>
+          <div className="tb-entry-meters">
+            {Array.from({ length: 5 }, (_, i) => (
+              <div key={i} className="tb-entry-meter">
+                <div className="tb-entry-meter-fill" />
+              </div>
+            ))}
+          </div>
+        </EntryScreen>
       </div>
     )
   }

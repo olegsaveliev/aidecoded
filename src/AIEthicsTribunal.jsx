@@ -249,6 +249,7 @@ function AIEthicsTribunal({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
 
   const [started, setStarted] = useState(false)
+  const [visibleLines, setVisibleLines] = useState(0)
   const [currentCase, setCurrentCase] = useState(0)
   const [verdict, setVerdict] = useState(null) // 'favor' | 'against' | 'deadlock'
   const [reasoning, setReasoning] = useState('')
@@ -279,6 +280,15 @@ function AIEthicsTribunal({ onSwitchTab, onGoHome }) {
       revealTimerRef.current?.forEach(clearTimeout)
     }
   }, [])
+
+  useEffect(() => {
+    if (started) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [started])
 
   /* ── Handlers ── */
 
@@ -353,12 +363,15 @@ function AIEthicsTribunal({ onSwitchTab, onGoHome }) {
         <EntryScreen
           icon={<ModuleIcon module="ai-ethics-tribunal" size={64} style={{ color: '#F59E0B' }} />}
           title="AI Ethics Tribunal"
-          subtitle="The hardest questions have no easy answers."
+          taglines={['The hardest questions have no easy answers.']}
+          visibleLines={visibleLines}
           description="Six real-world AI cases land on your bench. Hear both sides. Weigh the evidence. Deliver your verdict. Then see how the world actually ruled — and why reasonable people still disagree."
           buttonText="Take the Bench"
+          buttonClassName="entry-screen-btn-game"
           onStart={handleStart}
-        />
-        <div className="aet-entry-meta">6 cases &middot; No wrong answers &middot; Real dilemmas</div>
+        >
+          <div className="aet-entry-meta">6 cases &middot; No wrong answers &middot; Real dilemmas</div>
+        </EntryScreen>
       </div>
     )
   }

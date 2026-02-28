@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useRef } from 'react'
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react'
 import EntryScreen from './EntryScreen.jsx'
 import ModuleIcon from './ModuleIcon.jsx'
 import { CheckIcon, CrossIcon, TipIcon } from './ContentIcons.jsx'
@@ -598,6 +598,7 @@ function CompletionScreen({ wrongGuesses, onPlayAgain, onSwitchTab }) {
 function AICityBuilder({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
   const [started, setStarted] = useState(false)
+  const [visibleLines, setVisibleLines] = useState(0)
   const [caseIndex, setCaseIndex] = useState(0)
   const [solvedCases, setSolvedCases] = useState(new Set())
   const [revealedClues, setRevealedClues] = useState([])
@@ -607,6 +608,15 @@ function AICityBuilder({ onSwitchTab, onGoHome }) {
   const [showLesson, setShowLesson] = useState(false)
   const [gameComplete, setGameComplete] = useState(false)
   const resetTimerRef = useRef(null)
+
+  useEffect(() => {
+    if (started) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [started])
 
   const handleAskQuestion = useCallback((qi) => {
     setRevealedClues((prev) => prev.includes(qi) ? prev : [...prev, qi])
@@ -666,21 +676,24 @@ function AICityBuilder({ onSwitchTab, onGoHome }) {
         <EntryScreen
           icon={<ModuleIcon module="ai-city-builder" size={64} style={{ color: '#F59E0B' }} />}
           title="AI City Builder"
-          subtitle="Solve AI mysteries. Build your city."
+          taglines={['Solve AI mysteries.', 'Build your city.']}
+          visibleLines={visibleLines}
           description="Five citizens report strange AI behavior. Diagnose what went wrong and watch your city grow with every case you crack."
           buttonText="Start Building"
+          buttonClassName="entry-screen-btn-game"
           onStart={() => { setStarted(true); markModuleStarted('ai-city-builder') }}
-        />
-        <div className="acb-entry-meta">5 cases &middot; Beginner Friendly</div>
-        <div className="acb-entry-silhouettes">
-          <svg viewBox="0 0 600 100" width="100%" height="60" preserveAspectRatio="xMidYMax meet">
-            <rect x="40" y="50" width="60" height="50" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
-            <rect x="140" y="35" width="70" height="65" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
-            <rect x="260" y="40" width="80" height="60" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
-            <rect x="390" y="25" width="70" height="75" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
-            <rect x="510" y="5" width="60" height="95" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
-          </svg>
-        </div>
+        >
+          <div className="acb-entry-meta">5 cases &middot; Beginner Friendly</div>
+          <div className="acb-entry-silhouettes">
+            <svg viewBox="0 0 600 100" width="100%" height="60" preserveAspectRatio="xMidYMax meet">
+              <rect x="40" y="50" width="60" height="50" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
+              <rect x="140" y="35" width="70" height="65" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
+              <rect x="260" y="40" width="80" height="60" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
+              <rect x="390" y="25" width="70" height="75" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
+              <rect x="510" y="5" width="60" height="95" rx="2" stroke="var(--text-tertiary)" strokeWidth="1" fill="none" opacity="0.12" strokeDasharray="4 3" />
+            </svg>
+          </div>
+        </EntryScreen>
       </div>
     )
   }

@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  min-height: 60vh;
   padding: 40px 24px;
   background: var(--bg-primary);
 }
@@ -31,7 +31,7 @@
 }
 
 .mtt-entry-tagline {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--text-secondary);
   line-height: 1.6;
   opacity: 0;
@@ -45,14 +45,11 @@
 }
 
 .mtt-entry-briefing {
-  background: rgba(245, 158, 11, 0.06);
-  border-left: 3px solid #F59E0B;
-  border-radius: 12px;
-  padding: 16px 20px;
-  font-size: 14px;
+  max-width: 480px;
+  font-size: 18px;
   color: var(--text-secondary);
   line-height: 1.6;
-  text-align: left;
+  text-align: center;
   margin-bottom: 24px;
 }
 
@@ -1185,10 +1182,6 @@
 }
 
 /* ── Dark Mode ── */
-
-[data-theme="dark"] .mtt-entry-briefing {
-  background: rgba(245, 158, 11, 0.08);
-}
 
 [data-theme="dark"] .mtt-phase-card {
   background: var(--bg-secondary);

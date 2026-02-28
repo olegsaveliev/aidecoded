@@ -209,7 +209,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/HomeScreen.jsx` — Module card grid with filter tags and group labels
 - `src/LandingPage.jsx` — Landing page with neural network canvas (desktop) and hero screen (mobile)
 - `src/NeuralNetworkCanvas.jsx` — Interactive node graph on landing page (force-directed layout, viewBox 960×600)
-- `src/EntryScreen.jsx` — Reusable entry/intro screen for each module
+- `src/EntryScreen.jsx` — Reusable entry/intro screen for each module (props: `icon`, `title`, `subtitle`|`taglines`+`visibleLines`, `description`, `buttonText`, `buttonClassName`, `onStart`, `children`)
 - `src/Quiz.jsx` / `src/Quiz.css` — Reusable quiz component
 - `src/quizData.js` — All quiz question banks
 - `src/Tooltip.jsx` — Info tooltip component
@@ -240,7 +240,7 @@ Browser back/forward buttons work via the History API (`pushState`/`popstate`) u
 - `src/ClaudeCode.jsx` / `src/ClaudeCode.css` — Claude Code tutorial (8 stages: what it is, installation, models, CLAUDE.md, skills, MCP, full stack, workflows)
 - `src/AgentTeams.jsx` / `src/AgentTeams.css` — Agent Teams tutorial (5 stages: solo vs team, architecture, first team, patterns, rough edges). TeamVisualiser SVG, TeamBuilderViz interactive builder, DecisionMatrix quadrant chart, ToolChips with colored dots + descriptions
 - `src/CustomAgents.jsx` / `src/CustomAgents.css` — Custom Agents tutorial (5 stages: what they are, name and description, frontmatter fields, three example agents, comparison). AgentCard component, DescriptionTester interactive, FrontmatterBuilder interactive, three-way comparison table
-- `src/ToolChips.jsx` — Reusable tool chips component with colored dots and click-to-expand descriptions (portal popup, viewport clamped)
+- `src/ToolChips.jsx` — Reusable tool chips component with colored dots and click-to-expand descriptions (portal popup, viewport clamped). Returns `null` when `tools` array is empty — stages with no real tools show no ToolChips section
 - `src/moduleData.js` — Shared ALL_MODULES array + getRandomModules helper
 - `src/SuggestedModules.jsx` — Reusable "What to learn next" cards (used in final screens + quiz end)
 - `src/usePersistedState.js` — Hook to persist module stage/entry state to sessionStorage for logged-in users
@@ -1117,6 +1117,8 @@ padding: 12px 16px;
 **Entry Screen:**
 - Full-width button, reduced padding
 - Icons use explicit `size={48}` (not affected by font-size CSS)
+- Game entry buttons use `.entry-screen-btn-game` class (orange #F59E0B, hover #D97706)
+- Tagline text: `font-size: 16px`, `font-weight: 400`, `color: var(--text-secondary)`
 
 ---
 
@@ -1291,7 +1293,7 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 7. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color, add position to `NEURON_LAYOUT`, add to `NEURON_ANIM_ORDER` (force layout auto-resolves overlaps)
 8. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
 9. Add module to `src/moduleData.js` ALL_MODULES array
-10. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`
+10. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`; for Game modules, also pass `buttonClassName="entry-screen-btn-game"` for orange button
 11. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
 12. All content icons inside colored containers must match the container's border/accent color
 13. Use `border: 1.5px solid transparent` on all filled buttons
@@ -1315,8 +1317,12 @@ const offsetY = (svgRect.height - REF_H * scale) / 2
 - Tag colors (5 colors) drive all module icon coloring — NOT individual accent colors
 - All modules support dark mode via CSS variables
 - Quizzes are 10 questions, +10 points per correct answer
-- Entry screens use the shared `EntryScreen` component with `ModuleIcon` colored by tag color
+- Entry screens use the shared `EntryScreen` component with `ModuleIcon` colored by tag color; game modules pass `buttonClassName="entry-screen-btn-game"` for orange buttons (#F59E0B); non-game modules use default blue (`var(--accent)`)
+- Game entry screens use tagline animation: `taglines` array + `visibleLines` state with staggered `setTimeout` (300ms/600ms/900ms) + cleanup. Taglines: `font-size: 16px`, `font-weight: 400`. CSS: `.entry-screen-tagline` with `opacity`/`transform` transition, `.visible` class applied per line
+- Game entry screen description text: plain centered text (`font-size: 16px`, `color: var(--text-secondary)`, `text-align: center`) — no briefing boxes, no borders, no backgrounds
+- Custom-entry games (AlignmentGame, DrawAndDeceive, AgentOffice, LabelMaster, ModelTrainingTycoon, SystemDesignInterview) have own entry CSS but follow same patterns: `min-height: 60vh`, `padding: 40px 24px`, orange button (#F59E0B), 16px tagline text
 - Visualizations animate on stage activation via `active` prop
+- ToolChips entries must be actual software tools, libraries, frameworks, platforms, or APIs — not company names, techniques, algorithms, parameters, commands, benchmarks, or generic descriptors. When a company name is relevant, use the product name instead (e.g. "Claude" not "Anthropic", "OpenAI API" not "OpenAI"). Empty tool arrays are fine — `ToolChips` returns `null` and the section is hidden
 - Navigation groups are defined in `NavDropdown.jsx` NAV_GROUPS array
 - Icons in colored containers always match the container's accent/border color
 - Semantic icons (CheckIcon=green, CrossIcon=red, TipIcon=yellow) keep their semantic colors

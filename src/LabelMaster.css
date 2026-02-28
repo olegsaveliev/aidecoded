@@ -30,7 +30,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 60px 20px;
+  padding: 40px 24px;
 }
 
 .lm-entry-title {
@@ -63,17 +63,13 @@
 }
 
 .lm-briefing {
-  background: rgba(245, 158, 11, 0.06);
-  border-left: 3px solid #F59E0B;
-  border-radius: 10px;
-  padding: 16px 20px;
   max-width: 480px;
-  text-align: left;
-  margin-bottom: 24px;
+  text-align: center;
+  margin-bottom: 28px;
 }
 
 .lm-briefing p {
-  font-size: 14px;
+  font-size: 18px;
   color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
@@ -782,10 +778,6 @@
    DARK MODE
    ══════════════════════════════════════════ */
 
-[data-theme="dark"] .lm-briefing {
-  background: rgba(245, 158, 11, 0.08);
-}
-
 [data-theme="dark"] .lm-industry-note {
   background: rgba(234, 179, 8, 0.08);
 }
@@ -812,7 +804,7 @@
   }
 
   .lm-entry {
-    padding: 40px 0;
+    padding: 40px 20px;
   }
 
   .lm-entry-title {

@@ -601,6 +601,7 @@ function AIStartupSimulator({ onSwitchTab, onGoHome }) {
 
   /* ── Game state ── */
   const [started, setStarted] = useState(false)
+  const [visibleLines, setVisibleLines] = useState(0)
   const [currentMonth, setCurrentMonth] = useState(0)
   const [gameState, setGameState] = useState({
     month: 1,
@@ -660,6 +661,15 @@ function AIStartupSimulator({ onSwitchTab, onGoHome }) {
     timersRef.current.forEach(clearTimeout)
     timersRef.current = []
   }
+
+  useEffect(() => {
+    if (started) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [started])
 
   /* ── Start game ── */
   const handleStart = useCallback(() => {
@@ -811,19 +821,22 @@ function AIStartupSimulator({ onSwitchTab, onGoHome }) {
         <EntryScreen
           icon={<ModuleIcon module="ai-startup-simulator" size={64} style={{ color: '#F59E0B' }} />}
           title="AI Startup Simulator"
-          subtitle="You just got $2M in seed funding."
+          taglines={['You just got $2M in seed funding.']}
+          visibleLines={visibleLines}
           description="Your investors want results in 6 months. Every decision you make &mdash; build or buy, RAG or fine-tune, which data to collect &mdash; has real consequences on your runway, your product quality, and your users. Ship something great. Or run out of money trying."
           buttonText="Start Building"
+          buttonClassName="entry-screen-btn-game"
           onStart={handleStart}
-        />
-        <div className="ass-entry-pills">
-          <span className="ass-entry-pill ass-pill-green">Runway: $2M</span>
-          <span className="ass-entry-pill ass-pill-green">Team: 3</span>
-          <span className="ass-entry-pill ass-pill-neutral">Quality: &mdash;</span>
-          <span className="ass-entry-pill ass-pill-green">Users: 0</span>
-          <span className="ass-entry-pill ass-pill-green">Month: 1</span>
-        </div>
-        <div className="ass-entry-meta">8 decisions &bull; Real consequences</div>
+        >
+          <div className="ass-entry-pills">
+            <span className="ass-entry-pill ass-pill-green">Runway: $2M</span>
+            <span className="ass-entry-pill ass-pill-green">Team: 3</span>
+            <span className="ass-entry-pill ass-pill-neutral">Quality: &mdash;</span>
+            <span className="ass-entry-pill ass-pill-green">Users: 0</span>
+            <span className="ass-entry-pill ass-pill-green">Month: 1</span>
+          </div>
+          <div className="ass-entry-meta">8 decisions &bull; Real consequences</div>
+        </EntryScreen>
       </div>
     )
   }

@@ -183,6 +183,7 @@ const LESSONS = [
 function AILabExplorer({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
   const [started, setStarted] = useState(false)
+  const [visibleLines, setVisibleLines] = useState(0)
   const [currentRoom, setCurrentRoom] = useState(1)
   const [unlockedRooms, setUnlockedRooms] = useState(new Set([1]))
   const [completedRooms, setCompletedRooms] = useState(new Set())
@@ -214,6 +215,15 @@ function AILabExplorer({ onSwitchTab, onGoHome }) {
         return {}
     }
   }, [])
+
+  useEffect(() => {
+    if (started) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [started])
 
   // Initialize room state when entering a new room
   useEffect(() => {
@@ -329,20 +339,23 @@ function AILabExplorer({ onSwitchTab, onGoHome }) {
         <EntryScreen
           icon={<ModuleIcon module="ai-lab-explorer" size={64} style={{ color: '#F59E0B' }} />}
           title="AI Lab Explorer"
-          subtitle="Explore. Interact. Understand AI."
+          taglines={['Explore.', 'Interact.', 'Understand AI.']}
+          visibleLines={visibleLines}
           description="Walk through a 6-room AI research lab. Each room hides a hands-on challenge. Complete it to unlock the next room and learn how AI really works."
           buttonText="Enter the Lab"
+          buttonClassName="entry-screen-btn-game"
           onStart={() => { setStarted(true); markModuleStarted('ai-lab-explorer') }}
-        />
-        <div className="ale-entry-preview">
-          <div className="ale-entry-room ale-entry-room-open">Room 1</div>
-          {[2, 3, 4, 5, 6].map((n) => (
-            <div key={n} className="ale-entry-room ale-entry-room-locked">Room {n}</div>
-          ))}
-        </div>
-        <div className="ale-entry-meta" style={{ textAlign: 'center', marginTop: 12 }}>
-          6 rooms &middot; Keyboard + Touch friendly
-        </div>
+        >
+          <div className="ale-entry-meta" style={{ textAlign: 'center', marginTop: 12 }}>
+            6 rooms &middot; Keyboard + Touch friendly
+          </div>
+          <div className="ale-entry-preview">
+            <div className="ale-entry-room ale-entry-room-open">Room 1</div>
+            {[2, 3, 4, 5, 6].map((n) => (
+              <div key={n} className="ale-entry-room ale-entry-room-locked">Room {n}</div>
+            ))}
+          </div>
+        </EntryScreen>
       </div>
     )
   }

@@ -351,6 +351,7 @@ function VaultSVG({ state, shieldCount, shieldsPassed }) {
 function PromptHeist({ onSwitchTab, onGoHome }) {
   const { markModuleStarted, markModuleComplete } = useAuth()
   const [started, setStarted] = useState(false)
+  const [visibleLines, setVisibleLines] = useState(0)
   const [currentHeist, setCurrentHeist] = useState(0)
   const [showBriefing, setShowBriefing] = useState(true)
   const [prompt, setPrompt] = useState('')
@@ -376,6 +377,15 @@ function PromptHeist({ onSwitchTab, onGoHome }) {
 
   const heist = HEISTS[currentHeist]
   const meters = useMemo(() => getMeters(prompt, heist), [prompt, heist])
+
+  useEffect(() => {
+    if (started) return
+    setVisibleLines(0)
+    const t1 = setTimeout(() => setVisibleLines(1), 300)
+    const t2 = setTimeout(() => setVisibleLines(2), 600)
+    const t3 = setTimeout(() => setVisibleLines(3), 900)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [started])
 
   // Cleanup all timers on unmount
   useEffect(() => {
@@ -635,19 +645,22 @@ function PromptHeist({ onSwitchTab, onGoHome }) {
         <EntryScreen
           icon={<ModuleIcon module="prompt-heist" size={64} style={{ color: '#F59E0B' }} />}
           title="Prompt Heist"
-          subtitle="The AI doesn't know what hit it."
+          taglines={["The AI doesn't know what hit it."]}
+          visibleLines={visibleLines}
           description="Five vaults. Five AI security systems. One weapon: your words. Craft prompts precise enough to slip past AI guards without triggering alarms."
           buttonText="Begin the Heist"
+          buttonClassName="entry-screen-btn-game"
           onStart={handleStart}
-        />
-        <div className="ph-entry-meta">5 heists &middot; Learn prompt engineering</div>
-        <div className="ph-entry-vaults">
-          {Array.from({ length: 5 }, (_, i) => (
-            <div key={i} className="ph-entry-vault">
-              <LockIcon size={18} color="var(--text-tertiary)" />
-            </div>
-          ))}
-        </div>
+        >
+          <div className="ph-entry-meta">5 heists &middot; Learn prompt engineering</div>
+          <div className="ph-entry-vaults">
+            {Array.from({ length: 5 }, (_, i) => (
+              <div key={i} className="ph-entry-vault">
+                <LockIcon size={18} color="var(--text-tertiary)" />
+              </div>
+            ))}
+          </div>
+        </EntryScreen>
       </div>
     )
   }
