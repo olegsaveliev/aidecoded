@@ -161,10 +161,16 @@
   background: rgba(245, 158, 11, 0.04);
 }
 
-.sdi-scenario-icon {
-  width: 48px;
-  height: 48px;
+.sdi-scenario-top-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 12px;
+}
+
+.sdi-scenario-icon {
+  width: 36px;
+  height: 36px;
 }
 
 .sdi-difficulty-badge {
@@ -173,7 +179,6 @@
   border-radius: 12px;
   font-size: 11px;
   font-weight: 600;
-  margin-bottom: 12px;
 }
 
 .sdi-difficulty-badge.intermediate {
@@ -1307,6 +1312,9 @@
   .sdi-right-panel {
     position: static;
     order: -1;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .sdi-decision-card {

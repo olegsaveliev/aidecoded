@@ -1080,8 +1080,10 @@ function SystemDesignInterview({ onSwitchTab }) {
                 onClick={() => setSelectedScenario(s.id)}
                 onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedScenario(s.id) } }}
               >
-                {SCENARIO_ICONS[s.id]}
-                <span className={`sdi-difficulty-badge ${s.difficultyClass}`}>{s.difficulty}</span>
+                <div className="sdi-scenario-top-row">
+                  {SCENARIO_ICONS[s.id]}
+                  <span className={`sdi-difficulty-badge ${s.difficultyClass}`}>{s.difficulty}</span>
+                </div>
                 <h3>{s.title}</h3>
                 <p className="sdi-scenario-brief">{s.brief}</p>
                 <div className="sdi-tension-pills">
