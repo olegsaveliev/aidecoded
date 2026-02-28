@@ -94,14 +94,14 @@ const AAI_TOOLS = {
     { name: 'LangChain', color: '#5856D6', desc: 'Framework with built-in ReAct agent implementation' },
     { name: 'LlamaIndex', color: '#5856D6', desc: 'Agent framework with step-wise execution' },
     { name: 'OpenAI Assistants API', color: '#0071E3', desc: 'Managed agent loop with tool calling' },
-    { name: 'Anthropic Tool Use', color: '#5856D6', desc: 'Claude tool use for agent-style interactions' },
+    { name: 'Claude Tool Use', color: '#5856D6', desc: 'Claude tool use for agent-style interactions' },
     { name: 'Microsoft Semantic Kernel', color: '#0071E3', desc: 'SDK for AI agent orchestration' },
     { name: 'Haystack', color: '#34C759', desc: 'Open-source framework for building AI pipelines' },
   ],
   2: [
     { name: 'LangChain Tools', color: '#5856D6', desc: 'Pre-built tool integrations for agents' },
     { name: 'OpenAI Function Calling', color: '#0071E3', desc: 'Structured tool calling via function schemas' },
-    { name: 'Anthropic Tool Use', color: '#5856D6', desc: 'Claude structured tool use API' },
+    { name: 'Claude Tool Use', color: '#5856D6', desc: 'Claude structured tool use API' },
     { name: 'Zapier AI Actions', color: '#FF9500', desc: 'Connect agents to 5000+ apps' },
     { name: 'Browser Use', color: '#34C759', desc: 'Open-source browser automation for agents' },
     { name: 'E2B Code Interpreter', color: '#34C759', desc: 'Sandboxed code execution for AI agents' },
@@ -125,7 +125,7 @@ const AAI_TOOLS = {
   5: [
     { name: 'LangChain', color: '#5856D6', desc: 'Most popular agent building framework' },
     { name: 'OpenAI Assistants', color: '#0071E3', desc: 'Quickest way to build a hosted agent' },
-    { name: 'Anthropic Claude', color: '#5856D6', desc: 'Tool use and agentic capabilities built in' },
+    { name: 'Claude', color: '#5856D6', desc: 'Tool use and agentic capabilities built in' },
     { name: 'LlamaIndex', color: '#5856D6', desc: 'Data-aware agent framework' },
     { name: 'Flowise', color: '#34C759', desc: 'Visual drag-and-drop agent builder' },
     { name: 'n8n', color: '#FF9500', desc: 'Workflow automation with AI agent nodes' },
@@ -144,7 +144,7 @@ const AAI_TOOLS = {
     { name: 'AutoGen', color: '#0071E3', desc: 'Microsoft research multi-agent platform' },
     { name: 'LlamaIndex', color: '#5856D6', desc: 'Data agent framework expanding capabilities' },
     { name: 'OpenAI Assistants', color: '#0071E3', desc: 'Managed agent infrastructure' },
-    { name: 'Anthropic Tool Use', color: '#5856D6', desc: 'Advancing agentic capabilities' },
+    { name: 'Claude Tool Use', color: '#5856D6', desc: 'Advancing agentic capabilities' },
   ],
 }
 

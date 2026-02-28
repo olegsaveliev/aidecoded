@@ -39,41 +39,13 @@ const TOOLKIT = [
 /* ─── Tool chips per stage ─── */
 const STAGE_TOOLS = [
   /* Stage 0 */
-  [
-    { name: 'Spec-Driven Development', color: '#34C759', desc: 'Write what you want before AI writes how' },
-    { name: 'CLAUDE.md', color: '#34C759', desc: 'Project-level instructions for Claude Code' },
-    { name: 'Requirements', color: '#34C759', desc: 'What we are building and why' },
-    { name: 'Context window', color: '#34C759', desc: 'The memory limit of any AI conversation' },
-    { name: 'Vibe coding', color: '#34C759', desc: 'Unstructured back-and-forth prompting' },
-  ],
+  [],
   /* Stage 1 */
-  [
-    { name: 'requirements.md', color: '#34C759', desc: 'What we are building and why' },
-    { name: 'design.md', color: '#34C759', desc: 'How we will build it — architecture and data model' },
-    { name: 'tasks.md', color: '#34C759', desc: 'Ordered implementation steps with success conditions' },
-    { name: 'Out of scope', color: '#34C759', desc: 'Explicit fence keeping AI from adding unwanted features' },
-    { name: 'Review gates', color: '#34C759', desc: 'Points where human reviews and approves before AI proceeds' },
-    { name: 'Data model', color: '#34C759', desc: 'The database schema and data structures' },
-    { name: 'Success conditions', color: '#34C759', desc: 'Testable criteria for task completion' },
-  ],
+  [],
   /* Stage 2 */
-  [
-    { name: 'Out of scope', color: '#34C759', desc: 'The fence that keeps AI inside the yard' },
-    { name: 'Success conditions', color: '#34C759', desc: 'Testable definition of done for each task' },
-    { name: 'Testable requirements', color: '#34C759', desc: 'Requirements that can be verified by a test' },
-    { name: 'Task sizing', color: '#34C759', desc: 'Small enough to fit in one context window' },
-    { name: 'AI as drafter', color: '#34C759', desc: 'AI generates documents, human corrects and locks' },
-    { name: 'Human as reviewer', color: '#34C759', desc: 'Your job is reviewer, not author' },
-    { name: 'Definition of done', color: '#34C759', desc: 'Clear criteria for when a task is complete' },
-  ],
+  [],
   /* Stage 3 */
-  [
-    { name: 'requirements.md', color: '#34C759', desc: 'Complete requirements example' },
-    { name: 'design.md', color: '#34C759', desc: 'Complete design example' },
-    { name: 'tasks.md', color: '#34C759', desc: 'Complete task breakdown example' },
-    { name: 'Implementation prompt', color: '#34C759', desc: 'The single prompt that drives the entire build' },
-    { name: 'Living documentation', color: '#34C759', desc: 'Specs that outlive any chat session' },
-  ],
+  [],
 ]
 
 /* ─── Spec Transformer (split panel visualization) ─── */

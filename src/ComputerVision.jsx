@@ -22,11 +22,9 @@ const CV_TOOLS = {
     { name: 'scikit-image', color: '#5856D6', desc: 'Image processing algorithms built on NumPy' },
   ],
   1: [
-    { name: 'RGB', color: '#5856D6', desc: 'Red-Green-Blue colour model used by displays' },
     { name: 'PyTorch tensor', color: '#5856D6', desc: 'Multi-dimensional array for neural network input' },
     { name: 'NumPy array', color: '#5856D6', desc: 'N-dimensional array for numerical operations' },
     { name: 'torchvision.transforms', color: '#5856D6', desc: 'Image transformation pipeline for preprocessing' },
-    { name: 'Normalize', color: '#5856D6', desc: 'Scale pixel values for stable training' },
   ],
   2: [
     { name: 'torch.nn.Conv2d', color: '#5856D6', desc: '2D convolution layer in PyTorch' },
@@ -39,14 +37,11 @@ const CV_TOOLS = {
     { name: 'torch.nn.MaxPool2d', color: '#5856D6', desc: 'Max pooling layer to downsample feature maps' },
     { name: 'AvgPool2d', color: '#5856D6', desc: 'Average pooling layer for smoother downsampling' },
     { name: 'AdaptiveAvgPool2d', color: '#5856D6', desc: 'Global average pooling to a target output size' },
-    { name: 'stride', color: '#5856D6', desc: 'Step size for filter movement across the image' },
   ],
   4: [
     { name: 'torch.nn.Conv2d', color: '#5856D6', desc: '2D convolution layer' },
     { name: 'MaxPool2d', color: '#5856D6', desc: 'Max pooling layer' },
     { name: 'Linear', color: '#5856D6', desc: 'Fully connected layer' },
-    { name: 'Softmax', color: '#5856D6', desc: 'Converts logits to probabilities' },
-    { name: 'ReLU', color: '#5856D6', desc: 'Rectified Linear Unit activation function' },
     { name: 'torchsummary', color: '#5856D6', desc: 'Print model architecture summary' },
   ],
   5: [
@@ -55,7 +50,6 @@ const CV_TOOLS = {
     { name: 'RandomRotation', color: '#5856D6', desc: 'Randomly rotate images by a given angle' },
     { name: 'ColorJitter', color: '#5856D6', desc: 'Randomly change brightness, contrast, saturation' },
     { name: 'DataLoader', color: '#5856D6', desc: 'Batch and shuffle training data efficiently' },
-    { name: 'pretrained=True', color: '#5856D6', desc: 'Load ImageNet pretrained weights' },
   ],
   6: [
     { name: 'torchvision.models', color: '#5856D6', desc: 'Pre-built model architectures in PyTorch' },

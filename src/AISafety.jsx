@@ -19,15 +19,11 @@ const AIS_TOOLS = {
     { name: 'Perplexity', color: '#34C759', desc: 'Search-augmented AI that cites sources' },
   ],
   1: [
-    { name: 'OpenAI', color: '#34C759', desc: 'GPT model family with known hallucination patterns' },
-    { name: 'Anthropic', color: '#34C759', desc: 'Claude models with constitutional AI safety training' },
-    { name: 'Google', color: '#34C759', desc: 'Gemini models with factuality benchmarks' },
     { name: 'Hugging Face', color: '#34C759', desc: 'Open-source model hub for safety research' },
   ],
   2: [
     { name: 'Perplexity', color: '#34C759', desc: 'AI search engine that cites and verifies sources' },
     { name: 'You.com', color: '#34C759', desc: 'AI search with source attribution' },
-    { name: 'Grounding tools', color: '#34C759', desc: 'Frameworks for anchoring AI to verified facts' },
   ],
   3: [
     { name: 'GPT-4', color: '#34C759', desc: 'Strong instruction following for safety prompts' },

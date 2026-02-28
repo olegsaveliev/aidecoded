@@ -33,8 +33,6 @@ const DL_TOOLS = {
   3: [
     { name: 'PyTorch autograd', color: '#5856D6', desc: 'Automatic differentiation engine for PyTorch' },
     { name: 'TensorFlow GradientTape', color: '#5856D6', desc: 'Records ops for automatic differentiation' },
-    { name: 'Adam Optimizer', color: '#5856D6', desc: 'Adaptive learning rate optimizer, the go-to default' },
-    { name: 'LR Schedulers', color: '#5856D6', desc: 'Adjust learning rate during training for better convergence' },
   ],
   4: [
     { name: 'PyTorch Conv2d', color: '#5856D6', desc: '2D convolution layer for image processing' },
@@ -50,7 +48,6 @@ const DL_TOOLS = {
   ],
   6: [
     { name: 'PyTorch BatchNorm', color: '#5856D6', desc: 'Batch normalization layer for stable training' },
-    { name: 'Dropout', color: '#5856D6', desc: 'Regularization technique to prevent overfitting' },
     { name: 'Weights & Biases', color: '#5856D6', desc: 'ML experiment tracking and visualization' },
     { name: 'fast.ai', color: '#5856D6', desc: 'High-level library making DL accessible to all' },
   ],

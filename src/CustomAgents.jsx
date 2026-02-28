@@ -41,70 +41,15 @@ const TOOLKIT = [
 /* ─── Tool chips per stage ─── */
 const STAGE_TOOLS = [
   /* Stage 0: What They Are */
-  [
-    { name: '/agents', color: '#5856D6', desc: 'Interactive command to create, list, and manage custom agents' },
-    { name: '.claude/agents/', color: '#5856D6', desc: 'Project-scope agent folder — shared with team via git' },
-    { name: '~/.claude/agents/', color: '#5856D6', desc: 'Personal-scope agent folder — available in all your projects' },
-    { name: '.md file', color: '#5856D6', desc: 'Markdown file format: YAML frontmatter + instructions body' },
-    { name: 'custom agent', color: '#5856D6', desc: 'A specialist AI assistant you define in one Markdown file' },
-    { name: 'auto-delegation', color: '#5856D6', desc: 'Claude routes tasks to agents automatically based on description' },
-    { name: 'context window', color: '#5856D6', desc: 'Each agent gets its own clean context — does not share with main session' },
-    { name: 'Task tool', color: '#5856D6', desc: 'The underlying mechanism Claude uses to delegate work to agents' },
-  ],
+  [],
   /* Stage 1: Name & Description */
-  [
-    { name: 'name field', color: '#5856D6', desc: 'Becomes the /slash-command — must be lowercase, hyphens only' },
-    { name: 'description field', color: '#5856D6', desc: 'The most important field — tells Claude when to auto-delegate' },
-    { name: 'auto-routing', color: '#5856D6', desc: 'Claude reads descriptions and matches against current task' },
-    { name: 'multi-line YAML', color: '#5856D6', desc: 'Use | for multi-line descriptions with explicit trigger situations' },
-    { name: '/slash-command', color: '#5856D6', desc: 'Direct invocation: /agent-name runs the agent explicitly' },
-    { name: 'trigger context', color: '#5856D6', desc: 'List specific situations where agent should activate' },
-    { name: 'proactive hints', color: '#5856D6', desc: 'Tell Claude to invoke agent after certain actions, not just on direct request' },
-  ],
+  [],
   /* Stage 2: Frontmatter Fields */
-  [
-    { name: 'tools field', color: '#5856D6', desc: 'Controls which tools the agent can access — principle of least privilege' },
-    { name: 'Read', color: '#5856D6', desc: 'Read files — always include this for any agent' },
-    { name: 'Write', color: '#5856D6', desc: 'Create and overwrite files' },
-    { name: 'Edit', color: '#5856D6', desc: 'Make targeted edits to existing files' },
-    { name: 'Bash', color: '#5856D6', desc: 'Run shell commands — can be scoped with Bash(pattern)' },
-    { name: 'Glob', color: '#5856D6', desc: 'Find files by glob patterns' },
-    { name: 'Grep', color: '#5856D6', desc: 'Search file contents with regex' },
-    { name: 'model: haiku/sonnet/opus', color: '#5856D6', desc: 'Match model capability to task complexity' },
-    { name: 'color field', color: '#5856D6', desc: 'Visual identifier in TUI — use consistent colors across team' },
-    { name: 'memory field', color: '#5856D6', desc: 'Persistent memory across sessions: user, project, or local' },
-    { name: '~/.claude/memory/', color: '#5856D6', desc: 'Where user-scope memory is stored' },
-    { name: 'least privilege', color: '#5856D6', desc: 'Give agents only the tools they actually need' },
-    { name: 'Bash(git *)', color: '#5856D6', desc: 'Scoped Bash — restrict to specific command patterns' },
-  ],
+  [],
   /* Stage 3: Three Agents */
-  [
-    { name: 'security-auditor', color: '#5856D6', desc: 'Read-only reviewer using opus with project memory' },
-    { name: 'test-writer', color: '#5856D6', desc: 'Test generation specialist on sonnet with scoped Bash' },
-    { name: 'doc-generator', color: '#5856D6', desc: 'Documentation specialist on sonnet with user memory' },
-    { name: 'OWASP', color: '#5856D6', desc: 'Top 10 web application security risks reference' },
-    { name: 'regression test', color: '#5856D6', desc: 'Test written to prevent a fixed bug from recurring' },
-    { name: 'git diff', color: '#5856D6', desc: 'See recent code changes — scoped Bash pattern' },
-    { name: 'npm test', color: '#5856D6', desc: 'Run project test suite — scoped Bash pattern' },
-    { name: 'JSDoc', color: '#5856D6', desc: 'JavaScript documentation annotation format' },
-    { name: 'Read CLAUDE.md', color: '#5856D6', desc: 'Ground the agent in project conventions first' },
-    { name: 'memory: user', color: '#5856D6', desc: 'Style preferences persist across all projects' },
-    { name: 'memory: project', color: '#5856D6', desc: 'Build up project-specific knowledge over time' },
-    { name: 'copy to clipboard', color: '#5856D6', desc: 'Copy full agent file content — ready to save' },
-  ],
+  [],
   /* Stage 4: Comparison */
-  [
-    { name: '.claude/agents/', color: '#5856D6', desc: 'Project scope — shared with team via git' },
-    { name: 'name field', color: '#5856D6', desc: 'Becomes /slash-command for direct invocation' },
-    { name: 'description field', color: '#5856D6', desc: 'Controls when Claude auto-delegates' },
-    { name: 'tools field', color: '#5856D6', desc: 'Principle of least privilege for agent capabilities' },
-    { name: 'model routing', color: '#5856D6', desc: 'Different models for different agent tasks' },
-    { name: 'memory', color: '#5856D6', desc: 'Cross-session learning: user, project, or local' },
-    { name: 'color', color: '#5856D6', desc: 'Visual identity in Claude Code TUI' },
-    { name: '/agents command', color: '#5856D6', desc: 'Interactive agent creation and management' },
-    { name: 'auto-delegation', color: '#5856D6', desc: 'Claude routes tasks based on description match' },
-    { name: 'least privilege', color: '#5856D6', desc: 'Give agents only the tools they need' },
-  ],
+  [],
 ]
 
 /* ─── Example agents for Stage 4 ─── */

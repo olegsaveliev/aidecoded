@@ -65,7 +65,6 @@ const TOOLS_BY_STAGE = {
     { name: 'Dolma', color: '#34c759', desc: 'Open source cleaned dataset by AI2' },
     { name: 'FineWeb', color: '#ff9500', desc: "HuggingFace's cleaned CommonCrawl" },
     { name: 'fastText', color: '#5856d6', desc: 'Language detection and filtering' },
-    { name: 'MinHash', color: '#636366', desc: 'Duplicate detection algorithm' },
   ],
   tokenization: [
     { name: 'tiktoken', color: '#1c1c1e', desc: 'Fast BPE tokenizer by OpenAI' },
@@ -88,11 +87,8 @@ const TOOLS_BY_STAGE = {
     { name: 'LLaMA Factory', color: '#0071e3', desc: 'Fine-tune open source models easily' },
   ],
   rlhf: [
-    { name: 'PPO Algorithm', color: '#0071e3', desc: 'Proximal Policy Optimization, core RL algo' },
     { name: 'TRL', color: '#ff9500', desc: 'Transformer Reinforcement Learning (HuggingFace)' },
-    { name: 'Reward Model', color: '#5856d6', desc: 'Separate model that scores responses' },
     { name: 'Scale AI', color: '#1c1c1e', desc: 'Human labeling at scale' },
-    { name: 'Constitutional AI', color: '#af52de', desc: 'AI feedback instead of human (Anthropic)' },
   ],
 }
 

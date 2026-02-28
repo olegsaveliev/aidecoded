@@ -735,53 +735,18 @@ const STAGE_TOOLS = [
   /* Stage 0: What Are Agent Teams? */
   [
     { name: 'Claude Code', color: '#5856D6', desc: 'Anthropic\'s CLI tool for coding with Claude' },
-    { name: 'Agent Teams', color: '#5856D6', desc: 'Multiple Claude Code sessions working in parallel on one task' },
-    { name: 'Opus 4.6', color: '#AF52DE', desc: 'Claude\'s most capable model — required for team lead' },
-    { name: 'Parallel execution', color: '#34C759', desc: 'Teammates work simultaneously instead of sequentially' },
-    { name: 'Context windows', color: '#FF9500', desc: 'Each teammate gets its own full context window' },
   ],
   /* Stage 1: Architecture */
   [
-    { name: 'TeamCreate', color: '#5856D6', desc: 'Tool the lead uses to spawn a new teammate session' },
-    { name: 'TeammateTool', color: '#5856D6', desc: 'Internal tool teammates use to communicate with the lead' },
-    { name: 'TaskCreate', color: '#34C759', desc: 'Creates a task on the shared task list file' },
-    { name: 'TaskUpdate', color: '#34C759', desc: 'Marks a task as in-progress, done, or blocked' },
-    { name: 'MessageSend', color: '#0071E3', desc: 'Sends a direct message between teammates via mailbox files' },
-    { name: 'delegate mode', color: '#FF9500', desc: 'Restricts the lead to coordination only — no code editing' },
-    { name: 'Shift+Tab', color: '#FF9500', desc: 'Keyboard shortcut to toggle delegate mode in Claude Code' },
-    { name: 'split panes', color: '#8E8E93', desc: 'Terminal panes (tmux/iTerm) to watch teammates work live' },
     { name: 'tmux', color: '#8E8E93', desc: 'Terminal multiplexer — view all agent sessions at once' },
   ],
   /* Stage 2: Setup */
-  [
-    { name: 'settings.json', color: '#5856D6', desc: 'Claude Code config file where you enable experimental features' },
-    { name: 'AGENT_TEAMS flag', color: '#5856D6', desc: 'Environment variable that enables the agent teams feature' },
-    { name: 'TeamCreate', color: '#34C759', desc: 'Tool the lead uses to spawn a new teammate session' },
-    { name: 'role assignment', color: '#FF9500', desc: 'Give each teammate a specific focus area in the system prompt' },
-    { name: 'file ownership', color: '#FF9500', desc: 'Each teammate only edits files in its assigned scope' },
-    { name: 'plan mode', color: '#0071E3', desc: 'Lead plans the approach first, then spawns teammates to execute' },
-    { name: 'delegate mode', color: '#0071E3', desc: 'Restricts the lead to coordination only — no code editing' },
-  ],
+  [],
   /* Stage 3: Patterns */
-  [
-    { name: 'parallel exploration', color: '#5856D6', desc: 'Multiple agents research different angles at the same time' },
-    { name: 'layer split', color: '#5856D6', desc: 'Divide work by stack layer — frontend, backend, tests' },
-    { name: 'QA swarm', color: '#5856D6', desc: 'Read-only agents review code in parallel for fast feedback' },
-    { name: 'file ownership', color: '#FF9500', desc: 'Prevent merge conflicts by assigning files to one agent only' },
-    { name: 'peer messaging', color: '#0071E3', desc: 'Teammates message each other directly via mailbox files' },
-    { name: 'delegate mode', color: '#0071E3', desc: 'Restricts the lead to coordination only — no code editing' },
-    { name: 'dependency tasks', color: '#34C759', desc: 'Tasks that block until a prerequisite task is completed' },
-    { name: 'synthesis', color: '#34C759', desc: 'Lead collects and merges results from all teammates' },
-  ],
+  [],
   /* Stage 4: Rough Edges */
   [
-    { name: 'delegate mode', color: '#5856D6', desc: 'Restricts the lead to coordination only — no code editing' },
-    { name: 'task status', color: '#34C759', desc: 'Track what each teammate is doing via the shared task file' },
-    { name: '/resume', color: '#FF9500', desc: 'Resume a Claude Code session — teammates do not persist' },
-    { name: 'cleanup', color: '#FF9500', desc: 'Teammates may leave temp files — review after shutdown' },
-    { name: 'cost awareness', color: '#FF3B30', desc: 'Each teammate uses its own tokens — teams cost more' },
-    { name: 'file ownership', color: '#0071E3', desc: 'Prevent merge conflicts by assigning files to one agent only' },
-    { name: 'split panes', color: '#8E8E93', desc: 'Terminal panes to monitor all teammate sessions at once' },
+    { name: 'tmux', color: '#8E8E93', desc: 'Terminal multiplexer — view all agent sessions at once' },
   ],
 ]
 
