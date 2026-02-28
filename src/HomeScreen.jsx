@@ -279,6 +279,15 @@ const CARDS = [
     difficulty: 'Strategic',
   },
   {
+    id: 'system-design-interview',
+    group: 'Play',
+    tag: 'Game',
+    title: 'System Design Interview',
+    description: 'You are in the interview room. Design a real AI system across 7 architecture decisions. Two interviewers push back on every choice. Then your design faces three live incidents. Three scenarios, all replayable. Learn trade-offs by living them.',
+    isGame: true,
+    difficulty: 'Strategic',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',

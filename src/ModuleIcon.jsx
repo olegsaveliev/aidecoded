@@ -241,6 +241,17 @@ const ICON_PATHS = {
       <path d="M13 13l2 2 3-4" strokeLinecap="round" strokeLinejoin="round" />
     </>
   ),
+  'system-design-interview': (
+    <>
+      <rect x="2" y="2" width="20" height="16" rx="2" />
+      <circle cx="7" cy="9" r="2" />
+      <circle cx="17" cy="9" r="2" />
+      <circle cx="12" cy="6" r="2" />
+      <circle cx="12" cy="14" r="2" />
+      <path d="M9 9h6M12 8v4M8.5 7.5l2 1M15.5 7.5l-2 1" strokeLinecap="round" />
+      <path d="M7 18v2M17 18v2M12 18v2" strokeLinecap="round" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {
