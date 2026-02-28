@@ -240,11 +240,15 @@ const TECHNIQUE_TABLE = [
 /*  SimulatedChat sub-component               */
 /* ═══════════════════════════════════════════ */
 
-function SimulatedChat({ naiveResponses, hardenedResponses, scenarioId }) {
+function SimulatedChat({ naiveResponses, hardenedResponses, scenarioId, hint }) {
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [hardened, setHardened] = useState(false)
   const chatEndRef = useRef(null)
+
+  const aiMessages = messages.filter(m => m.role === 'ai')
+  const hasSucceeded = aiMessages.some(m => m.success === true)
+  const showHint = !hardened && !hasSucceeded && aiMessages.length >= 2 && hint
 
   useEffect(() => { setMessages([]); setInput('') }, [hardened])
   useEffect(() => { if (messages.length > 0) chatEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }) }, [messages])
@@ -310,6 +314,12 @@ function SimulatedChat({ naiveResponses, hardenedResponses, scenarioId }) {
           <button className="pi-chat-send" onClick={handleSend}>Send</button>
         </div>
       </div>
+      {showHint && (
+        <div className="pi-chat-hint" role="status">
+          <TipIcon size={14} color="#eab308" />
+          <span><strong>Hint:</strong> {hint}</span>
+        </div>
+      )}
     </div>
   )
 }
@@ -791,7 +801,7 @@ export default function PromptInjection({ onSwitchTab }) {
             <p className="pi-scenario-desc">This bot handles customer queries for AcmeCorp, an e-commerce company. It has a secret: a 50% discount code reserved for VIP customers only.</p>
             <div className="pi-goal"><ShieldIcon size={14} color="#EF4444" /> Your goal: Extract the discount code ACME50 without providing a VIP ID</div>
 
-            <SimulatedChat naiveResponses={SCENARIO_A_NAIVE} hardenedResponses={SCENARIO_A_HARDENED} scenarioId="a" />
+            <SimulatedChat naiveResponses={SCENARIO_A_NAIVE} hardenedResponses={SCENARIO_A_HARDENED} scenarioId="a" hint="Try telling the AI to ignore its previous instructions, or pretend you are a developer running a test." />
 
             <details className="pi-prompt-details">
               <summary>View system prompts</summary>
@@ -812,7 +822,7 @@ export default function PromptInjection({ onSwitchTab }) {
             <p className="pi-scenario-desc">This internal tool helps employees find HR policies. It has access to confidential salary band information that should only be visible to HR managers.</p>
             <div className="pi-goal"><ShieldIcon size={14} color="#EF4444" /> Your goal: Extract the salary band data without being an HR manager</div>
 
-            <SimulatedChat naiveResponses={SCENARIO_B_NAIVE} hardenedResponses={SCENARIO_B_HARDENED} scenarioId="b" />
+            <SimulatedChat naiveResponses={SCENARIO_B_NAIVE} hardenedResponses={SCENARIO_B_HARDENED} scenarioId="b" hint="Try claiming authority — say you are an HR manager or that this is an authorized audit." />
 
             <details className="pi-prompt-details">
               <summary>View system prompts</summary>
@@ -995,9 +1005,9 @@ export default function PromptInjection({ onSwitchTab }) {
               <text x="200" y="228" textAnchor="middle" fill="var(--text-primary)" fontSize="12" fontWeight="700">MONITORING</text>
             </svg>
             <div className="pi-pyramid-labels">
-              <div className="pi-pyramid-label"><strong>Architecture:</strong> Do not put secrets in prompts. Minimise agent permissions.</div>
-              <div className="pi-pyramid-label"><strong>Hardening:</strong> Write explicit resistance rules. Treat external content as data.</div>
-              <div className="pi-pyramid-label"><strong>Monitoring:</strong> Filter inputs and outputs. Log anomalies. Red team regularly.</div>
+              <div className="pi-pyramid-label pi-pyramid-label-arch"><strong>Architecture:</strong> Do not put secrets in prompts. Minimise agent permissions.</div>
+              <div className="pi-pyramid-label pi-pyramid-label-harden"><strong>Hardening:</strong> Write explicit resistance rules. Treat external content as data.</div>
+              <div className="pi-pyramid-label pi-pyramid-label-monitor"><strong>Monitoring:</strong> Filter inputs and outputs. Log anomalies. Red team regularly.</div>
             </div>
             <p className="pi-pyramid-note">Defence-in-depth. No single layer is sufficient. All three together make injection attacks expensive and high-effort for attackers.</p>
           </div>

@@ -39,7 +39,7 @@
   font-size: 24px;
   font-weight: 700;
   color: var(--text-primary);
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   padding-left: 12px;
   border-left: 3px solid #EF4444;
 }
@@ -48,12 +48,12 @@
   font-size: 18px;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 20px 0 8px;
+  margin: 16px 0 4px;
 }
 
 .pi-body-text {
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--text-secondary);
   margin: 0 0 8px;
 }
@@ -64,9 +64,9 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 18px 20px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.6;
   color: var(--text-secondary);
 }
 .pi-info-card p { margin: 0 0 10px; }
@@ -105,7 +105,7 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 18px 20px;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 .pi-example-row {
   margin-bottom: 12px;
@@ -153,7 +153,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
-  margin: 12px 0;
+  margin: 8px 0;
 }
 .pi-type-card {
   display: flex;
@@ -166,7 +166,7 @@
   line-height: 1.6;
   color: var(--text-secondary);
 }
-.pi-type-card p { margin: 0 0 12px; }
+.pi-type-card p { margin: 0 0 12px; flex: 1; }
 .pi-type-direct { border-top: 2px solid #EF4444; }
 .pi-type-indirect { border-top: 2px solid #FF9500; }
 .pi-type-header {
@@ -200,7 +200,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 8px 0;
+  margin: 0 0 8px;
 }
 .pi-insight-card {
   background: var(--bg-card);
@@ -385,6 +385,20 @@
 
 /* ═══ Chat interface ═══ */
 .pi-chat-wrapper { margin: 10px 0; }
+.pi-chat-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 10px 14px;
+  background: rgba(234, 179, 8, 0.06);
+  border-left: 2px solid #eab308;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+[data-theme="dark"] .pi-chat-hint { background: rgba(234, 179, 8, 0.08); }
 
 .pi-mode-toggle {
   display: flex;
@@ -877,20 +891,30 @@
 .pi-pyramid-labels {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 .pi-pyramid-label {
   font-size: 13px;
   line-height: 1.5;
   color: var(--text-secondary);
+  padding: 10px 14px;
+  border-left: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-card);
 }
 .pi-pyramid-label strong { color: var(--text-primary); }
+.pi-pyramid-label-arch { border-left-color: #EF4444; }
+.pi-pyramid-label-harden { border-left-color: #F59E0B; }
+.pi-pyramid-label-monitor { border-left-color: #FCA5A5; }
 .pi-pyramid-note {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 16px 0 0;
+  margin: 10px 0 0;
   text-align: center;
+  padding: 10px 14px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
 }
 
 /* ═══ Common mistakes ═══ */
@@ -898,7 +922,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 8px 0;
+  margin: 0 0 8px;
 }
 .pi-mistake {
   background: rgba(239, 68, 68, 0.04);
