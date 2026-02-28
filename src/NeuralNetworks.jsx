@@ -59,8 +59,6 @@ const NN_TOOLS = {
     { name: 'PyTorch nn.Linear', color: '#5856D6', desc: 'Applies a linear transformation with weights and bias' },
     { name: 'TensorFlow Dense', color: '#5856D6', desc: 'Fully-connected layer with configurable weights' },
     { name: 'Keras weights', color: '#5856D6', desc: 'Access and modify layer weights directly' },
-    { name: 'Xavier init', color: '#5856D6', desc: 'Weight initialisation scaled by layer width' },
-    { name: 'He init', color: '#5856D6', desc: 'Weight initialisation designed for ReLU networks' },
     { name: 'NumPy random', color: '#5856D6', desc: 'Generate random weight matrices for experiments' },
   ],
   2: [
@@ -68,29 +66,19 @@ const NN_TOOLS = {
     { name: 'tf.nn.relu', color: '#5856D6', desc: 'TensorFlow ReLU activation' },
     { name: 'F.sigmoid', color: '#5856D6', desc: 'Apply sigmoid activation function' },
     { name: 'torch.tanh', color: '#5856D6', desc: 'Apply hyperbolic tangent activation' },
-    { name: 'GELU', color: '#5856D6', desc: 'Gaussian Error Linear Unit used in transformers' },
-    { name: 'Softmax', color: '#5856D6', desc: 'Output probability distribution for classification' },
   ],
   3: [
     { name: 'PyTorch nn.Sequential', color: '#5856D6', desc: 'Stack layers sequentially for forward pass' },
     { name: 'Keras Sequential', color: '#5856D6', desc: 'Linear stack of layers for simple models' },
     { name: 'nn.Linear', color: '#5856D6', desc: 'Fully connected layer (dense)' },
     { name: 'Conv2d', color: '#5856D6', desc: 'Convolutional layer for image processing' },
-    { name: 'Transformer layers', color: '#5856D6', desc: 'Self-attention layers used in LLMs' },
   ],
-  4: [
-    { name: 'model.forward()', color: '#5856D6', desc: 'Run input through the network to get prediction' },
-    { name: 'model(x)', color: '#5856D6', desc: 'Shorthand for forward pass in PyTorch' },
-    { name: 'model.predict', color: '#5856D6', desc: 'Keras/TF method for inference' },
-    { name: 'torch.mm', color: '#5856D6', desc: 'Matrix multiplication for manual forward pass' },
-    { name: 'F.relu', color: '#5856D6', desc: 'Apply ReLU between layers during forward pass' },
-  ],
+  4: [],
   5: [
     { name: 'nn.BCELoss', color: '#5856D6', desc: 'Binary Cross-Entropy loss for classification' },
     { name: 'nn.MSELoss', color: '#5856D6', desc: 'Mean Squared Error loss for regression' },
     { name: 'nn.CrossEntropyLoss', color: '#5856D6', desc: 'Multi-class classification loss' },
     { name: 'tf.keras losses', color: '#5856D6', desc: 'TensorFlow loss function library' },
-    { name: 'Huber loss', color: '#5856D6', desc: 'Robust loss less sensitive to outliers' },
   ],
   6: [
     { name: 'loss.backward()', color: '#5856D6', desc: 'Compute gradients via automatic differentiation' },
@@ -98,15 +86,11 @@ const NN_TOOLS = {
     { name: 'optimizer.zero_grad()', color: '#5856D6', desc: 'Reset gradients before each training step' },
     { name: 'autograd', color: '#5856D6', desc: 'PyTorch automatic differentiation engine' },
     { name: 'GradientTape', color: '#5856D6', desc: 'TensorFlow gradient recording context' },
-    { name: 'Adam', color: '#5856D6', desc: 'Adaptive optimiser combining momentum and RMSProp' },
   ],
   7: [
     { name: 'model.train()', color: '#5856D6', desc: 'Set model to training mode (enables dropout, etc.)' },
     { name: 'DataLoader', color: '#5856D6', desc: 'PyTorch batching and shuffling utility' },
     { name: 'model.fit()', color: '#5856D6', desc: 'Keras one-line training loop' },
-    { name: 'AdamW', color: '#5856D6', desc: 'Adam with weight decay, standard for LLMs' },
-    { name: 'cosine scheduler', color: '#5856D6', desc: 'Learning rate decay following cosine curve' },
-    { name: 'early stopping', color: '#5856D6', desc: 'Stop training when validation loss stops improving' },
   ],
 }
 

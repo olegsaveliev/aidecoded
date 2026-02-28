@@ -39,8 +39,6 @@ const RUH_TOOLS = {
     { name: 'Pinecone', color: '#8E8E93', desc: 'Managed vector database' },
     { name: 'Weaviate', color: '#8E8E93', desc: 'Open-source vector database' },
     { name: 'ChromaDB', color: '#8E8E93', desc: 'Embedding database' },
-    { name: 'OpenAI', color: '#8E8E93', desc: 'LLM and embedding provider' },
-    { name: 'Anthropic', color: '#8E8E93', desc: 'LLM provider' },
   ],
   1: [
     { name: 'LangChain RecursiveTextSplitter', color: '#5856D6', desc: 'Recursive document splitting' },
@@ -77,8 +75,6 @@ const RUH_TOOLS = {
     { name: 'Pinecone hybrid', color: '#8E8E93', desc: 'Built-in hybrid search' },
     { name: 'Weaviate hybrid', color: '#8E8E93', desc: 'Combined BM25 and vector search' },
     { name: 'Elasticsearch', color: '#8E8E93', desc: 'Full-text and vector search engine' },
-    { name: 'BM25Okapi', color: '#8E8E93', desc: 'Classic keyword ranking algorithm' },
-    { name: 'RRF fusion', color: '#8E8E93', desc: 'Reciprocal rank fusion for merging results' },
   ],
   5: [
     { name: 'Pinecone metadata filtering', color: '#5856D6', desc: 'Server-side metadata filters' },

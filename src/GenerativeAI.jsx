@@ -155,7 +155,6 @@ const GAI_TOOLS = {
     { name: 'Gemini Ultra', color: '#FF9500', desc: 'Google\u2019s most capable multimodal AI model' },
     { name: 'Claude', color: '#FF9500', desc: 'Anthropic\u2019s frontier conversational AI' },
     { name: 'Sora', color: '#FF9500', desc: 'OpenAI\u2019s text-to-video generation model' },
-    { name: 'World Labs', color: '#FF9500', desc: 'Fei-Fei Li\u2019s spatial intelligence AI company' },
     { name: 'Runway', color: '#FF9500', desc: 'Real-time creative AI tools and video generation' },
   ],
 }

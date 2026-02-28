@@ -66,7 +66,6 @@ const TOOLKIT = [
 ]
 
 const TOOLS_0 = [
-  { name: 'Anthropic', color: ACCENT, desc: 'Creator of Claude and Claude Code' },
   { name: 'Claude Code CLI', color: ACCENT, desc: 'Terminal-based agentic coding tool' },
   { name: 'VS Code', color: '#0071E3', desc: 'IDE integration for Claude Code' },
   { name: 'JetBrains', color: '#FF9500', desc: 'IntelliJ/WebStorm integration' },
@@ -76,42 +75,15 @@ const TOOLS_0 = [
 
 const TOOLS_1 = [
   { name: 'claude CLI', color: ACCENT, desc: 'The main Claude Code binary' },
-  { name: '/init', color: ACCENT, desc: 'Generate CLAUDE.md for your project' },
-  { name: '/doctor', color: '#0071E3', desc: 'Run 8 health checks in 5 seconds' },
-  { name: '/help', color: '#FF9500', desc: 'Show all available commands' },
-  { name: '/clear', color: '#6e6e73', desc: 'Reset conversation context' },
-  { name: '/compact', color: '#AF52DE', desc: 'Summarise and compress context' },
 ]
 
-const TOOLS_2 = [
-  { name: 'claude-sonnet-4-6', color: ACCENT, desc: 'Fast, capable general-purpose model' },
-  { name: 'claude-opus-4-6', color: '#5856D6', desc: 'Flagship model for hard problems' },
-  { name: 'claude-haiku-4-5', color: '#F59E0B', desc: 'Very fast model for quick tasks' },
-  { name: '/model', color: '#0071E3', desc: 'Switch model during a session' },
-  { name: '/config', color: '#6e6e73', desc: 'View and edit all settings' },
-  { name: 'extended thinking', color: '#FF9500', desc: 'Step-by-step reasoning for hard tasks' },
-]
+const TOOLS_2 = []
 
-const TOOLS_3 = [
-  { name: 'CLAUDE.md', color: ACCENT, desc: 'Project-level persistent memory file' },
-  { name: '/init', color: '#0071E3', desc: 'Auto-generate CLAUDE.md from project' },
-  { name: '/memory', color: '#FF9500', desc: 'Open CLAUDE.md for editing' },
-  { name: '@import', color: '#AF52DE', desc: 'Include other files in CLAUDE.md' },
-  { name: '# quick memory', color: '#F59E0B', desc: 'Prefix any message with # to save' },
-  { name: 'global memory', color: '#6e6e73', desc: '~/.claude/CLAUDE.md for all projects' },
-]
+const TOOLS_3 = []
 
-const TOOLS_4 = [
-  { name: '.claude/skills/', color: ACCENT, desc: 'Project-level skill definitions' },
-  { name: 'SKILL.md', color: '#0071E3', desc: 'Skill definition with frontmatter' },
-  { name: '/skills', color: '#FF9500', desc: 'List all available skills' },
-  { name: '$ARGUMENTS', color: '#AF52DE', desc: 'Parameter substitution in commands' },
-  { name: 'invoke: auto', color: '#F59E0B', desc: 'Skills that load when relevant' },
-  { name: '.claude/commands/', color: '#6e6e73', desc: 'Custom slash command definitions' },
-]
+const TOOLS_4 = []
 
 const TOOLS_5 = [
-  { name: 'MCP', color: ACCENT, desc: 'Model Context Protocol — open standard' },
   { name: 'GitHub MCP', color: '#6e6e73', desc: 'Read/write issues, PRs, and code' },
   { name: 'Playwright MCP', color: '#0071E3', desc: 'Browser automation and testing' },
   { name: 'Context7', color: '#FF9500', desc: 'Live library documentation' },
@@ -119,23 +91,9 @@ const TOOLS_5 = [
   { name: 'Postgres MCP', color: '#5856D6', desc: 'Query databases via natural language' },
 ]
 
-const TOOLS_6 = [
-  { name: '.claude/agents/', color: ACCENT, desc: 'Define specialized sub-agents' },
-  { name: 'Hooks', color: '#0071E3', desc: 'Deterministic lifecycle scripts' },
-  { name: 'PreToolUse', color: '#FF9500', desc: 'Hook: before any tool is called' },
-  { name: '/permissions', color: '#AF52DE', desc: 'Granular file/command control' },
-  { name: '/sandbox', color: '#6e6e73', desc: 'Maximum isolation mode' },
-  { name: 'agent teams', color: '#5856D6', desc: 'Parallel specialist agents (Opus)' },
-]
+const TOOLS_6 = []
 
-const TOOLS_7 = [
-  { name: 'bug-first debugging', color: ACCENT, desc: 'Run tests, let Claude see real errors' },
-  { name: 'code review', color: '#0071E3', desc: 'Pre-PR security and style check' },
-  { name: 'refactoring', color: '#FF9500', desc: 'Step-by-step file-by-file changes' },
-  { name: 'git workflows', color: '#AF52DE', desc: 'Commits, squash, merge conflicts' },
-  { name: 'documentation', color: '#6e6e73', desc: 'Generate docs from code' },
-  { name: 'codebase onboarding', color: '#5856D6', desc: 'Reverse-engineer conventions' },
-]
+const TOOLS_7 = []
 
 const ALL_TOOLS = [TOOLS_0, TOOLS_1, TOOLS_2, TOOLS_3, TOOLS_4, TOOLS_5, TOOLS_6, TOOLS_7]
 

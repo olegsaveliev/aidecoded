@@ -82,6 +82,8 @@ function ToolChips({ tools }) {
     }
   }, [activeTool])
 
+  if (!tools || tools.length === 0) return null
+
   const activeToolData = activeTool ? tools.find((t) => t.name === activeTool) : null
 
   return (
