@@ -9,6 +9,7 @@ import ToolChips from './ToolChips.jsx'
 import { promptEngineeringQuiz } from './quizData.js'
 import { CheckIcon, CrossIcon, TipIcon, GearIcon, ChatIcon, RobotIcon, TheaterIcon, WrenchIcon, MemoIcon, SearchIcon, BarChartIcon, PencilIcon, TargetIcon, FileIcon, LinkIcon, TreeIcon, RefreshIcon, BookIcon, PlayIcon } from './ContentIcons.jsx'
 import SuggestedModules from './SuggestedModules.jsx'
+import { scrollStageToTop } from './scrollUtils.js'
 
 const PE_TOOLS = {
   0: [
@@ -1079,23 +1080,8 @@ function PromptEngineering({ model, temperature, topP, maxTokens, onSwitchTab, o
   }, [stage, maxStageReached])
 
   useEffect(() => {
-    const rafId = requestAnimationFrame(() => {
-      let el = document.querySelector('.pe-root')
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
-        el = el.parentElement
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      if (activeStepRef.current) {
-        const step = activeStepRef.current
-        const stepper = step.closest('.how-stepper')
-        if (stepper) {
-          const left = stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2
-          stepper.scrollTo({ left, behavior: 'smooth' })
-        }
-      }
-    })
-    return () => cancelAnimationFrame(rafId)
+    const cancel = scrollStageToTop('.pe-root', activeStepRef)
+    return cancel
   }, [stage])
 
   function goToStage(target) {

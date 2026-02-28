@@ -10,6 +10,7 @@ import Tooltip from './Tooltip.jsx'
 import { ollamaQuiz } from './quizData.js'
 import SuggestedModules from './SuggestedModules.jsx'
 import './Ollama.css'
+import { scrollStageToTop } from './scrollUtils.js'
 
 function CopyIcon({ size = 16, color = '#8E8E93' }) {
   return (
@@ -1151,26 +1152,10 @@ function Ollama({ onSwitchTab, onGoHome }) {
     if (stage > maxStageReached) setMaxStageReached(stage)
   }, [stage])
 
-  // Scroll on stage change
   useEffect(() => {
     if (stage < 0) return
-    const rafId = requestAnimationFrame(() => {
-      let el = document.querySelector('.ol-root')
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
-        el = el.parentElement
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      if (activeStepRef.current) {
-        const step = activeStepRef.current
-        const stepper = step.closest('.how-stepper')
-        if (stepper) {
-          const left = stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2
-          stepper.scrollTo({ left, behavior: 'smooth' })
-        }
-      }
-    })
-    return () => cancelAnimationFrame(rafId)
+    const cancel = scrollStageToTop('.ol-root', activeStepRef)
+    return cancel
   }, [stage])
 
   // Progressive learn tips

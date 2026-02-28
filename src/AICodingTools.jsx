@@ -10,6 +10,7 @@ import ToolChips from './ToolChips.jsx'
 import { aiCodingToolsQuiz } from './quizData.js'
 import SuggestedModules from './SuggestedModules.jsx'
 import './AICodingTools.css'
+import { scrollStageToTop } from './scrollUtils.js'
 
 /* ───── Constants ───── */
 const ACCENT = '#34C759'
@@ -447,26 +448,10 @@ export default function AICodingTools({ onSwitchTab }) {
     }
   }, [stage, dismissedTips])
 
-  /* scroll to top on stage change */
   useEffect(() => {
     if (stage < 0) return
-    const rafId = requestAnimationFrame(() => {
-      let el = document.querySelector('.act-module')
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
-        el = el.parentElement
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      if (activeStepRef.current) {
-        const step = activeStepRef.current
-        const stepper = step.closest('.how-stepper')
-        if (stepper) {
-          const left = stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2
-          stepper.scrollTo({ left, behavior: 'smooth' })
-        }
-      }
-    })
-    return () => cancelAnimationFrame(rafId)
+    const cancel = scrollStageToTop('.act-module', activeStepRef)
+    return cancel
   }, [stage])
 
   /* update max stage */

@@ -10,6 +10,7 @@ import ToolChips from './ToolChips.jsx'
 import { computerVisionQuiz } from './quizData.js'
 import SuggestedModules from './SuggestedModules.jsx'
 import './ComputerVision.css'
+import { scrollStageToTop } from './scrollUtils.js'
 
 /* ── Tool chips per stage ── */
 const CV_TOOLS = {
@@ -1483,23 +1484,8 @@ function ComputerVision({ onSwitchTab, onGoHome }) {
 
   /* ── Scroll on stage change ── */
   useEffect(() => {
-    const rafId = requestAnimationFrame(() => {
-      let el = document.querySelector('.cv-root')
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
-        el = el.parentElement
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      if (activeStepRef.current) {
-        const step = activeStepRef.current
-        const stepper = step.closest('.how-stepper')
-        if (stepper) {
-          const left = stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2
-          stepper.scrollTo({ left, behavior: 'smooth' })
-        }
-      }
-    })
-    return () => cancelAnimationFrame(rafId)
+    const cancel = scrollStageToTop('.cv-root', activeStepRef)
+    return cancel
   }, [stage])
 
   /* ── Progressive learn tips ── */

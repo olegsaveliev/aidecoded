@@ -10,6 +10,7 @@ import Quiz from './Quiz.jsx'
 import ToolChips from './ToolChips.jsx'
 import { howLLMsWorkQuiz } from './quizData.js'
 import SuggestedModules from './SuggestedModules.jsx'
+import { scrollStageToTop } from './scrollUtils.js'
 
 const STAGES = ['Prompt', 'Tokenization', 'Embeddings', 'Attention', 'Generation']
 
@@ -112,23 +113,8 @@ function HowLLMsWork({ model, temperature, topP, maxTokens, onSwitchTab, onGoHom
   const activeStepRef = useRef(null)
 
   useEffect(() => {
-    const rafId = requestAnimationFrame(() => {
-      let el = document.querySelector('.how-llms')
-      while (el && el !== document.body && el !== document.documentElement) {
-        if (el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'smooth' })
-        el = el.parentElement
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-      if (activeStepRef.current) {
-        const step = activeStepRef.current
-        const stepper = step.closest('.how-stepper')
-        if (stepper) {
-          const left = stepper.scrollLeft + step.getBoundingClientRect().left - stepper.getBoundingClientRect().left - stepper.offsetWidth / 2 + step.offsetWidth / 2
-          stepper.scrollTo({ left, behavior: 'smooth' })
-        }
-      }
-    })
-    return () => cancelAnimationFrame(rafId)
+    const cancel = scrollStageToTop('.how-llms', activeStepRef)
+    return cancel
   }, [stage])
 
   const allTokens = useMemo(() => {
