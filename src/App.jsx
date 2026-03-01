@@ -82,6 +82,15 @@ const BOOT_LINES = [
   '> Ready.',
 ]
 const BOOT_CHAR_DELAY = 30
+const BOOT_BLUE = new Set(['>', '.'])
+
+function colorizeBootText(text) {
+  return text.split('').map((ch, i) => (
+    BOOT_BLUE.has(ch)
+      ? <span key={i} style={{ color: 'var(--accent)' }}>{ch}</span>
+      : ch
+  ))
+}
 
 function BootScreen({ fadingOut, onComplete }) {
   const [lineIndex, setLineIndex] = useState(0)
@@ -121,11 +130,11 @@ function BootScreen({ fadingOut, onComplete }) {
     <div className={`boot-screen ${fadingOut ? 'boot-screen-fadeout' : ''}`}>
       <div className="boot-terminal">
         {lines.map((line, i) => (
-          <div key={i} className="boot-line">{line}</div>
+          <div key={i} className="boot-line">{colorizeBootText(line)}</div>
         ))}
         {isTyping && (
           <div className="boot-line">
-            {currentPartial}
+            {colorizeBootText(currentPartial)}
             <span className="boot-cursor">|</span>
           </div>
         )}
