@@ -197,6 +197,10 @@
 /* ── Landscape mobile — compact hero + smaller labels ── */
 
 @media (max-height: 500px) {
+  .landing-network-canvas {
+    display: none;
+  }
+
   .landing-heading {
     font-size: clamp(20px, 4vw, 28px);
   }
