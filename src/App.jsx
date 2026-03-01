@@ -931,7 +931,7 @@ function App() {
                     <button className="avatar-dropdown-item" onClick={() => { setShowAvatarDropdown(false); handleSwitchTab('profile') }}>
                       <UserIcon size={16} color="var(--text-secondary)" /> Profile
                     </button>
-                    <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false); setShowLanding(true); setShowHome(false); window.history.replaceState(null, '', window.location.pathname) }}>
+                    <button className="avatar-dropdown-item avatar-dropdown-item-signout" onClick={() => { signOut(); setShowAvatarDropdown(false); setShowLanding(true); setShowHome(false); sessionStorage.removeItem('auth_return_tab'); setPendingAuthReturn(null); window.history.replaceState(null, '', window.location.pathname) }}>
                       <SignOutIcon size={16} color="#FF3B30" /> Sign Out
                     </button>
                   </div>
