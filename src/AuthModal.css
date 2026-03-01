@@ -401,12 +401,25 @@
   color: var(--text-primary, #1d1d1f);
 }
 
-.avatar-dropdown-email {
+.avatar-dropdown-email-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   font-size: 11px;
   color: var(--text-secondary, #6e6e73);
   margin-top: 1px;
+}
+
+.avatar-dropdown-email-row span:first-child {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.avatar-dropdown-email-row span:last-child {
+  flex-shrink: 0;
   white-space: nowrap;
 }
 

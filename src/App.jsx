@@ -922,7 +922,10 @@ function App() {
                   <div className="avatar-dropdown">
                     <div className="avatar-dropdown-info">
                       <div className="avatar-dropdown-name">{user.user_metadata?.display_name || user.user_metadata?.full_name || 'User'}</div>
-                      <div className="avatar-dropdown-email">{user.email}</div>
+                      <div className="avatar-dropdown-email-row">
+                        <span title={user.email}>{user.email}</span>
+                        <span>v{__APP_VERSION__}</span>
+                      </div>
                     </div>
                     <div className="avatar-dropdown-divider" />
                     <button className="avatar-dropdown-item" onClick={() => { setShowAvatarDropdown(false); handleSwitchTab('profile') }}>
