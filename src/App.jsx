@@ -43,6 +43,7 @@ import AICodingTools from './AICodingTools.jsx'
 import AIPMWorkflows from './AIPMWorkflows.jsx'
 import SystemDesignInterview from './SystemDesignInterview.jsx'
 import PromptInjection from './PromptInjection.jsx'
+import PromptInjectionLab from './PromptInjectionLab.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -142,7 +143,7 @@ const VALID_TABS = [
   'ai-startup-simulator', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   'alignment-game', 'choosing-ai-model', 'neural-networks', 'ollama', 'computer-vision',
   'label-master', 'draw-and-deceive', 'agent-office', 'claude-code', 'agent-teams', 'custom-agents',
-  'model-training-tycoon', 'spec-driven-dev', 'ai-coding-tools', 'ai-pm-workflows', 'system-design-interview', 'prompt-injection',
+  'model-training-tycoon', 'spec-driven-dev', 'ai-coding-tools', 'ai-pm-workflows', 'system-design-interview', 'prompt-injection', 'prompt-injection-lab',
   'profile'
 ]
 
@@ -1344,6 +1345,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'prompt-injection' && (
           <PromptInjection onSwitchTab={handleSwitchTab} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'prompt-injection-lab' && (
+          <PromptInjectionLab onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'profile' && (
           <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

@@ -1,0 +1,1534 @@
+/* ── Prompt Injection Lab ── */
+
+/* Entry Screen */
+.pil-entry {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.pil-entry-inner {
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pil-entry-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+  margin: 20px 0 16px;
+}
+
+.pil-entry-taglines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+  min-height: 56px;
+}
+
+.pil-tagline {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.pil-tagline-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pil-entry-description {
+  font-size: 16px;
+  color: var(--text-secondary);
+  max-width: 480px;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0 0 28px;
+}
+
+.pil-entry-stats {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0 0 24px;
+}
+
+.pil-stat-pill {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pil-start-btn {
+  height: 52px;
+  width: 100%;
+  max-width: 360px;
+  padding: 0 32px;
+  font-size: 16px;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  background: #F59E0B;
+  color: #000;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease-out, transform 0.15s ease-out;
+  margin-top: 8px;
+}
+
+.pil-start-btn:hover {
+  background: #D97706;
+  transform: translateY(-1px);
+}
+
+.pil-start-btn:active {
+  transform: scale(0.97);
+}
+
+.pil-start-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 12px;
+}
+
+/* Role Selection */
+.pil-role-screen {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.pil-role-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.pil-role-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 8px;
+}
+
+.pil-role-header p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.pil-role-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 24px 0;
+}
+
+.pil-role-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pil-role-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.pil-role-card.pil-role-attacker-selected {
+  border-color: #EF4444;
+  border-width: 2px;
+  background: rgba(239, 68, 68, 0.04);
+}
+
+.pil-role-card.pil-role-defender-selected {
+  border-color: #34C759;
+  border-width: 2px;
+  background: rgba(52, 199, 89, 0.04);
+}
+
+.pil-role-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 12px;
+}
+
+.pil-role-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 8px;
+}
+
+.pil-role-title-attacker {
+  color: #EF4444;
+}
+
+.pil-role-title-defender {
+  color: #34C759;
+}
+
+.pil-role-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 12px;
+}
+
+.pil-role-learns {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.pil-role-learns li {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  padding-left: 16px;
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.pil-role-learns li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.pil-role-card-attacker .pil-role-learns li::before {
+  background: #EF4444;
+}
+
+.pil-role-card-defender .pil-role-learns li::before {
+  background: #34C759;
+}
+
+.pil-role-action {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.pil-role-btn {
+  height: 48px;
+  padding: 0 32px;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.pil-role-btn:hover {
+  filter: brightness(0.9);
+}
+
+.pil-role-btn:active {
+  transform: scale(0.97);
+}
+
+.pil-role-btn-attacker {
+  background: #EF4444;
+}
+
+.pil-role-btn-defender {
+  background: #34C759;
+}
+
+/* Game Container */
+.pil-game {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 24px 40px;
+}
+
+/* Game Header */
+.pil-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pil-header-scenario {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pil-header-pills {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.pil-header-pill {
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pil-header-pill-amber {
+  background: rgba(245, 158, 11, 0.1);
+  color: #F59E0B;
+}
+
+/* Attempt Dots */
+.pil-attempts {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pil-attempt-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.pil-attempt-dot-used {
+  background: #EF4444;
+  border-color: #EF4444;
+  animation: pilDotUsed 0.3s ease;
+}
+
+@keyframes pilDotUsed {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* Context Card */
+.pil-context {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.pil-context-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-tertiary);
+  margin-bottom: 6px;
+}
+
+.pil-context p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* System Prompt Display (attacker sees this) */
+.pil-system-prompt-display {
+  background: #0d1117;
+  border: 1.5px solid #EF4444;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.pil-system-prompt-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #EF4444;
+  margin-bottom: 8px;
+}
+
+.pil-system-prompt-text {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Goal Badge */
+.pil-goal {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #EF4444;
+  margin-bottom: 16px;
+}
+
+/* Chat Interface */
+.pil-chat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.pil-messages {
+  min-height: 200px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pil-message {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pil-message-user {
+  align-self: flex-end;
+  background: var(--accent);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.pil-message-ai {
+  align-self: flex-start;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-bottom-left-radius: 4px;
+}
+
+.pil-chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.pil-chat-input {
+  flex: 1;
+  height: 40px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  outline: none;
+}
+
+.pil-chat-input:focus {
+  border-color: var(--accent);
+}
+
+.pil-chat-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pil-chat-send {
+  height: 40px;
+  padding: 0 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  background: var(--accent);
+  color: #fff;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.pil-chat-send:hover {
+  background: var(--accent-hover);
+}
+
+.pil-chat-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Success Animation */
+.pil-success-banner {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1.5px solid #EF4444;
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+  animation: pilSecretExtracted 0.6s ease;
+}
+
+.pil-success-badge {
+  font-size: 18px;
+  font-weight: 700;
+  color: #EF4444;
+  margin-bottom: 4px;
+}
+
+.pil-success-score {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+@keyframes pilSecretExtracted {
+  0% { background: var(--bg-card); }
+  20% { background: rgba(239, 68, 68, 0.2); }
+  60% { background: rgba(239, 68, 68, 0.1); }
+  100% { background: rgba(239, 68, 68, 0.08); }
+}
+
+/* Exhausted Banner */
+.pil-exhausted-banner {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.pil-exhausted-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.pil-exhausted-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Hint Panel */
+.pil-hints {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.pil-hints-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.pil-hints-chevron {
+  transition: transform 0.2s ease;
+}
+
+.pil-hints-chevron-open {
+  transform: rotate(90deg);
+}
+
+.pil-hints-list {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pil-hint-card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.pil-hint-card-locked {
+  opacity: 0.6;
+  font-style: italic;
+}
+
+.pil-hint-unlock {
+  display: inline-block;
+  margin-top: 4px;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #F59E0B;
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+
+.pil-hint-unlock:hover {
+  background: rgba(245, 158, 11, 0.2);
+}
+
+/* Key Insight (tip box pattern) */
+.pil-key-insight {
+  background: rgba(234, 179, 8, 0.06);
+  border-left: 2px solid #eab308;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.pil-key-insight .pil-context-label {
+  color: #eab308;
+}
+
+.pil-key-insight p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+[data-theme="dark"] .pil-key-insight {
+  background: rgba(234, 179, 8, 0.08);
+}
+
+/* Technique Reveal */
+.pil-techniques {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+
+.pil-techniques-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.pil-technique-item {
+  margin-bottom: 12px;
+}
+
+.pil-technique-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.pil-technique-example {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #e2e8f0;
+  background: #0d1117;
+  border-radius: 6px;
+  padding: 8px 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Attack Transcripts (Defender) */
+.pil-transcripts {
+  margin: 16px 0;
+}
+
+.pil-transcripts-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.pil-transcript {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-left: 3px solid #EF4444;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.pil-transcript-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pil-transcript-header:hover {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.pil-transcript-badge {
+  background: rgba(245, 158, 11, 0.1);
+  color: #F59E0B;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.pil-transcript-preview {
+  font-size: 13px;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.pil-transcript-chevron {
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+  transition: transform 0.2s ease;
+}
+
+.pil-transcript-chevron-open {
+  transform: rotate(90deg);
+}
+
+.pil-transcript-body {
+  border-top: 1px solid var(--border);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pil-transcript-msg {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.pil-transcript-msg-user {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  color: var(--text-primary);
+}
+
+.pil-transcript-msg-ai {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+
+.pil-transcript-succeeded {
+  display: inline-block;
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* System Prompt Editor (Defender) */
+.pil-editor {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.pil-editor-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.pil-editor-textarea {
+  width: 100%;
+  min-height: 180px;
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.7;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.pil-editor-textarea:focus {
+  border-color: var(--accent);
+}
+
+.pil-editor-textarea::placeholder {
+  color: #6b7280;
+}
+
+/* Tips Strip */
+.pil-tips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 8px 0;
+}
+
+.pil-tip-pill {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+
+.pil-tip-pill:hover {
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.pil-tip-expanded {
+  background: rgba(245, 158, 11, 0.04);
+  border-left: 2px solid #F59E0B;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+/* Test Button */
+.pil-test-btn {
+  width: 100%;
+  height: 48px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #34C759;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  margin-top: 8px;
+}
+
+.pil-test-btn:hover {
+  background: #2da44e;
+}
+
+.pil-test-btn:active {
+  transform: scale(0.97);
+}
+
+/* Test Results */
+.pil-test-results {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 16px;
+  animation: pilSlideDown 0.3s ease;
+}
+
+@keyframes pilSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pil-test-result-row {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.pil-test-result-row:last-child {
+  border-bottom: none;
+}
+
+.pil-test-result-row:hover {
+  background: var(--bg-secondary);
+}
+
+.pil-test-result-technique {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.pil-badge-blocked {
+  background: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pil-badge-leaked {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+  border-radius: 12px;
+  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pil-test-result-detail {
+  padding: 0 16px 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.pil-test-result-attack {
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #e2e8f0;
+  background: #0d1117;
+  border-radius: 6px;
+  padding: 8px 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 6px;
+}
+
+.pil-test-result-why {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Score Summary */
+.pil-score-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.pil-score-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.pil-score-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pil-score-feedback {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+/* Scenario nav */
+.pil-scenario-nav {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.pil-scenario-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #F59E0B;
+  color: #000;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.pil-scenario-btn:hover {
+  background: #D97706;
+}
+
+.pil-scenario-btn:active {
+  transform: scale(0.97);
+}
+
+.pil-refine-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid var(--accent);
+  border-radius: 10px;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pil-refine-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.pil-defender-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* Results Screen */
+.pil-results {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.pil-results-score {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.pil-results-number {
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.pil-results-max {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text-tertiary);
+}
+
+.pil-results-band {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 6px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 12px;
+}
+
+.pil-band-master {
+  background: rgba(239, 68, 68, 0.1);
+  color: #EF4444;
+}
+
+.pil-band-skilled {
+  background: rgba(245, 158, 11, 0.1);
+  color: #F59E0B;
+}
+
+.pil-band-learning {
+  background: rgba(0, 113, 227, 0.1);
+  color: #0071E3;
+}
+
+.pil-band-beginner {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.pil-band-unbreachable {
+  background: rgba(52, 199, 89, 0.1);
+  color: #34C759;
+}
+
+.pil-band-strong {
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+}
+
+.pil-results-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  text-align: center;
+  max-width: 480px;
+  margin: 12px auto 24px;
+}
+
+/* Scenario Breakdown Table */
+.pil-breakdown {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.pil-breakdown th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pil-breakdown td {
+  font-size: 13px;
+  color: var(--text-primary);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Key Lessons */
+.pil-lessons {
+  margin-bottom: 24px;
+}
+
+.pil-lessons-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.pil-lesson-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+}
+
+.pil-lesson-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.pil-lesson-card p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Ideal Prompt Reveal */
+.pil-ideal-prompt {
+  background: #0d1117;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 8px;
+}
+
+/* Switch Role CTA */
+.pil-switch-role {
+  background: var(--bg-card);
+  border: 1.5px solid #F59E0B;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin: 24px 0;
+}
+
+.pil-switch-role-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.pil-switch-role-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.pil-switch-role-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #F59E0B;
+  color: #000;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.pil-switch-role-btn:hover {
+  background: #D97706;
+}
+
+.pil-switch-role-btn:active {
+  transform: scale(0.97);
+}
+
+/* Best Scores Row */
+.pil-best-scores {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.pil-best-score-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.pil-best-score-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.pil-best-score-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Concept Pills */
+.pil-concepts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.pil-concept-pill {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Final actions */
+.pil-final-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.pil-play-again-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #F59E0B;
+  color: #000;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.pil-play-again-btn:hover {
+  background: #D97706;
+}
+
+.pil-play-again-btn:active {
+  transform: scale(0.97);
+}
+
+.pil-home-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.pil-home-btn:hover {
+  background: var(--bg-secondary);
+}
+
+/* Fade in animation */
+.pil-fade-in {
+  animation: pilFadeIn 0.3s ease;
+}
+
+@keyframes pilFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Defence blocked animation */
+@keyframes pilDefenceBlocked {
+  0% { background: var(--bg-card); }
+  20% { background: rgba(52, 199, 89, 0.15); }
+  100% { background: var(--bg-card); }
+}
+
+/* Progress indicator */
+.pil-progress {
+  font-size: 13px;
+  color: var(--text-tertiary);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Dark mode overrides */
+[data-theme="dark"] .pil-transcript-header:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+[data-theme="dark"] .pil-role-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .pil-stat-pill {
+  background: rgba(245, 158, 11, 0.12);
+}
+
+[data-theme="dark"] .pil-tip-expanded {
+  background: rgba(245, 158, 11, 0.06);
+}
+
+[data-theme="dark"] .pil-role-card.pil-role-attacker-selected {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+[data-theme="dark"] .pil-role-card.pil-role-defender-selected {
+  background: rgba(52, 199, 89, 0.1);
+}
+
+[data-theme="dark"] .pil-success-banner {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+[data-theme="dark"] .pil-goal {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+[data-theme="dark"] .pil-transcript-msg-user {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* ── Mobile ── */
+
+@media (max-width: 768px) {
+  .pil-entry {
+    padding: 32px 16px;
+    min-height: 50vh;
+  }
+
+  .pil-entry-title {
+    font-size: 28px;
+  }
+
+  .pil-start-btn {
+    max-width: 100%;
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .pil-role-screen {
+    padding: 24px 16px;
+  }
+
+  .pil-role-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pil-role-btn {
+    width: 100%;
+  }
+
+  .pil-breakdown {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pil-game {
+    padding: 16px 16px 32px;
+  }
+
+  .pil-header {
+    padding: 10px 14px;
+  }
+
+  .pil-messages {
+    max-height: 300px;
+    min-height: 150px;
+  }
+
+  .pil-chat-send,
+  .pil-test-btn,
+  .pil-scenario-btn,
+  .pil-refine-btn,
+  .pil-role-btn,
+  .pil-start-btn,
+  .pil-switch-role-btn,
+  .pil-play-again-btn,
+  .pil-home-btn {
+    min-height: 44px;
+  }
+
+  .pil-defender-actions {
+    flex-direction: column;
+  }
+
+  .pil-defender-actions .pil-scenario-btn,
+  .pil-defender-actions .pil-refine-btn {
+    width: 100%;
+  }
+
+  .pil-final-actions {
+    flex-direction: column;
+  }
+
+  .pil-final-actions button {
+    width: 100%;
+  }
+
+  .pil-scenario-nav {
+    flex-direction: column;
+  }
+
+  .pil-scenario-nav button {
+    width: 100%;
+  }
+
+  .pil-results-number {
+    font-size: 48px;
+  }
+
+  .pil-best-scores {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pil-tips {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pil-tip-pill {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .pil-attempt-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .pil-editor-textarea {
+    min-height: 120px;
+  }
+
+  .pil-results-number {
+    font-size: 48px;
+  }
+
+  .pil-role-title {
+    font-size: 18px;
+  }
+}

@@ -258,6 +258,13 @@ const ICON_PATHS = {
       <path d="M12 7v5M12 15v1" strokeLinecap="round" strokeWidth="2.5" />
     </>
   ),
+  'prompt-injection-lab': (
+    <>
+      <path d="M12 2L4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6L12 2z" />
+      <path d="M8.5 12l2 2 5-5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="12" y1="2" x2="12" y2="22" strokeWidth="1" strokeDasharray="2 2" />
+    </>
+  ),
 }
 
 function ModuleIcon({ module, size = 24, className = '', style }) {

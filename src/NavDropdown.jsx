@@ -88,6 +88,7 @@ const NAV_GROUPS = [
       { id: 'agent-office', name: 'Agent Office', tag: 'Game' },
       { id: 'model-training-tycoon', name: 'Training Tycoon', tag: 'Game' },
       { id: 'system-design-interview', name: 'System Design', tag: 'Game' },
+      { id: 'prompt-injection-lab', name: 'Injection Lab', tag: 'Game' },
     ],
   },
   {

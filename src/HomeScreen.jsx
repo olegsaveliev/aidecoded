@@ -299,6 +299,16 @@ const CARDS = [
     accent: '#EF4444',
   },
   {
+    id: 'prompt-injection-lab',
+    group: 'Play',
+    tag: 'Game',
+    title: 'Prompt Injection Lab',
+    description: 'Choose your side. As the attacker: 5 attempts to extract a secret from an AI system using real injection techniques. As the defender: write the system prompt that stops those exact attacks. Both roles teach you something the other cannot.',
+    icon: 'prompt-injection-lab',
+    isGame: true,
+    difficulty: 'Intermediate',
+  },
+  {
     id: 'ai-native-pm',
     title: 'AI-Native PM',
     description: 'The deliverables AI engineers actually need from PMs — system instructions, evals, and structured logic. Not PRDs. Not user stories.',
