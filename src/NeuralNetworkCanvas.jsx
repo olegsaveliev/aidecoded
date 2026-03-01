@@ -61,6 +61,7 @@ const NODES = [
   { id: 'system-design-interview', label: 'System Design', group: 'play', desc: 'Design AI systems and defend trade-offs under pressure' },
   { id: 'prompt-injection', label: 'Prompt Injection', group: 'security', desc: 'The #1 AI security risk — attacks that use nothing but text' },
   { id: 'prompt-injection-lab', label: 'Injection Lab', group: 'play', desc: 'Attack or defend AI systems in a hands-on prompt injection lab' },
+  { id: 'skill-builder-challenge', label: 'Skill Builder', group: 'play', desc: 'Write the SKILL.md that fixes Claude — three rounds of escalating challenge' },
 ]
 
 
@@ -201,6 +202,9 @@ const CONNECTIONS = [
   ['prompt-injection', 'prompt-injection-lab'],
   ['system-design-interview', 'prompt-injection-lab'],
   ['agentic-ai', 'prompt-injection-lab'],
+  ['claude-skills', 'skill-builder-challenge'],
+  ['claude-code', 'skill-builder-challenge'],
+  ['prompt-injection-lab', 'skill-builder-challenge'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -271,6 +275,7 @@ const NEURON_LAYOUT = {
   'system-design-interview': { px: 0.52, py: 0.82 },
   'prompt-injection':        { px: 0.85, py: 0.70 },
   'prompt-injection-lab':    { px: 0.92, py: 0.78 },
+  'skill-builder-challenge': { px: 0.64, py: 0.88 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -282,7 +287,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'claude-skills', 'spec-driven-dev', 'ai-coding-tools',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview', 'prompt-injection', 'prompt-injection-lab',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview', 'prompt-injection', 'prompt-injection-lab', 'skill-builder-challenge',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */
