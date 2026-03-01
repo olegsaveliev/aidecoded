@@ -45,6 +45,7 @@ import AIPMWorkflows from './AIPMWorkflows.jsx'
 import SystemDesignInterview from './SystemDesignInterview.jsx'
 import PromptInjection from './PromptInjection.jsx'
 import PromptInjectionLab from './PromptInjectionLab.jsx'
+import SkillBuilderChallenge from './SkillBuilderChallenge.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -1355,6 +1356,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'prompt-injection-lab' && (
           <PromptInjectionLab onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'skill-builder-challenge' && (
+          <SkillBuilderChallenge onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'profile' && (
           <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

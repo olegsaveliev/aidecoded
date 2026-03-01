@@ -90,6 +90,7 @@ const NAV_GROUPS = [
       { id: 'model-training-tycoon', name: 'Training Tycoon', tag: 'Game' },
       { id: 'system-design-interview', name: 'System Design', tag: 'Game' },
       { id: 'prompt-injection-lab', name: 'Injection Lab', tag: 'Game' },
+      { id: 'skill-builder-challenge', name: 'Skill Builder', tag: 'Game' },
     ],
   },
   {

@@ -62,6 +62,7 @@ Interactive React app for learning how Large Language Models work.
 | `system-design-interview` | SystemDesignInterview.jsx | SystemDesignInterview.css | — (game) | Game | #F59E0B |
 | `prompt-injection` | PromptInjection.jsx | PromptInjection.css | promptInjectionQuiz | Security | #EF4444 |
 | `prompt-injection-lab` | PromptInjectionLab.jsx | PromptInjectionLab.css | — (game) | Game | #F59E0B |
+| `skill-builder-challenge` | SkillBuilderChallenge.jsx | SkillBuilderChallenge.css | — (game) | Game | #F59E0B |
 
 ## Color System — Two Color Layers
 
@@ -76,7 +77,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Claude Skills, Spec-Driven Development, AI Coding Tools |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams, Custom Agents |
-| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview |
+| Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview, Skill Builder Challenge |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM, AI-Native PM Workflows |
 | Security | #EF4444 (red) | Prompt Injection Explained |
 
@@ -93,7 +94,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Claude Skills, Spec-Driven Development, AI Coding Tools |
 | Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Custom Agents, Why RAG Fails, AI in Production |
-| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview |
+| Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview, Skill Builder Challenge |
 | Professional | #0EA5E9 | AI-Native PM, AI-Native PM Workflows |
 | Security | #EF4444 | Prompt Injection Explained |
 

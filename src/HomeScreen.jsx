@@ -405,6 +405,17 @@ const CARDS = [
     title: 'AI-Native PM Workflows',
     description: 'The prompts, templates and weekly rhythms that separate AI-native PMs from everyone else. Copy-ready prompts for discovery, planning and stakeholder communication.',
   },
+  {
+    id: 'skill-builder-challenge',
+    group: 'Play',
+    tag: 'Game',
+    title: 'Skill Builder Challenge',
+    description: 'Claude fails at a task. Your job: write the SKILL.md that fixes it. Three rounds, escalating complexity. See your skill run against real test cases and score based on how well it performs.',
+    icon: 'skill-builder-challenge',
+    accent: '#F59E0B',
+    isGame: true,
+    difficulty: 'Intermediate',
+  },
 ]
 
 const GROUP_NAMES = ['Tools', 'Foundations', 'Security', 'Skills', 'Advanced', 'Play', 'Professional']

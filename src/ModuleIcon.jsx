@@ -198,6 +198,13 @@ const ICON_PATHS = {
       <path d="M9 12h6M12 9v6" strokeLinecap="round" />
     </>
   ),
+  'skill-builder-challenge': (
+    <>
+      <path d="M5 19l9-9" />
+      <path d="M17 3l2 2-9 9-3 1 1-3 9-9z" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M19 13v6M16 16h6" />
+    </>
+  ),
   'agent-teams': (
     <>
       <circle cx="12" cy="5" r="2.5" />
