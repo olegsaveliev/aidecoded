@@ -7,7 +7,7 @@ import './LandingPage.css'
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
   const [reveal, setReveal] = useState(false)
   const [titleDone, setTitleDone] = useState(false)
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768 || window.innerHeight <= 500)
 
   // Mark body so CSS can hide theme toggle on mobile landing only
   useEffect(() => {
@@ -17,7 +17,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
 
   // Track mobile breakpoint for conditional NeuronBackground render
   useEffect(() => {
-    const mql = window.matchMedia('(max-width: 768px)')
+    const mql = window.matchMedia('(max-width: 768px), (max-height: 500px)')
     const handler = (e) => setIsMobile(e.matches)
     mql.addEventListener('change', handler)
     return () => mql.removeEventListener('change', handler)
