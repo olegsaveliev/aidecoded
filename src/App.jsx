@@ -35,6 +35,7 @@ import LabelMaster from './LabelMaster.jsx'
 import DrawAndDeceive from './DrawAndDeceive.jsx'
 import AgentOffice from './AgentOffice.jsx'
 import ClaudeCode from './ClaudeCode.jsx'
+import ClaudeSkills from './ClaudeSkills.jsx'
 import AgentTeams from './AgentTeams.jsx'
 import CustomAgents from './CustomAgents.jsx'
 import ModelTrainingTycoon from './ModelTrainingTycoon.jsx'
@@ -1324,6 +1325,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'claude-code' && (
           <ClaudeCode onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'claude-skills' && (
+          <ClaudeSkills onSwitchTab={handleSwitchTab} />
         )}
         {!showHome && canRenderModule && activeTab === 'agent-teams' && (
           <AgentTeams onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

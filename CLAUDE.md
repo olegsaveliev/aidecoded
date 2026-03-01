@@ -52,6 +52,7 @@ Interactive React app for learning how Large Language Models work.
 | `choosing-ai-model` | ChoosingAIModel.jsx | ChoosingAIModel.css | choosingAIModelQuiz | Practical | #34C759 |
 | `ollama` | Ollama.jsx | Ollama.css | ollamaQuiz | Practical | #34C759 |
 | `claude-code` | ClaudeCode.jsx | ClaudeCode.css | claudeCodeQuiz | Practical | #34C759 |
+| `claude-skills` | ClaudeSkills.jsx | ClaudeSkills.css | claudeSkillsQuiz | Practical | #34C759 |
 | `agent-teams` | AgentTeams.jsx | AgentTeams.css | agentTeamsQuiz | Technical | #5856D6 |
 | `custom-agents` | CustomAgents.jsx | CustomAgents.css | customAgentsQuiz | Technical | #5856D6 |
 | `model-training-tycoon` | ModelTrainingTycoon.jsx | ModelTrainingTycoon.css | — (game) | Game | #F59E0B |
@@ -73,7 +74,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
 | Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
-| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Spec-Driven Development, AI Coding Tools |
+| Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Claude Skills, Spec-Driven Development, AI Coding Tools |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams, Custom Agents |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview |
 | Professional | #0EA5E9 (sky blue) | AI-Native PM, AI-Native PM Workflows |
@@ -90,7 +91,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
 | Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
-| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Spec-Driven Development, AI Coding Tools |
+| Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Claude Skills, Spec-Driven Development, AI Coding Tools |
 | Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Custom Agents, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview |
 | Professional | #0EA5E9 | AI-Native PM, AI-Native PM Workflows |
@@ -447,6 +448,52 @@ Implemented via `[data-theme="dark"]` attribute on `<html>`.
 ---
 
 ## Standardized Module Screens
+
+### Stage Content Structure
+
+Every stage in a stage-based module follows this layout (top to bottom):
+
+1. **Info card** (`how-info-card how-info-card-edu`) — contains ALL introductory text for the stage:
+   - `how-info-card-header` with `<strong>` title (renders with blue left border accent)
+   - Body paragraphs (intro text, explanations)
+   - Tip box (`how-info-tip` with `TipIcon`) if applicable
+   - `ToolChips` component if applicable
+2. **Visual/interactive content** — section headings (`<h3>`) + visualizations, diagrams, interactive elements, cards, grids, etc.
+3. **Navigation** — `how-nav-row` > `how-nav-buttons` > Back + Next buttons
+
+```jsx
+{stage === N && (
+  <div className="xx-stage">
+    <div className="how-info-card how-info-card-edu">
+      <div className="how-info-card-header"><strong>Stage Title</strong></div>
+      <p>Intro paragraph...</p>
+      <div className="how-info-tip">
+        <TipIcon size={16} color="#eab308" />
+        Tip text...
+      </div>
+      <ToolChips tools={STAGES[N].tools} />
+    </div>
+
+    <h3 className="xx-section-heading">Section Title</h3>
+    <p>Description hint text (13px, var(--text-secondary)).</p>
+    {/* Visualization / interactive component */}
+
+    <div className="how-nav-row">
+      <div className="how-nav-buttons">
+        <button className="how-back-btn" onClick={handleBack}>&larr; Back</button>
+        <button className="how-gotit-btn" onClick={handleNext}>Next &rarr;</button>
+      </div>
+    </div>
+  </div>
+)}
+```
+
+**Rules:**
+- All intro text goes INSIDE the info card — never floating bare `<p>` tags above it
+- Section headings (`<h3>`) and their visual content go BELOW the info card
+- Description text below section headings: `13px`, `color: var(--text-secondary)` (hint style)
+- Navigation is always last, wrapped in `how-nav-row` > `how-nav-buttons`
+- One info card per stage (not multiple)
 
 ### Final Screen (after completing all stages, before quiz)
 

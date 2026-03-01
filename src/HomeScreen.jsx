@@ -358,6 +358,13 @@ const CARDS = [
     group: 'Skills',
   },
   {
+    id: 'claude-skills',
+    title: 'Claude Skills',
+    description: 'Skills are reusable instruction files that teach Claude how to do specific tasks better — permanently. Learn how to write a SKILL.md, when to use one, how triggering works, and how to build skills that compound in value over time.',
+    tag: 'Practical',
+    group: 'Skills',
+  },
+  {
     id: 'spec-driven-dev',
     group: 'Skills',
     tag: 'Practical',

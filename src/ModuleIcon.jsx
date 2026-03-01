@@ -191,6 +191,13 @@ const ICON_PATHS = {
       <path d="M19 2l1.5 1.5L19 5M21 1.5h-3" strokeLinecap="round" />
     </>
   ),
+  'claude-skills': (
+    <>
+      <path d="M12 3C8 3 5 6 5 10c0 2 .8 3.8 2 5l0 4h10l0-4c1.2-1.2 2-3 2-5 0-4-3-7-7-7z" />
+      <path d="M9 19v2M15 19v2" strokeLinecap="round" />
+      <path d="M9 12h6M12 9v6" strokeLinecap="round" />
+    </>
+  ),
   'agent-teams': (
     <>
       <circle cx="12" cy="5" r="2.5" />
