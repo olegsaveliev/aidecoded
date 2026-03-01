@@ -2,7 +2,6 @@ import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 import { readFileSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
-import { execSync } from 'child_process'
 
 // Generates sitemap.xml from moduleData.js at build time (runs in Node.js during vite build)
 function sitemapPlugin() {
@@ -34,11 +33,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   let appVersion = '1.0'
   try {
-    const commitCount = Number(execSync('git rev-list --count HEAD').toString().trim())
-    const major = Math.floor(commitCount / 100) + 1
-    const minor = commitCount % 100
-    appVersion = `${major}.${minor}`
-  } catch { /* fallback when git is unavailable (CI, Docker) */ }
+    appVersion = JSON.parse(readFileSync(resolve('version.json'), 'utf-8')).version
+  } catch { /* fallback if version.json missing */ }
 
   return {
     base: '/',
