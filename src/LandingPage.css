@@ -166,9 +166,19 @@
   }
 }
 
+/* ── Mobile particle background ── */
+
+.landing-bg-mobile {
+  display: none;
+}
+
 /* ── Responsive ── */
 
 @media (max-width: 768px) {
+  .landing-bg-mobile {
+    display: block;
+  }
+
   .landing-network-canvas {
     display: none;
   }
