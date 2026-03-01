@@ -1,16 +1,26 @@
 import { useState, useEffect } from 'react'
 import TypewriterTitle from './TypewriterTitle.jsx'
 import NeuronNetwork from './NeuronNetwork.jsx'
+import NeuronBackground from './NeuronBackground.jsx'
 import './LandingPage.css'
 
 function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMode }) {
   const [reveal, setReveal] = useState(false)
   const [titleDone, setTitleDone] = useState(false)
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth <= 768)
 
   // Mark body so CSS can hide theme toggle on mobile landing only
   useEffect(() => {
     document.body.classList.add('on-landing')
     return () => document.body.classList.remove('on-landing')
+  }, [])
+
+  // Track mobile breakpoint for conditional NeuronBackground render
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)')
+    const handler = (e) => setIsMobile(e.matches)
+    mql.addEventListener('change', handler)
+    return () => mql.removeEventListener('change', handler)
   }, [])
 
   // Trigger blur-reveal animation shortly after mount
@@ -24,6 +34,7 @@ function LandingPage({ fadingOut, onGetStarted, onSelectTab, darkMode, setDarkMo
   return (
     <div className={`landing ${fadingOut ? 'landing-fade-out' : ''}`}>
       <NeuronNetwork fire={titleDone} onSelectTab={onSelectTab} />
+      {isMobile && <div className="landing-bg-mobile" aria-hidden="true"><NeuronBackground landing /></div>}
       <button
         className="header-icon-btn landing-theme-toggle"
         onClick={() => setDarkMode((d) => !d)}
