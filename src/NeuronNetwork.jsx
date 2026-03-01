@@ -143,9 +143,10 @@ function computeLayout(w, h, nodes) {
   const stretch = w > h ? 1.2 : 0.9 // wider on landscape
 
   // Exclusion zone around the title — no nodes here
-  // Title + subtitle + hint + CTA ≈ 200px tall, 350px wide
-  const exHalfW = Math.max(180, w * 0.18)
-  const exHalfH = Math.max(120, h * 0.14)
+  // Wider on landscape mobile where vertical space is tight
+  const landscape = w > h
+  const exHalfW = Math.max(180, w * (landscape ? 0.22 : 0.18))
+  const exHalfH = Math.max(120, h * (landscape ? 0.18 : 0.14))
 
   const ringDef = [
     { groups: ['tools'], rFactor: 0.28 },
@@ -501,13 +502,15 @@ function NeuronNetwork({ fire, onSelectTab }) {
           drawLock(ctx, drawX, drawY - lockSize * 0.15, lockSize)
         }
 
-        // Label
+        // Label (smaller on landscape mobile)
         if (state.w > 500 && labelAlpha > 0) {
-          ctx.globalAlpha = labelAlpha * (isHov ? 1 : 0.55)
+          const compact = state.h < 500
+          const fontSize = isHov ? (compact ? 9 : 11) : (compact ? 7 : 9)
+          ctx.globalAlpha = labelAlpha * (isHov ? 1 : (compact ? 0.4 : 0.55))
           ctx.fillStyle = isHov ? p.color : labelColor
-          ctx.font = `500 ${isHov ? 11 : 9}px -apple-system, BlinkMacSystemFont, sans-serif`
+          ctx.font = `500 ${fontSize}px -apple-system, BlinkMacSystemFont, sans-serif`
           ctx.textAlign = 'center'
-          ctx.fillText(p.label, drawX, drawY + r + 13)
+          ctx.fillText(p.label, drawX, drawY + r + (compact ? 10 : 13))
         }
       }
 
