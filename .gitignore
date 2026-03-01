@@ -29,5 +29,8 @@ dist-ssr
 .claude/
 docs/
 
+# Backup
+backup/
+
 # Scripts
 scripts/

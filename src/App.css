@@ -51,7 +51,7 @@
 .boot-line {
   font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
   font-size: 14px;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   white-space: pre;
   line-height: 1.6;
 }

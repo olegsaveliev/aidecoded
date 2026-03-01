@@ -84,7 +84,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 **Where tag colors are used:**
 - HomeScreen card left borders + card icons: `FILTER_COLORS[card.tag]`
 - EntryScreen ModuleIcon: `style={{ color: '<tag-color>' }}`
-- NeuralNetworkCanvas uses GROUP_COLORS (separate system for nav groups)
+- Landing page neuron burst particles use tag palette colors (light/dark variants)
 
 ### Navigation Group Colors
 
@@ -98,7 +98,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Professional | #0EA5E9 | AI-Native PM, AI-Native PM Workflows |
 | Security | #EF4444 | Prompt Injection Explained |
 
-Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
+Used in: `NavDropdown.jsx`
 
 ### Icon Color Matching Rule
 
@@ -106,7 +106,7 @@ Used in: `NavDropdown.jsx`, `NeuralNetworkCanvas.jsx` (node rings)
 - Icon inside a card with colored left border → icon color = border color
 - Icon inside a pipeline step with colored border → icon color = border color
 - Icon inside a tag-labeled container → icon color = tag color
-- Module icons (EntryScreen, HomeScreen, LandingPage) → tag color from table above
+- Module icons (EntryScreen, HomeScreen) → tag color from table above
 - TOOLKIT icons on final screens → tag color from table above (never gray)
 - Icons with semantic meaning keep their semantic color (CheckIcon=green, CrossIcon=red, TipIcon=yellow)
 
@@ -186,8 +186,7 @@ Header uses grouped dropdown navigation (`NavDropdown.jsx` / `NavDropdown.css`):
 - `src/ModuleIcon.jsx` / `src/ModuleIcon.css` — Module-specific SVG icons
 - `src/NavDropdown.jsx` — Grouped dropdown navigation
 - `src/HomeScreen.jsx` — Module card grid with filter tags
-- `src/LandingPage.jsx` — Landing page (neural network canvas desktop, hero mobile)
-- `src/NeuralNetworkCanvas.jsx` — Interactive node graph (force-directed, viewBox 960×600)
+- `src/LandingPage.jsx` — Landing page (Augen-style blur-reveal hero with typewriter title + neuron burst particles)
 - `src/EntryScreen.jsx` — Reusable entry/intro screen for each module
 - `src/Quiz.jsx` / `src/Quiz.css` — Reusable quiz component
 - `src/quizData.js` — All quiz question banks
@@ -250,7 +249,7 @@ Each module has a unique icon. Uses `stroke="currentColor"` so color is set via 
 <ModuleIcon module="how-llms-work" size={48} style={{ color: '#FF9500' }} />
 ```
 
-This applies to: EntryScreen icons, HomeScreen cards, NeuralNetworkCanvas nodes.
+This applies to: EntryScreen icons, HomeScreen cards.
 
 ---
 
@@ -401,9 +400,11 @@ padding: 12px 16px;
 **Cards and Grids:**
 - Grid collapse pattern: 3/4-col → 2-col (768px) → 1-col (480px)
 
-**Landing Page Mobile:**
-- Desktop: neural network canvas (hidden at 768px)
-- Mobile: single hero screen → boot screen → home
+**Landing Page:**
+- Augen-style full-viewport centered hero (same layout desktop + mobile)
+- Blur-reveal animation: elements start `opacity: 0; filter: blur(6px)` → reveal with stagger
+- TypewriterTitle types on load with blur clearing; subtitle + CTA blur-reveal after typing finishes
+- Neuron burst: canvas particle system fires when typewriter completes — particles shoot toward four screen corners
 - Theme toggle hidden on mobile landing via `body.on-landing` class
 
 **Entry Screen:**
@@ -587,28 +588,27 @@ The `Quiz.jsx` component renders a standardized end screen:
 4. Update `src/NavDropdown.jsx`: add item to the appropriate NAV_GROUPS entry
 5. Update `src/App.jsx`: import component, add render condition (pass `onSwitchTab={setActiveTab}`)
 6. Update `src/HomeScreen.jsx`: add card to CARDS array — set `tag` field and use `FILTER_COLORS[tag]` for icon color
-7. Update `src/NeuralNetworkCanvas.jsx`: add to NODES array with group color, add position to `NEURON_LAYOUT`, add to `NEURON_ANIM_ORDER` (force layout auto-resolves overlaps)
-8. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
-9. Add module to `src/moduleData.js` ALL_MODULES array
-10. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`; for Game modules, also pass `buttonClassName="entry-screen-btn-game"` for orange button
-11. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
-12. All content icons inside colored containers must match the container's border/accent color
-13. Use `border: 1.5px solid transparent` on all filled buttons
-14. Final screen: define `TOOLKIT` array at module level with `{ concept, when, phrase, icon }` items (icon color = tag color), use `pe-final-grid` + `pe-reference` + 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
-15. Quiz: pass `onStartOver`, `onSwitchTab`, `currentModuleId` props
-16. Add `useAuth` import and destructure `markModuleStarted`, `markModuleComplete`
-17. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
-18. Call `markModuleComplete('<module-id>')` when module is completed (final screen or first meaningful action)
-19. Update `TOTAL_MODULES` in `HomeScreen.jsx` if adding a completable module
-20. Use `usePersistedState('<module-id>', -1)` for stage state (or `usePersistedState('<module-id>-entry', true)` for entry-based); init `showWelcome` from stage: `useState(stage === -1)`; init `showFinal` from stage: `useState(stage >= STAGES.length)` — prevents blank screen on page refresh
-21. Add welcome banner with `<ol className="module-welcome-steps">` (shared CSS class for all modules)
-22. Add progressive learn tips: `learnTip`/`dismissedTips`/`fadeTimerRef` state, `dismissLearnTip` function, milestone-based useEffect
-23. Add `handleStartOver` function that resets stage, tips, welcome, and all module state
-24. Add mobile touch targets (min-height: 44px) for module-specific buttons at 768px breakpoint
-25. Update this file (CLAUDE.md module inventory table, tag color tables if new tag, conventions if new pattern)
-26. Update `docs/module-details.md` with entry screen, stages, learn tips, and visualizations for the new module
-27. Update `docs/progress-triggers.md` with started/completed triggers for the new module
-28. To hide before release: insert `(module_id, false)` into `module_releases` table. To release: set `released = true` or delete the row.
+7. Add module icon to `src/ModuleIcon.jsx` ICON_PATHS
+8. Add module to `src/moduleData.js` ALL_MODULES array
+9. Color the EntryScreen icon with **tag color**: `style={{ color: '<tag-color>' }}`; for Game modules, also pass `buttonClassName="entry-screen-btn-game"` for orange button
+10. Import needed icons from `src/ContentIcons.jsx` — always pass `color` prop matching container
+11. All content icons inside colored containers must match the container's border/accent color
+12. Use `border: 1.5px solid transparent` on all filled buttons
+13. Final screen: define `TOOLKIT` array at module level with `{ concept, when, phrase, icon }` items (icon color = tag color), use `pe-final-grid` + `pe-reference` + 2 buttons + `<SuggestedModules>` (see Standardized Module Screens)
+14. Quiz: pass `onStartOver`, `onSwitchTab`, `currentModuleId` props
+15. Add `useAuth` import and destructure `markModuleStarted`, `markModuleComplete`
+16. Call `markModuleStarted('<module-id>')` when entry screen is dismissed
+17. Call `markModuleComplete('<module-id>')` when module is completed (final screen or first meaningful action)
+18. Update `TOTAL_MODULES` in `HomeScreen.jsx` if adding a completable module
+19. Use `usePersistedState('<module-id>', -1)` for stage state (or `usePersistedState('<module-id>-entry', true)` for entry-based); init `showWelcome` from stage: `useState(stage === -1)`; init `showFinal` from stage: `useState(stage >= STAGES.length)` — prevents blank screen on page refresh
+20. Add welcome banner with `<ol className="module-welcome-steps">` (shared CSS class for all modules)
+21. Add progressive learn tips: `learnTip`/`dismissedTips`/`fadeTimerRef` state, `dismissLearnTip` function, milestone-based useEffect
+22. Add `handleStartOver` function that resets stage, tips, welcome, and all module state
+23. Add mobile touch targets (min-height: 44px) for module-specific buttons at 768px breakpoint
+24. Update this file (CLAUDE.md module inventory table, tag color tables if new tag, conventions if new pattern)
+25. Update `docs/module-details.md` with entry screen, stages, learn tips, and visualizations for the new module
+26. Update `docs/progress-triggers.md` with started/completed triggers for the new module
+27. To hide before release: insert `(module_id, false)` into `module_releases` table. To release: set `released = true` or delete the row.
 
 > For progress tracking triggers per module, see `docs/progress-triggers.md`.
 
@@ -638,12 +638,12 @@ The `Quiz.jsx` component renders a standardized end screen:
 - Final screens: TOOLKIT icon grid + toolkit table + exactly 2 buttons (Test Your Knowledge + Start over) + SuggestedModules
 - Quiz end screens: exactly 2 buttons (Start Over + Take Quiz Again) + explore next cards
 - Tip boxes: always yellow — `rgba(234, 179, 8, 0.06)` bg, `#eab308` border-left, `TipIcon color="#eab308"`
-- NeuralNetworkCanvas: neuron-shaped initial layout + random replay; new nodes need `NODES`, `NEURON_LAYOUT`, `NEURON_ANIM_ORDER` entries; tooltips must account for SVG letterboxing (xMidYMid meet)
+- Landing page: Augen-style blur-reveal (`landingBlurReveal` keyframes) + TypewriterTitle + neuron burst canvas particles shooting to screen corners; `NeuronBurst` component in `LandingPage.jsx`
 - Free modules (playground, tokenizer, generation) don't require login; all others show lock icon until authenticated
 - Every module must call `markModuleStarted` on entry screen dismiss and `markModuleComplete` on completion
 - Auth header button (sign-in icon / avatar) is always last in header-right, after dark mode toggle
 - Dark mode toggle hidden on mobile landing page via `body.on-landing` class
-- Landing page mobile: single hero screen with typewriter + CTA → boot screen → home; desktop uses neural network canvas
+- Landing page: full-viewport centered hero with typewriter title + blur-reveal subtitle/CTA + neuron burst → boot screen → home (same layout desktop + mobile)
 - OAuth redirect preserves current tab via sessionStorage `auth_return_tab`
 - Sign-out redirects to landing page and resets all module stages
 - Profile page (`activeTab === 'profile'`) requires auth, only accessible via avatar dropdown
