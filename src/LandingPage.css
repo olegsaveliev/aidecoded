@@ -201,17 +201,16 @@
     display: none;
   }
 
+  .landing-hint {
+    display: none;
+  }
+
   .landing-heading {
     font-size: clamp(20px, 4vw, 28px);
   }
 
   .landing-sub {
     font-size: 13px;
-    margin-top: 8px;
-  }
-
-  .landing-hint {
-    font-size: 11px;
     margin-top: 8px;
   }
 
