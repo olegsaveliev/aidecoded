@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { supabase } from './supabase'
 
 const ReleaseContext = createContext({ hiddenModules: new Set(), releaseLoading: false })
@@ -25,8 +25,10 @@ export function ReleaseProvider({ children }) {
       })
   }, [])
 
+  const value = useMemo(() => ({ hiddenModules, releaseLoading }), [hiddenModules, releaseLoading])
+
   return (
-    <ReleaseContext.Provider value={{ hiddenModules, releaseLoading }}>
+    <ReleaseContext.Provider value={value}>
       {children}
     </ReleaseContext.Provider>
   )

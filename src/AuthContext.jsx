@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useMemo } from 'react'
 import { supabase } from './supabase'
 import ALL_MODULES from './moduleData'
+import { useRelease } from './ReleaseContext'
 
 const AuthContext = createContext({})
 
@@ -44,7 +45,9 @@ async function syncProfileName(userId, setUser) {
   }
 }
 
+// ReleaseProvider must wrap AuthProvider in the component tree (see main.jsx)
 export const AuthProvider = ({ children }) => {
+  const { hiddenModules } = useRelease()
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState([])
@@ -132,8 +135,36 @@ export const AuthProvider = ({ children }) => {
     } catch { setStartedModules([]) }
   }
 
+  // Track activity dates — recorded when user accesses any module
+  const [visitDates, setVisitDates] = useState([])
+
+  useEffect(() => {
+    if (!user?.id) return
+    try {
+      const raw = JSON.parse(localStorage.getItem(`visits_${user.id}`) || '[]')
+      setVisitDates(Array.isArray(raw) ? raw : [])
+    } catch { setVisitDates([]) }
+  }, [user?.id])
+
+  const recordVisitDate = () => {
+    if (!user?.id) return
+    const key = `visits_${user.id}`
+    const today = new Date().toISOString().slice(0, 10)
+    try {
+      const raw = JSON.parse(localStorage.getItem(key) || '[]')
+      const saved = Array.isArray(raw) ? raw : []
+      if (saved.includes(today)) return
+      saved.push(today)
+      const cutoff = new Date(Date.now() - 90 * 86400000).toISOString().slice(0, 10)
+      const trimmed = saved.filter(d => d >= cutoff)
+      localStorage.setItem(key, JSON.stringify(trimmed))
+      setVisitDates(trimmed)
+    } catch {}
+  }
+
   const markModuleStarted = (moduleId) => {
     if (!user) return
+    recordVisitDate()
     setStartedModules(prev => {
       if (prev.includes(moduleId)) return prev
       const next = [...prev, moduleId]
@@ -156,7 +187,10 @@ export const AuthProvider = ({ children }) => {
       .filter(q => q.module_id === moduleId)
       .sort((a, b) => b.score - a.score)[0]
 
-  const completedCount = progress.filter(p => VALID_MODULE_IDS.has(p.module_id)).length
+  const completedCount = useMemo(() =>
+    progress.filter(p => VALID_MODULE_IDS.has(p.module_id) && !hiddenModules.has(p.module_id)).length,
+    [progress, hiddenModules]
+  )
 
   const signInWithGoogle = () => {
     if (!supabase) return
@@ -203,12 +237,13 @@ export const AuthProvider = ({ children }) => {
     setProgress([])
     setQuizResults([])
     setStartedModules([])
+    setVisitDates([])
     try { await supabase.auth.signOut() } catch { /* ignore */ }
   }
 
   return (
     <AuthContext.Provider value={{
-      user, loading, progress, quizResults, startedModules,
+      user, loading, progress, quizResults, startedModules, visitDates,
       markModuleStarted, markModuleComplete, saveQuizResult,
       isModuleStarted, isModuleComplete, isModuleLocked, getQuizResult,
       completedCount, updateDisplayName,

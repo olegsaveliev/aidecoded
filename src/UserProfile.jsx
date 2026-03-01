@@ -320,7 +320,7 @@ function ProgressByCategory({ categoryProgress }) {
 
 function UserProfile({ onSwitchTab, onGoHome }) {
   const {
-    user, progress, quizResults, startedModules,
+    user, progress, quizResults, startedModules, visitDates,
     completedCount, updateDisplayName,
   } = useAuth()
   const { hiddenModules } = useRelease()
@@ -330,67 +330,74 @@ function UserProfile({ onSwitchTab, onGoHome }) {
   const [editName, setEditName] = useState('')
   const [saving, setSaving] = useState(false)
   const [sortMode, setSortMode] = useState('date')
-  const [streak, setStreak] = useState(0)
 
   const displayName = user?.user_metadata?.display_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'User'
   const memberSince = user?.created_at
     ? new Date(user.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
     : null
 
-  // Streak — read/write localStorage on mount only (not inside useMemo)
+  // Clean up legacy streak localStorage key — TODO: remove after 2026-06
   useEffect(() => {
-    if (!user) return
-    const streakKey = `streak_${user.id}`
-    try {
-      const saved = JSON.parse(localStorage.getItem(streakKey) || '{}')
-      const today = new Date().toISOString().slice(0, 10)
-      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10)
-      if (saved.date === today) {
-        setStreak(saved.count || 1)
-      } else if (saved.date === yesterday) {
-        const next = (saved.count || 0) + 1
-        localStorage.setItem(streakKey, JSON.stringify({ date: today, count: next }))
-        setStreak(next)
-      } else {
-        localStorage.setItem(streakKey, JSON.stringify({ date: today, count: 1 }))
-        setStreak(1)
-      }
-    } catch { setStreak(1) }
+    if (user?.id) try { localStorage.removeItem(`streak_${user.id}`) } catch {}
   }, [user?.id])
 
-  // Compute stats
+  // Streak — consecutive days of app usage (visits + completions + quizzes)
+  const streak = useMemo(() => {
+    const dates = new Set(visitDates)
+    progress.forEach(p => { if (p.completed_at && !hiddenModules.has(p.module_id)) dates.add(p.completed_at.slice(0, 10)) })
+    quizResults.forEach(q => { if (q.created_at && !hiddenModules.has(q.module_id)) dates.add(q.created_at.slice(0, 10)) })
+    if (dates.size === 0) return 0
+    const sorted = [...dates].sort().reverse()
+    const today = new Date().toISOString().slice(0, 10)
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10)
+    // Streak must include today or yesterday to be active
+    if (sorted[0] !== today && sorted[0] !== yesterday) return 0
+    let count = 1
+    for (let i = 1; i < sorted.length; i++) {
+      const prev = new Date(sorted[i - 1] + 'T00:00:00Z')
+      const curr = new Date(sorted[i] + 'T00:00:00Z')
+      const diffDays = (prev - curr) / 86400000
+      if (diffDays === 1) count++
+      else break
+    }
+    return count
+  }, [visitDates, progress, quizResults, hiddenModules])
+
+  // Compute stats (exclude hidden modules from all counts)
   const stats = useMemo(() => {
-    const completedSet = new Set(progress.map(p => p.module_id).filter(id => VALID_MODULE_IDS.has(id)))
-    const quizCount = new Set(quizResults.map(q => q.module_id)).size
-    const quizScores = quizResults.map(q => (q.score / q.max_score) * 100)
+    const completedSet = new Set(progress.map(p => p.module_id).filter(id => VALID_MODULE_IDS.has(id) && !hiddenModules.has(id)))
+    const visibleQuizResults = quizResults.filter(q => !hiddenModules.has(q.module_id))
+    const quizCount = new Set(visibleQuizResults.map(q => q.module_id)).size
+    const quizScores = visibleQuizResults.map(q => (q.score / q.max_score) * 100)
     const avgQuizScore = quizScores.length > 0
       ? Math.round(quizScores.reduce((a, b) => a + b, 0) / quizScores.length)
       : 0
-    const hasPerfectQuiz = quizResults.some(q => q.score === q.max_score)
+    const hasPerfectQuiz = visibleQuizResults.some(q => q.score === q.max_score)
 
-    const startedNotCompleted = startedModules.filter(id => !completedSet.has(id)).length
+    const visibleStarted = startedModules.filter(id => !hiddenModules.has(id))
+    const startedNotCompleted = visibleStarted.filter(id => !completedSet.has(id)).length
     const xp = (completedSet.size * 20) + (quizCount * 10) + (startedNotCompleted * 5)
 
-    // Categories started (at least one module touched)
-    const allStarted = new Set([...startedModules, ...Array.from(completedSet)])
-    const categoriesStarted = NAV_GROUPS.filter(g =>
-      g.items.some(item => allStarted.has(item.id))
+    // Categories started (at least one visible module touched)
+    const allStarted = new Set([...visibleStarted, ...Array.from(completedSet)])
+    const visibleGroups = NAV_GROUPS.filter(g => g.items.some(item => !hiddenModules.has(item.id)))
+    const categoriesStarted = visibleGroups.filter(g =>
+      g.items.some(item => !hiddenModules.has(item.id) && allStarted.has(item.id))
     ).length
 
-    // Categories completed (every module in the group done)
-    const categoriesCompleted = NAV_GROUPS.filter(g =>
-      g.items.every(item => completedSet.has(item.id))
+    // Categories completed (every visible module in the group done)
+    const categoriesCompleted = visibleGroups.filter(g =>
+      g.items.filter(item => !hiddenModules.has(item.id)).every(item => completedSet.has(item.id))
     ).length
 
     // Tools group completion (dynamic — finds the "Tools" group by label)
     const toolsGroup = NAV_GROUPS.find(g => g.label === 'Tools')
-    const toolsGroupCompleted = toolsGroup
-      ? toolsGroup.items.every(item => completedSet.has(item.id))
-      : false
+    const visibleTools = toolsGroup ? toolsGroup.items.filter(item => !hiddenModules.has(item.id)) : []
+    const toolsGroupCompleted = visibleTools.length > 0 && visibleTools.every(item => completedSet.has(item.id))
 
-    // Quiz score stats (best score per module)
+    // Quiz score stats (best score per module, visible only)
     const bestScoreByModule = {}
-    quizResults.forEach(q => {
+    visibleQuizResults.forEach(q => {
       const pct = (q.score / q.max_score) * 100
       if (!bestScoreByModule[q.module_id] || pct > bestScoreByModule[q.module_id]) {
         bestScoreByModule[q.module_id] = pct
@@ -405,7 +412,6 @@ function UserProfile({ onSwitchTab, onGoHome }) {
       avgQuizScore,
       quizCount,
       xp,
-      streak,
       hasPerfectQuiz,
       startedCount: allStarted.size,
       categoriesStarted,
@@ -413,16 +419,17 @@ function UserProfile({ onSwitchTab, onGoHome }) {
       toolsGroupCompleted,
       quizScoresOver70,
       perfectQuizCount,
-      totalCategories: NAV_GROUPS.length,
+      totalCategories: visibleGroups.length,
       completedSet,
     }
-  }, [progress, quizResults, startedModules, user, streak])
+  }, [progress, quizResults, startedModules, hiddenModules])
 
-  // Flat module lookup from NAV_GROUPS (auto-updates when modules are added)
+  // Flat module lookup from NAV_GROUPS (auto-updates when modules are added, excludes hidden)
   const moduleMap = useMemo(() => {
     const map = {}
     NAV_GROUPS.forEach(group => {
       group.items.forEach(item => {
+        if (hiddenModules.has(item.id)) return
         const full = ALL_MODULES.find(m => m.id === item.id)
         map[item.id] = {
           id: item.id,
@@ -433,20 +440,24 @@ function UserProfile({ onSwitchTab, onGoHome }) {
       })
     })
     return map
-  }, [])
+  }, [hiddenModules])
 
-  // Progress by category
+  // Progress by category (exclude hidden modules)
   const categoryProgress = useMemo(() => {
-    return NAV_GROUPS.map(group => {
-      const modules = group.items.map(item => ({
-        name: item.name,
-        done: stats.completedSet.has(item.id),
-      }))
-      const total = modules.length
-      const completed = modules.filter(m => m.done).length
-      return { label: group.label, color: group.color, completed, total, modules }
-    })
-  }, [stats.completedSet])
+    return NAV_GROUPS
+      .map(group => {
+        const visibleItems = group.items.filter(item => !hiddenModules.has(item.id))
+        if (visibleItems.length === 0) return null
+        const modules = visibleItems.map(item => ({
+          name: item.name,
+          done: stats.completedSet.has(item.id),
+        }))
+        const total = modules.length
+        const completed = modules.filter(m => m.done).length
+        return { label: group.label, color: group.color, completed, total, modules }
+      })
+      .filter(Boolean)
+  }, [stats.completedSet, hiddenModules])
 
   // Badge data
   const badgeData = useMemo(() => {
@@ -462,13 +473,13 @@ function UserProfile({ onSwitchTab, onGoHome }) {
       perfectQuizCount: stats.perfectQuizCount,
       totalCategories: stats.totalCategories,
       totalModules: visibleTotal,
-      streak: stats.streak,
+      streak,
     }
     return BADGES.map(badge => ({
       ...badge,
       earned: badge.condition(d),
     }))
-  }, [stats, visibleTotal])
+  }, [stats, visibleTotal, streak])
 
   // Completed modules (base, unsorted) — uses moduleMap so new modules auto-populate
   const completedModulesBase = useMemo(() => {
@@ -587,7 +598,7 @@ function UserProfile({ onSwitchTab, onGoHome }) {
         </div>
         <div className="up-stat-card">
           <div className="up-stat-icon"><FlameIcon size={20} color="#FF3B30" /></div>
-          <div className="up-stat-value">{stats.streak}</div>
+          <div className="up-stat-value">{streak}</div>
           <div className="up-stat-label">Day Streak</div>
         </div>
       </div>
