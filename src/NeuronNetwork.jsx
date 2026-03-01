@@ -275,7 +275,14 @@ function NeuronNetwork({ fire, onSelectTab }) {
     rectRef.current = canvas.getBoundingClientRect()
 
     // Filter hidden modules
-    const visibleNodes = NODES.filter(n => !hiddenModules.has(n.id))
+    let visibleNodes = NODES.filter(n => !hiddenModules.has(n.id))
+
+    // Landscape mobile — limit to 10 random nodes
+    if (h < 500 && visibleNodes.length > 10) {
+      const shuffled = visibleNodes.slice().sort(() => Math.random() - 0.5)
+      visibleNodes = shuffled.slice(0, 10)
+    }
+
     const visibleIds = new Set(visibleNodes.map(n => n.id))
     const visibleConns = CONNECTIONS
       .filter(([a, b]) => visibleIds.has(a) && visibleIds.has(b))
