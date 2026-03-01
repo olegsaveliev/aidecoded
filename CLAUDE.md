@@ -60,6 +60,7 @@ Interactive React app for learning how Large Language Models work.
 | `ai-pm-workflows` | AIPMWorkflows.jsx | AIPMWorkflows.css | aiPMWorkflowsQuiz | Professional | #0EA5E9 |
 | `system-design-interview` | SystemDesignInterview.jsx | SystemDesignInterview.css | — (game) | Game | #F59E0B |
 | `prompt-injection` | PromptInjection.jsx | PromptInjection.css | promptInjectionQuiz | Security | #EF4444 |
+| `prompt-injection-lab` | PromptInjectionLab.jsx | PromptInjectionLab.css | — (game) | Game | #F59E0B |
 
 ## Color System — Two Color Layers
 

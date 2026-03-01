@@ -59,6 +59,7 @@ const NODES = [
   { id: 'ai-pm-workflows', label: 'PM Workflows', group: 'professional', desc: 'Copy-ready prompts and weekly rhythms for AI-native PMs' },
   { id: 'system-design-interview', label: 'System Design', group: 'play', desc: 'Design AI systems and defend trade-offs under pressure' },
   { id: 'prompt-injection', label: 'Prompt Injection', group: 'security', desc: 'The #1 AI security risk — attacks that use nothing but text' },
+  { id: 'prompt-injection-lab', label: 'Injection Lab', group: 'play', desc: 'Attack or defend AI systems in a hands-on prompt injection lab' },
 ]
 
 
@@ -192,6 +193,9 @@ const CONNECTIONS = [
   ['ai-in-production', 'prompt-injection'],
   ['agentic-ai', 'prompt-injection'],
   ['ai-safety', 'prompt-injection'],
+  ['prompt-injection', 'prompt-injection-lab'],
+  ['system-design-interview', 'prompt-injection-lab'],
+  ['agentic-ai', 'prompt-injection-lab'],
 ]
 
 const NODE_APPEAR_DUR = 500
@@ -260,6 +264,7 @@ const NEURON_LAYOUT = {
   'ai-pm-workflows':       { px: 0.98, py: 0.80 },
   'system-design-interview': { px: 0.52, py: 0.82 },
   'prompt-injection':        { px: 0.85, py: 0.70 },
+  'prompt-injection-lab':    { px: 0.92, py: 0.78 },
 }
 
 /* Animation order follows signal flow: dendrites → soma → axon → terminals */
@@ -271,7 +276,7 @@ const NEURON_ANIM_ORDER = [
   // Axon
   'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'spec-driven-dev', 'ai-coding-tools',
   // Terminals
-  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview', 'prompt-injection',
+  'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview', 'prompt-injection', 'prompt-injection-lab',
 ]
 
 /* ── Force-directed layout to prevent node overlap ── */
