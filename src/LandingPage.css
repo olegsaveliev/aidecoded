@@ -219,6 +219,10 @@
     height: 36px;
     padding: 0 22px;
     font-size: 12px;
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    pointer-events: auto;
   }
 }
 
