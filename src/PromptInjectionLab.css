@@ -263,6 +263,7 @@
 
 /* Game Container */
 .pil-game {
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
   padding: 20px 24px 40px;
@@ -738,6 +739,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
+  min-width: 0;
 }
 
 .pil-transcript-chevron {
