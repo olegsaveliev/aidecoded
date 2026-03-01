@@ -1710,3 +1710,66 @@ export const promptInjectionQuiz = [
     accentColor: '#EF4444',
   },
 ]
+
+export const claudeSkillsQuiz = [
+  {
+    question: 'What is the primary purpose of the description field in a SKILL.md?',
+    options: ['To explain the skill to human readers', 'To tell Claude what the skill does in detail', 'To determine when Claude loads and uses the skill', 'To list the dependencies the skill needs'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Which of these is the best way to write a rule in a SKILL.md?',
+    options: ['It is generally preferable to use DXA units when possible.', 'DXA units are usually better than percentages for most cases.', 'Always use WidthType.DXA. Never use WidthType.PERCENTAGE — it breaks in Google Docs.', 'Consider using DXA for table widths.'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What does progressive disclosure mean in the context of skills?',
+    options: ['Skills get more complex over time', 'Only the metadata, SKILL.md body, and bundled resources load based on need', 'Claude gradually reveals skill contents to the user', 'Skills improve themselves automatically'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'When should you NOT create a skill?',
+    options: ['When you do the same task repeatedly', 'When Claude consistently gets something wrong', 'When the task is a one-off and Claude already handles it well', 'When multiple team members need consistent output'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the anti-pattern called when a skill description is too vague to trigger correctly?',
+    options: ['The Kitchen Sink', 'The Essay', 'The Vague Trigger', 'Missing the Gotchas'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Why should you include the WHY alongside critical rules in a SKILL.md?',
+    options: ['To make the skill easier to read', 'To help Claude apply the rule correctly to edge cases it does not explicitly cover', 'To document the skill for future editing', 'To reduce the word count'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'Where should all "when to use" information go in a SKILL.md?',
+    options: ['In the body of the file under a "When to Use" heading', 'In the description field of the frontmatter', 'In a separate TRIGGERS.md file', 'Anywhere — Claude reads the whole file'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What is the recommended maximum length for a SKILL.md body?',
+    options: ['100 lines', '200 lines', '500 lines', 'There is no limit'],
+    correct: 2,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'What are bundled resources in a skill?',
+    options: ['External APIs the skill connects to', 'Scripts, references, and assets that load alongside the SKILL.md when needed', 'A list of other skills that must be installed first', 'Environment variables the skill requires'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+  {
+    question: 'How does a skill differ from instructions in CLAUDE.md?',
+    options: ['Skills are faster to load', 'CLAUDE.md applies globally while skills activate only when their trigger conditions match', 'Skills can contain code but CLAUDE.md cannot', 'There is no meaningful difference'],
+    correct: 1,
+    accentColor: '#34C759',
+  },
+]

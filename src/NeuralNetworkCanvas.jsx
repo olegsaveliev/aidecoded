@@ -51,6 +51,7 @@ const NODES = [
   { id: 'draw-and-deceive', label: 'Draw & Deceive', group: 'play', desc: 'Draw pixel art and try to fool GPT-4o vision' },
   { id: 'agent-office', label: 'Agent Office', group: 'play', desc: 'Run a pixel art AI startup with four AI agents' },
   { id: 'claude-code', label: 'Claude Code', group: 'skills', desc: 'AI pair programmer that lives in your terminal' },
+  { id: 'claude-skills', label: 'Claude Skills', group: 'skills', desc: 'Teach Claude permanent expertise via SKILL.md files' },
   { id: 'agent-teams', label: 'Agent Teams', group: 'advanced', desc: 'Multiple Claude Code agents coordinating in parallel' },
   { id: 'custom-agents', label: 'Custom Agents', group: 'advanced', desc: 'Define specialist AI assistants in Markdown files' },
   { id: 'model-training-tycoon', label: 'Training Tycoon', group: 'play', desc: 'Allocate $50K across six phases of model training' },
@@ -174,6 +175,10 @@ const CONNECTIONS = [
   ['ai-startup-simulator', 'model-training-tycoon'],
   ['fine-tuning', 'model-training-tycoon'],
   ['deep-learning', 'model-training-tycoon'],
+  ['claude-code', 'claude-skills'],
+  ['custom-agents', 'claude-skills'],
+  ['spec-driven-dev', 'claude-skills'],
+  ['prompt-engineering', 'claude-skills'],
   ['claude-code', 'spec-driven-dev'],
   ['agentic-ai', 'spec-driven-dev'],
   ['prompt-engineering', 'spec-driven-dev'],
@@ -256,6 +261,7 @@ const NEURON_LAYOUT = {
   'draw-and-deceive':      { px: 0.82, py: 0.90 },
   'agent-office':          { px: 0.78, py: 0.97 },
   'claude-code':           { px: 0.27, py: 1.00 },
+  'claude-skills':         { px: 0.42, py: 0.72 },
   'agent-teams':           { px: 0.58, py: 0.90 },
   'custom-agents':         { px: 0.65, py: 0.82 },
   'model-training-tycoon': { px: 0.45, py: 0.97 },
@@ -274,7 +280,7 @@ const NEURON_ANIM_ORDER = [
   // Soma
   'machine-learning', 'neural-networks', 'computer-vision', 'model-training', 'rag', 'fine-tuning', 'generative-ai', 'agentic-ai', 'precision-recall', 'rag-under-the-hood', 'ai-in-production',
   // Axon
-  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'spec-driven-dev', 'ai-coding-tools',
+  'prompt-heist', 'prompt-engineering', 'context-engineering', 'ai-safety', 'ai-fluency', 'choosing-ai-model', 'ollama', 'claude-code', 'claude-skills', 'spec-driven-dev', 'ai-coding-tools',
   // Terminals
   'ai-lab-explorer', 'ai-city-builder', 'token-budget', 'ai-ethics-tribunal', 'pm-simulator', 'ai-startup-simulator', 'alignment-game', 'ai-native-pm', 'ai-pm-workflows', 'label-master', 'draw-and-deceive', 'agent-office', 'agent-teams', 'custom-agents', 'model-training-tycoon', 'system-design-interview', 'prompt-injection', 'prompt-injection-lab',
 ]

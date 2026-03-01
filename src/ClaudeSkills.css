@@ -1,0 +1,1093 @@
+/* ============================================================
+   ClaudeSkills.css — prefix .cs-
+   ============================================================ */
+
+/* ── Stepper green accent (matches ClaudeCode pattern) ── */
+
+.cs-stepper .how-step-current .how-step-num {
+  background: var(--bg-card);
+  color: #34C759;
+  border: 2px solid #34C759;
+}
+
+[data-theme="dark"] .cs-stepper .how-step-current .how-step-num {
+  background: var(--bg-primary);
+}
+
+.cs-stepper .how-step-completed .how-step-num {
+  background: var(--bg-card);
+  border: 2px solid #34C759;
+  color: #34C759;
+}
+
+[data-theme="dark"] .cs-stepper .how-step-completed .how-step-num {
+  background: var(--bg-primary);
+}
+
+.cs-stepper .how-step-active .how-step-label {
+  color: var(--text-primary);
+}
+
+.cs-stepper .how-arrow-active {
+  color: #34C759;
+}
+
+/* ============================================================
+   Stage content
+   ============================================================ */
+
+.cs-stage {
+  animation: csFadeIn 0.3s ease;
+}
+
+.cs-stage > p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 8px 0 16px;
+}
+
+.cs-section-heading {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 28px 0 12px;
+  color: var(--text-primary);
+}
+
+.cs-bullet-list {
+  margin: 8px 0 16px 20px;
+  padding: 0;
+  font-size: 15px;
+  color: var(--text-primary);
+  line-height: 1.7;
+}
+.cs-bullet-list li {
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   Analogy card
+   ============================================================ */
+
+.cs-analogy-card {
+  background: rgba(52, 199, 89, 0.06);
+  border-left: 2px solid #34C759;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+.cs-analogy-card p {
+  margin: 0 0 8px;
+}
+.cs-analogy-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================================
+   Before/After flow diagram
+   ============================================================ */
+
+.cs-flow-container {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.cs-flow-row {
+  border-radius: 12px;
+  padding: 14px 18px;
+  overflow-x: auto;
+}
+.cs-flow-without {
+  background: rgba(239, 68, 68, 0.04);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.cs-flow-with {
+  background: rgba(52, 199, 89, 0.04);
+  border: 1px solid rgba(52, 199, 89, 0.2);
+}
+.cs-flow-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+}
+.cs-flow-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  min-width: max-content;
+}
+.cs-flow-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  position: relative;
+  color: var(--text-primary);
+}
+.cs-flow-sublabel {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text-tertiary);
+  margin-top: 2px;
+}
+.cs-flow-arrow {
+  font-size: 16px;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Pyramid
+   ============================================================ */
+
+.cs-pyramid {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.cs-pyramid-tier {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-radius: 8px;
+  padding: 14px 20px;
+}
+.cs-pyramid-top {
+  width: 45%;
+  background: #34C759;
+  color: white;
+}
+.cs-pyramid-mid {
+  width: 70%;
+  background: #16A34A;
+  color: white;
+}
+.cs-pyramid-bottom {
+  width: 100%;
+  background: rgba(52, 199, 89, 0.2);
+  color: var(--text-primary);
+}
+.cs-pyramid-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.cs-pyramid-content strong {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.cs-pyramid-content span {
+  font-size: 11px;
+  opacity: 0.9;
+}
+.cs-pyramid-note {
+  font-size: 11px;
+  opacity: 0.85;
+  max-width: 200px;
+  line-height: 1.4;
+}
+
+/* ============================================================
+   Trigger cards (2×2 grid)
+   ============================================================ */
+
+.cs-trigger-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 16px 0;
+}
+.cs-trigger-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-trigger-card strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.cs-trigger-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+.cs-trigger-example {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   Warning items
+   ============================================================ */
+
+.cs-warning-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-left: 2px solid #EF4444;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.04);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+.cs-warning-item svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   Annotated skill display (Stage 1)
+   ============================================================ */
+
+.cs-annotated-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+  align-items: start;
+}
+
+.cs-skill-file {
+  background: #0d1117;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.cs-skill-section {
+  cursor: pointer;
+  padding: 4px 0;
+  transition: background 0.15s;
+  position: relative;
+}
+.cs-skill-section:hover {
+  background: rgba(52, 199, 89, 0.06);
+}
+.cs-skill-section.active {
+  background: rgba(52, 199, 89, 0.10);
+  border-left: 2px solid #34C759;
+}
+
+.cs-section-badge {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #34C759;
+  background: rgba(52, 199, 89, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+}
+
+.cs-skill-line {
+  display: flex;
+  padding: 0 12px 0 0;
+}
+.cs-line-num {
+  display: inline-block;
+  width: 32px;
+  text-align: right;
+  padding-right: 12px;
+  color: #484f58;
+  user-select: none;
+  flex-shrink: 0;
+}
+.cs-line-code {
+  color: #e2e8f0;
+  white-space: pre;
+}
+
+/* Annotation panel */
+.cs-annotation {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 2px solid #34C759;
+  border-radius: 12px;
+  padding: 16px 20px;
+  animation: csSlideInRight 0.25s ease;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  position: sticky;
+  top: 80px;
+}
+.cs-annotation-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #34C759;
+  margin-bottom: 10px;
+}
+.cs-annotation p {
+  margin: 0 0 8px;
+}
+.cs-annotation ul {
+  margin: 6px 0 10px 16px;
+  padding: 0;
+}
+.cs-annotation li {
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   Comparison cards
+   ============================================================ */
+
+.cs-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+.cs-compare-card {
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.cs-compare-bad {
+  border-left: 2px solid #EF4444;
+  background: rgba(239, 68, 68, 0.04);
+}
+.cs-compare-good {
+  border-left: 2px solid #34C759;
+  background: rgba(52, 199, 89, 0.04);
+}
+.cs-compare-label {
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cs-compare-code {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+.cs-compare-code.cs-mono {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 6px;
+  padding: 8px 10px;
+  white-space: pre-wrap;
+}
+[data-theme="dark"] .cs-compare-code.cs-mono {
+  background: rgba(255, 255, 255, 0.06);
+}
+.cs-compare-issues {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.cs-compare-issues p {
+  margin: 2px 0;
+}
+.cs-compare-why {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 4px 0 20px;
+}
+
+/* ============================================================
+   Anti-pattern cards
+   ============================================================ */
+
+.cs-antipattern-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+.cs-antipattern-card {
+  border-left: 2px solid #EF4444;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.04);
+  padding: 14px 18px;
+}
+.cs-antipattern-card strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.cs-antipattern-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+  line-height: 1.6;
+}
+.cs-antipattern-fix {
+  font-size: 12px;
+  font-weight: 600;
+  color: #34C759;
+  margin-top: 6px;
+}
+
+/* ============================================================
+   Skill Grader
+   ============================================================ */
+
+.cs-grader {
+  margin: 16px 0 24px;
+}
+.cs-grader-skill {
+  background: #0d1117;
+  border-radius: 12px;
+  padding: 16px 20px;
+  overflow-x: auto;
+}
+.cs-grader-skill pre {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #e2e8f0;
+  margin: 0;
+  white-space: pre-wrap;
+}
+.cs-grader-prompt {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 16px 0 10px;
+  color: var(--text-primary);
+}
+.cs-grader-issues {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-grader-issue {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cs-grader-issue:hover {
+  border-color: #EF4444;
+  border-style: dashed;
+}
+.cs-grader-issue.found {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.04);
+  cursor: default;
+}
+.cs-grader-issue-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+.cs-grader-q {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.cs-grader-issue-detail {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+  font-size: 13px;
+  line-height: 1.6;
+  animation: csFadeIn 0.2s ease;
+}
+.cs-grader-issue-problem {
+  color: var(--text-secondary);
+  margin: 0 0 4px;
+}
+.cs-grader-issue-fix {
+  color: #34C759;
+  margin: 0;
+}
+
+/* Grader score bar */
+.cs-grader-score {
+  margin-top: 14px;
+  height: 28px;
+  background: var(--bg-surface);
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.cs-grader-score-fill {
+  height: 100%;
+  background: #34C759;
+  border-radius: 14px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cs-grader-score-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ============================================================
+   Use case cards
+   ============================================================ */
+
+.cs-use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 20px 0;
+}
+.cs-use-case-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+.cs-domain-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+.cs-use-case-skill {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.cs-use-case-solves {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 10px;
+  line-height: 1.5;
+}
+.cs-use-case-trigger {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.cs-use-case-rule {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+[data-theme="dark"] .cs-use-case-rule {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================================
+   Ecosystem diagram
+   ============================================================ */
+
+.cs-ecosystem {
+  margin: 20px 0;
+}
+.cs-ecosystem-svg {
+  width: 100%;
+  max-height: 240px;
+}
+
+/* ============================================================
+   Resource cards
+   ============================================================ */
+
+.cs-resource-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 16px 0;
+}
+.cs-resource-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-resource-card strong {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+.cs-resource-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Folder tree */
+.cs-folder-tree {
+  background: #0d1117;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+}
+.cs-folder-tree pre {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+/* ============================================================
+   Skill Builder (Stage 4)
+   ============================================================ */
+
+.cs-builder {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 20px 0;
+  align-items: start;
+}
+.cs-builder-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cs-builder-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.cs-builder-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+.cs-builder-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.cs-builder-input,
+.cs-builder-textarea {
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-primary);
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+.cs-builder-input:focus,
+.cs-builder-textarea:focus {
+  border-color: #34C759;
+  outline: none;
+}
+.cs-builder-textarea {
+  min-height: 60px;
+}
+
+/* Rule rows */
+.cs-rule-row {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.cs-rule-row .cs-builder-input {
+  flex: 1;
+  min-width: 200px;
+}
+.cs-rule-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 36px;
+  border: none;
+  background: none;
+  color: var(--text-tertiary);
+  cursor: pointer;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.cs-rule-remove:hover {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+.cs-add-rule-btn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  align-self: flex-start;
+}
+.cs-add-rule-btn:hover {
+  border-color: #34C759;
+  color: #34C759;
+}
+.cs-imperative-nudge {
+  width: 100%;
+  font-size: 11px;
+  color: #F59E0B;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* Output type selector */
+.cs-output-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.cs-output-option {
+  padding: 6px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: none;
+  font-size: 12px;
+  font-family: inherit;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cs-output-option:hover {
+  border-color: #34C759;
+  color: #34C759;
+}
+.cs-output-option.active {
+  border-color: #34C759;
+  background: rgba(52, 199, 89, 0.08);
+  color: #34C759;
+  font-weight: 600;
+}
+
+/* ============================================================
+   Live Preview
+   ============================================================ */
+
+.cs-preview-wrapper {
+  position: sticky;
+  top: 80px;
+}
+.cs-preview-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #34C759;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.cs-preview {
+  background: #0d1117;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.8;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.cs-preview pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Quality checks */
+.cs-quality {
+  margin-top: 14px;
+}
+.cs-quality-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--text-primary);
+}
+.cs-quality-row svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Preview action buttons */
+.cs-preview-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+.cs-copy-btn {
+  border: 1.5px solid #34C759;
+  color: #34C759;
+  background: transparent;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cs-copy-btn:hover {
+  background: rgba(52, 199, 89, 0.08);
+}
+.cs-download-btn {
+  background: #34C759;
+  color: white;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.cs-download-btn:hover {
+  background: #2EB84E;
+}
+
+/* Install info */
+.cs-install-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+.cs-install-info strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+.cs-install-info p {
+  margin: 2px 0;
+}
+.cs-install-info code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+@keyframes csFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes csSlideInRight {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============================================================
+   Dark mode overrides
+   ============================================================ */
+
+[data-theme="dark"] .cs-analogy-card {
+  background: rgba(52, 199, 89, 0.08);
+}
+[data-theme="dark"] .cs-flow-without {
+  background: rgba(239, 68, 68, 0.06);
+}
+[data-theme="dark"] .cs-flow-with {
+  background: rgba(52, 199, 89, 0.06);
+}
+[data-theme="dark"] .cs-compare-bad {
+  background: rgba(239, 68, 68, 0.06);
+}
+[data-theme="dark"] .cs-compare-good {
+  background: rgba(52, 199, 89, 0.06);
+}
+[data-theme="dark"] .cs-antipattern-card {
+  background: rgba(239, 68, 68, 0.06);
+}
+[data-theme="dark"] .cs-warning-item {
+  background: rgba(239, 68, 68, 0.06);
+}
+[data-theme="dark"] .cs-pyramid-bottom {
+  background: rgba(52, 199, 89, 0.12);
+}
+[data-theme="dark"] .cs-grader-issue.found {
+  background: rgba(52, 199, 89, 0.06);
+}
+[data-theme="dark"] .cs-output-option.active {
+  background: rgba(52, 199, 89, 0.12);
+}
+
+/* ============================================================
+   Mobile — 768px
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .cs-section-heading {
+    font-size: 16px;
+  }
+
+  /* Annotated skill: stack */
+  .cs-annotated-layout {
+    grid-template-columns: 1fr;
+  }
+  .cs-annotation {
+    position: static;
+    border-radius: 12px;
+    border-left: 2px solid #34C759;
+  }
+
+  /* Comparisons: stack */
+  .cs-compare {
+    grid-template-columns: 1fr;
+  }
+
+  /* Trigger cards: stack */
+  .cs-trigger-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Resource cards: stack */
+  .cs-resource-cards {
+    grid-template-columns: 1fr;
+  }
+
+  /* Use case grid: 2-col */
+  .cs-use-case-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Builder: stack */
+  .cs-builder {
+    grid-template-columns: 1fr;
+  }
+  .cs-preview-wrapper {
+    position: static;
+  }
+
+  /* Pyramid: full width tiers */
+  .cs-pyramid-top {
+    width: 60%;
+  }
+  .cs-pyramid-mid {
+    width: 80%;
+  }
+  .cs-pyramid-note {
+    max-width: 140px;
+    font-size: 10px;
+  }
+
+  /* Touch targets */
+  .cs-grader-issue {
+    min-height: 44px;
+  }
+  .cs-output-option {
+    min-height: 44px;
+    padding: 10px 14px;
+  }
+  .cs-add-rule-btn {
+    min-height: 44px;
+  }
+  .cs-copy-btn,
+  .cs-download-btn {
+    min-height: 44px;
+    flex: 1;
+  }
+
+  /* Ecosystem: hide SVG, show simplified */
+  .cs-ecosystem-svg {
+    max-height: 200px;
+  }
+}
+
+/* ============================================================
+   Mobile — 480px
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .cs-use-case-grid {
+    grid-template-columns: 1fr;
+  }
+  .cs-pyramid-tier {
+    flex-direction: column;
+    text-align: center;
+  }
+  .cs-pyramid-note {
+    max-width: none;
+    text-align: center;
+  }
+  .cs-pyramid-top {
+    width: 70%;
+  }
+  .cs-pyramid-mid {
+    width: 85%;
+  }
+  .cs-rule-row {
+    flex-direction: column;
+  }
+  .cs-rule-row .cs-builder-input {
+    min-width: 0;
+  }
+  .cs-preview-actions {
+    flex-direction: column;
+  }
+}
