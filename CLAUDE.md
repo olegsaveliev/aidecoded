@@ -32,6 +32,7 @@ Interactive React app for learning how Large Language Models work.
 | `computer-vision` | ComputerVision.jsx | ComputerVision.css | computerVisionQuiz | Technical | #5856D6 |
 | `fine-tuning` | FineTuning.jsx | FineTuning.css | fineTuningQuiz | Technical | #5856D6 |
 | `generative-ai` | GenerativeAI.jsx | GenerativeAI.css | generativeAIQuiz | Journey | #FF9500 |
+| `image-generation` | ImageGeneration.jsx | ImageGeneration.css | imageGenerationQuiz | Journey | #FF9500 |
 | `ai-city-builder` | AICityBuilder.jsx | AICityBuilder.css | — (game) | Game | #F59E0B |
 | `ai-lab-explorer` | AILabExplorer.jsx | AILabExplorer.css | — (game) | Game | #F59E0B |
 | `prompt-heist` | PromptHeist.jsx | PromptHeist.css | — (game) | Game | #F59E0B |
@@ -74,7 +75,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 |---|---|---|
 | Interactive | #0071E3 (blue) | Playground, Generation |
 | Visual | #AF52DE (purple) | Tokenizer |
-| Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI |
+| Journey | #FF9500 (orange) | How LLMs Work, Model Training, RAG, Generative AI, Image Generation |
 | Practical | #34C759 (green) | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Claude Skills, Spec-Driven Development, AI Coding Tools |
 | Technical | #5856D6 (indigo) | Agentic AI, Machine Learning, Neural Networks, Deep Learning, Fine-Tuning, Precision & Recall, Why RAG Fails, AI in Production, Agent Teams, Custom Agents |
 | Game | #F59E0B (amber/gold) | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview, Skill Builder Challenge |
@@ -91,7 +92,7 @@ These 8 colors drive all icon coloring, HomeScreen card borders, EntryScreen ico
 | Group | Color | Tabs |
 |---|---|---|
 | Tools | #0071E3 | Playground, Tokenizer, Generation |
-| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI |
+| Foundations | #AF52DE | How LLMs Work, Model Training, Machine Learning, Neural Networks, Precision & Recall, Deep Learning, Fine-Tuning, Generative AI, Image Generation |
 | Skills | #34C759 | Prompt Engineering, Context Engineering, AI Safety & Hallucinations, AI Fluency, Choosing the Right AI Model, Run AI Locally, Claude Code, Claude Skills, Spec-Driven Development, AI Coding Tools |
 | Advanced | #FF9500 | RAG, Agentic AI, Agent Teams, Custom Agents, Why RAG Fails, AI in Production |
 | Play | #F59E0B | AI City Builder, AI Lab Explorer, Prompt Heist, Token Budget, AI Ethics Tribunal, PM Simulator, AI Startup Simulator, The Alignment Game, Label Master, Draw & Deceive, Agent Office, Model Training Tycoon, System Design Interview, Skill Builder Challenge |
@@ -518,7 +519,7 @@ const TOOLKIT = [
 **Icon color rule:** Every TOOLKIT icon must use the module's **tag color** (not gray `#8E8E93`):
 - Practical (#34C759): PromptEngineering, ContextEngineering, AISafety, AIFluency, ChoosingAIModel, Ollama, ClaudeCode
 - Technical (#5856D6): AgenticAI, MachineLearning, NeuralNetworks, DeepLearning, FineTuning, PrecisionRecall, RAGUnderTheHood, AIInProduction, AgentTeams
-- Journey (#FF9500): HowLLMsWork, ModelTraining, RAG, GenerativeAI
+- Journey (#FF9500): HowLLMsWork, ModelTraining, RAG, GenerativeAI, ImageGeneration
 - Professional (#0EA5E9): AINativePM
 - Security (#EF4444): PromptInjection
 
@@ -652,6 +653,7 @@ The `Quiz.jsx` component renders a standardized end screen:
 - Started modules tracked in localStorage (keyed by user ID), completed in Supabase `progress` table
 - Logged-in users persist navigation + module stage to sessionStorage via `usePersistedState` hook; non-logged-in users always start fresh
 - New modules must use `usePersistedState(moduleId, -1)` for stage (or `usePersistedState(moduleId + '-entry', true)` for entry-based modules)
+- Module root wrapper must use `className="how-llms [xx]-root"` — `how-llms` (App.css) provides `display:flex`, `flex-direction:column`, `flex:1`, `width:100%`, `align-self:center`, `overflow-y:auto`, `overflow-x:hidden`; module CSS only overrides `max-width`, `gap`, `padding`
 - `showFinal` must initialize from persisted stage: `useState(stage >= STAGES.length)` — `useState(false)` causes blank screen on refresh
 - Welcome banner `<ol>` uses shared `module-welcome-steps` class (one CSS definition in App.css)
 - Welcome banner only shows on first stage: render condition must include `stage === 0 &&`
