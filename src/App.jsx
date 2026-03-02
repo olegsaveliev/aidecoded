@@ -46,6 +46,7 @@ import SystemDesignInterview from './SystemDesignInterview.jsx'
 import PromptInjection from './PromptInjection.jsx'
 import PromptInjectionLab from './PromptInjectionLab.jsx'
 import SkillBuilderChallenge from './SkillBuilderChallenge.jsx'
+import ImageGeneration from './ImageGeneration.jsx'
 import UserProfile from './UserProfile.jsx'
 import LandingPage from './LandingPage.jsx'
 import NeuronBackground from './NeuronBackground.jsx'
@@ -155,7 +156,7 @@ const VALID_TABS = [
   'alignment-game', 'choosing-ai-model', 'neural-networks', 'ollama', 'computer-vision',
   'label-master', 'draw-and-deceive', 'agent-office', 'claude-code', 'agent-teams', 'custom-agents',
   'model-training-tycoon', 'spec-driven-dev', 'ai-coding-tools', 'ai-pm-workflows', 'system-design-interview', 'prompt-injection', 'prompt-injection-lab',
-  'profile'
+  'image-generation', 'profile'
 ]
 
 function getTabFromUrl() {
@@ -1368,6 +1369,9 @@ function App() {
         )}
         {!showHome && canRenderModule && activeTab === 'skill-builder-challenge' && (
           <SkillBuilderChallenge onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
+        )}
+        {!showHome && canRenderModule && activeTab === 'image-generation' && (
+          <ImageGeneration onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />
         )}
         {!showHome && activeTab === 'profile' && (
           <UserProfile onSwitchTab={handleSwitchTab} onGoHome={handleGoHome} />

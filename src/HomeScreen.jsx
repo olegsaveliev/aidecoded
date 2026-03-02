@@ -169,6 +169,14 @@ const CARDS = [
     group: 'Foundations',
   },
   {
+    id: 'image-generation',
+    title: 'Image Generation',
+    description: 'How does AI turn a text prompt into a photorealistic image? Follow the diffusion process step by step — from pure random noise through dozens of denoising passes guided by your words.',
+    tag: 'Journey',
+
+    group: 'Foundations',
+  },
+  {
     id: 'ai-city-builder',
     title: 'AI City Builder',
     description: 'Solve AI mysteries. Diagnose failures. Build your city with every case you crack.',

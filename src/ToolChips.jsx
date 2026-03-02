@@ -74,11 +74,13 @@ function ToolChips({ tools }) {
     const id = setTimeout(() => {
       document.addEventListener('mousedown', onDocClick, true)
       document.addEventListener('keydown', onKey)
+      window.addEventListener('scroll', closePopup, true)
     }, 0)
     return () => {
       clearTimeout(id)
       document.removeEventListener('mousedown', onDocClick, true)
       document.removeEventListener('keydown', onKey)
+      window.removeEventListener('scroll', closePopup, true)
     }
   }, [activeTool])
 

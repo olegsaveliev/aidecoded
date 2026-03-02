@@ -31,6 +31,7 @@ const NAV_GROUPS = [
       { id: 'deep-learning', name: 'Deep Learning', tag: 'Technical' },
       { id: 'fine-tuning', name: 'Fine-Tuning', tag: 'Technical' },
       { id: 'generative-ai', name: 'Generative AI', tag: 'Journey' },
+      { id: 'image-generation', name: 'Image Generation', tag: 'Journey' },
     ],
   },
   {

@@ -1773,3 +1773,66 @@ export const claudeSkillsQuiz = [
     accentColor: '#34C759',
   },
 ]
+
+export const imageGenerationQuiz = [
+  {
+    question: 'What is the fundamental problem with trying to generate images directly from pixels all at once?',
+    options: ['Images are too large to fit in memory', 'The output space is too large — the model produces blurry averaged results instead of committing to one image', 'Pixels cannot represent text information', 'The model runs out of training data'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What does the forward diffusion process do?',
+    options: ['Converts text prompts into images', 'Gradually adds noise to a real image until it becomes pure static', 'Removes noise from a generated image', 'Compresses images into latent space'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What question does the model answer at each denoising step?',
+    options: ['What does the final image look like?', 'Which pixels should I change?', 'What noise should I subtract to make this slightly cleaner?', 'Is this image realistic?'],
+    correct: 2,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'Why do modern models like Stable Diffusion work in latent space instead of pixel space?',
+    options: ['Latent space produces higher resolution', 'Pixel space does not support text guidance', 'Latent space is about 48x fewer values, making denoising steps much faster', 'The VAE cannot process pixels directly'],
+    correct: 2,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What is CLIP and why is it used in image generation?',
+    options: ['A tool for compressing images', 'A model trained on image-caption pairs that puts words and images in the same mathematical space', 'An algorithm for adding noise to images', 'A sampler used during denoising'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What is cross-attention doing during each denoising step?',
+    options: ['Compressing the image into latent space', 'Comparing the prompt against the noisy image to decide which words to attend to for each spatial region', 'Adding noise to guide the generation', 'Selecting the sampler algorithm'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'Classifier-free guidance runs the model twice per step. What is the purpose of the second run (without a prompt)?',
+    options: ['To check for content policy violations', 'To provide a baseline so the difference can be amplified to strengthen prompt adherence', 'To generate a negative prompt automatically', 'To speed up the denoising process'],
+    correct: 1,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'You generate an image you love. What single parameter do you need to record to reproduce it exactly?',
+    options: ['The guidance scale', 'The sampler', 'The seed', 'The number of steps'],
+    correct: 2,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'What happens if you set the guidance scale too high (above 12)?',
+    options: ['The image ignores the prompt completely', 'Generation becomes slower', 'The image becomes over-saturated and cartoonish', 'The model uses more denoising steps'],
+    correct: 2,
+    accentColor: '#FF9500',
+  },
+  {
+    question: 'At what point in the denoising process is the overall composition of the image determined?',
+    options: ['In the final 10% of steps', 'Evenly across all steps', 'In the first 30% of steps', 'Only in the very first step'],
+    correct: 2,
+    accentColor: '#FF9500',
+  },
+]

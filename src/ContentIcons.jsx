@@ -611,6 +611,15 @@ export function PlayIcon({ size = 16, color = '#8E8E93', className }) {
   )
 }
 
+export function PauseIcon({ size = 16, color = '#8E8E93', className }) {
+  return (
+    <IconBase size={size} color={color} className={className}>
+      <line x1="10" y1="4" x2="10" y2="20" />
+      <line x1="14" y1="4" x2="14" y2="20" />
+    </IconBase>
+  )
+}
+
 export function GlobeIcon({ size = 16, color = '#8E8E93', className }) {
   return (
     <IconBase size={size} color={color} className={className}>

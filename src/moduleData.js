@@ -47,6 +47,7 @@ const ALL_MODULES = [
   { id: 'prompt-injection', title: 'Prompt Injection Explained', description: 'The number one AI security risk according to OWASP 2025. Learn how attackers hijack AI systems using nothing but carefully crafted text — then try the attacks yourself in a live simulation.', tag: 'Security', tagColor: '#EF4444' },
   { id: 'prompt-injection-lab', title: 'Prompt Injection Lab', description: 'Choose your side. As the attacker, extract secrets using real injection techniques. As the defender, write the system prompt that stops those exact attacks. Both roles teach you something the other cannot.', tag: 'Game', tagColor: '#F59E0B' },
   { id: 'skill-builder-challenge', title: 'Skill Builder Challenge', description: 'Claude fails at a task. Your job: write the SKILL.md that fixes it. Three rounds, escalating complexity. See your skill run against real test cases.', tag: 'Game', tagColor: '#F59E0B' },
+  { id: 'image-generation', title: 'Image Generation', description: 'How does AI turn a text prompt into a photorealistic image? Follow the diffusion process step by step — from pure random noise through dozens of denoising passes guided by your words.', tag: 'Journey', tagColor: '#FF9500' },
 ]
 
 export function getRandomModules(excludeId, count = 3, hiddenIds = new Set()) {

@@ -27,6 +27,7 @@ const NODES = [
   { id: 'generative-ai', label: 'Generative AI', group: 'foundations', desc: 'How AI creates images, music, video and code' },
   { id: 'precision-recall', label: 'Precision/Recall', group: 'foundations', desc: 'Why accuracy lies and what to measure instead' },
   { id: 'computer-vision', label: 'Computer Vision', group: 'foundations', desc: 'How machines learn to see' },
+  { id: 'image-generation', label: 'Image Generation', group: 'foundations', desc: 'From random noise to stunning images' },
   { id: 'rag', label: 'RAG', group: 'advanced', desc: 'How AI learns from YOUR documents' },
   { id: 'agentic-ai', label: 'Agentic AI', group: 'advanced', desc: 'AI that plans, acts and learns autonomously' },
   { id: 'rag-under-the-hood', label: 'Why RAG Fails', group: 'advanced', desc: 'Fix every layer of your RAG pipeline' },
@@ -128,6 +129,8 @@ const CONNECTIONS = [
   ['prompt-injection', 'prompt-injection-lab'], ['system-design-interview', 'prompt-injection-lab'],
   ['agentic-ai', 'prompt-injection-lab'],
   ['prompt-engineering', 'skill-builder-challenge'], ['ai-fluency', 'skill-builder-challenge'], ['prompt-heist', 'skill-builder-challenge'],
+  ['generative-ai', 'image-generation'], ['deep-learning', 'image-generation'],
+  ['computer-vision', 'image-generation'], ['model-training', 'image-generation'],
 ]
 
 /* ── Layout ── */
